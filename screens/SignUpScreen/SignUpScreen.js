@@ -3,11 +3,11 @@ import { View, StyleSheet, Text } from 'react-native';
 
 const SignUpScreen = () => {
     return (
-        <View>
-            <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold' }}>
-                My Broswer
-            </Text>
-        </View>
+        <View style={{ alignItems:"center", width: 400}}>
+                <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold', marginVertical:10 }}>
+                    Sign Up With Your Email
+                </Text>
+            </View>
     );
 }
 

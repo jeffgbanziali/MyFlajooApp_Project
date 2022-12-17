@@ -4,10 +4,14 @@ import { View, StyleSheet, Text } from 'react-native';
 const SignInScreen = () => {
     return (
         <>
-            <View>
-                <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold' }}>
-                    Sign In Screen
+            <View style={{ alignItems: "center", width: 460 }}>
+                <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold', marginVertical: 10 }}>
+                    Login
                 </Text>
+                <View style={{ backgroundColor: 'white', height: 700, width: 460, borderTopLeftRadius:160, paddingTop:100 }}>
+
+                    
+                </View>
             </View>
 
         </>
