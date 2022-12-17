@@ -1,11 +1,16 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const SignInScreen = () => {
     return (
-        <View>
-            My Browser
-        </View>
+        <>
+            <View>
+                <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold' }}>
+                    Sign In Screen
+                </Text>
+            </View>
+
+        </>
     );
 }
 
