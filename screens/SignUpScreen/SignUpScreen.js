@@ -25,7 +25,7 @@ const SignUpScreen = props => {
                     fontSize: 20,
                     color: 'gray',
                     fontWeight: 'bold',
-                    marginVertical: 10
+                    marginVertical: 2
                 }}>
                     Create a new account for the specified
                 </Text>
@@ -47,6 +47,37 @@ const SignUpScreen = props => {
                 <InputPage
                     placeholder="Phone Number"
                     keyboardType={"number"} />
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '78%',
+                    paddingRight: 16,
+                }}>
+                    <Text style={{
+                        color: 'white',
+                        fontSize: 16
+                    }}>
+                        By signing in, you agree to our{" "}
+                    </Text>
+                    <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Terms & Conditions</Text>
+
+                </View>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent:'center',
+                    width: '78%',
+                    paddingRight: 16,
+                    marginBottom:10
+                }}>
+                    <Text style={{
+                        color: 'white',
+                        fontSize: 16
+                    }}>
+                        and{" "}
+                    </Text>
+                    <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Privacy Policy</Text>
+                </View>
                 <View>
                     <Button
                         textColor="#D9D9D9"
