@@ -9,15 +9,15 @@ import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Signup" component={SignUpScreen} />
+                <Stack.Screen name="Signin" component={SignInScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default Navigation;

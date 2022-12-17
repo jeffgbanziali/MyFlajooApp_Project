@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 const SignUpScreen = () => {
     return (
         <View>
-            My Browser
+            <Text style={{ color: 'white', fontSize: 64, fontWeight: 'bold' }}>
+                My Broswer
+            </Text>
         </View>
     );
 }

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Navigation from './navigation/Navigation';
 
 
-const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
@@ -11,5 +11,9 @@ const App = () => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
 export default App;
