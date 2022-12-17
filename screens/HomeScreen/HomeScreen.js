@@ -15,7 +15,7 @@ function HomeScreen(props) {
                 <View style={{ alignItems: 'center', marginHorizontal: 40, marginVertical: 100 }}>
                     <Text style={{ color: "black", fontSize: 64 }}>Let's Start </Text>
                     <Text style={{ color: "black", fontSize: 64, marginBottom: 40 }}>Welcome </Text>
-                    <Ionicons name='mail' size={40} color='white' /><Button bgColor={darkRose} textColor="white" buttonLabel="Continue with Email" Press={() => props.navigation.navigate("Signup")} />
+                    <Button bgColor={darkRose} textColor="white" buttonLabel="Continue with Email" Press={() => props.navigation.navigate("Signup")} />
                     <Button bgColor={darkRose} textColor='white' buttonLabel="Continue with Facebook" Press={() => props.navigation.navigate("loginFacebook")} />
                     <Button bgColor={darkRose} textColor='white' buttonLabel="Continue with Google" Press={() => props.navigation.navigate("loginGoogle")} />
                 </View>
