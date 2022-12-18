@@ -1,10 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
-import Button from '../../components/Button/Button';
-import { darkRose, darkBlue, darkRed } from '../../components/Button/Constants';
+import { darkBlue } from '../../components/Button/Constants';
+import { useState } from 'react';
+//import { auth } from '../../firebase';
+
 
 const SignUpScreen = props => {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+
+
     return (
         <ImageBackground
             source={require("../../assets/Images/Background.jpg")}
@@ -31,21 +41,33 @@ const SignUpScreen = props => {
                 </Text>
                 <InputPage
                     placeholder="First Name"
+                    value={firstName}
+                    onChange={(text) => setFirstName(text)}
                 />
                 <InputPage
                     placeholder="Last Name"
-                    keyboardType={"email-adress"} />
+                    value={lastName}
+                    onChange={(text) => setLastName(text)}
+                />
                 <InputPage
                     placeholder="Email/UserName"
+                    value={email}
+                    onChange={(text) => setEmail(text)}
                     keyboardType={"email-adress"} />
                 <InputPage
                     placeholder="Password"
+                    value={password}
+                    onChange={(text) => setPassword(text)}
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(text) => setConfirmPassword(text)}
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Phone Number"
+                    value={phoneNumber}
+                    onChange={(text) => setPhoneNumber(text)}
                     keyboardType={"number"} />
                 <View style={{
                     display: 'flex',
@@ -65,10 +87,10 @@ const SignUpScreen = props => {
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent:'center',
+                    justifyContent: 'center',
                     width: '78%',
                     paddingRight: 16,
-                    marginBottom:10
+                    marginBottom: 10
                 }}>
                     <Text style={{
                         color: 'white',
@@ -79,14 +101,25 @@ const SignUpScreen = props => {
                     <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Privacy Policy</Text>
                 </View>
                 <View>
-                    <Button
-                        textColor="#D9D9D9"
-                        bgColor={darkRose}
-                        buttonLabel="Sign Up"
-                        Press={() => {
-                            alert("Account created successfully")
-                            props.navigation.navigate("Signin")
-                        }} />
+                    < TouchableOpacity
+                        onPress={handleSignUp}
+                        style={{
+                            backgroundColor: bgColor,
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            width: 350,
+                            paddingVertical: 15,
+                            marginVertical: 10
+                        }}>
+                        <Text style={{
+                            color: textColor,
+                            fontSize: 22,
+                            fontWeight: 'bold'
+                        }} >
+                            Sign Up
+                        </Text>
+
+                    </TouchableOpacity>
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: 'center' }}>
                         <Text style={{ fontWeight: 'semibold', fontSize: 16 }}>
                             Already an account ?
@@ -103,6 +136,5 @@ const SignUpScreen = props => {
     );
 }
 
-const styles = StyleSheet.create({})
 
 export default SignUpScreen;
