@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
-import { darkBlue } from '../../components/Button/Constants';
+import {  darkBlue } from '../../components/Button/Constants';
 import { useState } from 'react';
-//import { auth } from '../../firebase';
+import { auth } from '../../firebase';
 
 
 const SignUpScreen = props => {
@@ -14,7 +14,15 @@ const SignUpScreen = props => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
-
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(firstName, lastName, email, password, confirmPassword, phoneNumber)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log("Registered with ", user.firstName,user.lastName, user.email, user.password, user.confirmPassword, user.phoneNumber);
+            })
+            .catch(error => alert(error.message));
+    };
     return (
         <ImageBackground
             source={require("../../assets/Images/Background.jpg")}
@@ -136,5 +144,7 @@ const SignUpScreen = props => {
     );
 }
 
+
+const styles = StyleSheet.create({})
 
 export default SignUpScreen;
