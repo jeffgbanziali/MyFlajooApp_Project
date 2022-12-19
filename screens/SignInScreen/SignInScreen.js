@@ -4,15 +4,12 @@ import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
 import InputPage from '../../components/InputPage/InputPage';
 import Button from '../../components/Button/Button';
-import { useState } from 'react';
-import { auth } from '../../firebase';
+
 
 
 
 
 const SignInScreen = (props) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
 
     return (
@@ -42,14 +39,12 @@ const SignInScreen = (props) => {
                     <InputPage
                         placeholder="Email/UserName"
                         keyboardType={"email-adress"}
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
+                       
                         />
                     <InputPage
                         placeholder="Password"
                         secureTextEntry={true}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
+                      
                         />
                     <View style={{
                         alignItems: "flex-end",

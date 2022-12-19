@@ -1,28 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
-import {  darkBlue } from '../../components/Button/Constants';
-import { useState } from 'react';
-import { auth } from '../../firebase';
+import { darkBlue, darkRose } from '../../components/Button/Constants';
+//import { useState } from 'react';
+//import { auth } from '../../firebase';
 
 
-const SignUpScreen = props => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-
-    const handleSignUp = () => {
-        auth
-            .createUserWithEmailAndPassword(firstName, lastName, email, password, confirmPassword, phoneNumber)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log("Registered with ", user.firstName,user.lastName, user.email, user.password, user.confirmPassword, user.phoneNumber);
-            })
-            .catch(error => alert(error.message));
-    };
+const SignUpScreen = (props) => {
     return (
         <ImageBackground
             source={require("../../assets/Images/Background.jpg")}
@@ -49,33 +33,26 @@ const SignUpScreen = props => {
                 </Text>
                 <InputPage
                     placeholder="First Name"
-                    value={firstName}
-                    onChange={(text) => setFirstName(text)}
                 />
                 <InputPage
                     placeholder="Last Name"
-                    value={lastName}
-                    onChange={(text) => setLastName(text)}
+
                 />
                 <InputPage
                     placeholder="Email/UserName"
-                    value={email}
-                    onChange={(text) => setEmail(text)}
+
                     keyboardType={"email-adress"} />
                 <InputPage
                     placeholder="Password"
-                    value={password}
-                    onChange={(text) => setPassword(text)}
+
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChange={(text) => setConfirmPassword(text)}
+
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Phone Number"
-                    value={phoneNumber}
-                    onChange={(text) => setPhoneNumber(text)}
+
                     keyboardType={"number"} />
                 <View style={{
                     display: 'flex',
@@ -110,17 +87,19 @@ const SignUpScreen = props => {
                 </View>
                 <View>
                     < TouchableOpacity
-                        onPress={handleSignUp}
                         style={{
-                            backgroundColor: bgColor,
+                            backgroundColor: darkRose,
                             borderRadius: 100,
                             alignItems: 'center',
                             width: 350,
                             paddingVertical: 15,
                             marginVertical: 10
-                        }}>
+                        }}
+                        onPress={() => props.navigation.navigate("Signin")}
+
+                    >
                         <Text style={{
-                            color: textColor,
+                            color: '#D9D9D9',
                             fontSize: 22,
                             fontWeight: 'bold'
                         }} >
@@ -143,6 +122,7 @@ const SignUpScreen = props => {
         </ImageBackground>
     );
 }
+
 
 
 const styles = StyleSheet.create({})
