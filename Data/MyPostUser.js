@@ -5,6 +5,7 @@ export const POSTS = [
     {
         imageUrl: 'https://media.senscritique.com/media/000020015830/1200/new_gods_nezha_reborn.jpg',
         user: USER[0].user,
+        time: '1h ago',
         likes: 123,
         caption: 'This is a caption',
         profilePicture: USER[0].image,
@@ -26,6 +27,7 @@ export const POSTS = [
     {
         imageUrl: 'https://pbs.twimg.com/media/D031BfXX4AAnZPB.jpg:large',
         user: USER[0].user,
+        time: '10 min ago',
         likes: 123,
         caption: 'This is a caption',
         profilePicture: USER[0].image,

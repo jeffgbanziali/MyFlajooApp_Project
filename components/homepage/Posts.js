@@ -44,7 +44,24 @@ const PostHeader = ({ post }) => {
                         }} />
                 </TouchableOpacity>
 
-                <Text style={{ color: "white", marginLeft: 5, fontWeight: '600' }}>{post.user}</Text>
+                <Text style={{
+                    color: "white",
+                    marginLeft: 5,
+                    fontWeight: '600'
+                }}>{post.user}</Text>
+                <Text style={{
+                    color: "#797777",
+                    fontSize: 10,
+                    marginRight: 40,
+                    marginTop: 30,
+                    marginHorizontal: -35,
+                    fontWeight: '400',
+                    fontSize: 10,
+                    lineHeight: 12,
+                    
+
+
+                }}>{post.time}</Text>
             </View>
             <TouchableOpacity style={{
                 backgroundColor: "#302929",
@@ -75,8 +92,10 @@ const PostImage = ({ post }) => {
                     width: '100%',
                     height: 400,
                     resizeMode: "cover",
-                    borderRadius: 20
+                    borderRadius: 20,
+                  
                 }} />
+
         </View>
     )
 }
