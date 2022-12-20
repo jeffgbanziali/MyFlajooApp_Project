@@ -26,6 +26,7 @@ const Posts = ({ post }) => {
 
             <View style={{ backgroundColor: '#3D3939', borderRadius: 30, paddingBottom: 10 }}>
                 <Caption post={post} />
+                <CommentsSection post={post} />
                 <Comments post={post} />
             </View>
 
@@ -209,7 +210,7 @@ const Caption = ({ post }) => {
             <Text style={{ color: 'white', fontWeight: '600' }}>
                 {post.user}
             </Text>
-            <Text style={{ color: 'white', textAlign: 'justify' }}> {''}
+            <Text style={{ color: '#B7AFAF', textAlign: 'justify' }}> {''}
                 {post.caption}
             </Text>
         </View>
@@ -217,16 +218,36 @@ const Caption = ({ post }) => {
     )
 }
 
-const Comments = ({ post }) => {
+const CommentsSection = ({ post }) => {
     return (
         <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 5 }}>
-            <Text style={{ color: 'white', fontWeight: '600' }}>
-                {post.user}
-            </Text>
-            <Text style={{ color: 'white' }}> {''}
-                {post.caption}
-            </Text>
+            {!!post.comments.length && (
+                <Text style={{ color: 'gray' }}>
+                    View {post.comments.length > 1 ? 'all' : ''} {post.comments.length} {''}
+                    {post.comments.length > 1 ? "comments" : "comment"}
+                </Text>
+            )}
         </View>
+
+
+    )
+}
+
+const Comments = ({ post }) => {
+    return (
+        <>
+            {post.comments.map((comment, index) => (
+                <View key={index} style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 5 }}>
+                    <Text style={{ color: 'white', fontWeight: '600' }}>
+                        {comment.user}
+                    </Text>
+                    <Text style={{ color: '#B7AFAF', textAlign: 'justify' }}> {''}
+                        {comment.comment}
+                    </Text>
+                </View>
+            ))}
+
+        </>
 
     )
 }
