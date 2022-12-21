@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import TabNavigation from './navigation/TabNavigation';
+import { StyleSheet, View, } from 'react-native';
+import StackNavigation from './navigation/StackNavigation';
+
+
 
 
 
@@ -8,11 +10,20 @@ import TabNavigation from './navigation/TabNavigation';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <TabNavigation />
-    </NavigationContainer>
+    <View style={styles.root}>
+      <StackNavigation />
+    </View>
+
+
 
   );
 };
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: "blue",
+  },
+});
+
 
 export default App;

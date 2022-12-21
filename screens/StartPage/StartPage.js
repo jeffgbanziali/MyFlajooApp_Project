@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import Button from '../../components/Button/Button';
 import { darkRose } from '../../components/Button/Constants';
-import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 
 
