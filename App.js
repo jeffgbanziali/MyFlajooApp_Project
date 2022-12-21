@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, } from 'react-native';
 import StackNavigation from './navigation/StackNavigation';
+import TabNavigation from './navigation/TabNavigation';
 
 
 
@@ -11,7 +12,8 @@ import StackNavigation from './navigation/StackNavigation';
 const App = () => {
   return (
     <View style={styles.root}>
-      <StackNavigation />
+      {/*<StackNavigation /> */}
+      <TabNavigation />
     </View>
 
 
