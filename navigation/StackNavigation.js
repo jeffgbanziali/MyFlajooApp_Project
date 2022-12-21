@@ -10,7 +10,8 @@ import StartPage from "../screens/StartPage/StartPage";
 
 const Stack = createNativeStackNavigator();
 
-const Navigation = () => {
+
+const StackNavigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -24,4 +25,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default StackNavigation;
