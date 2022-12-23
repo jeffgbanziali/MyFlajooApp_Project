@@ -44,7 +44,7 @@ const TabNavigation = () => {
                     component={AddButton}
                     options={{
                         tabBarLabel: "Accueil",
-                        tabBarIcon: () => (
+                        tabBarIcon: () =>  (
                             <AddButton />
                         )
 
