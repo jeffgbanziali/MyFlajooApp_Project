@@ -13,8 +13,8 @@ import NewPostScreen from './screens/NewPostScreen/NewPostScreen';
 const App = () => {
   return (
     <View style={styles.root}>
-      {/*<StackNavigation /> <TabNavigation />  */}
-      <NewPostScreen />
+      {/*<StackNavigation /><NewPostScreen />   */}
+      <TabNavigation />
     </View>
 
 

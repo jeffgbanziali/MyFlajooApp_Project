@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 
 
 
-const Header = () => {
+const Header = (props) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity>
@@ -32,7 +31,7 @@ const Header = () => {
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity >
                     <View style={{
                         backgroundColor: "red",
                         position: "absolute",
@@ -45,9 +44,10 @@ const Header = () => {
                         zIndex: 100
 
                     }}>
-                        <Text style={{ 
-                            color: 'white', 
-                            fontWeight: 'bold' }}>
+                        <Text style={{
+                            color: 'white',
+                            fontWeight: 'bold'
+                        }}>
                             2
                         </Text>
                     </View>
@@ -58,7 +58,7 @@ const Header = () => {
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity >
                     <Feather name="user" size={34} color="white" style={{
                         width: 60,
                         height: 60,
