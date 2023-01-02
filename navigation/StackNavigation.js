@@ -21,7 +21,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
-                <Stack.Screen name="Mess" component={Message} />
+                <Stack.Screen name="Messages" component={Message} />
             </Stack.Navigator>
         </NavigationContainer>
     );

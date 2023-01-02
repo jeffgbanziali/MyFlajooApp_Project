@@ -31,7 +31,7 @@ const Header = (props) => {
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
-                <TouchableOpacity >
+                <TouchableOpacity>
                     <View style={{
                         backgroundColor: "red",
                         position: "absolute",
