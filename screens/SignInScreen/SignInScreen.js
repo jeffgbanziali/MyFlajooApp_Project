@@ -4,6 +4,7 @@ import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
 import InputPage from '../../components/InputPage/InputPage';
 import Button from '../../components/Button/Button';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -11,11 +12,13 @@ import Button from '../../components/Button/Button';
 const SignInScreen = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigation = useNavigation(false);
 
 
 
     const handleSignInAccount = () => {
         console.log("Login Button Pressed");
+        navigation.navigate("HomeScreen");
     }
 
     return (
@@ -88,7 +91,8 @@ const SignInScreen = (props) => {
                                 paddingVertical: 15,
                                 marginVertical: 10
                             }}
-                            onClick={handleSignInAccount} >
+
+                            onPress={handleSignInAccount} >
                             <Text
                                 style={{
                                     color: '#D9D9D9',
