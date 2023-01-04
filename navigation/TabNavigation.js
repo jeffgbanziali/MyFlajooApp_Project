@@ -2,12 +2,11 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
-import SignInScreen from '../screens/SignInScreen/SignInScreen'
-import SignUpScreen from '../screens/SignUpScreen/SignUpScreen'
-import StartPage from '../screens/StartPage/StartPage'
 import { NavigationContainer } from '@react-navigation/native'
 import AddButton from '../components/Button/AddButton'
 import Feather from 'react-native-vector-icons/Feather';
+import Message from '../screens/Message/Message'
+import NewPostScreen from '../screens/NewPostScreen/NewPostScreen'
 
 
 const Tab = createBottomTabNavigator()
@@ -31,7 +30,7 @@ const TabNavigation = () => {
                 />
                 <Tab.Screen
                     name="Start"
-                    component={StartPage}
+                    component={NewPostScreen}
                     options={{
                         tabBarLabel: "Accueil",
                         tabBarIcon: () => (
@@ -44,7 +43,7 @@ const TabNavigation = () => {
                     component={AddButton}
                     options={{
                         tabBarLabel: "Accueil",
-                        tabBarIcon: () =>  (
+                        tabBarIcon: () => (
                             <AddButton />
                         )
 
@@ -53,7 +52,7 @@ const TabNavigation = () => {
                 />
                 <Tab.Screen
                     name="Signup"
-                    component={SignUpScreen}
+                    component={Message}
                     options={{
                         tabBarLabel: "Accueil",
                         tabBarIcon: () => (
@@ -62,8 +61,8 @@ const TabNavigation = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="Signin"
-                    component={SignInScreen}
+                    name="Messages"
+                    component={Message}
                     options={{
                         tabBarLabel: "Accueil",
                         tabBarIcon: () => (

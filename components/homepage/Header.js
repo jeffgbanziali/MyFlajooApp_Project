@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 
 
-const Header = (props) => {
+const Header = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity>
@@ -31,7 +31,7 @@ const Header = (props) => {
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity >
                     <View style={{
                         backgroundColor: "red",
                         position: "absolute",

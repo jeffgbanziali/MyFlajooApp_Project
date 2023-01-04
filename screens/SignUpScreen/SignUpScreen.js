@@ -1,12 +1,22 @@
-import React from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
-//import { useState } from 'react';
-//import { auth } from '../../firebase';
+
+
 
 
 const SignUpScreen = (props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    let signUp = () => {
+        console.log('Sign Up Button Pressed');
+    }
     return (
         <ImageBackground
             source={require("../../assets/Images/Background.jpg")}
@@ -33,27 +43,39 @@ const SignUpScreen = (props) => {
                 </Text>
                 <InputPage
                     placeholder="First Name"
+                    value={firstName}
+                    onPress={(text) => setFirstName(text)}
+
                 />
                 <InputPage
                     placeholder="Last Name"
+                    value={lastName}
+                    onPress={(text) => setLastName(text)}
+
 
                 />
                 <InputPage
                     placeholder="Email/UserName"
-
+                    value={email}
+                    onPress={(text) => setEmail(text)}
                     keyboardType={"email-adress"} />
                 <InputPage
                     placeholder="Password"
-
+                    value={password}
+                    onPress={(text) => setPassword(text)}
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Confirm Password"
-
+                    value={confirmPassword}
+                    onPress={(text) => setConfirmPassword(text)}
                     secureTextEntry={true} />
                 <InputPage
                     placeholder="Phone Number"
+                    value={phoneNumber}
+                    keyboardType={"number"}
+                    onPress={(text) => setPhoneNumber(text)}
+                />
 
-                    keyboardType={"number"} />
                 <View style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -95,7 +117,7 @@ const SignUpScreen = (props) => {
                             paddingVertical: 15,
                             marginVertical: 10
                         }}
-                        onPress={() => props.navigation.navigate("Signin")}
+                        onPress={signUp}
 
                     >
                         <Text style={{

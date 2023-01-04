@@ -7,16 +7,18 @@ import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen/ForgotPasswordScreen";
 import StartPage from "../screens/StartPage/StartPage";
 import Message from "../screens/Message/Message";
+import TabNavigation from "./TabNavigation";
+
 
 
 const Stack = createNativeStackNavigator();
 
-
 const StackNavigation = () => {
+
+
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Start" component={StartPage} />
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />

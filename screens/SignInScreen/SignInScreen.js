@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
@@ -8,9 +8,15 @@ import Button from '../../components/Button/Button';
 
 
 
-
 const SignInScreen = (props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+
+
+    const handleSignInAccount = () => {
+        console.log("Login Button Pressed");
+    }
 
     return (
         <>
@@ -38,19 +44,23 @@ const SignInScreen = (props) => {
                     </Text>
                     <InputPage
                         placeholder="Email/UserName"
+                        value={email}
                         keyboardType={"email-adress"}
-                       
-                        />
+                        onchangeText={(text) => setEmail(text)}
+
+                    />
                     <InputPage
                         placeholder="Password"
+                        value={password}
                         secureTextEntry={true}
-                      
-                        />
+                        onchangeText={(text) => setPassword(text)}
+
+                    />
                     <View style={{
                         alignItems: "flex-end",
                         width: '78%',
                         paddingRight: 16,
-                        marginBottom: 200
+                        marginBottom: 40
                     }}>
                         <Text style={{
                             color: darkRed,
@@ -60,18 +70,40 @@ const SignInScreen = (props) => {
                             Forgot Password ?
                         </Text>
                     </View>
-                    <View>
-                        <Button
-                            textColor="#D9D9D9"
-                            bgColor={darkRose}
-                            buttonLabel="Login"
-                            Press={() => alert("Logged In")} />
+                    <View
+                        style={{
+                            alignItems: "center",
+                            width: '100%',
+                            paddingHorizontal: 16,
+                            marginVertical: -16
+                        }}
+
+                    >
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: darkRose,
+                                borderRadius: 100,
+                                alignItems: 'center',
+                                width: 350,
+                                paddingVertical: 15,
+                                marginVertical: 10
+                            }}
+                            onClick={handleSignInAccount} >
+                            <Text
+                                style={{
+                                    color: '#D9D9D9',
+                                    fontSize: 22,
+                                    fontWeight: 'bold'
+                                }}>
+                                Login
+                            </Text>
+                        </TouchableOpacity>
                         <View style={{ display: "flex", flexDirection: "row", justifyContent: 'center' }}>
-                            <Text style={{fontWeight:'semibold', fontSize:16}}>
+                            <Text style={{ fontWeight: 'semibold', fontSize: 16 }}>
                                 Don't have an account ?
                             </Text>
-                            <TouchableOpacity onPress={()=> props.navigation.navigate("Signup")}>
-                                <Text style={{color:darkBlue, fontWeight:'bold', fontSize:16}}>Sign Up</Text>
+                            <TouchableOpacity onPress={() => props.navigation.navigate("Signup")}>
+                                <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Sign Up</Text>
                             </TouchableOpacity>
 
                         </View>
