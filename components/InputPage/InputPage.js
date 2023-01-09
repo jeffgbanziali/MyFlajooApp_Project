@@ -7,13 +7,13 @@ const InputPage = props => {
   return (
 <TextInput {...props} 
 style={{ 
-  margin: 12,
+  margin: 10,
   borderWidth: 1,
   padding: 10,
   borderRadius: 10, 
   color: 'black', 
   backgroundColor: "#FFFFFF",
-  height: 58,
+  height: 54,
   width: 349,
    }}
   placeholderTextColor={darkRose}

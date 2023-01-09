@@ -33,7 +33,7 @@ const SignInScreen = (props) => {
                         color: 'blue',
                         fontSize: 64,
                         fontWeight: 'bold',
-                        marginVertical: 30
+                        marginVertical: 40
                     }}>
                         Login
                     </Text>

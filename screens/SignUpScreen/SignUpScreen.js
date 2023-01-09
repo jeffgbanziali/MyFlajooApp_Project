@@ -9,6 +9,7 @@ import { darkBlue, darkRose } from '../../components/Button/Constants';
 const SignUpScreen = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [pseudo, setPseudo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -29,18 +30,25 @@ const SignUpScreen = (props) => {
                     color: 'blue',
                     fontSize: 64,
                     fontWeight: 'bold',
-                    marginVertical: 40
+                    marginVertical: 20
                 }}>
                     Register
                 </Text>
                 <Text style={{
                     fontSize: 20,
-                    color: 'gray',
+                    color: 'lightred',
                     fontWeight: 'bold',
-                    marginVertical: 2
+                    marginVertical: 2,
+                    marginBottom: 10
                 }}>
                     Create a new account for the specified
                 </Text>
+                <InputPage
+                    placeholder="Pseudo"
+                    value={pseudo}
+                    onPress={(text) => setPseudo(text)}
+
+                />
                 <InputPage
                     placeholder="First Name"
                     value={firstName}
@@ -55,7 +63,7 @@ const SignUpScreen = (props) => {
 
                 />
                 <InputPage
-                    placeholder="Email/UserName"
+                    placeholder="Your Email"
                     value={email}
                     onPress={(text) => setEmail(text)}
                     keyboardType={"email-adress"} />
