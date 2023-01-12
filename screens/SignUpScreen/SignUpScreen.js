@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 
@@ -17,18 +18,27 @@ const SignUpScreen = (props) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
-    let signUp = async () => {
+    const navigation = useNavigation();
+
+    const handleSignUpAccount = async () => {
         console.log('Sign Up Button Pressed');
         try {
-            const response = await axios.post('http://yourserver.com/signup', {
-                email: email,
-                password: password,
-                pseudo: pseudo,
-                firstName: firstName,
-                lastName: lastName,
-                phoneNumber: phoneNumber
+            if (password !== confirmPassword) {
+                console.log("password and confirm password does not match");
+                return;
+            }
+            const response = await axios.post('http://192.168.0.34:5000/api/user/register', {
+                email,
+                password,
+                pseudo,
+                firstName,
+                lastName,
+                phoneNumber
             });
             console.log(response);
+            if (response.status === 200) {
+                navigation.navigate('Signin');
+            }
         } catch (error) {
             console.error(error);
         }
@@ -87,19 +97,20 @@ const SignUpScreen = (props) => {
                     <InputPage
                         placeholder="Password"
                         value={password}
-                        onPress={(e) => setPassword(e.target.value)}
+                        keyboardType={"password"}
+                        onChange={(e) => setPassword(e.target.value)}
                         secureTextEntry={true} />
                     <InputPage
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         keyboardType={"password"}
-                        onPress={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         secureTextEntry={true} />
                     <InputPage
                         placeholder="Phone Number"
                         value={phoneNumber}
                         keyboardType={"number"}
-                        onPress={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                     />
 
                     <View style={{
@@ -143,7 +154,7 @@ const SignUpScreen = (props) => {
                                 paddingVertical: 15,
                                 marginVertical: 10
                             }}
-                            onPress={signUp}
+                            onPress={handleSignUpAccount}
 
                         >
                             <Text style={{

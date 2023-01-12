@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -5,6 +6,11 @@ import Feather from 'react-native-vector-icons/Feather';
 
 
 const Header = () => {
+    const navigation = useNavigation(false);
+    const handleClick = () => {
+        console.log("clicked")
+        navigation.navigate('Profile');
+    }
     return (
         <View style={styles.container}>
             <TouchableOpacity>
@@ -59,12 +65,18 @@ const Header = () => {
                     }} />
                 </TouchableOpacity>
                 <TouchableOpacity >
-                    <Feather name="user" size={34} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -10,
-                        resizeMode: "contain"
-                    }} />
+                    <Feather
+                        name="user"
+                        size={34}
+                        color="white"
+                        style={{
+                            width: 60,
+                            height: 60,
+                            marginLeft: -10,
+                            resizeMode: "contain"
+                        }}
+                        onPress={handleClick}
+                    />
                 </TouchableOpacity>
             </View>
         </View>

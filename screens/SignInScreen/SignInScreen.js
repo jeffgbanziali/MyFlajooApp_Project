@@ -12,7 +12,7 @@ import axios from 'axios';
 
 
 
-const SignInScreen = () => {
+const SignInScreen = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
