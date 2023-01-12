@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
 import InputPage from '../../components/InputPage/InputPage';
-import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 
 
