@@ -60,6 +60,8 @@ const SignInScreen = () => {
                         Login to your account
                     </Text>
                     <InputPage
+                        type="password"
+                        name="password"
                         placeholder="Your Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -68,8 +70,11 @@ const SignInScreen = () => {
                         type="password"
                         name="password"
                         id="password"
+                        placeholder="Your Password"
                         onChange={(e) => setPassword(e.target.value)}
-                        value={password} />
+                        keyboardType={"password"}
+                        value={password}
+                        secureTextEntry={true} />
                     <Text>Email error</Text>
                     <View style={{
                         alignItems: "flex-end",
