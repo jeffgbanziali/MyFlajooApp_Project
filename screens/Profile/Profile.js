@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
+import NavButton from '../../components/ProfileUtils.js/NavButton';
 
 // create a component
 const Profile = () => {
@@ -53,8 +54,9 @@ const Profile = () => {
             <View >
                 <Followers />
             </View>
-
-
+            <View >
+                <NavButton />
+            </View>
 
         </ScrollView >
 
