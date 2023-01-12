@@ -7,19 +7,33 @@ import Button from '../../components/Button/Button';
 import { useNavigation } from '@react-navigation/native';
 
 
+import axios from 'axios';
 
 
-const SignInScreen = (props) => {
+
+
+const SignInScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const navigation = useNavigation(false);
 
+    const handleSignInAccount = async () => {
+        try {
+            const response = await axios
+                .post("http://192.168.0.34:5000/api/user/login", {
+                    email,
+                    password
+                });
+            if (response.status === 200) {
+                navigation.navigate("HomeScreen")
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle login error, such as displaying an error message to the user
+        }
+    };
 
-
-    const handleSignInAccount = () => {
-        console.log("Login Button Pressed");
-        navigation.navigate("HomeScreen");
-    }
 
     return (
         <>
@@ -46,19 +60,17 @@ const SignInScreen = (props) => {
                         Login to your account
                     </Text>
                     <InputPage
-                        placeholder="Email/UserName"
+                        placeholder="Your Email"
                         value={email}
-                        keyboardType={"email-adress"}
-                        onchangeText={(text) => setEmail(text)}
-
-                    />
+                        onChange={(e) => setEmail(e.target.value)}
+                        keyboardType={"email-adress"} />
                     <InputPage
-                        placeholder="Password"
-                        value={password}
-                        secureTextEntry={true}
-                        onchangeText={(text) => setPassword(text)}
-
-                    />
+                        type="password"
+                        name="password"
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password} />
+                    <Text>Email error</Text>
                     <View style={{
                         alignItems: "flex-end",
                         width: '78%',
@@ -91,8 +103,9 @@ const SignInScreen = (props) => {
                                 paddingVertical: 15,
                                 marginVertical: 10
                             }}
+                            onPress={handleSignInAccount}
 
-                            onPress={handleSignInAccount} >
+                        >
                             <Text
                                 style={{
                                     color: '#D9D9D9',

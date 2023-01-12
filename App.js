@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, } from 'react-native';
 import StackNavigation from './navigation/StackNavigation';
-import TabNavigation from './navigation/TabNavigation';
-import NewPostScreen from './screens/NewPostScreen/NewPostScreen';
+import AuthProvider from './components/Context/AuthContext';
 
 
 
@@ -13,10 +12,12 @@ import NewPostScreen from './screens/NewPostScreen/NewPostScreen';
 
 const App = () => {
   return (
-    <View style={styles.root}>
-      {/*<NewPostScreen />   */}
-      <StackNavigation />
-    </View>
+    <AuthProvider>
+      <View style={styles.root}>
+        <StackNavigation />
+      </View>
+    </AuthProvider>
+
 
 
 

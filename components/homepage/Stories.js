@@ -17,8 +17,8 @@ const Stories = () => {
                 showsHorizontalScrollIndicator={false}
             >
                 {USER.map((story, index) => (
-                    <TouchableOpacity >
-                        < View key={index} style={{ alignItems: 'center' }} >
+                    <TouchableOpacity key={index} >
+                        < View style={{ alignItems: 'center' }} >
                             <Image key={index} source={{ uri: story.image }} style={{
                                 width: 60,
                                 height: 60,
