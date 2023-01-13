@@ -79,7 +79,6 @@ const SignUpScreen = (props) => {
                         onChangeText={(e) => setPseudo(e)}
 
                     />
-                    <Text> {error.pseudoError} </Text>
                     <InputPage
                         placeholder="First Name"
                         value={firstName}
@@ -98,21 +97,18 @@ const SignUpScreen = (props) => {
                         value={email}
                         onChangeText={(e) => setEmail(e)}
                         keyboardType="email-address" />
-                    <Text> {error.emailError} </Text>
                     <InputPage
                         placeholder="Password"
                         value={password}
                         keyboardType={"password"}
                         onChangeText={(e) => setPassword(e)}
                         secureTextEntry={true} />
-                    <Text> {error.passwordError} </Text>
                     <InputPage
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         keyboardType="password"
                         onChangeText={(e) => setConfirmPassword(e)}
                         secureTextEntry={true} />
-                    <Text>  {error.confirmPasswordError} </Text>
                     <InputPage
                         placeholder="Phone Number"
                         value={phoneNumber}
