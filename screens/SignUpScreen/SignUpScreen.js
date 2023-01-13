@@ -17,14 +17,14 @@ const SignUpScreen = (props) => {
     const [lastName, setLastName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [error, setError] = useState({});
 
     const navigation = useNavigation();
 
     const handleSignUpAccount = async () => {
-        console.log('Sign Up Button Pressed');
         try {
             if (password !== confirmPassword) {
-                console.log("password and confirm password does not match");
+                setError({ passwordConfirmError: "Les mots de passe ne correspondent pas" })
                 return;
             }
             const response = await axios.post('http://192.168.0.34:5000/api/user/register', {
@@ -34,15 +34,17 @@ const SignUpScreen = (props) => {
                 firstName,
                 lastName,
                 phoneNumber
-            });
-            console.log(response);
+            })
+
             if (response.status === 200) {
-                navigation.navigate('Signin');
+                navigation.navigate("SignInScreen")
             }
         } catch (error) {
             console.error(error);
+            // Handle login error, such as displaying an error message to the user
         }
-    }
+    };
+
     return (
         <ImageBackground
             source={require("../../assets/Images/Background.jpg")}
@@ -73,44 +75,48 @@ const SignUpScreen = (props) => {
                     <InputPage
                         placeholder="Pseudo"
                         value={pseudo}
-                        onChange={(e) => setPseudo(e.target.value)}
+                        onChangeText={(e) => setPseudo(e)}
 
                     />
+                    <Text> {error.pseudoError} </Text>
                     <InputPage
                         placeholder="First Name"
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChangeText={(e) => setFirstName(e)}
 
                     />
                     <InputPage
                         placeholder="Last Name"
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        onChangeText={(e) => setLastName(e)}
 
 
                     />
                     <InputPage
                         placeholder="Your Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        keyboardType={"email-adress"} />
+                        onChangeText={(e) => setEmail(e)}
+                        keyboardType="email-address" />
+                    <Text> {error.emailError} </Text>
                     <InputPage
                         placeholder="Password"
                         value={password}
                         keyboardType={"password"}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChangeText={(e) => setPassword(e)}
                         secureTextEntry={true} />
+                    <Text> {error.passwordError} </Text>
                     <InputPage
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        keyboardType={"password"}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        keyboardType="password"
+                        onChangeText={(e) => setConfirmPassword(e)}
                         secureTextEntry={true} />
+                    <Text>  {error.confirmPasswordError} </Text>
                     <InputPage
                         placeholder="Phone Number"
                         value={phoneNumber}
                         keyboardType={"number"}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChangeText={(e) => setPhoneNumber(e)}
                     />
 
                     <View style={{
