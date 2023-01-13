@@ -1,8 +1,8 @@
-import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native'
+import React from 'react'
 import SwitchSelector from "react-native-switch-selector";
 
-const NavButton = () => {
+const NavButtonHome = () => {
     const options = [
         { label: "01:00", value: "1", testID: "switch-one", accessibilityLabel: "switch-one" },
         { label: "01:30", value: "1.5", testID: "switch-one-thirty", accessibilityLabel: "switch-one-thirty" },
@@ -14,10 +14,9 @@ const NavButton = () => {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: -20,
+          
         }}
         >
-
 
             <SwitchSelector
                 initial={0}
@@ -51,5 +50,4 @@ const NavButton = () => {
     );
 }
 
-
-export default NavButton;
+export default NavButtonHome

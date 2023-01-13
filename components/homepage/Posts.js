@@ -8,15 +8,17 @@ import { Divider } from '@rneui/themed';
 const Posts = ({ post }) => {
     return (
         <View style={{
-            marginTop: 30,
+            marginTop: 8,
             marginBottom: 5,
             backgroundColor: "#423C3C",
             position: "relative",
             borderRadius: 20,
             paddingBottom: 20,
+            zIndex: 1,
+
 
         }}>
-            <Divider />
+
             <PostHeader post={post} />
             <PostImage post={post} />
             <PostFooter post={post} />

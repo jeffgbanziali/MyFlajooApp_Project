@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { Avatar } from 'react-native-elements';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
-import NavButton from '../../components/ProfileUtils.js/NavButton';
+import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -122,7 +122,7 @@ const Profile = () => {
                 <Followers />
             </View>
             <View >
-                <NavButton />
+                <NavButtonProfile />
             </View>
 
         </ScrollView >

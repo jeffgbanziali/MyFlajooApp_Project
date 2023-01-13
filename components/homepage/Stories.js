@@ -5,7 +5,8 @@ import { USER } from "../../Data/Users"
 const Stories = () => {
     return (
         <View style={{
-            marginBottom: 13,
+            marginTop: -15,
+            marginBottom: 10,
             backgroundColor: "#000",
             height: 100,
             width: "100%",

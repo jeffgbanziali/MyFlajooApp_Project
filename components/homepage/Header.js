@@ -7,9 +7,17 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const Header = () => {
     const navigation = useNavigation(false);
-    const handleClick = () => {
+    const handleClickProfile = () => {
         console.log("clicked")
         navigation.navigate('Profile');
+    }
+    const handleClickMessage = () => {
+        console.log("clicked")
+        navigation.navigate('Messages');
+    }
+    const handleClickNotifications = () => {
+        console.log("clicked")
+        navigation.navigate('Notifications');
     }
     return (
         <View style={styles.container}>
@@ -25,59 +33,108 @@ const Header = () => {
 
             <View style={{
                 flexDirection: 'row',
-                marginHorizontal: -20,
-                top: -10
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginHorizontal: -10,
+                top: -20
 
             }}>
-                <TouchableOpacity>
-                    <Feather name="bell" size={34} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -6,
-                        resizeMode: "contain"
-                    }} />
-                </TouchableOpacity>
-                <TouchableOpacity >
-                    <View style={{
-                        backgroundColor: "red",
-                        position: "absolute",
-                        left: 10,
-                        width: 25,
-                        height: 18,
-                        borderRadius: 25,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 100
-
-                    }}>
-                        <Text style={{
-                            color: 'white',
-                            fontWeight: 'bold'
-                        }}>
-                            2
-                        </Text>
-                    </View>
-                    <Feather name="message-circle" size={34} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -10,
-                        resizeMode: "contain"
-                    }} />
-                </TouchableOpacity>
-                <TouchableOpacity >
-                    <Feather
-                        name="user"
-                        size={34}
-                        color="white"
-                        style={{
-                            width: 60,
-                            height: 60,
-                            marginLeft: -10,
+                <View style={{
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    backgroundColor: "#161414",
+                    borderRadius: 30,
+                    marginLeft: "3.5%",
+                    marginTop: "1.5%",
+                    width: 50,
+                    height: 50,
+                    zIndex: 100
+                }}>
+                    <TouchableOpacity>
+                        <Feather name="bell" size={25} color="white" style={{
+                            alignSelf: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
                             resizeMode: "contain"
                         }}
-                        onPress={handleClick}
-                    />
-                </TouchableOpacity>
+                            onPress={handleClickNotifications}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View style={{
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    backgroundColor: "#161414",
+                    borderRadius: 30,
+                    marginLeft: "3.5%",
+                    marginTop: "1.5%",
+                    width: 50,
+                    height: 50,
+                    zIndex: 100
+                }}
+                >
+                    <TouchableOpacity >
+                        <View style={{
+                            backgroundColor: "red",
+                            position: "absolute",
+                            left: 10,
+                            width: 20,
+                            height: 18,
+                            borderRadius: 25,
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            alignItems: "center",
+                            marginLeft: 16,
+                            marginTop: -6,
+                            zIndex: 100
+
+                        }}>
+                            <Text style={{
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontZize: 2
+                            }}>
+                                2
+                            </Text>
+                        </View>
+                        <Feather name="message-circle" size={25} color="white" style={{
+                            alignSelf: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            resizeMode: "contain"
+                        }}
+                            onPress={handleClickMessage}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View style={{
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    backgroundColor: "#161414",
+                    borderRadius: 30,
+                    marginLeft: "3.5%",
+                    marginTop: "1.5%",
+                    width: 50,
+                    height: 50,
+                    zIndex: 100
+                }}>
+                    <TouchableOpacity >
+                        <Feather
+                            name="user"
+                            size={25}
+                            color="white"
+                            style={{
+                                alignSelf: 'center',
+                                alignContent: 'center',
+                                alignItems: 'center',
+                                resizeMode: "contain"
+                            }}
+                            onPress={handleClickProfile}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+
             </View>
         </View>
     );

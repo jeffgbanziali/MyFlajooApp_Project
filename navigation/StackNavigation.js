@@ -10,6 +10,7 @@ import Message from "../screens/Message/Message";
 import Profile from "../screens/Profile/Profile";
 import Settings from "../screens/Settings/Settings";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
+import Notifications from "../screens/Notifications/Notifications";
 
 
 
@@ -31,6 +32,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Messages" component={Message} />
                 <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Stack.Screen name="Notifications" component={Notifications} />
             </Stack.Navigator>
         </NavigationContainer>
     );
