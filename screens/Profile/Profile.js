@@ -1,14 +1,26 @@
 //import liraries
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButton from '../../components/ProfileUtils.js/NavButton';
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-// create a component
+
+
+
 const Profile = () => {
+    const navigation = useNavigation(false);
+    const handleClickReturnHome = () => {
+        console.log("clicked")
+        navigation.navigate('HomeScreen');
+    }
+    const handleClickSettings = () => {
+        console.log("clicked")
+        navigation.navigate('Settings');
+    }
     return (
         <ScrollView style={styles.container}>
             <View >
@@ -19,13 +31,68 @@ const Profile = () => {
                         borderRadius: 30,
                         paddingBottom: 90,
                         marginTop: 50,
+
                     }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+
+                    }}
+                    >
+                        <View style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: "#161414",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginLeft: "3.5%",
+                            marginTop: "1.5%"
+                        }}
+                        >
+                            <TouchableOpacity
+                                onPress={handleClickReturnHome}
+                            >
+                                <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    resizeMode: "contain"
+                                }} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: "#161414",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginRight: "3.5%",
+                            marginTop: "1.5%"
+                        }}
+                        >
+                            <TouchableOpacity onPress={handleClickSettings}>
+                                <Entypo name="dots-three-horizontal" size={28} color="#5F5858" style={{
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    resizeMode: "contain"
+                                }} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+
                     <View
                         style={{
                             flex: 1,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            marginTop: 18,
+                            marginTop: -16,
+
                         }}>
                         <TouchableOpacity>
                             <Avatar
@@ -63,12 +130,11 @@ const Profile = () => {
     );
 };
 
-// define your styles
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#2C2828',
     },
 });
 
-//make this component available to the app
 export default Profile;

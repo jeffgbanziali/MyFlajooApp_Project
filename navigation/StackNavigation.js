@@ -8,6 +8,8 @@ import ForgotPasswordScreen from "../screens/ForgotPasswordScreen/ForgotPassword
 import StartPage from "../screens/StartPage/StartPage";
 import Message from "../screens/Message/Message";
 import Profile from "../screens/Profile/Profile";
+import Settings from "../screens/Settings/Settings";
+import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 
 
 
@@ -27,8 +29,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="Messages" component={Message} />
-
-
+                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
