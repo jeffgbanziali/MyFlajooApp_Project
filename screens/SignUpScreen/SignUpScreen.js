@@ -28,16 +28,17 @@ const SignUpScreen = (props) => {
                 return;
             }
             const response = await axios.post('http://192.168.0.34:5000/api/user/register', {
-                email,
-                password,
                 pseudo,
                 firstName,
                 lastName,
+                email,
+                password,
+                confirmPassword,
                 phoneNumber
             })
 
             if (response.status === 200) {
-                navigation.navigate("SignInScreen")
+                navigation.navigate("Signin")
             }
         } catch (error) {
             console.error(error);
