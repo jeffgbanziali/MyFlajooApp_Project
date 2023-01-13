@@ -53,14 +53,14 @@ const Header = () => {
                     height: 50,
                     zIndex: 100
                 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity  onPress={handleClickNotifications}>
                         <Feather name="bell" size={25} color="white" style={{
                             alignSelf: 'center',
                             alignContent: 'center',
                             alignItems: 'center',
                             resizeMode: "contain"
                         }}
-                            onPress={handleClickNotifications}
+                           
                         />
                     </TouchableOpacity>
                 </View>
@@ -76,7 +76,8 @@ const Header = () => {
                     zIndex: 100
                 }}
                 >
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={handleClickMessage}
+                    >
                         <View style={{
                             backgroundColor: "red",
                             position: "absolute",
@@ -106,9 +107,9 @@ const Header = () => {
                             alignItems: 'center',
                             resizeMode: "contain"
                         }}
-                            onPress={handleClickMessage}
+                            
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity >
                 </View>
                 <View style={{
                     justifyContent: 'center',
@@ -121,7 +122,7 @@ const Header = () => {
                     height: 50,
                     zIndex: 100
                 }}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={handleClickProfile}>
                         <Feather
                             name="user"
                             size={25}
@@ -132,7 +133,7 @@ const Header = () => {
                                 alignItems: 'center',
                                 resizeMode: "contain"
                             }}
-                            onPress={handleClickProfile}
+                            
                         />
                     </TouchableOpacity>
                 </View>

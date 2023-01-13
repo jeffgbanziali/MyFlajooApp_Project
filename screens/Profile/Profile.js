@@ -1,5 +1,5 @@
 //import liraries
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
@@ -7,12 +7,14 @@ import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { UidContext } from '../../components/Context/AuthContext';
 
 
 
 
 const Profile = () => {
-    const navigation = useNavigation(false);
+    const uid = useContext(UidContext)
+    const navigation = useNavigation();
     const handleClickReturnHome = () => {
         console.log("clicked")
         navigation.navigate('HomeScreen');
@@ -22,7 +24,10 @@ const Profile = () => {
         navigation.navigate('Settings');
     }
     return (
+
+
         <ScrollView style={styles.container}>
+
             <View >
                 <View
                     style={{
@@ -124,7 +129,6 @@ const Profile = () => {
             <View >
                 <NavButtonProfile />
             </View>
-
         </ScrollView >
 
     );
