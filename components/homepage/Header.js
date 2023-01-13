@@ -2,6 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { AntDesign } from '@expo/vector-icons';
+
+
 
 
 
@@ -97,7 +100,7 @@ const Header = () => {
                                 2
                             </Text>
                         </View>
-                        <Feather name="message-circle" size={25} color="white" style={{
+                        <AntDesign name="message1" size={25} color="white" style={{
                             alignSelf: 'center',
                             alignContent: 'center',
                             alignItems: 'center',

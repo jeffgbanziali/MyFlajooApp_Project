@@ -23,7 +23,7 @@ const Stories = () => {
                             <Image key={index} source={{ uri: story.image }} style={{
                                 width: 60,
                                 height: 60,
-                                borderRadius: 10,
+                                borderRadius: 30,
                                 borderWidth: 3,
                                 borderColor: "red",
                                 marginLeft: 10,

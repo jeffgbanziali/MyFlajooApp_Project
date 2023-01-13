@@ -81,17 +81,19 @@ const PostHeader = ({ post }) => {
             </View>
             <TouchableOpacity style={{
                 backgroundColor: "#302929",
-                width: 50,
-                height: 50,
+                width: 40,
+                height: 40,
                 borderRadius: 30,
                 marginRight: 10,
+                justifyContent: 'center',
+                alignSelf: 'center'
             }}>
-                <Feather name="more-horizontal" size={34} color="white"
+                <Feather name="more-horizontal" size={25} color="white"
                     style={{
                         textAlign: "center",
-                        marginTop: "15%",
+                        alignItems: "center",
+                        alignSelf: "center",
                         resizeMode: "contain"
-
                     }} />
             </TouchableOpacity>
 
@@ -108,7 +110,10 @@ const PostImage = ({ post }) => {
                     width: '100%',
                     height: 400,
                     resizeMode: "cover",
-                    borderRadius: 20,
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
+                    borderBottomLeftRadius: 0,
+                    borderBottomRightRadius: 0
 
                 }} />
 
@@ -121,73 +126,68 @@ const PostFooter = ({ post }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20, marginVertical: 10 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity style={{
-                    backgroundColor: "#302929",
+                    backgroundColor: "#161414",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
-                    marginRight: 10
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignSelf: 'center'
                 }}>
-                    <Feather name="heart" size={34} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -6,
-                        resizeMode: "contain",
+                    <Feather name="heart" size={25} color="white" style={{
                         textAlign: "center",
-                        marginTop: "15%",
+                        alignItems: "center",
+                        alignSelf: "center",
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{
-                    backgroundColor: "#302929",
+                    backgroundColor: "#161414",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
-                    marginRight: 10
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignSelf: 'center'
                 }}>
-                    <Feather name="message-circle" size={32} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -6,
-                        resizeMode: "contain",
+                    <Feather name="message-circle" size={25} color="white" style={{
                         textAlign: "center",
-                        marginTop: "15%",
+                        alignItems: "center",
+                        alignSelf: "center",
                         resizeMode: "contain"
                     }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{
-                    backgroundColor: "#302929",
+                    backgroundColor: "#161414",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
-                    marginRight: 10
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignSelf: 'center'
                 }}>
-                    <Feather name="send" size={34} color="white" style={{
-                        width: 60,
-                        height: 60,
-                        marginLeft: -8,
-                        resizeMode: "contain",
+                    <Feather name="send" size={25} color="white" style={{
                         textAlign: "center",
-                        marginTop: "15%",
+                        alignItems: "center",
+                        alignSelf: "center",
                         resizeMode: "contain"
 
                     }} />
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={{
-                backgroundColor: "#302929",
+                backgroundColor: "#161414",
                 width: 50,
                 height: 50,
                 borderRadius: 30,
-                marginRight: 10
+                marginRight: 10,
+                justifyContent: 'center',
+                alignSelf: 'center'
             }}>
-                <Feather name="bookmark" size={34} color="white" style={{
-                    width: 60,
-                    height: 60,
-                    marginLeft: -6,
-                    resizeMode: "contain",
+                <Feather name="bookmark" size={25} color="white" style={{
                     textAlign: "center",
                     alignItems: "center",
-                    marginTop: "15%",
+                    alignSelf: "center",
                     resizeMode: "contain"
                 }} />
             </TouchableOpacity>
