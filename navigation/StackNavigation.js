@@ -24,10 +24,10 @@ const StackNavigation = () => {
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Start" component={StartPage} />
-                <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />
+                <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
                 <Stack.Screen name="Messages" component={Message} />
                 <Stack.Screen name="Settings" component={Settings} />

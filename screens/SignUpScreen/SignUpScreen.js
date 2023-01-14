@@ -3,13 +3,17 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView }
 import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+const SignUpScreen = () => {
+    const { control, handleSubmit, watch } = useForm();
+    const pwd = watch("password");
 
 
-
-const SignUpScreen = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [pseudo, setPseudo] = useState('');
@@ -20,6 +24,10 @@ const SignUpScreen = (props) => {
     const [error, setError] = useState({});
 
     const navigation = useNavigation();
+    const onSignInPressed = () => {
+        console.warn("Sign in");
+        navigation.navigate("Signin");
+    };
 
     const handleSignUpAccount = async () => {
         try {
@@ -77,18 +85,57 @@ const SignUpScreen = (props) => {
                         placeholder="Pseudo"
                         value={pseudo}
                         onChangeText={(e) => setPseudo(e)}
+                        control={control}
+                        name="pseudo"
+                        rules={{
+                            required: "Pseudo is required",
+                            minLength: {
+                                value: 3,
+                                message: "Pseudo should be at least 3 characters long",
+                            },
+                            maxLength: {
+                                value: 24,
+                                message: "Pseudo should be max 24 characters long",
+                            },
+                        }}
 
                     />
                     <InputPage
                         placeholder="First Name"
                         value={firstName}
                         onChangeText={(e) => setFirstName(e)}
+                        control={control}
+                        name="firstName"
+                        rules={{
+                            required: "Prename is required",
+                            minLength: {
+                                value: 3,
+                                message: "Prename should be at least 3 characters long",
+                            },
+                            maxLength: {
+                                value: 24,
+                                message: "Prename should be max 24 characters long",
+                            },
+                        }}
 
                     />
                     <InputPage
                         placeholder="Last Name"
                         value={lastName}
                         onChangeText={(e) => setLastName(e)}
+                        control={control}
+                        name="lastName"
+                        rules={{
+                            required: "Last Name is required",
+                            minLength: {
+                                value: 3,
+                                message: "Last Name should be at least 3 characters long",
+                            },
+                            maxLength: {
+                                value: 24,
+                                message: "Last Name should be max 24 characters long",
+                            },
+                        }}
 
 
                     />
@@ -96,24 +143,65 @@ const SignUpScreen = (props) => {
                         placeholder="Your Email"
                         value={email}
                         onChangeText={(e) => setEmail(e)}
+                        control={control}
+                        name="email"
+                        rules={{
+                            required: "Email is required",
+                            pattern: {
+                                value: EMAIL_REGEX,
+                                message: "Invalid email address",
+                            },
+                        }}
+
                         keyboardType="email-address" />
                     <InputPage
                         placeholder="Password"
                         value={password}
                         keyboardType={"password"}
                         onChangeText={(e) => setPassword(e)}
+                        control={control}
+                        name="password"
+                        rules={{
+                            required: "Password is required",
+                            minLength: {
+                                value: 6,
+                                message: "Password should be at least 6 characters long",
+                            },
+                            maxLength: {
+                                value: 24,
+                                message: "Password should be max 24 characters long",
+                            },
+                        }}
                         secureTextEntry={true} />
                     <InputPage
                         placeholder="Confirm Password"
                         value={confirmPassword}
                         keyboardType="password"
                         onChangeText={(e) => setConfirmPassword(e)}
+                        control={control}
+                        name="confirmPassword"
+                        rules={{
+                            validate: (value) => value === pwd || "Password do not match",
+                        }}
                         secureTextEntry={true} />
                     <InputPage
                         placeholder="Phone Number"
                         value={phoneNumber}
                         keyboardType={"number"}
                         onChangeText={(e) => setPhoneNumber(e)}
+                        control={control}
+                        name="phoneNumber"
+                        rules={{
+                            required: "Phone Number is required",
+                            minLength: {
+                                value: 10,
+                                message: "Phone Number should be at least 10 characters long",
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: "Phone Number should be max 10 characters long",
+                            },
+                        }}
                     />
 
                     <View style={{
@@ -157,7 +245,7 @@ const SignUpScreen = (props) => {
                                 paddingVertical: 15,
                                 marginVertical: 10
                             }}
-                            onPress={handleSignUpAccount}
+                            onPress={handleSubmit(handleSignUpAccount)}
 
                         >
                             <Text style={{
@@ -173,7 +261,7 @@ const SignUpScreen = (props) => {
                             <Text style={{ fontWeight: 'semibold', fontSize: 16 }}>
                                 Already an account ?
                             </Text>
-                            <TouchableOpacity onPress={() => props.navigation.navigate("Signin")}>
+                            <TouchableOpacity onPress={onSignInPressed}>
                                 <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Sign In</Text>
                             </TouchableOpacity>
 

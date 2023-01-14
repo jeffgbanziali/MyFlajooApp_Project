@@ -24,6 +24,7 @@
     "formik": "^2.2.9",
     "lottie-react-native": "^5.1.4",
     "react": "18.1.0",
+    "react-hook-form": "^7.42.0",
     "react-native": "0.70.5",
     "react-native-element": "^1.2.1",
     "react-native-elements": "^3.4.3",

@@ -26,6 +26,8 @@ const App = () => {
           setUid(res.data)
         })
         .catch((err) => console.log('no token'))
+
+
     };
     fecthToken();
   }, []);

@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
 import InputPage from '../../components/InputPage/InputPage';
+import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -10,13 +11,18 @@ import axios from 'axios';
 
 
 
+const SignInScreen = () => {
+    const {
+        control,
+        handleSubmit,
+        formState: { error },
+    } = useForm();
+    console.log(error);
 
-const SignInScreen = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigation = useNavigation(false);
-
     const handleSignInAccount = async () => {
         try {
             const response = await axios
@@ -59,12 +65,15 @@ const SignInScreen = (props) => {
                         Login to your account
                     </Text>
                     <InputPage
-                        type="password"
-                        name="password"
+                        type="email"
+                        name="email"
                         placeholder="Your Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        keyboardType={"email-adress"} />
+                        keyboardType={"email-adress"}
+                        control={control}
+                        rules={{ required: "email is required" }}
+                    />
                     <InputPage
                         type="password"
                         name="password"
@@ -73,8 +82,17 @@ const SignInScreen = (props) => {
                         onChange={(e) => setPassword(e.target.value)}
                         keyboardType={"password"}
                         value={password}
-                        secureTextEntry={true} />
-                    <Text>Email error</Text>
+                        secureTextEntry={true}
+                        control={control}
+                        rules={{
+                            required: "Password is required",
+                            minLength: {
+                                value: 3,
+                                message: "Password should be minimum 3 characters long",
+                            },
+                        }}
+
+                    />
                     <View style={{
                         alignItems: "flex-end",
                         width: '78%',
@@ -107,7 +125,7 @@ const SignInScreen = (props) => {
                                 paddingVertical: 15,
                                 marginVertical: 10
                             }}
-                            onPress={handleSignInAccount}
+                            onPress={handleSubmit(handleSignInAccount)}
 
                         >
                             <Text
@@ -123,7 +141,7 @@ const SignInScreen = (props) => {
                             <Text style={{ fontWeight: 'semibold', fontSize: 16 }}>
                                 Don't have an account ?
                             </Text>
-                            <TouchableOpacity onPress={() => props.navigation.navigate("Signup")}>
+                            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
                                 <Text style={{ color: darkBlue, fontWeight: 'bold', fontSize: 16 }}>Sign Up</Text>
                             </TouchableOpacity>
 
