@@ -7,13 +7,12 @@ import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { UidContext } from '../../components/Context/AuthContext';
 
 
 
 
 const Profile = () => {
-    const uid = useContext(UidContext)
+
     const navigation = useNavigation();
     const handleClickReturnHome = () => {
         console.log("clicked")
@@ -26,9 +25,7 @@ const Profile = () => {
     return (
 
         <View style={styles.container}>
-            {uid ? (
-                <UpdateProfil />
-            ) : (
+            
                 <ScrollView style={styles.container}>
 
                     <View style={styles.container} >
@@ -133,7 +130,6 @@ const Profile = () => {
                         <NavButtonProfile />
                     </View>
                 </ScrollView >
-            )}
         </View>
     );
 

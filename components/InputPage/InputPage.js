@@ -1,79 +1,46 @@
 import React from 'react';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
 import { darkRose } from '../Button/Constants';
-import { Controller } from 'react-hook-form';
 
 
-const InputPage = ({ control, name, rules = {}, placeholder, secureTextEntry }) => {
+const InputPage = ({ label, ...props }) => {
   return (
 
-    <Controller
-      control={control}
-      name={name}
-      rules={rules}
-      render={({
-        field: { value, onChange, onBlur },
-        fieldState: { error },
-      }) => (
-        <>
-          <View>
-            <TextInput
-              value={value}
-              onBlur={onBlur}
-              placeholder={placeholder}
-              onChangeText={onChange}
-              secureTextEntry={secureTextEntry}
-              style={{
-                margin: 10,
-                borderWidth: 1,
-                padding: 10,
-                borderRadius: 10,
-                color: 'black',
-                backgroundColor: "#FFFFFF",
-                height: 54,
-                width: 349,
-                borderColor: error ? "red" : "#787373"
-              }}
-              placeholderTextColor={darkRose}
-            />
-          </View>
-          {error && (
-            <View style={styles.container}
-            >
-              <Text style={{
-                color: "red",
-                fontWeight: "bold",
-                alignSelf: "stretch",
-                textAlign: "center",
-                paddingRight: 16,
-                fontSize: 12
+
+    <>
+      <View style={styles.container}>
+        <Text style={styles.label}>{label}</Text>
 
 
-              }}>
-                {error.message || "Error"}
-              </Text>
-            </View>
+        <TextInput
+          style={styles.input}
+          {...props}
 
-          )}
-        </>
-      )}
-    />
+        />
+
+      </View>
+    </>
   );
 };
 
+
+
 const styles = StyleSheet.create({
-  container: {
+  input: {
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    width: 150,
-    height: 20,
-    backgroundColor: "black",
+    margin: 10,
+    borderWidth: 1,
+    padding: 10,
     borderRadius: 10,
-    
+    color: 'black',
+    backgroundColor: "#FFFFFF",
+    height: 54,
+    width: 349,
+
   },
-  input: {},
 
 });
 
