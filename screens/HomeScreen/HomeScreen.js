@@ -9,31 +9,30 @@ import NavButtonHome from '../../components/homepage/NavButtonHome';
 
 
 
+
 const HomeScreen = () => {
     return (
-        <SafeAreaView style={styles.container}>
-            <Header />
-            <Stories />
+        <>
+            <SafeAreaView style={styles.container}>
+                <Header />
 
-            <ScrollView>
-                <View
-                    style={{
-                        alignItems: 'center',
-                        marginTop: -20,
-                    }}
-                >
-                    <NavButtonHome />
-                </View>
+                        <Stories />
+                        <ScrollView>
+                            <View
+                                style={{
+                                    alignItems: 'center',
+                                    marginTop: -20,
+                                }}
+                            >
+                                <NavButtonHome />
+                            </View>
+                            {POSTS.map((post, index) => (
+                                <Posts key={index} post={post} />
+                            ))}
+                        </ScrollView>                
 
-                {POSTS.map((post, index) => (
-                    <Posts key={index} post={post} />
-                ))}
-            </ScrollView>
-
-        </SafeAreaView>
-
-
-
+            </SafeAreaView>
+        </>
 
     );
 }
@@ -46,3 +45,6 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+
+

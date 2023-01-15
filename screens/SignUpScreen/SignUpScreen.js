@@ -10,8 +10,7 @@ import axios from 'axios';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
-    const { control, handleSubmit, watch } = useForm();
-    const pwd = watch("password");
+    const { control, handleSubmit } = useForm();
 
 
     const [email, setEmail] = useState('');

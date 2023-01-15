@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { darkBlue, darkRed, darkRose } from '../../components/Button/Constants';
 import InputPage from '../../components/InputPage/InputPage';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
-
 import axios from 'axios';
 
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 
 const SignInScreen = () => {
+  
     const {
         control,
         handleSubmit,
@@ -22,7 +24,7 @@ const SignInScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigation = useNavigation(false);
+    const navigation = useNavigation();
     const handleSignInAccount = async () => {
         try {
             const response = await axios
@@ -31,11 +33,13 @@ const SignInScreen = () => {
                     password
                 });
             if (response.status === 200) {
+        
                 navigation.navigate("HomeScreen")
             }
+            else return false;
         } catch (error) {
             console.error(error);
-            // Handle login error, such as displaying an error message to the user
+            return false;
         }
     };
 
@@ -68,20 +72,26 @@ const SignInScreen = () => {
                         type="email"
                         name="email"
                         placeholder="Your Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        defaultValue={email}
+                        onChange={(email) => setEmail(email)}
                         keyboardType={"email-adress"}
                         control={control}
-                        rules={{ required: "email is required" }}
+                        rules={{
+                            required: "email is required",
+                            pattern: {
+                                value: EMAIL_REGEX,
+                                message: "Invalid email address",
+                            },
+                        }}
                     />
                     <InputPage
                         type="password"
                         name="password"
                         id="password"
                         placeholder="Your Password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(password) => setPassword(password)}
                         keyboardType={"password"}
-                        value={password}
+                        defaultValue={password}
                         secureTextEntry={true}
                         control={control}
                         rules={{
@@ -150,14 +160,11 @@ const SignInScreen = () => {
                 </View>
 
             </ImageBackground>
-
-
-
-
         </>
     );
 }
 
-const styles = StyleSheet.create({})
+
+
 
 export default SignInScreen;
