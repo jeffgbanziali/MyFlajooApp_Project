@@ -6,9 +6,40 @@ import { Formik } from 'formik';
 import axios from 'axios';
 
 
+
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = ({ navigation }) => {
+    const handleLogin = () => {
+
+
+        axios({
+            method: "post",
+            url: 'http://192.168.0.34:5000/api/user/register',
+            data: {
+                pseudo: pseudo,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+                phoneNumber: phoneNumber
+
+            }
+        }).then((res) => {
+            if (res.data.errors) {
+                console.log("Erreur dans la saisie")
+            } else {
+                console.log("Vous êtes connecter")
+                console.log(res.data.user)
+                navigate("signIn")
+            }
+        }).catch((err) => {
+            console.log(err);
+            console.log("Une du server");
+        })
+    }
+
 
 
     return (
@@ -39,12 +70,7 @@ const SignUpScreen = ({navigation}) => {
                         Create a new account for the specified
                     </Text>
 
-                    <Formik initialValues={{ pseaudo: '', firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNumber: '' }}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            navigation.navigate('HomeScreen')
-                        }}
-                    >
+                    <Formik >
                         {({ handleChange, handleBlur, handleSubmit, values }) => (
                             <>
                                 <InputPage

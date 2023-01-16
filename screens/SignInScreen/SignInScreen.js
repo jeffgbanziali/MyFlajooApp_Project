@@ -5,6 +5,7 @@ import InputPage from '../../components/InputPage/InputPage';
 import { Formik } from 'formik';
 
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -13,34 +14,30 @@ import axios from 'axios';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 
-const SignInScreen = ({ navigation }) => {
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState('');
+const SignInScreen = () => {
+    const navigation = useNavigation();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+
 
 
     const handleLogin = (credentials) => {
         const url = 'http://192.168.0.34:5000/api/user/login';
 
         axios.post(url, credentials)
-            .then((response) => {
-                const { data } = response;
-                const { message, status, token } = data;
-            
-                if (!status !== 'success') {
-                    console.log(data);
-                    handleMessage(message, status);
-                    navigation.navigate('HomeScreen');
+            .then((res) => {
+                if (res.data.errors) {
+                    console.log("Erreur dans la saisie")
+                } else {
+                    console.log("Vous êtes connecter")
+                    console.log(res.data.user)
+                    navigation.navigate("HomeScreen")
                 }
-
-            }).catch(error => {
-                console.log(error);
-                handleMessage('An error occured, please try again', 'failed');
+            }).catch((err) => {
+                console.log(err);
+                console.log("connecte toi");
             })
-    }
-
-    const handleMessage = (message, type = 'failed') => {
-        setMessage(message);
-        setMessageType(type);
     }
 
     return (
@@ -67,102 +64,78 @@ const SignInScreen = ({ navigation }) => {
                     }}>
                         Login to your account
                     </Text>
-                    <Formik
-                        initialValues={{ email: '', password: '' }}
-                        onSubmit={(values) => {
-                            if (values.email === '' || values.password === '') {
-                                handleMessage('Please fill all fields', 'failed');
-                            } else if (!EMAIL_REGEX.test(values.email)) {
-                                handleMessage('Please enter a valid email', 'failed');
-                            } else {
-                                handleLogin(values, values);
-                            }
+
+                    <InputPage
+
+                        placeholder="Email"
+                        placeholderTextColor="red"
+                        onChangeText={(text) => { setEmail(text) }}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+
+                    />
+                    <InputPage
+                        placeholder="Password"
+                        placeholderTextColor="red"
+                        onChangeText={(text) => { setPassword(text) }}m
+                        value={password}
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+
+                    />
+
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: darkBlue,
+                            width: 300,
+                            height: 50,
+                            borderRadius: 10,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginVertical: 20
                         }}
-                    >{
-                            ({ handleChange, handleBlur, handleSubmit, values }) => (
-                                <>
-                                    <InputPage
-
-                                        placeholder="Email"
-                                        placeholderTextColor="red"
-                                        onChangeText={handleChange('email')}
-                                        onBlur={handleBlur('email')}
-                                        value={values.email}
-                                        keyboardType="email-address"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-
-                                    />
-                                    <InputPage
-                                        placeholder="Password"
-                                        placeholderTextColor="red"
-                                        onChangeText={handleChange('password')}
-                                        onBlur={handleBlur('password')}
-                                        value={values.password}
-                                        secureTextEntry={true}
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-
-                                    />
-                                    <Text style={{
-                                        color: messageType === 'failed' ? darkRed : darkBlue,
-                                        fontSize: 20,
-                                        fontWeight: 'bold',
-                                        marginVertical: 20
-
-                                    }} type={messageType}>{message}</Text>
-
-                                    <TouchableOpacity
-                                        style={{
-                                            backgroundColor: darkBlue,
-                                            width: 300,
-                                            height: 50,
-                                            borderRadius: 10,
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            marginVertical: 20
-                                        }}
-                                        onPress={handleSubmit}
-                                    >
-                                        <Text style={{
-                                            color: 'white',
-                                            fontSize: 20,
-                                            fontWeight: 'bold'
-                                        }}>
-                                            Login
-                                        </Text>
-                                    </TouchableOpacity>
+                        onPress={() => {
+                            console.log('Login');
+                            handleLogin({ email, password });
+                        }}
+                    >
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}>
+                            Login
+                        </Text>
+                    </TouchableOpacity>
 
 
-                                    <TouchableOpacity
-                                        style={{
-                                            backgroundColor: darkRose,
-                                            width: 300,
-                                            height: 50,
-                                            borderRadius: 10,
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            marginVertical: 20
-                                        }}
-                                        onPress={() => {
-                                            console.log('Sign Up');
-                                            navigation.navigate('Signup');
-                                        }}
-                                    >
-                                        <Text style={{
-                                            color: 'white',
-                                            fontSize: 20,
-                                            fontWeight: 'bold'
-                                        }}>
-                                            Sign Up
-                                        </Text>
-                                    </TouchableOpacity>
-                                </>
-                            )
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: darkRose,
+                            width: 300,
+                            height: 50,
+                            borderRadius: 10,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginVertical: 20
+                        }}
+                        onPress={() => {
+                            console.log('Sign Up');
+                            navigation.navigate('Signup');
+                        }}
+                    >
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}>
+                            Sign Up
+                        </Text>
+                    </TouchableOpacity>
 
-                        }
-
-                    </Formik>
                 </View>
 
             </ImageBackground>
