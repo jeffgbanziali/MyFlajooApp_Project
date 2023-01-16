@@ -32,7 +32,7 @@ const SignInScreen = () => {
                 } else {
                     console.log("Vous êtes connecter")
                     console.log(res.data.user)
-                    navigation.navigate("HomeScreen")
+                    navigation.replace("HomeScreen")
                 }
             }).catch((err) => {
                 console.log(err);
@@ -69,7 +69,7 @@ const SignInScreen = () => {
 
                         placeholder="Email"
                         placeholderTextColor="red"
-                        onChangeText={(text) => { setEmail(text) }}
+                        onChangeText={(text) =>  setEmail(text) }
                         value={email}
                         keyboardType="email-address"
                         autoCapitalize="none"
@@ -79,7 +79,7 @@ const SignInScreen = () => {
                     <InputPage
                         placeholder="Password"
                         placeholderTextColor="red"
-                        onChangeText={(text) => { setPassword(text) }}m
+                        onChangeText={(text) =>  setPassword(text) }
                         value={password}
                         secureTextEntry={true}
                         autoCapitalize="none"

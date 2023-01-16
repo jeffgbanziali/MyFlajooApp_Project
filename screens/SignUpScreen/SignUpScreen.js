@@ -11,6 +11,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 
 const SignUpScreen = () => {
     const navigation = useNavigation();
+
     const [pseudo, setPseudo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -19,27 +20,44 @@ const SignUpScreen = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
-    const handleSignUp = (credentials) => {
-        const url = 'http://192.168.0.34:5000/api/user/register';
+    const handleSignUp = async () => {
+        try {
+            const url = 'http://192.168.0.34:5000/api/user/register';
+            const credentials = {
+                pseudo: pseudo,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+                phoneNumber: phoneNumber,
+            };
 
-        axios.post(url, credentials)
-            .then((res) => {
-                if (res.data.errors) {
-                    console.log("Erreur dans la saisie")
-                } else {
-                    console.log("Vous êtes connecter")
-                    console.log(res.data.user)
+            // Validate the form data
+            if (!EMAIL_REGEX.test(email)) {
+                alert("Invalid email address");
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return;
+            }
 
-                    navigation.navigate("Signin")
-                }
-            }).catch((err) => {
-                console.log(err);
-                console.log("connecte toi");
-            })
-    }
+            // Send the data to the server
+            const response = await axios.post(url, credentials);
 
-
-
+            // Handle the server response
+            if (response.status === 201) {
+                alert("User created successfully");
+                navigation.navigate("Signin");
+            } else {
+                alert("An error occurred");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred");
+        }
+    };
 
 
     return (
@@ -75,7 +93,8 @@ const SignUpScreen = () => {
                         placeholder="Pseudo"
                         placeholderTextColor="red"
                         value={pseudo}
-                        onChangeText={(text) => { setPseudo(text) }}
+                        onChangeText={(text) => setPseudo(text) }
+                        keyboardType='none'
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
@@ -83,8 +102,8 @@ const SignUpScreen = () => {
                         placeholder="First Name"
                         placeholderTextColor="red"
                         value={firstName}
-                        onChangeText={(text) => { setFirstName(text) }}
-
+                        onChangeText={(text) =>  setFirstName(text) }
+                        keyboardType='none'
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
@@ -92,15 +111,15 @@ const SignUpScreen = () => {
                         placeholder="Last Name"
                         placeholderTextColor="red"
                         value={lastName}
-                        onChangeText={(text) => { setLastName(text) }}
-
+                        onChangeText={(text) => setLastName(text) }
+                        keyboardType='none'
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
                     <InputPage
                         placeholder="Email"
                         placeholderTextColor="red"
-                        onChangeText={(text) => { setEmail(text) }}
+                        onChangeText={(text) => setEmail(text) }
                         value={email}
                         keyboardType="email-address"
                         autoCapitalize="none"
@@ -110,7 +129,7 @@ const SignUpScreen = () => {
                     <InputPage
                         placeholder="Password"
                         placeholderTextColor="red"
-                        onChangeText={(text) => { setPassword(text) }} m
+                        onChangeText={(text) => setPassword(text) }
                         value={password}
                         secureTextEntry={true}
                         autoCapitalize="none"
@@ -120,7 +139,7 @@ const SignUpScreen = () => {
                         placeholder="Confirm Password"
                         placeholderTextColor="red"
                         value={confirmPassword}
-                        onChangeText={(text) => { setConfirmPassword(text) }}
+                        onChangeText={(text) =>  setConfirmPassword(text) }
                         autoCapitalize="none"
                         autoCorrect={false}
                         secureTextEntry={true}
@@ -129,7 +148,7 @@ const SignUpScreen = () => {
                         placeholder="Phone Number"
                         placeholderTextColor="red"
                         value={phoneNumber}
-                        onChangeText={(text) => { setPhoneNumber(text) }}
+                        onChangeText={(text) => setPhoneNumber(text) }
                         keyboardType="phone-pad"
                         autoCapitalize="none"
                         autoCorrect={false}
