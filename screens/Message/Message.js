@@ -1,12 +1,43 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView } from 'react-native'
+import React, { useState } from 'react'
+import Chat from './Chat'
+import ChatList from './ChatList';
+
 
 const Message = () => {
+  const [username, setUsername] = useState('');
+
+
+  const saveUsername = (name) => {
+    setUsername(name);
+  }
+  if (username === "") {
+    return <ChatList saveUsername={saveUsername} />;
+  }
+
   return (
-    <View>
-      <Text>Message</Text>
+    <View style={{
+      flex: 1,
+      marginTop: 20,
+    }}
+    >
+      <Text style={{
+        fontSize: 20,
+        textAlign: 'center',
+        marginBottom: 20,
+      }}
+      >
+        {username}
+      </Text>
+      <Chat />
     </View>
+
   )
 }
 
 export default Message
+
+
+
+
+
