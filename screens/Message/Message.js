@@ -5,7 +5,7 @@ import ChatList from './ChatList';
 
 
 const Message = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('Jeff');
 
 
   const saveUsername = (name) => {
@@ -29,7 +29,7 @@ const Message = () => {
       >
         {username}
       </Text>
-      <Chat />
+      <Chat username={username} />
     </View>
 
   )
