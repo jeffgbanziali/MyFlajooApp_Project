@@ -8,8 +8,8 @@ const Followers = () => {
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginHorizontal: 60,
-                top: -60,
+                marginHorizontal: 100,
+                top: -65,
                 zIndex: 1,
                 position: 'relative',
 

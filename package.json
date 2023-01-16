@@ -38,6 +38,7 @@
     "react-native-screens": "~3.18.0",
     "react-native-svg": "13.4.0",
     "react-native-switch-selector": "^2.3.0",
+    "react-native-video": "^6.0.0-alpha.4",
     "react-native-web": "~0.18.9",
     "yup": "^0.32.11"
   },

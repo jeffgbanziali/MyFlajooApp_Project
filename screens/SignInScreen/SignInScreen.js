@@ -43,7 +43,7 @@ const SignInScreen = () => {
     return (
         <>
             <ImageBackground
-                source={require("../../assets/Images/Background.jpg")}
+                source={require("../../assets/Images/Background2.jpg")}
                 style={{ height: '100%' }}>
                 <View style={{
                     alignItems: "center",

@@ -1,50 +1,50 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
-import { Formik } from 'formik';
 
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const SignUpScreen = ({ navigation }) => {
-    const handleLogin = () => {
+const SignUpScreen = () => {
+    const navigation = useNavigation();
+    const [pseudo, setPseudo] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
+    const handleSignUp = (credentials) => {
+        const url = 'http://192.168.0.34:5000/api/user/register';
 
-        axios({
-            method: "post",
-            url: 'http://192.168.0.34:5000/api/user/register',
-            data: {
-                pseudo: pseudo,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password,
-                confirmPassword: confirmPassword,
-                phoneNumber: phoneNumber
+        axios.post(url, credentials)
+            .then((res) => {
+                if (res.data.errors) {
+                    console.log("Erreur dans la saisie")
+                } else {
+                    console.log("Vous êtes connecter")
+                    console.log(res.data.user)
 
-            }
-        }).then((res) => {
-            if (res.data.errors) {
-                console.log("Erreur dans la saisie")
-            } else {
-                console.log("Vous êtes connecter")
-                console.log(res.data.user)
-                navigate("signIn")
-            }
-        }).catch((err) => {
-            console.log(err);
-            console.log("Une du server");
-        })
+                    navigation.navigate("Signin")
+                }
+            }).catch((err) => {
+                console.log(err);
+                console.log("connecte toi");
+            })
     }
+
+
 
 
 
     return (
         <ImageBackground
-            source={require("../../assets/Images/Background.jpg")}
+            source={require("../../assets/Images/Background3.jpg")}
             style={{ height: '100%' }}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{
@@ -70,106 +70,91 @@ const SignUpScreen = ({ navigation }) => {
                         Create a new account for the specified
                     </Text>
 
-                    <Formik >
-                        {({ handleChange, handleBlur, handleSubmit, values }) => (
-                            <>
-                                <InputPage
-                                    placeholder="Pseaudo"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('pseaudo')}
-                                    onBlur={handleBlur('pseaudo')}
-                                    value={values.pseaudo}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <InputPage
-                                    placeholder="First Name"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('firstName')}
-                                    onBlur={handleBlur('firstName')}
-                                    value={values.firstName}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <InputPage
-                                    placeholder="Last Name"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('lastName')}
-                                    onBlur={handleBlur('lastName')}
-                                    value={values.lastName}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <InputPage
-                                    placeholder="Email"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('email')}
-                                    onBlur={handleBlur('email')}
-                                    value={values.email}
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <InputPage
-                                    placeholder="Password"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('password')}
-                                    onBlur={handleBlur('password')}
-                                    value={values.password}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    secureTextEntry={true}
-                                />
-                                <InputPage
-                                    placeholder="Confirm Password"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('confirmPassword')}
-                                    onBlur={handleBlur('confirmPassword')}
-                                    value={values.confirmPassword}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    secureTextEntry={true}
-                                />
-                                <InputPage
-                                    placeholder="Phone Number"
-                                    placeholderTextColor="red"
-                                    onChangeText={handleChange('phoneNumber')}
-                                    onBlur={handleBlur('phoneNumber')}
-                                    value={values.phoneNumber}
-                                    keyboardType="phone-pad"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: 'blue',
-                                        width: 350,
-                                        height: 50,
-                                        borderRadius: 10,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        marginTop: 20,
-                                        marginBottom: 20
-                                    }}
-                                    onPress={handleSubmit}
-                                >
-                                    <Text style={{
-                                        color: 'white',
-                                        fontSize: 20,
-                                        fontWeight: 'bold'
-                                    }}>
-                                        Register
-                                    </Text>
-                                </TouchableOpacity>
-                            </>
-                        )}
 
-                    </Formik>
+                    <InputPage
+                        placeholder="Pseudo"
+                        placeholderTextColor="red"
+                        value={pseudo}
+                        onChangeText={(text) => { setPseudo(text) }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        placeholder="First Name"
+                        placeholderTextColor="red"
+                        value={firstName}
+                        onChangeText={(text) => { setFirstName(text) }}
+
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        placeholder="Last Name"
+                        placeholderTextColor="red"
+                        value={lastName}
+                        onChangeText={(text) => { setLastName(text) }}
+
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        placeholder="Email"
+                        placeholderTextColor="red"
+                        onChangeText={(text) => { setEmail(text) }}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+
+                    />
+                    <InputPage
+                        placeholder="Password"
+                        placeholderTextColor="red"
+                        onChangeText={(text) => { setPassword(text) }} m
+                        value={password}
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        placeholder="Confirm Password"
+                        placeholderTextColor="red"
+                        value={confirmPassword}
+                        onChangeText={(text) => { setConfirmPassword(text) }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                    />
+                    <InputPage
+                        placeholder="Phone Number"
+                        placeholderTextColor="red"
+                        value={phoneNumber}
+                        onChangeText={(text) => { setPhoneNumber(text) }}
+                        keyboardType="phone-pad"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: 'blue',
+                            width: 350,
+                            height: 50,
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginTop: 20,
+                            marginBottom: 20
+                        }}
+                        onPress={handleSignUp}
+                    >
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}>
+                            Register
+                        </Text>
+                    </TouchableOpacity>
 
                 </View>
             </ScrollView>

@@ -7,6 +7,7 @@ import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import PostsUser from '../../components/ProfileUtils.js/PostsUser';
 
 
 
@@ -24,113 +25,127 @@ const Profile = () => {
     }
     return (
 
-        <View style={styles.container}>
-            
-                <ScrollView style={styles.container}>
 
-                    <View style={styles.container} >
-                        <View
-                            style={{
-                                flex: 1,
-                                backgroundColor: '#3D3939',
-                                borderRadius: 30,
-                                paddingBottom: 90,
-                                marginTop: 50,
+        <ScrollView style={styles.container}>
 
-                            }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
+            <View style={styles.container} >
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: '#3D3939',
+                        borderRadius: 30,
+                        paddingBottom: 90,
+                        marginTop: 50,
 
-                            }}
+                    }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+
+                    }}
+                    >
+                        <View style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: "#161414",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginLeft: "3.5%",
+                            marginTop: "1.5%"
+                        }}
+                        >
+                            <TouchableOpacity
+                                onPress={handleClickReturnHome}
                             >
-                                <View style={{
-                                    justifyContent: 'center',
+                                <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
                                     alignSelf: 'center',
-                                    backgroundColor: "#161414",
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: 30,
-                                    marginLeft: "3.5%",
-                                    marginTop: "1.5%"
-                                }}
-                                >
-                                    <TouchableOpacity
-                                        onPress={handleClickReturnHome}
-                                    >
-                                        <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
-                                            alignSelf: 'center',
-                                            alignContent: 'center',
-                                            alignItems: 'center',
-                                            resizeMode: "contain"
-                                        }} />
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={{
-                                    justifyContent: 'center',
-                                    alignSelf: 'center',
-                                    backgroundColor: "#161414",
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: 30,
-                                    marginRight: "3.5%",
-                                    marginTop: "1.5%"
-                                }}
-                                >
-                                    <TouchableOpacity onPress={handleClickSettings}>
-                                        <Entypo name="dots-three-horizontal" size={28} color="#5F5858" style={{
-                                            alignSelf: 'center',
-                                            alignContent: 'center',
-                                            alignItems: 'center',
-                                            resizeMode: "contain"
-                                        }} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-
-
-                            <View
-                                style={{
-                                    flex: 1,
+                                    alignContent: 'center',
                                     alignItems: 'center',
-                                    justifyContent: 'center',
-                                    marginTop: -16,
+                                    resizeMode: "contain"
+                                }} />
+                            </TouchableOpacity>
+                        </View>
 
-                                }}>
-                                <TouchableOpacity>
-                                    <Avatar
-                                        size="xlarge"
-                                        rounded
-                                        source={{
-                                            uri:
-                                                'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                                        }} />
-
-                                </TouchableOpacity>
-
-                                <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
-                                    John Doe
-                                </Text>
-                                <Text style={{ fontSize: 15, color: 'gray', marginTop: 5 }}>
-                                    Full Stack Developer
-                                </Text>
-
-                            </View>
+                        <View style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: "#161414",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginRight: "3.5%",
+                            marginTop: "1.5%"
+                        }}
+                        >
+                            <TouchableOpacity onPress={handleClickSettings}>
+                                <Entypo name="dots-three-horizontal" size={28} color="#5F5858" style={{
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    resizeMode: "contain"
+                                }} />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <View >
-                        <ProfileUtils />
+
+
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginTop: -16,
+
+                        }}>
+                        <TouchableOpacity>
+                            <Avatar
+                                size="xlarge"
+                                rounded
+                                source={{
+                                    uri:
+                                        'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                                }} />
+
+                        </TouchableOpacity>
+
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
+                            John Doe
+                        </Text>
+                        <Text style={{ fontSize: 15, color: 'gray', marginTop: 5 }}>
+                            Full Stack Developer
+                        </Text>
+
                     </View>
-                    <View >
-                        <Followers />
-                    </View>
-                    <View >
-                        <NavButtonProfile />
-                    </View>
-                </ScrollView >
-        </View>
+                </View>
+            </View>
+            <View >
+                <ProfileUtils />
+            </View>
+            <View >
+                <Followers />
+            </View>
+            <View >
+                <NavButtonProfile />
+            </View>
+
+            <View style={{
+
+                flex: 1,
+                alignContent: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+                marginBottom: 10,
+                backgroundColor: '#3D3939',
+                borderRadius: 30,
+
+            }}>
+                <PostsUser />
+            </View>
+        </ScrollView >
+
     );
 
 };
