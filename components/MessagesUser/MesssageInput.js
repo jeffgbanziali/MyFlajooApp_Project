@@ -33,15 +33,18 @@ const MesssageInput = ({ username, socket }) => {
                 onContentSizeChange={(e) => setHeight(e.nativeEvent.contentSize.height)}
                 style={{
                     flex: 1,
-                    borderColor: 'gray',
+                    borderColor: '#D9D9D9',
                     borderWidth: 2,
-                    borderRadius: 10,
+                    borderRadius: 30,
                     paddingVertical: 10,
                     paddingHorizontal: 20,
                     marginRight: 10,
                     height: Math.max(40, height),
+                    
                 }}
-                placeholder="Message"
+                placeholder="Message..."
+                placeholderTextColor="#787373"
+                backgroundColor="#D9D9D9"
                 multiline
             />
             <Pressable

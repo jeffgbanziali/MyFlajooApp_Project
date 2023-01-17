@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList, Text } from 'react-native';
 import MessagesUser from '../../components/MessagesUser/MessagesUser';
 import MesssageInput from '../../components/MessagesUser/MesssageInput';
 import { KeyboardAvoidingView } from 'react-native';
-import  io  from 'socket.io-client';
+import io from 'socket.io-client';
 
 
 
@@ -33,29 +33,58 @@ export default function Chat({ username }) {
     }, [])
 
     const renderItem = ({ item }) => (
-        <MessagesUser username={username} message={item}
-        />
+        <>
+
+            <MessagesUser username={username} message={item}
+            />
+        </>
+
 
     );
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "null"}
-            style={{
-                flex: 1,
-                paddingBottom: 10,
-            }}
-        >
-            <FlatList
-                data={messages}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
+        <>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "null"}
+                style={{
+                    flex: 1,
+                    paddingBottom: 10,
+                    backgroundColor: 'white',
+                    marginTop: 40,
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
 
-            />
-            <MesssageInput username={username} socket={socket} />
-        </KeyboardAvoidingView>
+                }}
+            >
+
+                <FlatList
+                    data={Messages}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+
+                />
+                <MesssageInput username={username} socket={socket} />
+
+            </KeyboardAvoidingView>
+        </>
+
 
 
     );
 }
 
+const Messages = [
+    {
+        id: 1,
+        username: 'Jeff',
+        content: 'Hello my bro how are you ?',
+        emoji: 'https://cdn-icons-png.flaticon.com/512/147/147144.png',
+    },
+    {
+        id: 2,
+        username: 'Madame',
+        content: 'Hello my guy i"m fine ',
+        emoji: 'https://w7.pngwing.com/pngs/129/292/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png',
+    },
+
+]
