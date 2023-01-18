@@ -3,44 +3,21 @@ import { View, StyleSheet, FlatList, Text } from 'react-native';
 import MessagesUser from '../../components/MessagesUser/MessagesUser';
 import MesssageInput from '../../components/MessagesUser/MesssageInput';
 import { KeyboardAvoidingView } from 'react-native';
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 
 
 
 //Socket.io configation 
 
 
-const socket = io('http://192.168.0.34:5000');
+//const socket = io('http://192.168.0.34:5000');
 
 
 
 
 
-export default function Chat({ username }) {
+export default function Chat() {
 
-    const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        // Roommm connection
-        socket.emit('join_room', "React jeff");
-        // Message config  sending + recptions
-        socket.on('new_message', (data) => {
-            console.log("new message receive", data);
-            setMessages((current) => {
-                return [...current, data];
-            });
-        });
-    }, [])
-
-    const renderItem = ({ item }) => (
-        <>
-
-            <MessagesUser username={username} message={item}
-            />
-        </>
-
-
-    );
 
     return (
         <>
@@ -56,16 +33,21 @@ export default function Chat({ username }) {
 
                 }}
             >
-
-                <FlatList
-                    data={Messages}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-
-                />
-                <MesssageInput username={username} socket={socket} />
+                <View>
+                    <MessagesUser  />
+                    <MessagesUser own={true} />
+                    <MessagesUser />
+                </View>
 
             </KeyboardAvoidingView>
+            <View style={{
+                position: 'absolute',
+                bottom: 10,
+                width: '100%',
+            }}
+            >
+                <MesssageInput />
+            </View>
         </>
 
 

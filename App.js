@@ -12,7 +12,7 @@ import { UidContext } from './components/Context/AppContext';
 
 
 const App = () => {
-  const [value, setValue] = useState("hello Jeff")
+  const [uid, setUid] = useState(null);
   const fetchToken = () => {
     axios
       .get("http://192.168.0.34:5000/jwtid")
@@ -31,7 +31,7 @@ const App = () => {
 
 
   return (
-    <UidContext.Provider value={{ value, setValue }}>
+    <UidContext.Provider value={{ uid, setUid }}>
       <View style={styles.root}>
         <StackNavigation />
       </View>

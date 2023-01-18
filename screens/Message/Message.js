@@ -1,169 +1,266 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native'
 import React, { useState } from 'react'
-import Chat from './Chat'
-import ChatList from './ChatList';
-import { Avatar } from 'react-native-elements';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
+import Conversation from './Conversation';
+import Search from '../../components/MessagesUser/Search';
+import ChatOnline from '../../components/MessagesUser/ChatOnline';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
+
+
 
 
 const Message = () => {
-  const [username, setUsername] = useState('Jeff');
+  const navigation = useNavigation();
 
 
-  const saveUsername = (name) => {
-    setUsername(name);
-  }
-  if (username === "") {
-    return <ChatList saveUsername={saveUsername} />;
-  }
   const handleClickReturnHome = () => {
     console.log("clicked")
     navigation.navigate('HomeScreen');
   }
+  const handleClickCallList = () => {
+    console.log("clicked")
+    navigation.navigate('CallList');
+  }
+
+  const handleClickToCamera = () => {
+    console.log("clicked")
+    navigation.navigate('Camera');
+  }
+
 
   return (
     <>
-      <View style={{
-        flex: 1,
-        marginTop: 20,
-        backgroundColor: '#2C2828',
-      }}
-      >
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 30,
-          marginTop: 20
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "null"}
+        style={{
+          flex: 1,
+          paddingBottom: 10,
+          backgroundColor: '#2C2828',
 
         }}
-        >
-          <View style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            backgroundColor: "#161414",
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            marginLeft: "3.5%",
-            marginTop: "1.5%"
-          }}
-          >
-            <TouchableOpacity
-              onPress={handleClickReturnHome}
-            >
-              <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: "contain"
-              }} />
-            </TouchableOpacity>
-          </View>
-
-
-          <Text style={{
-            fontWeight: 'bold',
-            fontSize: 26,
-            textAlign: 'center',
-            alignContent: 'center',
-            alignItems: 'center',
-            marginBottom: 10,
-            color: '#FFFFFF',
-          }}>
-            Messages
-          </Text>
-          <View style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            backgroundColor: "#D9D9D9",
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            marginLeft: "11.5%",
-            marginTop: "1.5%"
-          }}
-          >
-            <TouchableOpacity
-              onPress={handleClickReturnHome}
-            >
-              <Ionicons name="ios-call" size={28} color="#000000" style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: "contain"
-              }} />
-            </TouchableOpacity>
-          </View>
-          <View style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            backgroundColor: "#D9D9D9",
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            marginRight: "3.5%",
-            marginTop: "1.5%"
-          }}
-          >
-            <TouchableOpacity
-              onPress={handleClickReturnHome}
-            >
-              <Ionicons name="videocam" size={28} color="#000000" style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: "contain"
-              }} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
+      >
         <View
           style={{
+
             flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: 10,
+            justifyContent: "space-between",
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
             marginTop: 10,
-            marginBottom: 20,
+
           }}
         >
-          <Avatar
-            size="large"
-            rounded
-            source={{
-              uri:
-                'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-            }} />
-          <Text style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginTop: -40,
-            marginLeft: 10,
-            color: '#FFFFFF',
-
-          }}
-          >
-            {username}
-          </Text>
-          <Text
+          <View
             style={{
-              fontSize: 15,
-              color: 'gray',
-              marginLeft: -35,
+              flexDirection: 'row',
+              justifyContent: "flex-start",
+              alignItems: 'center',
+              paddingTop: 10,
+              paddingLeft: 10,
+              paddingRight: 10,
               marginTop: 10,
-              color: '#09C03C',
+
+            }}>
+            <View style={{
+
+              justifyContent: 'center',
+              alignSelf: 'center',
+              backgroundColor: "#161414",
+              width: 50,
+              height: 50,
+              borderRadius: 30,
+              marginLeft: "3.5%",
+              marginTop: "1.5%"
+            }} >
+              <TouchableOpacity
+                onPress={handleClickReturnHome}
+              >
+                <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                  alignSelf: 'center',
+                  alignContent: 'center',
+                  alignItems: 'center',
+                  resizeMode: "contain"
+                }} />
+              </TouchableOpacity>
+            </View>
+            <View style={{
+
+              justifyContent: 'center',
+              alignSelf: 'center',
+              backgroundColor: "#161414",
+              width: 50,
+              height: 50,
+              borderRadius: 30,
+              marginLeft: "3.5%",
+              marginTop: "1.5%"
+            }} >
+              <TouchableOpacity
+                onPress={handleClickToCamera}
+              >
+                <Ionicons name="camera" size={28} color="#5F5858" style={{
+                  alignSelf: 'center',
+                  alignContent: 'center',
+                  alignItems: 'center',
+                  resizeMode: "contain"
+                }} />
+              </TouchableOpacity>
+            </View>
+            <View style={{
+
+              justifyContent: 'center',
+              alignSelf: 'center',
+              backgroundColor: "#161414",
+              width: 50,
+              height: 50,
+              borderRadius: 30,
+              marginLeft: "3.5%",
+              marginTop: "1.5%"
+            }}>
+              <TouchableOpacity
+                onPress={handleClickCallList}
+              >
+                <Ionicons name="ios-call" size={28} color="#000000" style={{
+                  alignSelf: 'center',
+                  alignContent: 'center',
+                  alignItems: 'center',
+                  resizeMode: "contain"
+                }} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              backgroundColor: '#2C2828',
+              flexDirection: 'row',
+              justifyContent: "flex-end",
+              alignContent: "flex-end",
+              alignSelf: "flex-end",
+              alignItems: 'center',
+              paddingTop: 10,
+              paddingLeft: 10,
+              paddingRight: 10,
+              marginTop: 10,
+
             }}
           >
-            Online
-          </Text>
+            <Image source={require('../../assets/Images/woman-gdc9219422_1920.jpg')}
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: 100,
+                objectfit: 'cover',
+                borderWidth: 5,
+                borderColor: "#3B4FB8",
+              }}
+
+            />
+            <View
+              style={{
+                backgroundColor: "red",
+                position: "absolute",
+                left: 40,
+                width: 24,
+                height: 20,
+                borderRadius: 25,
+                justifyContent: "center",
+                alignSelf: "center",
+                alignItems: "center",
+                marginLeft: 16,
+                marginTop: -10,
+                zIndex: 100
+
+              }}>
+              <Text style={{
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: 10
+              }}>
+                124
+              </Text>
+            </View>
+            <Text style={{
+              fontWeight: 'bold',
+              fontSize: 20,
+              textAlign: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+              marginBottom: 10,
+              marginLeft: 15,
+              color: '#FFFFFF',
+            }}>
+              Conversations
+            </Text>
+          </View>
         </View>
 
-        <Chat username={username} />
-      </View>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          style={{
+            flex: 1,
+            marginTop: 10,
+            paddingTop: 10,
+            paddingBottom: -10,
+            marginBottom: -10,
+          }}
+        >
+          <ScrollView horizontal
+            showsHorizontalScrollIndicator={false}>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+            <View>
+              <ChatOnline />
+            </View>
+          </ScrollView>
 
+          <View>
+            <Search />
+          </View>
+          <View >
+            <View  >
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
+              <Conversation />
 
+            </View>
+          </View>
+        </ScrollView>
+
+      </KeyboardAvoidingView>
 
     </>
 

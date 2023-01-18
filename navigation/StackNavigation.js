@@ -11,6 +11,9 @@ import Profile from "../screens/Profile/Profile";
 import Settings from "../screens/Settings/Settings";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Notifications from "../screens/Notifications/Notifications";
+import ChatList from "../screens/Message/ChatList";
+
+
 
 
 
@@ -23,9 +26,9 @@ const StackNavigation = () => {
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Messages" component={Message} />
+                <Stack.Screen name="Messages" component={Message} />
                 <Stack.Screen name="Start" component={StartPage} />
-               
+                <Stack.Screen name="Chatlist" component={ChatList} />
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />
