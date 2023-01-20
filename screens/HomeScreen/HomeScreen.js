@@ -16,8 +16,7 @@ const HomeScreen = () => {
     return (
         <>
             <SafeAreaView style={styles.container}>
-                {
-                    uid ? (
+                
                         <>
                             <Header />
                             <Stories />
@@ -33,15 +32,8 @@ const HomeScreen = () => {
                                 {POSTS.map((post, index) => (
                                     <Posts key={index} post={post} />
                                 ))}
-                            </ScrollView></>
-                    ) : (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: 'white' }}>You need to be logged in to see this page</Text>
-                        </View>
-                    )
-
-                }
-
+                            </ScrollView>
+                            </>
 
             </SafeAreaView>
         </>

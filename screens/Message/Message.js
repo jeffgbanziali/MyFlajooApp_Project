@@ -1,15 +1,33 @@
 import { View, Text, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Conversation from './Conversation';
 import Search from '../../components/MessagesUser/Search';
 import ChatOnline from '../../components/MessagesUser/ChatOnline';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { UidContext } from '../../components/Context/AppContext';
+import axios from 'axios';
 
 
 
 
 const Message = () => {
+  const [conversations, setConversations] = useState([]);
+  const { uid } = useContext(UidContext);
+
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await axios.get("/conversations/" + uid);
+        console.log(res);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    };
+  }, [uid]);
+
+
   const navigation = useNavigation();
 
 
@@ -210,24 +228,6 @@ const Message = () => {
         >
           <ScrollView horizontal
             showsHorizontalScrollIndicator={false}>
-            <View>
-              <ChatOnline />
-            </View>
-            <View>
-              <ChatOnline />
-            </View>
-            <View>
-              <ChatOnline />
-            </View>
-            <View>
-              <ChatOnline />
-            </View>
-            <View>
-              <ChatOnline />
-            </View>
-            <View>
-              <ChatOnline />
-            </View>
             <View>
               <ChatOnline />
             </View>
