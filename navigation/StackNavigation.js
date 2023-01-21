@@ -30,20 +30,19 @@ const StackNavigation = () => {
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+               
                 <Stack.Screen name="Start" component={StartPage} />
+                <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
-                <>
-                   
-                    <Stack.Screen name="Messages" component={Message} />
-                    <Stack.Screen name="Chatlist" component={ChatList} />
-                    <Stack.Screen name="Profile" component={Profile} />
-                    <Stack.Screen name="Settings" component={Settings} />
-                    <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
-                    <Stack.Screen name="Notifications" component={Notifications} />
-                </>
+
+                <Stack.Screen name="Messages" component={Message} />
+                <Stack.Screen name="Chatlist" component={ChatList} />
+                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Stack.Screen name="Notifications" component={Notifications} />
 
             </Stack.Navigator>
         </NavigationContainer>
