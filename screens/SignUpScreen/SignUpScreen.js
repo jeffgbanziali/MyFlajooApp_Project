@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
+import { darkBlue, darkRose } from '../../components/Button/Constants';
+
 
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -61,130 +63,217 @@ const SignUpScreen = () => {
 
 
     return (
-        <ImageBackground
-            source={require("../../assets/Images/Background3.jpg")}
-            style={{ height: '100%' }}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{
-                    alignItems: "center",
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
 
-                }}>
+        >
+            <ImageBackground
+                source={require("../../assets/Images/Background3.jpg")}
+                style={{ height: '100%', width: "100%" }}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={{
+                        backgroundColor: "#5C6E7A",
+                        overflow: "hidden",
+                        opacity: 0.5,
+                        width: 400,
+                        height: 1000,
+                        borderRadius: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                        alignSelf: 'center',
+                        marginTop: 60,
+                        marginLeft: 20,
+                        marginRight: 20,
 
-                    <Text style={{
-                        color: 'blue',
-                        fontSize: 64,
-                        fontWeight: 'bold',
-                        marginVertical: 20
                     }}>
-                        Register
-                    </Text>
-                    <Text style={{
-                        fontSize: 20,
-                        color: 'lightred',
-                        fontWeight: 'bold',
-                        marginVertical: 2,
-                        marginBottom: 10
-                    }}>
-                        Create a new account for the specified
-                    </Text>
 
-
-                    <InputPage
-                        placeholder="Pseudo"
-                        placeholderTextColor="red"
-                        value={pseudo}
-                        onChangeText={(text) => setPseudo(text) }
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        placeholder="First Name"
-                        placeholderTextColor="red"
-                        value={firstName}
-                        onChangeText={(text) =>  setFirstName(text) }
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        placeholder="Last Name"
-                        placeholderTextColor="red"
-                        value={lastName}
-                        onChangeText={(text) => setLastName(text) }
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        placeholder="Email"
-                        placeholderTextColor="red"
-                        onChangeText={(text) => setEmail(text) }
-                        value={email}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-
-                    />
-                    <InputPage
-                        placeholder="Password"
-                        placeholderTextColor="red"
-                        onChangeText={(text) => setPassword(text) }
-                        value={password}
-                        secureTextEntry={true}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        placeholder="Confirm Password"
-                        placeholderTextColor="red"
-                        value={confirmPassword}
-                        onChangeText={(text) =>  setConfirmPassword(text) }
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        secureTextEntry={true}
-                    />
-                    <InputPage
-                        placeholder="Phone Number"
-                        placeholderTextColor="red"
-                        value={phoneNumber}
-                        onChangeText={(text) => setPhoneNumber(text) }
-                        keyboardType="phone-pad"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: 'blue',
-                            width: 350,
-                            height: 50,
-                            borderRadius: 10,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginTop: 20,
-                            marginBottom: 20
-                        }}
-                        onPress={handleSignUp}
-                    >
                         <Text style={{
-                            color: 'white',
-                            fontSize: 20,
-                            fontWeight: 'bold'
+                            color: 'blue',
+                            fontSize: 64,
+                            fontWeight: 'bold',
+                            marginVertical: 20
                         }}>
                             Register
                         </Text>
-                    </TouchableOpacity>
+                        <Text style={{
+                            fontSize: 20,
+                            color: 'lightred',
+                            fontWeight: 'bold',
+                            marginVertical: 2,
+                            marginBottom: 10
+                        }}>
+                            Create a new account for the specified
+                        </Text>
 
-                </View>
-            </ScrollView>
+
+                        <InputPage
+                            placeholder="Pseudo"
+                            placeholderTextColor="red"
+                            value={pseudo}
+                            onChangeText={(text) => setPseudo(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            placeholder="First Name"
+                            placeholderTextColor="red"
+                            value={firstName}
+                            onChangeText={(text) => setFirstName(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            placeholder="Last Name"
+                            placeholderTextColor="red"
+                            value={lastName}
+                            onChangeText={(text) => setLastName(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            placeholder="Email"
+                            placeholderTextColor="red"
+                            onChangeText={(text) => setEmail(text)}
+                            value={email}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+
+                        />
+                        <InputPage
+                            placeholder="Password"
+                            placeholderTextColor="red"
+                            onChangeText={(text) => setPassword(text)}
+                            value={password}
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            placeholder="Confirm Password"
+                            placeholderTextColor="red"
+                            value={confirmPassword}
+                            onChangeText={(text) => setConfirmPassword(text)}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            secureTextEntry={true}
+                        />
+                        <InputPage
+                            placeholder="Phone Number"
+                            placeholderTextColor="red"
+                            value={phoneNumber}
+                            onChangeText={(text) => setPhoneNumber(text)}
+                            keyboardType="phone-pad"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'blue',
+                                width: 350,
+                                height: 50,
+                                borderRadius: 10,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginTop: 20,
+                                marginBottom: 20
+                            }}
+                            onPress={handleSignUp}
+                        >
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 20,
+                                fontWeight: 'bold'
+                            }}>
+                                Register
+                            </Text>
+                        </TouchableOpacity>
+                        <View style={styles.footerView}>
+                            <Text style={styles.footerText}>Have an account? <Text onPress={() => navigation.navigate("Signin")} style={styles.footerLink}>Sign in</Text></Text>
+                        </View>
+
+                    </View>
+                </ScrollView>
 
 
-        </ImageBackground>
+            </ImageBackground>
+        </KeyboardAvoidingView>
+
     );
 }
 
 
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#2C2828',
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: darkRose,
+        marginBottom: 30,
+    },
+    error: {
+        color: 'red',
+        fontSize: 12,
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    input: {
+        height: 48,
+        borderRadius: 10,
+        borderColor: '#2e2e2d',
+        borderWidth: 1,
+        overflow: 'hidden',
+        backgroundColor: 'red',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16,
+        width: 300,
+    },
+    button: {
+        backgroundColor: darkRose,
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 10,
+        width: 100,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignSelf: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    footerView: {
+        flex: 1,
+        alignItems: "center",
+        marginTop: 20
+    },
+    footerText: {
+        fontSize: 16,
+        color: '#FFFFFF'
+    },
+    footerLink: {
+        color: darkBlue,
+        fontWeight: "bold",
+        fontSize: 16
+    }
+})
 
 export default SignUpScreen;

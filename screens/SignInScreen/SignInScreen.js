@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -59,61 +59,66 @@ const SignInScreen = () => {
 
     return (
         <>
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.container}
 
             >
-                <View style={{
-                    backgroundColor: "#5C6E7A",
-                    overflow: "hidden",
-                    opacity: 0.5,
-                    width: 400,
-                    height: 400,
-                    borderRadius: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: 100,
-                    marginLeft: 20,
-                    marginRight: 20,
+                <ImageBackground source={require("../../assets/Images/Background.jpg")} style={{ height: '100%' }}>
+                    <View style={{
+                        backgroundColor: "#5C6E7A",
+                        overflow: "hidden",
+                        opacity: 0.5,
+                        width: 400,
+                        height: 400,
+                        borderRadius: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: 100,
+                        marginLeft: 20,
+                        marginRight: 20,
 
-                }}
-                >
-                    <View >
-                        <Text style={styles.title}>Sign In</Text>
-                        {errors.email && <Text style={styles.error}>{errors.email}</Text>}
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            placeholderTextColor="#FFFFFF"
-                            onChangeText={(text) => setEmail(text)}
-                            value={email}
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                        />
-                        {errors.password && <Text style={styles.error}>{errors.password}</Text>}
-                        <TextInput
-                            style={styles.input}
-                            placeholderTextColor="#FFFFFF"
-                            secureTextEntry={true}
-                            placeholder="Password"
-                            onChangeText={(text) => setPassword(text)}
-                            value={password}
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                        />
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleSignIn}
-                        >
-                            <Text style={styles.buttonTitle}>Sign in</Text>
-                        </TouchableOpacity>
-                        <View style={styles.footerView}>
-                            <Text style={styles.footerText}>Don't have an account? <Text onPress={() => navigation.navigate("Signup")} style={styles.footerLink}>Sign up</Text></Text>
+                    }}
+                    >
+                        <View >
+                            <Text style={styles.title}>Sign In</Text>
+                            {errors.email && <Text style={styles.error}>{errors.email}</Text>}
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Email"
+                                placeholderTextColor="#FFFFFF"
+                                onChangeText={(text) => setEmail(text)}
+                                value={email}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            {errors.password && <Text style={styles.error}>{errors.password}</Text>}
+                            <TextInput
+                                style={styles.input}
+                                placeholderTextColor="#FFFFFF"
+                                secureTextEntry={true}
+                                placeholder="Password"
+                                onChangeText={(text) => setPassword(text)}
+                                value={password}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={handleSignIn}
+                            >
+                                <Text style={styles.buttonTitle}>Sign in</Text>
+                            </TouchableOpacity>
+                            <View style={styles.footerView}>
+                                <Text style={styles.footerText}>Don't have an account? <Text onPress={() => navigation.navigate("Signup")} style={styles.footerLink}>Sign up</Text></Text>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </ImageBackground>
             </KeyboardAvoidingView>
+
+
 
 
 
