@@ -12,20 +12,6 @@ import axios from 'axios';
 
 
 const Message = () => {
-  const [conversations, setConversations] = useState([]);
-  const { uid } = useContext(UidContext);
-
-  useEffect(() => {
-    const getConversations = async () => {
-      try {
-        const res = await axios.get("/conversations/" + uid);
-        console.log(res);
-      }
-      catch (err) {
-        console.log(err);
-      }
-    };
-  }, [uid]);
 
 
   const navigation = useNavigation();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
@@ -12,6 +12,7 @@ import Settings from "../screens/Settings/Settings";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Notifications from "../screens/Notifications/Notifications";
 import ChatList from "../screens/Message/ChatList";
+import { UidContext } from "../components/Context/AppContext";
 
 
 
@@ -20,23 +21,35 @@ import ChatList from "../screens/Message/ChatList";
 
 const Stack = createNativeStackNavigator();
 
+
+
+
 const StackNavigation = () => {
 
-
+    const { uid, setUid } = useContext(UidContext);
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Start" component={StartPage} />
-                <Stack.Screen name="Messages" component={Message} />
-                <Stack.Screen name="Chatlist" component={ChatList} />
-                <Stack.Screen name="Profile" component={Profile} />
-                <Stack.Screen name="Signup" component={SignUpScreen} />
-                <Stack.Screen name="Signin" component={SignInScreen} />
-                <Stack.Screen name="HomeScreen" component={HomeScreen} />
-                <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
-                <Stack.Screen name="Settings" component={Settings} />
-                <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
-                <Stack.Screen name="Notifications" component={Notifications} />
+                {
+                    uid ? (
+                        <>
+                            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                            <Stack.Screen name="Messages" component={Message} />
+                            <Stack.Screen name="Chatlist" component={ChatList} />
+                            <Stack.Screen name="Profile" component={Profile} />
+                            <Stack.Screen name="Settings" component={Settings} />
+                            <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                            <Stack.Screen name="Notifications" component={Notifications} />
+                        </>
+                    ) : (
+                        <>
+                            <Stack.Screen name="Start" component={StartPage} />
+                            <Stack.Screen name="Signup" component={SignUpScreen} />
+                            <Stack.Screen name="Signin" component={SignInScreen} />
+                            <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
+                        </>
+                    )}
+
             </Stack.Navigator>
         </NavigationContainer>
     );

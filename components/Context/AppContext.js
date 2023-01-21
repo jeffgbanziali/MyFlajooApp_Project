@@ -1,3 +1,3 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
-export const UidContext = createContext();
+export const UidContext = createContext(null);

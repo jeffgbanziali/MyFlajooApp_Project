@@ -1,16 +1,21 @@
 import { View, Text, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import { darkRose } from '../../components/Button/Constants'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { UidContext } from '../../components/Context/AppContext'
 
 
 
 
 const SignInScreen = () => {
 
+    const { setUid } = useContext(UidContext);
+
     const navigation = useNavigation();
+
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -26,13 +31,15 @@ const SignInScreen = () => {
                         'Content-Type': 'application/json',
                     },
 
-
                 });
             if (response.status === 200) {
-                const { token } = response.data;
+                const { token, userId } = response.data;
                 if (token) {
                     await AsyncStorage.setItem('token', token);
+                    await AsyncStorage.setItem('userId', userId);
+                    console.log("Token saved");
                 }
+                setUid(token, userId);
                 alert("User logged in successfully");
                 console.log(response);
                 navigation.navigate("HomeScreen");
@@ -40,8 +47,10 @@ const SignInScreen = () => {
                 if (response.data.errors.email !== '' || response.data.errors.password !== '') {
                     setErrors(response.data.errors);
                     console.log(response.data.errors);
+
                 }
                 alert("An error occurred");
+
             }
         } catch (error) {
             console.log(error);
