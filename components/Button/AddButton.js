@@ -1,13 +1,14 @@
 import { View, TouchableHighlight, Animated, StyleSheet } from 'react-native'
 import React from 'react'
 import Feather from 'react-native-vector-icons/Feather';
+import { Entypo } from '@expo/vector-icons';
 
 
-buttonSize = new Animated.Value(1);
-mode = new Animated.Value(0);
+const buttonSize = new Animated.Value(1);
+const mode = new Animated.Value(0);
 
 
-handlePress = () => {
+const handlePress = () => {
     Animated.sequence([
         Animated.timing(buttonSize, {
             toValue: 0.95,
@@ -25,6 +26,7 @@ handlePress = () => {
             useNativeDriver: false
         })
     ]).start()
+    console.log(mode._value)
 }
 
 
@@ -76,7 +78,7 @@ const AddButton = () => {
         inputRange: [0, 1],
         outputRange: [20, 0]
     });
-    
+
 
 
     return (
@@ -104,7 +106,7 @@ const AddButton = () => {
             <Animated.View style={[styles.button, sizeStyle]}>
                 <TouchableHighlight underlayColor="blue" onPress={handlePress}>
                     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-                        <Feather name="plus" size={24} color="black" />
+                        <Entypo name="plus" size={24} color="#FFFFFF" />
                     </Animated.View>
                 </TouchableHighlight>
             </Animated.View>
@@ -117,10 +119,10 @@ const AddButton = () => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "red",
-        width: 72,
-        height: 72,
-        borderRadius: 36,
+        backgroundColor: "#3B4FB8",
+        width: 92,
+        height: 92,
+        borderRadius: 100,
         top: -30,
         textAlign: "center",
         justifyContent: "center",

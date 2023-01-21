@@ -10,7 +10,7 @@ const Posts = ({ post }) => {
         <View style={{
             marginTop: 8,
             marginBottom: 5,
-            backgroundColor: "#423C3C",
+            backgroundColor: "#343232",
             position: "relative",
             borderRadius: 20,
             paddingBottom: 20,

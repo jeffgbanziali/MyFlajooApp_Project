@@ -1,6 +1,6 @@
 //import liraries
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity,Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
@@ -8,11 +8,14 @@ import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import PostsUser from '../../components/ProfileUtils.js/PostsUser';
+import { UidContext } from '../../components/Context/AppContext';
 
 
 
 
 const Profile = () => {
+
+    const { uid } = useContext(UidContext);
 
     const navigation = useNavigation();
     const handleClickReturnHome = () => {
@@ -111,24 +114,26 @@ const Profile = () => {
                                 }}
 
                             />
-                            <View style={{
-                                backgroundColor: "#09C03C",
-                                position: "absolute",
-                                left: 65,
-                                width: 16,
-                                height: 16,
-                                borderRadius: 25,
-                                borderWidth: 2,
-                                borderColor: "#000000",
-                                justifyContent: "center",
-                                alignSelf: "center",
-                                alignItems: "center",
-                                marginLeft: 16,
-                                marginTop: 75,
-                                zIndex: 100
+                            
+                                <View style={{
+                                    backgroundColor: "#09C03C",
+                                    position: "absolute",
+                                    left: 65,
+                                    width: 16,
+                                    height: 16,
+                                    borderRadius: 25,
+                                    borderWidth: 2,
+                                    borderColor: "#000000",
+                                    justifyContent: "center",
+                                    alignSelf: "center",
+                                    alignItems: "center",
+                                    marginLeft: 16,
+                                    marginTop: 75,
+                                    zIndex: 100
 
-                            }}>
-                            </View>
+                                }}>
+                                </View>
+                            
 
                         </TouchableOpacity>
 
