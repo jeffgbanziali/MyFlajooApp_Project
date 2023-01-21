@@ -39,7 +39,7 @@ const Stories = () => {
                                     height: 140,
                                     borderRadius: 10,
                                     borderWidth: 3,
-                                    borderColor: "violet",
+                                    borderColor: "#0D5C67",
                                     marginLeft: 10,
                                     resizeMode: "cover"
                                 }} />
@@ -75,12 +75,30 @@ const Stories = () => {
                                 resizeMode: "cover"
                             }}
                         >
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: "#000",
+                                    width: 20,
+                                    height: 20,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignSelf: 'center',
+                                }}
+                            >
+
                                 <Entypo
                                     name="circle-with-plus"
-                                    size={20}
+                                    size={16}
                                     color="#D6DA0E"
+                                    style={{
+                                        alignSelf: 'center',
+                                        alignContent: 'center',
+                                        alignItems: 'center',
+                                        resizeMode: "contain"
+                                    }}
                                 />
+
+
                             </TouchableOpacity>
 
                         </View>
@@ -128,7 +146,7 @@ const Stories = () => {
                                         height: 140,
                                         borderRadius: 10,
                                         borderWidth: 3,
-                                        borderColor: "violet",
+                                        borderColor: "#494747",
                                         marginLeft: 10,
                                         resizeMode: "cover"
                                     }} />
