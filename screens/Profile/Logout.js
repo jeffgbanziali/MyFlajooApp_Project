@@ -9,15 +9,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const Logout = () => {
 
-  const [uid, setUid] = useState(null);
-
   const navigation = useNavigation(false);
+
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userId');
       await axios.get('http://192.168.0.34:5000/api/user/logout');
-      setUid(null);
       navigation.navigate('Signin');
       console.log('Logged out');
 

@@ -39,7 +39,7 @@ const SignInScreen = () => {
                     await AsyncStorage.setItem('userId', userId);
                     console.log("Token saved");
                 }
-                setUid(token, userId);
+                setUid(token);
                 alert("User logged in successfully");
                 console.log(response);
                 navigation.navigate("HomeScreen");

@@ -3,14 +3,33 @@ import { StyleSheet, View } from 'react-native';
 import StackNavigation from './Navigation/StackNavigation';
 import axios from 'axios';
 import { UidContext } from './components/Context/AppContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux';
+import { getUser } from './actions/user.action';
+import rootReducer from './reducers';
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 
 
 
+const AppWapper = () => {
+  const store = createStore(
+    rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)),
+  );
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+};
 
 
-//const store = createStore(rootReducer);
+
+
 
 axios.interceptors.request.use(
   async (config) => {
@@ -27,34 +46,34 @@ axios.interceptors.request.use(
 
 const App = () => {
   const [uid, setUid] = useState(null);
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchToken = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        try {
-          const res = await axios.get("http://192.168.0.34:5000/jwtid");
+      await axios({
+        method: "get",
+        url: "http://192.168.0.34:5000/jwtid",
+        withCredentials: true,
+      })
+        .then((res) => {
           setUid(res.data);
-          await AsyncStorage.setItem('userId', res.data);
-          console.log("Token", res.data);
-        } catch (error) {
-          console.log("No token");
-        }
-      }
+        })
+        .catch((err) => console.log("No token"));
     };
     fetchToken();
-  }, []);
+    if (uid) dispatch (getUser(uid));
+    console.log("uid", uid);
 
-  //{/*useEffect(() => {
-  //if (uid) {
-  //dispatch(GET_USER(uid));
-  //}}/
+
+  }, [uid, dispatch]);
 
   return (
+
     <UidContext.Provider value={{ uid, setUid }}>
       <StackNavigation />
     </UidContext.Provider>
+
+
   );
 };
 
@@ -62,6 +81,9 @@ const App = () => {
 
 
 
-export default App;
+export default AppWapper;
+
+
+
 
 

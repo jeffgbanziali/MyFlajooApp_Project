@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const GET_USER = "GET_USER";
+export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 
 
 export const getUser = (uid) => {
@@ -12,4 +13,21 @@ export const getUser = (uid) => {
             })
             .catch((err) => console.log(err));
     };
+};
+
+export const uploadPicture = (data, uid) => {
+    return (dispatch) => {
+        return axios
+            .post("http://192.168.0.34:5000/api/user/upload", data)
+            .then((res) => {
+                return axios // return axios to chain the two requests
+                    .get(`http://192.168.0.34:5000/api/user/${uid}`)
+                    .then((res) => {
+                        dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+                    })
+                    .catch((err) => console.log(err)); 
+
+            })
+            .catch((err) => console.log(err));
+    }
 }
