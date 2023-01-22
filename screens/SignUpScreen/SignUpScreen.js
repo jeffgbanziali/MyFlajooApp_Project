@@ -23,37 +23,81 @@ const SignUpScreen = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const handleSignUp = async () => {
+        const data = {
+            pseudo: pseudo,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+            phoneNumber: phoneNumber,
+        };
         try {
             const url = 'http://192.168.0.34:5000/api/user/register';
-            const credentials = {
-                pseudo: pseudo,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password,
-                confirmPassword: confirmPassword,
-                phoneNumber: phoneNumber,
-            };
+
 
             // Validate the form data
-            if (!EMAIL_REGEX.test(email)) {
-                alert("Invalid email address");
+            if (pseudo === '') {
+                alert("Please enter your pseudo");
                 return;
             }
+
+            if (firstName === '') {
+                alert("Please enter your first name");
+                return;
+            }
+
+            if (lastName === '') {
+                alert("Please enter your last name");
+                return;
+            }
+
+            if (email === '') {
+                alert("Please enter your email");
+                return;
+            }
+
+            if (!EMAIL_REGEX.test(email)) {
+                alert("Please enter a valid email");
+                return;
+            }
+
+            if (password === '') {
+                alert("Please enter your password");
+                return;
+            }
+
+            if (confirmPassword === '') {
+                alert("Please confirm your password");
+                return;
+            }
+
             if (password !== confirmPassword) {
                 alert("Passwords do not match");
                 return;
             }
 
+            if (phoneNumber === '') {
+                alert("Please enter your phone number");
+                return;
+            }
+
             // Send the data to the server
-            const response = await axios.post(url, credentials);
+            const response = await axios.post(url, data, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
 
             // Handle the server response
             if (response.status === 201) {
                 alert("User created successfully");
+                console.log(response);
                 navigation.navigate("Signin");
             } else {
-                alert("An error occurred");
+                alert("An error ");
+                console.log(response);
             }
         } catch (error) {
             console.error(error);

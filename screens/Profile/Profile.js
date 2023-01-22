@@ -1,7 +1,7 @@
 //import liraries
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Pressable, TextInput } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import PostsUser from '../../components/ProfileUtils.js/PostsUser';
 import { UidContext } from '../../components/Context/AppContext';
 import UploadImg from '../../components/ProfileUtils.js/UploadImg';
-
+import { updateBio } from '../../actions/user.action';
 
 
 
@@ -20,6 +20,13 @@ const Profile = () => {
     const userData = useSelector((state) => state.userReducer);
     const [bio, setBio] = useState('');
     const [udapteForm, setUpdateForm] = useState(false);
+    const dispatch = useDispatch();
+
+    const handleUpdate = () => {
+        dispatch(updateBio(userData._id, bio))
+        setUpdateForm(false)
+
+    }
 
     const navigation = useNavigation();
     const handleClickReturnHome = () => {
@@ -149,32 +156,71 @@ const Profile = () => {
                                     </Text>
 
                                     <View>
+                                        <Text style={{ fontSize: 15, marginTop: 10, color: "#000000" }}>
+                                            bio
+                                        </Text>
                                         {
                                             udapteForm === false && (
                                                 <>
-                                                <Pressable>
+                                                    <View
 
-                                                    <Text
-                                                        style={{ fontSize: 15, marginTop: 10, color: "#5F5858" }}
-                                                        onPress={() => setUpdateForm(!udapteForm)}
                                                     >
-                                                        {userData.bio}
-                                                    </Text>
-                                                </Pressable>
-                                                    
-                                                    <Pressable>
+                                                        <Pressable
+
+                                                            onPress={() => setUpdateForm(!udapteForm)}>
+
+                                                            <Text
+                                                                style={{ fontSize: 15, marginTop: 10, color: "#FFFFFF" }}
+
+                                                            >
+                                                                {userData.bio}
+                                                            </Text>
+                                                        </Pressable>
+                                                    </View>
+
+                                                    <Pressable
+
+                                                    >
                                                         <Text>
                                                             modifier bio
                                                         </Text>
                                                     </Pressable>
                                                 </>
                                             )}
+                                        {
+                                            udapteForm && (
+                                                <>
+                                                    <TextInput style={{ fontSize: 15, marginTop: 10, color: "#000000", backgroundColor: "#FFFFFF", }}
+                                                        multiline={true}
+                                                        defaultValue={userData.bio}
+                                                        onChangeText={(text) => setBio(text)}
+                                                        autoCapitalize="none"
+                                                        autoCorrect={false}
+                                                        keyboardType='none'
+
+                                                    />
+                                                    <Pressable
+                                                        onPress={handleUpdate}
+                                                    >
+                                                        <Text>
+                                                            valider
+
+                                                        </Text>
+                                                    </Pressable>
+
+
+                                                </>
+                                            )
+                                        }
                                     </View>
 
-                                    <View>
-                                        <UploadImg />
-                                    </View>
 
+
+                                </View>
+                                <View>
+                                    <Text>
+                                        Membre depuis le : {userData.createdAt}
+                                    </Text>
                                 </View>
                             </View>
                         </View>
