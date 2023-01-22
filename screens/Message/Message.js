@@ -208,42 +208,71 @@ const Message = () => {
             flex: 1,
             marginTop: 10,
             paddingTop: 10,
-            paddingBottom: -10,
-            marginBottom: -10,
+            paddingBottom: -50,
           }}
         >
+
           <ScrollView horizontal
-            showsHorizontalScrollIndicator={false}>
+            showsHorizontalScrollIndicator={false}
+            style={{
+              zIndex: 100,
+              position: "absolute",
+            }}
+          >
             <View>
+
               <ChatOnline />
             </View>
           </ScrollView>
 
-          <View>
-            <Search />
-          </View>
-          <View >
-            <View  >
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
+          <View
+            style={{
+              zIndex: 100,
+              marginTop: 30,
+              backgroundColor: "#FFFFFF",
+              marginTop: 150,
+              paddingTop: -50,
+              height: "100%",
 
+            }}
+          >
+            <View
+              style={{
+                zIndex: 100,
+                marginTop: 10,
+
+
+
+              }}
+            >
+              <Search />
+            </View>
+            <View
+              style={{
+                display: "flex",
+                flexFlow: "row wrap",
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                //// width: "100%",
+
+
+                marginBottom: 100,
+                paddingBottom: -10,
+                position: "relative"
+
+
+
+              }}
+            >
+
+              <View>
+                <Conversation />
+
+              </View>
             </View>
           </View>
+
+
         </ScrollView>
 
       </KeyboardAvoidingView>

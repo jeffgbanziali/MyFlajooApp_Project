@@ -19,9 +19,7 @@ const Conversation = () => {
         navigation.navigate('Chatlist');
     }
     return (
-        <View
-
-        >
+        <View >
             <TouchableOpacity
                 style={containerStyle}
                 onPressIn={() => setIsPressed(true)}

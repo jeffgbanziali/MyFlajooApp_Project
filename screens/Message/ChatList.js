@@ -12,7 +12,7 @@ const Message = () => {
 
     const handleClickReturnMessageList = () => {
         console.log("clicked")
-        navigation.navigate('HomeScreen');
+        navigation.navigate('Messages');
     }
     const handleClickCall = () => {
         console.log("clicked")
