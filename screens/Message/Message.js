@@ -13,9 +13,28 @@ import axios from 'axios';
 
 const Message = () => {
 
+  const [conversations, setConversations] = useState([]);
+
+  const { uid } = useContext(UidContext);
+
+
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.34:5000/api/conversation/' + uid._id);
+        setConversations(response.data);
+        console.log(response);
+      }
+      catch (error) {
+        console.log(error);
+      }
+
+    }
+    getConversations();
+  }, [uid._id]);
 
   const handleClickReturnHome = () => {
     console.log("clicked")
@@ -266,7 +285,12 @@ const Message = () => {
             >
 
               <View>
-                <Conversation />
+                {
+                  conversations.map((c) => (
+                    <Conversation conversation={c} current={uid} />
+                  ))
+
+                }
 
               </View>
             </View>

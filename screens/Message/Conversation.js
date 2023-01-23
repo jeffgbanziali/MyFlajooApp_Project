@@ -1,11 +1,31 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 
-const Conversation = () => {
+
+const Conversation = ({ conversation, currentUser }) => {
+    const [user, setUser] = useState(null);
+
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
+
+    useEffect(() => {
+        const friendId = conversation.members.find((member) => member !== currentUser._id);
+        const getUser = async () => {
+            try {
+                const response = await axios.post('http://http://http://192.168.0.34:5000/api/?userId=' + friendId);
+                setUser(response.data);
+                console.log(response);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        getUser();
+    }, [currentUser._id, conversation]);
+
 
     const containerStyle = {
         display: 'flex',
@@ -44,7 +64,7 @@ const Conversation = () => {
                         alignSelf: 'center',
                         fontWeight: 'bold',
                     }}
-                >Koukouda</Text>
+                >{user?.pseudo}</Text>
             </TouchableOpacity>
 
         </View>

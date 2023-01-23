@@ -19,12 +19,14 @@ const Profile = () => {
     const { uid } = useContext(UidContext);
     const userData = useSelector((state) => state.userReducer);
     const [bio, setBio] = useState('');
-    const [udapteForm, setUpdateForm] = useState(false);
+    const [updateForm, setUpdateForm] = useState(false);
     const dispatch = useDispatch();
 
     const handleUpdate = () => {
-        dispatch(updateBio(userData._id, bio))
-        setUpdateForm(false)
+        if (bio !== userData.bio) {
+            dispatch(updateBio(userData._id, bio));
+        }
+        setUpdateForm(false);
 
     }
 
@@ -160,26 +162,20 @@ const Profile = () => {
                                             bio
                                         </Text>
                                         {
-                                            udapteForm === false && (
+                                            updateForm === false && (
                                                 <>
-                                                    <View
-
-                                                    >
+                                                    <View>
                                                         <Pressable
-
-                                                            onPress={() => setUpdateForm(!udapteForm)}>
-
+                                                            onPress={() => setUpdateForm(!updateForm)}>
                                                             <Text
                                                                 style={{ fontSize: 15, marginTop: 10, color: "#FFFFFF" }}
-
                                                             >
                                                                 {userData.bio}
                                                             </Text>
                                                         </Pressable>
                                                     </View>
-
                                                     <Pressable
-
+                                                        onPress={() => setUpdateForm(!updateForm)}
                                                     >
                                                         <Text>
                                                             modifier bio
@@ -188,16 +184,16 @@ const Profile = () => {
                                                 </>
                                             )}
                                         {
-                                            udapteForm && (
+                                            updateForm && (
                                                 <>
-                                                    <TextInput style={{ fontSize: 15, marginTop: 10, color: "#000000", backgroundColor: "#FFFFFF", }}
+                                                    <TextInput
+                                                        style={{ fontSize: 15, marginTop: 10, color: "#000000", backgroundColor: "#FFFFFF", }}
                                                         multiline={true}
                                                         defaultValue={userData.bio}
                                                         onChangeText={(text) => setBio(text)}
                                                         autoCapitalize="none"
                                                         autoCorrect={false}
                                                         keyboardType='none'
-
                                                     />
                                                     <Pressable
                                                         onPress={handleUpdate}

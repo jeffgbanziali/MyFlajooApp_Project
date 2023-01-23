@@ -12,7 +12,10 @@ import Settings from "../screens/Settings/Settings";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Notifications from "../screens/Notifications/Notifications";
 import ChatList from "../screens/Message/ChatList";
+
 import { UidContext } from "../components/Context/AppContext";
+import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
+import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
 
 
 
@@ -33,7 +36,6 @@ const StackNavigation = () => {
                 {
                     uid ? (
                         <>
-
                             <Stack.Screen name="HomeScreen" component={HomeScreen} />
                             <Stack.Screen name="Messages" component={Message} />
                             <Stack.Screen name="Chatlist" component={ChatList} />
@@ -41,6 +43,8 @@ const StackNavigation = () => {
                             <Stack.Screen name="Settings" component={Settings} />
                             <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
                             <Stack.Screen name="Notifications" component={Notifications} />
+                            <Stack.Screen name="Myfollowing" component={MyFollowings} />
+                            <Stack.Screen name="Myfollowers" component={MyFollowers} />
                         </>
                     ) : (
                         <>
