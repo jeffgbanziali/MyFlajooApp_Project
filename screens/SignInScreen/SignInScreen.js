@@ -33,16 +33,17 @@ const SignInScreen = () => {
 
                 });
             if (response.status === 200) {
-                const { token, userId } = response.data;
-                if (token) {
-                    await AsyncStorage.setItem('token', token);
-                    await AsyncStorage.setItem('userId', userId);
+                const { user } = response.data;
+                if (user) {
+                    //await AsyncStorage.setItem('token', token);
+                    await AsyncStorage.setItem('user', user);
                     console.log("Token saved");
                 }
-                setUid(token);
+                console.log(user);
+                setUid(user);
                 alert("User logged in successfully");
                 console.log(response);
-                navigation.navigate("HomeScreen");
+                //navigation.navigate("HomeScreen");
             } else {
                 if (response.data.errors.email !== '' || response.data.errors.password !== '') {
                     setErrors(response.data.errors);

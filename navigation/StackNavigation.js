@@ -29,6 +29,8 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
     const { uid } = useContext(UidContext);
+    console.log(uid);
+    console.log("StackNavigation"); 
 
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>

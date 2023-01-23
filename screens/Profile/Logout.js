@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UidContext } from '../../components/Context/AppContext';
+
 
 
 
 import { useNavigation } from '@react-navigation/native';
 
 const Logout = () => {
+
+  const { setUid } = useContext(UidContext);
+
 
   const navigation = useNavigation(false);
 
@@ -16,7 +21,8 @@ const Logout = () => {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userId');
       await axios.get('http://192.168.0.34:5000/api/user/logout');
-      navigation.navigate('Signin');
+      setUid(undefined);
+      //navigation.navigate('Signin');
       console.log('Logged out');
 
     } catch (error) {
