@@ -200,6 +200,7 @@ const PostImage = ({ post }) => {
 }
 
 const PostFooter = ({ post }) => {
+    const [showComments, setShowComments] = useState(false)
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20, marginVertical: 10 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -208,9 +209,8 @@ const PostFooter = ({ post }) => {
                     <LikesButton post={post} />
 
                 </View>
-
                 <View>
-                    <TouchableOpacity style={{
+                    <View style={{
                         backgroundColor: "#161414",
                         width: 50,
                         height: 50,
@@ -219,16 +219,30 @@ const PostFooter = ({ post }) => {
                         justifyContent: 'center',
                         alignSelf: 'center'
                     }}>
-                        <Feather name="message-circle" size={25} color="white" style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            resizeMode: "contain"
-                        }} />
 
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => setShowComments(!showComments)}
+                        >
+                            <Feather name="message-circle" size={25} color="white" style={{
+                                textAlign: "center",
+                                alignItems: "center",
+                                alignSelf: "center",
+                                resizeMode: "contain"
+                            }} />
+
+
+                        </TouchableOpacity>
+                        {
+                            showComments && (
+                                <CardComment post={post} />
+                            )
+                        }
+                    </View>
                     <CommentNumber post={post} />
+
                 </View>
+
+
 
                 <TouchableOpacity style={{
                     backgroundColor: "#161414",
@@ -291,14 +305,8 @@ const CommentNumber = ({ post }) => {
 const LikesButton = ({ post }) => {
 
     const uid = useContext(UidContext)
-
     const [liked, setLiked] = useState(false)
-
-    const usersData = useSelector((state) => state.usersReducer)
-    const userData = useSelector((state) => state.userReducer)
-
     const dispatch = useDispatch()
-
 
     const like = async () => {
         dispatch(likePost(post._id, uid))
@@ -385,6 +393,9 @@ const Caption = ({ post }) => {
             </Text>
             <Text style={{ color: '#B7AFAF', textAlign: 'justify' }}> {''}
                 {post.caption}
+
+                <CommentsSection post={post} />
+                <Comments post={post} />
             </Text>
         </View>
 
@@ -411,9 +422,6 @@ const Comments = ({ post }) => {
         <>
             {post.comments.map((comment, index) => (
                 <View key={index} style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 5 }}>
-                    <Text style={{ color: 'white', fontWeight: '600' }}>
-                        {comment.user}
-                    </Text>
                     <Text style={{ color: '#B7AFAF', textAlign: 'justify' }}> {''}
                         {comment.comment}
                     </Text>
@@ -424,3 +432,37 @@ const Comments = ({ post }) => {
 
     )
 }
+
+
+const CardComment = ({ post }) => {
+
+    const [text, setText] = useState('')
+    const usersData = useSelector((state) => state.usersReducer)
+    const userData = useSelector((state) => state.userReducer)
+    const dispatch = useDispatch()
+
+
+    const handleComment = () => { }
+
+    return (
+        <View>
+            {
+                post.comments.map((comment) => (
+                    <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 5 }}>
+                        <Text style={{ color: 'white', fontWeight: '600' }}>
+                            {comment.user}
+                        </Text>
+                        <Text style={{ color: '#B7AFAF', textAlign: 'justify' }}> {''}
+                            {comment.comment}
+                        </Text>
+                    </View>
+
+                ))
+
+            }
+        </View>
+    )
+
+
+}
+

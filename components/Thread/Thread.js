@@ -8,6 +8,7 @@ import Posts from '../homepage/Posts';
 const Thread = () => {
 
     const [loadPost, setLoadPost] = useState(true)
+    const [count, setCount] = useState(0)
     const dispatch = useDispatch()
     const posts = useSelector((state) => state.postReducer)
 
