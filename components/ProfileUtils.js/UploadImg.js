@@ -10,10 +10,9 @@ const UploadImg = () => {
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.userReducer);
     const handlePicture = () => {
-        e.preventDefault();
         const data = new FormData();
-        data.append('name', userData.name); // name of the user;
-        data.append('userId', userData._id); // id of the user;
+        data.append('name', userData.pseudo); // name of the user;
+        data.append('userId', userData.uid); // id of the user;
         data.append('file', file); // file to upload;
 
         dispatch(uploadPicture(data, userData._id));

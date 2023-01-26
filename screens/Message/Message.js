@@ -24,7 +24,7 @@ const Message = () => {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const response = await axios.get('http://192.168.0.34:5000/api/conversation/' + uid._id);
+        const response = await axios.get('http://192.168.0.34:5000/api/message/' + uid);
         setConversations(response.data);
         console.log(response);
       }
@@ -34,7 +34,7 @@ const Message = () => {
 
     }
     getConversations();
-  }, [uid._id]);
+  }, [uid]);
 
   const handleClickReturnHome = () => {
     console.log("clicked")

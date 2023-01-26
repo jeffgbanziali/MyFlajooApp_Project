@@ -1,11 +1,28 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
 import Feather from 'react-native-vector-icons/Feather';
 import { Divider } from '@rneui/themed';
+import Thread from '../Thread/Thread';
+import React, { useState, useEffect, useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { dateParser, isEmpty } from '../Context/Utils'
+import { FontAwesome } from '@expo/vector-icons';
+import { UidContext } from '../Context/AppContext';
+import { likePost, unlikePost } from '../../actions/post.actions'
+
 
 
 
 const Posts = ({ post }) => {
+    const [isLoading, setIsLoading] = useState(true)
+    const usersData = useSelector((state) => state.usersReducer)
+    const userData = useSelector((state) => state.userReducer)
+
+
+    useEffect(() => {
+        !isEmpty(usersData[0]) && setIsLoading(false)
+    }, [usersData])
+
+
     return (
         <View style={{
             marginTop: 8,
@@ -17,20 +34,38 @@ const Posts = ({ post }) => {
             zIndex: 1,
 
 
-        }}>
+        }} >
+            <View key={post._id}>
+                {
+                    isLoading ? (
+                        <Text
+                            style={{
+                                textAlign: 'center',
+                                marginTop: 20,
+                                marginBottom: 20,
+                                color: 'black'
+                            }}
+                        >
+                            <FontAwesome name="spinner" size={24} color="black" />
+                        </Text>
+                    ) : (
+                        <>
+                            <PostHeader post={post} />
+                            {
+                                post.picture && (
+                                    <PostImage post={post} />
+                                )
 
-            <PostHeader post={post} />
-            <PostImage post={post} />
-            <PostFooter post={post} />
-            <View style={{ backgroundColor: '#000000', borderRadius: 30, paddingBottom: 10, marginBottom: 8 }}>
-                <Likes post={post} />
+                            }
+                            <PostFooter post={post} />
+
+
+                        </>
+                    )
+                }
             </View>
 
-            <View style={{ backgroundColor: '#3D3939', borderRadius: 30, paddingBottom: 10 }}>
-                <Caption post={post} />
-                <CommentsSection post={post} />
-                <Comments post={post} />
-            </View>
+
 
 
 
@@ -42,62 +77,105 @@ const Posts = ({ post }) => {
 export default Posts
 
 const PostHeader = ({ post }) => {
-    return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity>
-                    <Image source={{ uri: post.profile_picture }}
+    const [isLoading, setIsLoading] = useState(true)
+    const usersData = useSelector((state) => state.usersReducer)
+    const userData = useSelector((state) => state.userReducer)
 
+
+    useEffect(() => {
+        !isEmpty(usersData[0]) && setIsLoading(false)
+    }, [usersData])
+
+    return (
+        <>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity>
+                        <Image source={
+                            !isEmpty(usersData[0]) &&
+                            usersData.map((user) => {
+                                if (user._id === post.posterId) {
+                                    return user.picture
+                                }
+                            }
+                            ).join("")
+                        }
+
+                            style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 30,
+                                marginTop: 10,
+                                borderWidth: 3,
+                                borderColor: "red",
+                                marginLeft: 30,
+                                resizeMode: "cover"
+                            }} />
+                    </TouchableOpacity>
+
+                    <Text style={{
+                        color: "white",
+                        marginLeft: 5,
+                        fontWeight: '600'
+                    }}>{!isEmpty(usersData[0]) &&
+                        usersData.map((user) => {
+                            if (user._id === post.posterId) {
+                                return user.pseudo
+                            }
+                        }
+                        ).join("")}</Text>
+                    <Text style={{
+                        color: "#797777",
+                        fontSize: 10,
+                        marginRight: 10,
+                        marginTop: 30,
+                        marginHorizontal: -35,
+                        fontWeight: '400',
+                        fontSize: 10,
+                        lineHeight: 12,
+
+
+
+                    }}>{
+                            dateParser(post.createdAt)
+                        }</Text>
+                </View>
+                <TouchableOpacity style={{
+                    backgroundColor: "#302929",
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignSelf: 'center'
+                }}>
+                    <Feather name="more-horizontal" size={25} color="white"
                         style={{
-                            width: 50,
-                            height: 50,
-                            borderRadius: 30,
-                            marginTop: 10,
-                            borderWidth: 3,
-                            borderColor: "red",
-                            marginLeft: 30,
-                            resizeMode: "cover"
+                            textAlign: "center",
+                            alignItems: "center",
+                            alignSelf: "center",
+                            resizeMode: "contain"
                         }} />
                 </TouchableOpacity>
 
-                <Text style={{
-                    color: "white",
-                    marginLeft: 5,
-                    fontWeight: '600'
-                }}>{post.user}</Text>
-                <Text style={{
-                    color: "#797777",
-                    fontSize: 10,
-                    marginRight: 40,
-                    marginTop: 30,
-                    marginHorizontal: -35,
-                    fontWeight: '400',
-                    fontSize: 10,
-                    lineHeight: 12,
-
-
-
-                }}>{post.time}</Text>
             </View>
-            <TouchableOpacity style={{
-                backgroundColor: "#302929",
-                width: 40,
-                height: 40,
-                borderRadius: 30,
-                marginRight: 10,
-                justifyContent: 'center',
-                alignSelf: 'center'
-            }}>
-                <Feather name="more-horizontal" size={25} color="white"
-                    style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        resizeMode: "contain"
-                    }} />
-            </TouchableOpacity>
 
-        </View>
+            <View>
+                <Text
+                    style={{
+                        color: "white",
+                        fontSize: 15,
+                        fontWeight: '400',
+                        marginHorizontal: 30,
+                        lineHeight: 20,
+                        marginBottom: 10
+                    }}
+                >
+                    {post.message}
+                </Text>
+            </View>
+        </>
+
     )
 }
 
@@ -105,7 +183,7 @@ const PostHeader = ({ post }) => {
 const PostImage = ({ post }) => {
     return (
         <View>
-            <Image source={{ uri: post.imageUrl }}
+            <Image source={post.picture}
                 style={{
                     width: '100%',
                     height: 400,
@@ -125,38 +203,33 @@ const PostFooter = ({ post }) => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20, marginVertical: 10 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity style={{
-                    backgroundColor: "#161414",
-                    width: 50,
-                    height: 50,
-                    borderRadius: 30,
-                    marginRight: 10,
-                    justifyContent: 'center',
-                    alignSelf: 'center'
-                }}>
-                    <Feather name="heart" size={25} color="white" style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        resizeMode: "contain"
-                    }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: "#161414",
-                    width: 50,
-                    height: 50,
-                    borderRadius: 30,
-                    marginRight: 10,
-                    justifyContent: 'center',
-                    alignSelf: 'center'
-                }}>
-                    <Feather name="message-circle" size={25} color="white" style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        resizeMode: "contain"
-                    }} />
-                </TouchableOpacity>
+                <View>
+
+                    <LikesButton post={post} />
+
+                </View>
+
+                <View>
+                    <TouchableOpacity style={{
+                        backgroundColor: "#161414",
+                        width: 50,
+                        height: 50,
+                        borderRadius: 30,
+                        marginRight: 10,
+                        justifyContent: 'center',
+                        alignSelf: 'center'
+                    }}>
+                        <Feather name="message-circle" size={25} color="white" style={{
+                            textAlign: "center",
+                            alignItems: "center",
+                            alignSelf: "center",
+                            resizeMode: "contain"
+                        }} />
+
+                    </TouchableOpacity>
+                    <CommentNumber post={post} />
+                </View>
+
                 <TouchableOpacity style={{
                     backgroundColor: "#161414",
                     width: 50,
@@ -195,14 +268,112 @@ const PostFooter = ({ post }) => {
     )
 }
 
-const Likes = ({ post }) => {
+const CommentNumber = ({ post }) => {
+    const [isLoading, setIsLoading] = useState(true)
+    const usersData = useSelector((state) => state.usersReducer)
+    const userData = useSelector((state) => state.userReducer)
+
+
+    useEffect(() => {
+        !isEmpty(usersData[0]) && setIsLoading(false)
+    }, [usersData])
     return (
         <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
             <Text style={{ color: 'white', fontWeight: '600' }}>
-                {post.likes.toLocaleString("en")} likes
+                {post.comments.length}
             </Text>
         </View>
 
+    )
+}
+
+
+const LikesButton = ({ post }) => {
+
+    const uid = useContext(UidContext)
+
+    const [liked, setLiked] = useState(false)
+
+    const usersData = useSelector((state) => state.usersReducer)
+    const userData = useSelector((state) => state.userReducer)
+
+    const dispatch = useDispatch()
+
+
+    const like = async () => {
+        dispatch(likePost(post._id, uid))
+        setLiked(true)
+    }
+
+    const unlike = async () => {
+        dispatch(unlikePost(post._id, uid))
+        setLiked(false)
+    }
+
+    useEffect(() => {
+        if (post.likers.includes(uid)) setLiked(true)
+        else setLiked(false)
+    }, [uid, post.likers, liked])
+
+
+    return (
+
+        <View>
+            {
+                uid && liked === false && (
+                    <View>
+                        <TouchableOpacity style={{
+                            backgroundColor: "red",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginRight: 10,
+                            justifyContent: 'center',
+                            alignSelf: 'center'
+                        }}
+                            onPress={like}
+                        >
+                            <Feather name="heart" size={25} color="white" style={{
+                                textAlign: "center",
+                                alignItems: "center",
+                                alignSelf: "center",
+                                resizeMode: "contain"
+                            }} />
+
+                        </TouchableOpacity>
+                        <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
+                            <Text style={{ color: 'white', fontWeight: '600' }}>
+                                {post.likers.length}
+                            </Text>
+                        </View>
+                    </View>
+
+                )
+            }
+            {
+                uid && liked && (
+                    <TouchableOpacity style={{
+                        backgroundColor: "#161414",
+                        width: 50,
+                        height: 50,
+                        borderRadius: 30,
+                        marginRight: 10,
+                        justifyContent: 'center',
+                        alignSelf: 'center'
+                    }}
+                        onPress={unlike}
+                    >
+                        <Feather name="heart" size={25} color="white" style={{
+                            textAlign: "center",
+                            alignItems: "center",
+                            alignSelf: "center",
+                            resizeMode: "contain"
+                        }} />
+                    </TouchableOpacity>
+
+                )
+            }
+        </View>
     )
 }
 

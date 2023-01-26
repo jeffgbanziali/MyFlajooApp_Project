@@ -2,20 +2,24 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 
 
 
 const Conversation = ({ conversation, currentUser }) => {
+    const userData = useSelector((state) => state.userReducer);
+    const usersData = useSelector((state) => state.usersReducer);
     const [user, setUser] = useState(null);
 
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
 
     useEffect(() => {
-        const friendId = conversation.members.find((member) => member !== currentUser._id);
+        const conversationId = conversation.members.find((member) => member !== currentUser);
         const getUser = async () => {
             try {
-                const response = await axios.post('http://http://http://192.168.0.34:5000/api/?userId=' + friendId);
+                const response = await axios.post('http://192.168.0.34:5000/api/conversation/' + conversationId);
                 setUser(response.data);
                 console.log(response);
             }
@@ -24,7 +28,7 @@ const Conversation = ({ conversation, currentUser }) => {
             }
         }
         getUser();
-    }, [currentUser._id, conversation]);
+    }, [currentUser, conversation]);
 
 
     const containerStyle = {
@@ -55,16 +59,17 @@ const Conversation = ({ conversation, currentUser }) => {
                     }}
 
                 />
-                <Text
-                    style={{
-                        fontSize: 16,
-                        marginLeft: 20,
-                        alignContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'center',
-                        fontWeight: 'bold',
-                    }}
-                >{user?.pseudo}</Text>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            marginLeft: 20,
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                        }}>
+                        {userData.pseudo}
+                    </Text>
             </TouchableOpacity>
 
         </View>

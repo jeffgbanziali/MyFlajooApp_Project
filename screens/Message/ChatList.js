@@ -4,9 +4,15 @@ import Chat from './Chat';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
 
 
 const Message = () => {
+
+    const userData = useSelector((state) => state.userReducer);
+    const usersData = useSelector((state) => state.usersReducer);
+
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
 
@@ -161,21 +167,22 @@ const Message = () => {
 
                     }}>
                     </View>
-                    <Text style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        marginLeft: 10,
-                        marginTop: 10,
-                        textAlign: 'center',
-                        alignContent: 'center',
-                        alignItems: 'center',
-                        color: '#FFFFFF',
+                    
+                        <Text style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            marginLeft: 10,
+                            marginTop: 10,
+                            textAlign: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            color: '#FFFFFF',
+                        }}
+                        >
+                            pseudo
+                        </Text>
 
-
-                    }}
-                    >
-                        {username}
-                    </Text>
+                    
                     <Text
                         style={{
                             fontSize: 15,

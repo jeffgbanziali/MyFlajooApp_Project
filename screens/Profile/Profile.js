@@ -149,7 +149,7 @@ const Profile = () => {
 
                                         }}>
                                         </View>
-
+                                        <UploadImg />
 
                                     </TouchableOpacity>
 

@@ -8,6 +8,7 @@ import { POSTS } from '../../Data/MyPostUser';
 import NavButtonHome from '../../components/homepage/NavButtonHome';
 import { UidContext } from '../../components/Context/AppContext';
 import Footer from '../../components/homepage/Footer';
+import Thread from '../../components/Thread/Thread';
 
 
 
@@ -34,9 +35,7 @@ const HomeScreen = () => {
                             >
                                 <NavButtonHome />
                             </View>
-                            {POSTS.map((post, index) => (
-                                <Posts key={index} post={post} />
-                            ))}
+                            <Thread />
                         </ScrollView>
                         <View>
                             <Footer />
