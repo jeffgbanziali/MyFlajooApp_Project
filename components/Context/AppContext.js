@@ -13,13 +13,13 @@ export const UidContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, INITIAL_STATE);
 
     useEffect(() => {
-        AsyncStorage.setItem('user', (state.user));
+        AsyncStorage.setItem('user', (state.uid));
     }, [state.user]);
 
     return (
         <UidContext.Provider
             value={{
-                user: state.user,
+                uid: state.uid,
                 isFetching: state.isFetching,
                 error: state.error,
                 dispatch,

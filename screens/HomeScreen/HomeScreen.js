@@ -35,7 +35,7 @@ const HomeScreen = () => {
                             >
                                 <NavButtonHome />
                             </View>
-                            <Thread />
+                            <Thread  />
                         </ScrollView>
                         <View>
                             <Footer />

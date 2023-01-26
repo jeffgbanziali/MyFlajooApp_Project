@@ -17,6 +17,8 @@ const Message = () => {
 
   const { uid } = useContext(UidContext);
 
+  console.log(uid);
+
 
 
   const navigation = useNavigation();
@@ -24,17 +26,16 @@ const Message = () => {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const response = await axios.get('http://192.168.0.34:5000/api/message/' + uid);
-        setConversations(response.data);
-        console.log(response);
-      }
-      catch (error) {
-        console.log(error);
+        const res = await axios.get(`http://192.168.0.34:5000/api/conversations/` + uid._id  );
+        setConversations(res.data);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
       }
 
     }
     getConversations();
-  }, [uid]);
+  }, [uid._id]);
 
   const handleClickReturnHome = () => {
     console.log("clicked")
@@ -287,7 +288,7 @@ const Message = () => {
               <View>
                 {
                   conversations.map((c) => (
-                    <Conversation conversation={c} current={uid} />
+                    <Conversation conversation={c} current= {uid} />
                   ))
 
                 }

@@ -16,10 +16,10 @@ const Conversation = ({ conversation, currentUser }) => {
     const [isPressed, setIsPressed] = useState(false);
 
     useEffect(() => {
-        const conversationId = conversation.members.find((member) => member !== currentUser);
+        const friendId = conversation.members.find((member) => member !== currentUser._id);
         const getUser = async () => {
             try {
-                const response = await axios.post('http://192.168.0.34:5000/api/conversation/' + conversationId);
+                const response = await axios.post('http://192.168.0.34:5000/api/user/' + friendId);
                 setUser(response.data);
                 console.log(response);
             }
@@ -50,7 +50,7 @@ const Conversation = ({ conversation, currentUser }) => {
                 onPressOut={() => setIsPressed(false)}
                 onPress={handleClickMessage}
             >
-                <Image source={require('../../assets/Images/woman-gdc9219422_1920.jpg')}
+                <Image source={{ uri: user?.picture }}
                     style={{
                         width: 60,
                         height: 60,
@@ -59,17 +59,17 @@ const Conversation = ({ conversation, currentUser }) => {
                     }}
 
                 />
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            marginLeft: 20,
-                            alignContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                        }}>
-                        {userData.pseudo}
-                    </Text>
+                <Text
+                    style={{
+                        fontSize: 16,
+                        marginLeft: 20,
+                        alignContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        fontWeight: 'bold',
+                    }}>
+                    {user?.pseudo}
+                </Text>
             </TouchableOpacity>
 
         </View>

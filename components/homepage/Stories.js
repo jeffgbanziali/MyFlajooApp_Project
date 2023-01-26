@@ -38,7 +38,7 @@ const Stories = () => {
 
                             <View>
                                 <Image
-                                    key={index} source={{ uri: story.image }}
+                                    source={{ uri: story.image }}
                                     style={{
                                         width: 100,
                                         height: 140,
