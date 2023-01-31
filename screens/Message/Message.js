@@ -7,6 +7,7 @@ import ChatOnline from '../../components/MessagesUser/ChatOnline';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { UidContext } from '../../components/Context/AppContext';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
@@ -15,27 +16,26 @@ const Message = () => {
 
   const [conversations, setConversations] = useState([]);
 
-  const { uid } = useContext(UidContext);
 
-  console.log(uid);
+  const userData = useSelector((state) => state.userReducer);
+
+  const uid = useContext(UidContext);
+
+  useEffect(() => {
+    userData.user && axios.get(`http://localhost:3000/api/conversation/${conversationId}}`)
+      .then((res) => {
+        setConversations(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [userData.conversation]);
+
+
+
 
 
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const getConversations = async () => {
-      try {
-        const res = await axios.get(`http://192.168.0.34:5000/api/conversations/` + uid._id  );
-        setConversations(res.data);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-
-    }
-    getConversations();
-  }, [uid._id]);
 
   const handleClickReturnHome = () => {
     console.log("clicked")
@@ -286,12 +286,11 @@ const Message = () => {
             >
 
               <View>
-                {
-                  conversations.map((c) => (
-                    <Conversation conversation={c} current= {uid} />
-                  ))
-
-                }
+                <ScrollView>
+                  {conversations.map(conversation => (
+                    <Conversation key={conversation._id} conversation={conversation} />
+                  ))}
+                </ScrollView>
 
               </View>
             </View>

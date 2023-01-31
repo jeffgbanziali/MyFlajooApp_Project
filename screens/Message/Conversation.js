@@ -7,28 +7,13 @@ import { useSelector } from 'react-redux';
 
 
 
-const Conversation = ({ conversation, currentUser }) => {
+const Conversation = () => {
     const userData = useSelector((state) => state.userReducer);
     const usersData = useSelector((state) => state.usersReducer);
     const [user, setUser] = useState(null);
 
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
-
-    useEffect(() => {
-        const friendId = conversation.members.find((member) => member !== currentUser._id);
-        const getUser = async () => {
-            try {
-                const response = await axios.post('http://192.168.0.34:5000/api/user/' + friendId);
-                setUser(response.data);
-                console.log(response);
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-        getUser();
-    }, [currentUser, conversation]);
 
 
     const containerStyle = {

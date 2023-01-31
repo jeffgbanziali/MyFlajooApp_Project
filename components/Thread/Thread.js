@@ -25,10 +25,10 @@ const Thread = () => {
             <View>
                 {
                     !isEmpty(posts[0]) && (
-                        posts.map((post) => {
+                        posts.map((posts) => {
                             return (
                                 <View>
-                                    <Posts post={post} key={post._id} />
+                                    <Posts post={posts} key={posts._id} />
                                 </View>
                             )
                         })

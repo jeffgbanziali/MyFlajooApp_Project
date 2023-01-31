@@ -22,6 +22,12 @@ const Profile = () => {
     const [updateForm, setUpdateForm] = useState(false);
     const dispatch = useDispatch();
 
+    const [image, setImage] = useState(null);
+
+    const handleImageChange = (newImage) => {
+        setImage(newImage);
+        console.log(image);
+    }
     const handleUpdate = () => {
         if (bio !== userData.bio) {
             dispatch(updateBio(userData._id, bio));
@@ -149,7 +155,7 @@ const Profile = () => {
 
                                         }}>
                                         </View>
-                                        <UploadImg />
+                                        <UploadImg image={image} onChange={handleImageChange} />
 
                                     </TouchableOpacity>
 
