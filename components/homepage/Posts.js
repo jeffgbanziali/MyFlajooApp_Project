@@ -8,6 +8,7 @@ import { dateParser, isEmpty } from '../Context/Utils'
 import { FontAwesome } from '@expo/vector-icons';
 import { UidContext } from '../Context/AppContext';
 import { likePost, unlikePost } from '../../actions/post.actions'
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -175,19 +176,20 @@ const Posts = ({ post }) => {
 
                                     </View>
                                     <View>
-                                        <View style={{
-                                            backgroundColor: "#161414",
-                                            width: 50,
-                                            height: 50,
-                                            borderRadius: 30,
-                                            marginRight: 10,
-                                            justifyContent: 'center',
-                                            alignSelf: 'center'
-                                        }}>
+                                        <TouchableOpacity
+                                            onPress={() => setShowComments(!showComments)}
+                                        >
+                                            <View style={{
+                                                backgroundColor: "#161414",
+                                                width: 50,
+                                                height: 50,
+                                                borderRadius: 30,
+                                                marginRight: 10,
+                                                justifyContent: 'center',
+                                                alignSelf: 'center'
+                                            }}>
 
-                                            <TouchableOpacity
-                                                onPress={() => setShowComments(!showComments)}
-                                            >
+
                                                 <Feather name="message-circle" size={25} color="white" style={{
                                                     textAlign: "center",
                                                     alignItems: "center",
@@ -196,30 +198,18 @@ const Posts = ({ post }) => {
                                                 }} />
 
 
-                                            </TouchableOpacity>
-                                            {
-                                                showComments && (
-                                                    <View>
-                                                        {
 
 
-                                                            <>
-                                                                <CardComments post={post} />
-                                                            </>
-
-                                                        }
-                                                    </View>
-                                                )
-                                            }
-                                        </View>
+                                            </View>
+                                        </TouchableOpacity>
                                         <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
                                             <Text style={{ color: 'white', fontWeight: '600' }}>
                                                 {post.comments.length}
                                             </Text>
                                         </View>
 
-
                                     </View>
+
 
 
 
@@ -257,6 +247,36 @@ const Posts = ({ post }) => {
                                         resizeMode: "contain"
                                     }} />
                                 </TouchableOpacity>
+                            </View>
+                            <View>
+                                {
+                                    showComments && (
+                                        <View
+                                            style={{
+                                                alignContent: 'center',
+                                                alignItems: 'center',
+                                                alignSelf: 'center',
+                                                justifyContent: 'center',
+                                                marginTop: 10,
+                                                backgroundColor: "#161414",
+                                                width: "100%",
+                                                height: 300,
+                                                borderRadius: 30,
+                                                marginTop: 10,
+                                            }}
+
+                                        >
+                                            {
+
+
+                                                <>
+                                                    <CardComments post={post} />
+                                                </>
+
+                                            }
+                                        </View>
+                                    )
+                                }
                             </View>
 
 
@@ -369,7 +389,6 @@ const CardComments = ({ post }) => {
 
     const handleComment = () => {
 
-
         if (text) {
             dispatch(addComment(post._id, userData._id, text, userData.pseudo))
                 .then(() => dispatch(getPosts()))
@@ -378,18 +397,7 @@ const CardComments = ({ post }) => {
     };
 
     return (
-        <View
-            style={{
-                backgroundColor: "#161414",
-                width: 500,
-                height: 150,
-                borderRadius: 30,
-                marginRight: 10,
-                justifyContent: 'center',
-                alignSelf: 'center',
-                zIndex: 1
-            }}
-        >
+        <View>
             {post.comments.map((comment) => {
                 let commentContainerStyle = {};
                 let leftPartStyle = {};
@@ -412,30 +420,33 @@ const CardComments = ({ post }) => {
                 }
 
                 return (
-                    <View style={commentContainerStyle} key={comment._id}>
-                        <View style={leftPartStyle}>
-                            <Image
-                                source={{ uri: commenterPicture }}
-                                style={styles.commenterPicture}
-                                alt="commenter-pic"
-                            />
-                        </View>
-                        <View style={rightPartStyle}>
-                            <View style={styles.commentHeader}>
-                                <View style={styles.pseudo}>
-                                    <Text style={styles.pseudoText}>{comment.commenterPseudo}</Text>
-                                    {comment.commenterId !== userData._id && (
-                                        <TouchableOpacity style={styles.replyButton}>
-                                            <Text style={styles.replyButtonText}>Reply</Text>
-                                        </TouchableOpacity>
-                                    )}
-                                </View>
-                                <Text style={styles.timestamp}>{(comment.timestamp)}</Text>
+                    <ScrollView>
+                        <View style={commentContainerStyle} key={comment._id}>
+                            <View style={leftPartStyle}>
+                                <Image
+                                    source={{ uri: commenterPicture }}
+                                    style={styles.commenterPicture}
+                                    alt="commenter-pic"
+                                />
                             </View>
-                            <Text>{comment.text}</Text>
+                            <View style={rightPartStyle}>
+                                <View style={styles.commentHeader}>
+                                    <View style={styles.pseudo}>
+                                        <Text style={styles.pseudoText}>{comment.commenterPseudo}</Text>
+                                        {comment.commenterId !== userData._id && (
+                                            <TouchableOpacity style={styles.replyButton}>
+                                                <Text style={styles.replyButtonText}>Reply</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                    </View>
+                                    <Text style={styles.timestamp}>{(comment.timestamp)}</Text>
+                                </View>
+                                <Text>{comment.text}</Text>
 
+                            </View>
                         </View>
-                    </View>
+                    </ScrollView>
+
                 );
             })}
             {userData._id && (
@@ -463,8 +474,14 @@ const styles = {
     clientCommentContainer: {
         backgroundColor: "#e6e6e6"
     },
-    leftPart: {},
-    rightPart: {},
+    leftPart: {
+        marginRight: 10
+
+    },
+    rightPart: {
+        flex: 1
+
+    },
     commenterPicture: {
         width: 50,
         height: 50
