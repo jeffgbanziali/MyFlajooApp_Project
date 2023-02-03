@@ -18,13 +18,13 @@ export const getUser = (uid) => {
     };
 };
 
-export const uploadPicture = (data, uid) => {
+export const uploadPicture = (data, id) => {
     return (dispatch) => {
         return axios
             .post("http://192.168.0.34:5000/api/user/upload", data)
             .then((res) => {
                 return axios // return axios to chain the two requests
-                    .get(`http://192.168.0.34:5000/api/user/${uid}`)
+                    .get(`http://192.168.0.34:5000/api/user/${id}`)
                     .then((res) => {
                         dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
                     })

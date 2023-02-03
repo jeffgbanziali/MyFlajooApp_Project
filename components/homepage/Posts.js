@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { dateParser, isEmpty } from '../Context/Utils'
 import { FontAwesome } from '@expo/vector-icons';
 import { UidContext } from '../Context/AppContext';
-import { likePost, unlikePost } from '../../actions/post.actions'
+import { likePost, unlikePost, addComment } from '../../actions/post.actions'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -154,7 +154,7 @@ const Posts = ({ post }) => {
                             </View>
                             {
                                 post.picture && (
-                                    <Image source={{ uri: post.picture }}
+                                    <Image source={post.picture }
                                         style={{
                                             width: '100%',
                                             height: 400,
@@ -385,6 +385,7 @@ const CardComments = ({ post }) => {
     const [text, setText] = useState("");
     const usersData = useSelector((state) => state.usersReducer);
     const userData = useSelector((state) => state.userReducer);
+
     const dispatch = useDispatch();
 
     const handleComment = () => {
