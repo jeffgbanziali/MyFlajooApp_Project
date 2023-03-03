@@ -10,7 +10,7 @@ export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const getUser = (uid) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.34:5000/api/user/${uid}`)
+            .get(`http://10.3.206.20:5000/api/user/${uid}`)
             .then((res) => {
                 dispatch({ type: GET_USER, payload: res.data });
             })
@@ -21,10 +21,10 @@ export const getUser = (uid) => {
 export const uploadPicture = (data, id) => {
     return (dispatch) => {
         return axios
-            .post("http://192.168.0.34:5000/api/user/upload", data)
+            .post("http://10.3.206.20:5000/api/user/upload", data)
             .then((res) => {
                 return axios // return axios to chain the two requests
-                    .get(`http://192.168.0.34:5000/api/user/${id}`)
+                    .get(`http://10.3.206.20:5000/api/user/${id}`)
                     .then((res) => {
                         dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
                     })
@@ -40,7 +40,7 @@ export const updateBio = (bio, userId) => {
     return (dispatch) => {
         const data = bio
         return axios
-            .put(`http://192.168.0.34:5000/api/user/` + userId, { bio })
+            .put(`http://10.3.206.20:5000/api/user/` + userId, { bio })
             .then((res) => {
                 dispatch({ type: UPDATE_BIO, payload: bio });
             }
@@ -49,27 +49,32 @@ export const updateBio = (bio, userId) => {
     }
 };
 
-export const followUser = (idToFollow, followerId) => {
+export const followUser = (followerId, idToFollow) => {
     return (dispatch) => {
-        return axios
-            .patch(`http://192.168.0.34:5000/api/user/follow/` + followerId, { idToFollow })
+        return axios({
+            method: "patch",
+            url: `http://localhost:5000/api/user/follow/` + followerId,
+            data: { idToFollow },
+        })
             .then((res) => {
-                dispatch({ type: FOLLOW_USER, payload: {idToFollow} });
-            }
-            )
+                dispatch({ type: FOLLOW_USER, payload: { idToFollow } });
+            })
             .catch((err) => console.log(err));
-    }
+    };
 };
-export const unfollowUser = (idToUnfollow, followerId) => {
+
+export const unfollowUser = (followerId, idToUnfollow) => {
     return (dispatch) => {
-        return axios
-            .patch(`http://192.168.0.34:5000/api/user/unfollow/` + followerId, { idToUnfollow })
+        return axios({
+            method: "patch",
+            url: `http://localhost:5000/api/user/unfollow/` + followerId,
+            data: { idToUnfollow },
+        })
             .then((res) => {
-                dispatch({ type: UNFOLLOW_USER, payload: {idToUnfollow} });
-            }
-            )
+                dispatch({ type: UNFOLLOW_USER, payload: { idToUnfollow } });
+            })
             .catch((err) => console.log(err));
-    }
+    };
 };
 
 

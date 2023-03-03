@@ -11,11 +11,11 @@ const MyFollowers = () => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{
                 flex: 1,
-                backgroundColor: '#2C2828',
+                backgroundColor: 'black',
             }}
 
         >
-            <View>
+            <View style={{ flex: 1 }}>
                 <Text
                     style={{
                         fontSize: 30,
@@ -45,6 +45,7 @@ const MyFollowers = () => {
                                             <View
                                                 style={{
                                                     flexDirection: 'row',
+                                                    justifyContent: 'space-between',
                                                 }}
                                                 key={user._id}
                                             >
@@ -56,7 +57,7 @@ const MyFollowers = () => {
                                                         marginRight: 20,
                                                         marginTop: 10,
                                                         marginBottom: 10,
-                                                        flexDirection: 'row',
+                                                        flexDirection: 'row'
                                                     }}
                                                 >
                                                     <Image source={user.picture}
@@ -87,21 +88,14 @@ const MyFollowers = () => {
                                                 </View>
                                                 <View
                                                     style={{
-                                                        backgroundColor: "#3B4FB8",
-                                                        width: 80,
-                                                        height: 30,
-                                                        marginLeft: 20,
+                                                        width: 100,
+                                                        padding: 5,
                                                         marginRight: 20,
                                                         marginTop: 10,
                                                         marginBottom: 10,
-                                                        flexDirection: 'row',
                                                         justifyContent: 'center',
-                                                        alignContent: 'center',
-                                                        alignItems: 'center',
-                                                        alignSelf: 'center',
 
-                                                    }}
-                                                >
+                                                    }}>
                                                     <FollowHandler idToFollow={user._id} type={"suggestion"} />
                                                 </View>
                                             </View>

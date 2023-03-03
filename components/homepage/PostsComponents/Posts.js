@@ -1,14 +1,13 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
-import { Divider } from '@rneui/themed';
-import Thread from '../Thread/Thread';
 import React, { useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { dateParser, isEmpty } from '../Context/Utils'
+import { dateParser, isEmpty } from '../../Context/Utils'
 import { FontAwesome } from '@expo/vector-icons';
-import { UidContext } from '../Context/AppContext';
-import { likePost, unlikePost, addComment } from '../../actions/post.actions'
 import { ScrollView } from 'react-native-gesture-handler';
+import LikeButton from './LikeButton';
+import FollowHandler from '../../ProfileUtils.js/FollowHandler';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -16,25 +15,28 @@ import { ScrollView } from 'react-native-gesture-handler';
 const Posts = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true)
     const usersData = useSelector((state) => state.usersReducer)
-    const userData = useSelector((state) => state.userReducer)
+    const userData = useSelector((state) => state.userReducer);
     const [showComments, setShowComments] = useState(false)
+
+    const navigation = useNavigation();
+    const goProfil = () => {
+        navigation.navigate("ProfilFriends", { id: post.posterId })
+    }
 
 
     useEffect(() => {
         !isEmpty(usersData[0]) && setIsLoading(false)
     }, [usersData])
 
-
     return (
         <View style={{
             marginTop: 8,
             marginBottom: 5,
-            backgroundColor: "#343232",
+            backgroundColor: "black",
             position: "relative",
             borderRadius: 20,
             paddingBottom: 20,
             zIndex: 1,
-
 
         }} >
             <View key={post._id}>
@@ -52,17 +54,24 @@ const Posts = ({ post }) => {
                         </Text>
                     ) : (
                         <>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: 10
+                            }}>
                                 <View style={{
                                     flexDirection: 'row', alignItems: 'center',
                                     alignContent: 'center',
                                     alignSelf: 'center',
                                     marginBottom: 20,
                                 }}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={goProfil}
+                                    >
                                         <Image source={
                                             !isEmpty(usersData[0]) &&
-                                            usersData.map((user) => {
+                                            usersData?.map((user) => {
                                                 if (user._id === post.posterId)
                                                     return user.picture;
                                                 else return null
@@ -88,18 +97,36 @@ const Posts = ({ post }) => {
 
                                         }}
                                     >
-                                        <Text style={{
-                                            color: "white",
-                                            marginLeft: 5,
-                                            fontWeight: '600',
-                                            marginTop: 10,
-                                        }}>{!isEmpty(usersData[0]) &&
-                                            usersData.map((user) => {
-                                                if (user._id === post.posterId)
-                                                    return user.pseudo;
-                                                else return null
-                                            }
-                                            ).join("")}</Text>
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+
+                                            }}>
+                                            <Text style={{
+                                                color: "white",
+                                                marginLeft: 5,
+                                                fontWeight: '600',
+                                                marginTop: 10,
+                                            }}>{!isEmpty(usersData[0]) &&
+                                                usersData?.map((user) => {
+                                                    if (user._id === post.posterId)
+                                                        return user.pseudo;
+                                                    else return null
+                                                }
+                                                ).join("")}</Text>
+                                            <View
+                                                style={{
+                                                    width: 100,
+                                                    marginLeft: 5,
+                                                    marginTop: 10,
+                                                    justifyContent: 'center',
+                                                }}>
+                                                {
+                                                    post.posterId !== userData._id && <FollowHandler idToFollow={post.posterId} type={"friends"} />
+
+                                                }
+                                            </View>
+                                        </View>
                                         <Text style={{
                                             color: "#797777",
                                             fontSize: 10,
@@ -108,15 +135,11 @@ const Posts = ({ post }) => {
                                             fontWeight: '400',
                                             fontSize: 12,
                                             lineHeight: 12,
-
-
-
                                         }}>{
                                                 dateParser(post.createdAt)
-                                            }</Text>
+                                            }
+                                        </Text>
                                     </View>
-
-
                                 </View>
                                 <TouchableOpacity style={{
                                     backgroundColor: "#302929",
@@ -135,9 +158,7 @@ const Posts = ({ post }) => {
                                             resizeMode: "contain"
                                         }} />
                                 </TouchableOpacity>
-
                             </View>
-
                             <View>
                                 <Text
                                     style={{
@@ -152,28 +173,20 @@ const Posts = ({ post }) => {
                                     {post.message}
                                 </Text>
                             </View>
-                            {
-                                post.picture && (
-                                    <Image source={post.picture }
-                                        style={{
-                                            width: '100%',
-                                            height: 400,
-                                            resizeMode: "cover",
-                                            borderTopLeftRadius: 20,
-                                            borderTopRightRadius: 20,
-                                            borderBottomLeftRadius: 0,
-                                            borderBottomRightRadius: 0
-
-                                        }} />
-                                )
-
-                            }
+                            <Image source={post.picture}
+                                style={{
+                                    width: '100%',
+                                    height: 400,
+                                    resizeMode: "cover",
+                                    borderTopLeftRadius: 20,
+                                    borderTopRightRadius: 20,
+                                    borderBottomLeftRadius: 0,
+                                    borderBottomRightRadius: 0
+                                }} />
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20, marginVertical: 10 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <View>
-
-                                        <LikesButton post={post} />
-
+                                        <LikeButton post={post} />
                                     </View>
                                     <View>
                                         <TouchableOpacity
@@ -188,18 +201,12 @@ const Posts = ({ post }) => {
                                                 justifyContent: 'center',
                                                 alignSelf: 'center'
                                             }}>
-
-
                                                 <Feather name="message-circle" size={25} color="white" style={{
                                                     textAlign: "center",
                                                     alignItems: "center",
                                                     alignSelf: "center",
                                                     resizeMode: "contain"
                                                 }} />
-
-
-
-
                                             </View>
                                         </TouchableOpacity>
                                         <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
@@ -207,12 +214,7 @@ const Posts = ({ post }) => {
                                                 {post.comments.length}
                                             </Text>
                                         </View>
-
                                     </View>
-
-
-
-
                                     <TouchableOpacity style={{
                                         backgroundColor: "#161414",
                                         width: 50,
@@ -296,90 +298,6 @@ const Posts = ({ post }) => {
 
 export default Posts
 
-
-
-const LikesButton = ({ post }) => {
-
-    const uid = useContext(UidContext)
-    const [liked, setLiked] = useState(false)
-    const dispatch = useDispatch()
-
-    const like = async () => {
-        dispatch(likePost(post._id, uid))
-        setLiked(true)
-    }
-
-    const unlike = async () => {
-        dispatch(unlikePost(post._id, uid))
-        setLiked(false)
-    }
-
-    useEffect(() => {
-        if (post.likers.includes(uid)) setLiked(true)
-        else setLiked(false)
-    }, [uid, post.likers, liked])
-
-
-    return (
-
-        <View>
-            {
-                uid && liked === false && (
-                    <View>
-                        <TouchableOpacity style={{
-                            backgroundColor: "red",
-                            width: 50,
-                            height: 50,
-                            borderRadius: 30,
-                            marginRight: 10,
-                            justifyContent: 'center',
-                            alignSelf: 'center'
-                        }}
-                            onPress={like}
-                        >
-                            <Feather name="heart" size={25} color="white" style={{
-                                textAlign: "center",
-                                alignItems: "center",
-                                alignSelf: "center",
-                                resizeMode: "contain"
-                            }} />
-
-                        </TouchableOpacity>
-                        <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
-                            <Text style={{ color: 'white', fontWeight: '600' }}>
-                                {post.likers.length}
-                            </Text>
-                        </View>
-                    </View>
-
-                )
-            }
-            {
-                uid && liked && (
-                    <TouchableOpacity style={{
-                        backgroundColor: "#161414",
-                        width: 50,
-                        height: 50,
-                        borderRadius: 30,
-                        marginRight: 10,
-                        justifyContent: 'center',
-                        alignSelf: 'center'
-                    }}
-                        onPress={unlike}
-                    >
-                        <Feather name="heart" size={25} color="white" style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            resizeMode: "contain"
-                        }} />
-                    </TouchableOpacity>
-
-                )
-            }
-        </View>
-    )
-}
 
 const CardComments = ({ post }) => {
     const [text, setText] = useState("");

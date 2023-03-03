@@ -13,7 +13,7 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const getPosts = (num) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.34:5000/api/post`)
+            .get(`http://10.3.206.20:5000/api/post`)
             .then((res) => {
                 const array = res.data.slice(0, num);
                 dispatch({ type: GET_POSTS, payload: array });
@@ -26,7 +26,7 @@ export const getPosts = (num) => {
 export const addPosts = (num) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.34:5000/api/post`, data)
+            .get(`http://10.3.206.20:5000/api/post`, data)
             .then((res) => {
                 if (res.data.errors) {
                     dispatch({ type: GET_POST_ERRORS, payload: res.data.errors });
@@ -37,37 +37,37 @@ export const addPosts = (num) => {
     }
 };
 
-export const likePost = (userId, postId) => {
+export const likePost = (postId, userId) => {
     return (dispatch) => {
-        return axios
-            .patch(`http://192.168.0.34:5000/api/post/like-post/` + postId, userId)
+        return axios({
+            method: "patch",
+            url: `http://10.3.206.20:5000/api/post/like-post/` + postId,
+            data: { id: userId },
+        })
             .then((res) => {
                 dispatch({ type: LIKE_POST, payload: { postId, userId } });
-            }
-            )
+            })
             .catch((err) => console.log(err));
-    }
+    };
 };
 
-export const unlikePost = (userId, postId) => {
+export const unlikePost = (postId, userId) => {
     return (dispatch) => {
-        return axios
-            .patch(`http://192.168.0.34:5000/api/post/unlike-post/` + postId, userId)
+        return axios({
+            method: "patch",
+            url: `http://10.3.206.20:5000/api/post/unlike-post/` + postId,
+            data: { id: userId },
+        })
             .then((res) => {
-                dispatch({
-                    type:
-                        UNLIKE_POST, payload: { postId, userId }
-                });
-            }
-            )
+                dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
+            })
             .catch((err) => console.log(err));
-    }
+    };
 };
-
 export const addComment = (userId, postId, text) => {
     return (dispatch) => {
         return axios
-            .patch(`http://http://192.168.0.34:5000/api/post/comment-post/` + postId, { commenterId, text, commenterPseudo })
+            .patch(`http://10.3.206.20:5000/api/post/comment-post/` + postId, { commenterId, text, commenterPseudo })
             .then((res) => {
                 dispatch({ type: ADD_COMMENT, payload: { postId } });
             })

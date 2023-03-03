@@ -16,6 +16,7 @@ import ChatList from "../screens/Message/ChatList";
 import { UidContext } from "../components/Context/AppContext";
 import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
+import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
 
 
 
@@ -30,7 +31,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
     const { uid } = useContext(UidContext);
     console.log(uid);
-    console.log("StackNavigation"); 
+    console.log("StackNavigation");
 
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
@@ -39,6 +40,7 @@ const StackNavigation = () => {
                     uid ? (
                         <>
                             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                            <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
                             <Stack.Screen name="Messages" component={Message} />
                             <Stack.Screen name="Chatlist" component={ChatList} />
                             <Stack.Screen name="Profile" component={Profile} />

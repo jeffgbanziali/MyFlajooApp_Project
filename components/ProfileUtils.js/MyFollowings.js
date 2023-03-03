@@ -12,7 +12,7 @@ const MyFollowers = () => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{
                 flex: 1,
-                backgroundColor: '#2C2828',
+                backgroundColor: 'black',
             }}
 
         >
@@ -47,6 +47,7 @@ const MyFollowers = () => {
                                             <View
                                                 style={{
                                                     flexDirection: 'row',
+                                                    justifyContent: 'space-between',
                                                 }}
                                             >
 
@@ -88,27 +89,18 @@ const MyFollowers = () => {
                                                 </View>
                                                 <View
                                                     style={{
-                                                        backgroundColor: "#3B4FB8",
-                                                        width: 80,
-                                                        height: 30,
-                                                        marginLeft: 20,
+                                                        width: 100,
+                                                        padding: 5,
                                                         marginRight: 20,
                                                         marginTop: 10,
                                                         marginBottom: 10,
-                                                        flexDirection: 'row',
                                                         justifyContent: 'center',
-                                                        alignContent: 'center',
-                                                        alignItems: 'center',
-                                                        alignSelf: 'center',
 
                                                     }}
                                                 >
-
-                                                    <FollowHandler idToFollow={user._id} type={"suggestion" } />
-
+                                                    <FollowHandler idToFollow={user._id} type={"suggestion"} />
                                                 </View>
                                             </View>
-
                                         </>
                                     );
                                 }

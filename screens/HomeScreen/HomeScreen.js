@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, Text, View, KeyboardAvoidingView } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/homepage/Header';
 import Stories from '../../components/homepage/Stories';
-import Posts from '../../components/homepage/Posts';
-import { POSTS } from '../../Data/MyPostUser';
 import NavButtonHome from '../../components/homepage/NavButtonHome';
 import { UidContext } from '../../components/Context/AppContext';
 import Footer from '../../components/homepage/Footer';
@@ -22,7 +20,6 @@ const HomeScreen = () => {
                 style={{ flex: 1 }}
             >
                 <SafeAreaView style={styles.container}>
-
                     <>
                         <Header />
                         <Stories />
@@ -35,14 +32,12 @@ const HomeScreen = () => {
                             >
                                 <NavButtonHome />
                             </View>
-                            <Thread  />
+                            <Thread />
                         </ScrollView>
                         <View>
                             <Footer />
                         </View>
-
                     </>
-
                 </SafeAreaView>
             </KeyboardAvoidingView>
 

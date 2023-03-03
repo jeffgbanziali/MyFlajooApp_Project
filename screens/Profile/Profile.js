@@ -9,8 +9,6 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import PostsUser from '../../components/ProfileUtils.js/PostsUser';
 import { UidContext } from '../../components/Context/AppContext';
-import UploadImg from '../../components/ProfileUtils.js/UploadImg';
-import { updateBio } from '../../actions/user.action';
 
 
 
@@ -18,23 +16,6 @@ const Profile = () => {
 
     const { uid } = useContext(UidContext);
     const userData = useSelector((state) => state.userReducer);
-    const [bio, setBio] = useState('');
-    const [updateForm, setUpdateForm] = useState(false);
-    const dispatch = useDispatch();
-
-    const [image, setImage] = useState(null);
-
-    const handleImageChange = (newImage) => {
-        setImage(newImage);
-        console.log(image);
-    }
-    const handleUpdate = () => {
-        if (bio !== userData.bio) {
-            dispatch(updateBio(userData._id, bio));
-        }
-        setUpdateForm(false);
-
-    }
 
     const navigation = useNavigation();
     const handleClickReturnHome = () => {
@@ -155,69 +136,14 @@ const Profile = () => {
 
                                         }}>
                                         </View>
-                                        <UploadImg image={image} onChange={handleImageChange} />
-
                                     </TouchableOpacity>
 
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
                                         {userData.pseudo}
                                     </Text>
-
-                                    <View>
-                                        <Text style={{ fontSize: 15, marginTop: 10, color: "#000000" }}>
-                                            bio
-                                        </Text>
-                                        {
-                                            updateForm === false && (
-                                                <>
-                                                    <View>
-                                                        <Pressable
-                                                            onPress={() => setUpdateForm(!updateForm)}>
-                                                            <Text
-                                                                style={{ fontSize: 15, marginTop: 10, color: "#FFFFFF" }}
-                                                            >
-                                                                {userData.bio}
-                                                            </Text>
-                                                        </Pressable>
-                                                    </View>
-                                                    <Pressable
-                                                        onPress={() => setUpdateForm(!updateForm)}
-                                                    >
-                                                        <Text>
-                                                            modifier bio
-                                                        </Text>
-                                                    </Pressable>
-                                                </>
-                                            )}
-                                        {
-                                            updateForm && (
-                                                <>
-                                                    <TextInput
-                                                        style={{ fontSize: 15, marginTop: 10, color: "#000000", backgroundColor: "#FFFFFF", }}
-                                                        multiline={true}
-                                                        defaultValue={userData.bio}
-                                                        onChangeText={(text) => setBio(text)}
-                                                        autoCapitalize="none"
-                                                        autoCorrect={false}
-                                                        keyboardType='none'
-                                                    />
-                                                    <Pressable
-                                                        onPress={handleUpdate}
-                                                    >
-                                                        <Text>
-                                                            valider
-
-                                                        </Text>
-                                                    </Pressable>
-
-
-                                                </>
-                                            )
-                                        }
-                                    </View>
-
-
-
+                                    <Text style={{ fontSize: 15, color: '#5F5858' }}>
+                                        {userData.bio}
+                                    </Text>
                                 </View>
                                 <View>
                                     <Text>

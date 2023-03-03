@@ -7,8 +7,6 @@ const MyStory = () => {
     return (
         <View >
             <TouchableOpacity>
-
-
                 <View>
                     <Image
                         source={require("../../assets/Images/Background.jpg")}
