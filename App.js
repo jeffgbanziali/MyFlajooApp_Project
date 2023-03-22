@@ -31,9 +31,6 @@ const AppW = () => {
 };
 
 
-
-
-
 axios.interceptors.request.use(
   async (config) => {
     const token = await AsyncStorage.getItem('token');

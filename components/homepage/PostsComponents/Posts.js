@@ -25,8 +25,8 @@ const Posts = ({ post }) => {
 
 
     useEffect(() => {
-        !isEmpty(usersData[0]) && setIsLoading(false)
-    }, [usersData])
+        !isEmpty(usersData)[0] && setIsLoading(false);
+    }, [usersData]);
 
     return (
         <View style={{
