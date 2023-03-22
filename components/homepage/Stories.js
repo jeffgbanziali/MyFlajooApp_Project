@@ -12,9 +12,6 @@ const Stories = () => {
             height: 180,
             width: "100%",
             resizeMode: "cover"
-
-
-
         }}>
             <ScrollView
                 horizontal
@@ -26,16 +23,11 @@ const Stories = () => {
                     marginRight: 10,
                     alignSelf: 'center',
                 }}
-
             >
                 <MyStory />
-
-
                 {USER.map((story, index) => (
                     < View >
                         <TouchableOpacity>
-
-
                             <View>
                                 <Image
                                     source={{ uri: story.image }}
@@ -127,9 +119,6 @@ const Stories = () => {
                             </View>
 
                         </View>
-
-
-
                     </View >
 
                 ))}

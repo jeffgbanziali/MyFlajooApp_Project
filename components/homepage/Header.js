@@ -137,8 +137,6 @@ const Header = () => {
                         />
                     </TouchableOpacity>
                 </View>
-
-
             </View>
         </View>
     );

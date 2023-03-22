@@ -116,17 +116,12 @@ const Followers = () => {
                             </Text>
                             <Text style={{
                                 color: '#787373',
-
-
                             }}>
                                 Following
                             </Text>
                         </TouchableOpacity>
-
                     </View>
-
                 </View>
-
             </View>
 
         </>

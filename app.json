@@ -4,10 +4,10 @@
     "slug": "MyFlajooApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Logos/my_flajoo.png",
+    "icon": "./assets/Images/Background.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Images/Background.jpg",
+      "image": "./assets/Images/Background.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

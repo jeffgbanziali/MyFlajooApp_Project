@@ -17,7 +17,7 @@ import { getUsers } from './actions/users.action';
 
 
 
-const AppWapper = () => {
+const AppW = () => {
   const store = createStore(
     rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)),
   );
@@ -55,7 +55,7 @@ const App = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
-        url: "http://192.168.0.34:5000/jwtid",
+        url: "http://192.168.0.40:5000/jwtid",
         withCredentials: true,
       })
         .then((res) => {
@@ -64,7 +64,7 @@ const App = () => {
         .catch((err) => console.log("No token"));
     };
     fetchToken();
-    if (uid) dispatch (getUser(uid));
+    if (uid) dispatch(getUser(uid));
     console.log("uid", uid);
 
 
@@ -84,7 +84,7 @@ const App = () => {
 
 
 
-export default AppWapper;
+export default AppW;
 
 
 
