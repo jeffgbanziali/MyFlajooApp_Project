@@ -23,7 +23,11 @@ const SignInScreen = () => {
     const handleSignIn = async () => {
         const data = { email, password };
         try {
+<<<<<<< HEAD
             const response = await axios.post('http://192.168.0.40:5000/api/user/login', data,
+=======
+            const response = await axios.post('http://10.3.206.20:5000/api/user/login', data,
+>>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
 
                 {
                     withCredentials: true,

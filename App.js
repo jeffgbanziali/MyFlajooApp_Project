@@ -55,7 +55,11 @@ const App = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
+<<<<<<< HEAD
         url: "http://192.168.0.40:5000/jwtid",
+=======
+        url: "http://10.3.206.20:5000/jwtid",
+>>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
         withCredentials: true,
       })
         .then((res) => {
