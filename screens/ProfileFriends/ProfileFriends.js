@@ -98,11 +98,7 @@ const ProfileFriends = () => {
                                         width: 100,
                                         height: 100,
                                         borderRadius: 100,
-<<<<<<< HEAD
                                         objectFit: 'cover',
-=======
-                                        objectfit: 'cover',
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                                         borderWidth: 5,
                                         borderColor: "red",
                                     }}
@@ -146,10 +142,7 @@ const ProfileFriends = () => {
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-<<<<<<< HEAD
-=======
                                 backgroundColor: '#161414',
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                                 justifyContent: 'space-between',
                                 height: 50,
                                 width: 250,
@@ -163,49 +156,30 @@ const ProfileFriends = () => {
                                     }}
                                 >
                                     <View>
-<<<<<<< HEAD
-                                        <FollowHandler  type={"card"} />
-=======
                                         <FollowHandler idToFollow={"60f0b5b0b9c5b40015b5b0c7"} type={"card"} />
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                                     </View>
                                     <View
                                         style={{
                                             flexDirection: 'row',
                                             backgroundColor: 'blue',
-                                            borderRadius: 10,
-<<<<<<< HEAD
                                             padding: 8,
                                             width: 120,
                                             alignItems: 'center',
                                             justifyContent: 'center'
                                         }}
                                     >
-=======
-                                            padding: 10,
-                                            width: 120,
-                                            alignItems: 'center',
-                                        }}
-                                    >
+
                                         <MaterialCommunityIcons name="facebook-messenger" size={20} color="white" />
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                                         <Text style={{
                                             textAlign: 'center',
                                             fontFamily: 'Roboto',
                                             fontWeight: 'semibold',
                                             justifyContent: 'center',
-<<<<<<< HEAD
                                             fontSize: 20,
                                             color: 'white'
                                         }}>
                                             Chating
-=======
-                                            fontSize: 16,
-                                            marginLeft: 6,
-                                            color: 'white'
-                                        }}>
-                                            Chat
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
+
                                         </Text>
                                     </View>
                                 </View>
@@ -222,17 +196,11 @@ const ProfileFriends = () => {
                     <ProfileFriendsUtils />
                 </View>
                 <View >
-<<<<<<< HEAD
-=======
-
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                 </View>
                 <View >
 
                 </View>
-
             </>
-
         </ScrollView >
 
     );

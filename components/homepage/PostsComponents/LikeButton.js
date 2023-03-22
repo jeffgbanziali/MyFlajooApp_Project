@@ -15,10 +15,7 @@ const LikeButton = ({ post }) => {
         dispatch(likePost(post._id, uid))
         setLiked(true)
         console.log(post._id)
-<<<<<<< HEAD
 
-=======
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
     }
 
     const unlike = () => {
@@ -36,11 +33,7 @@ const LikeButton = ({ post }) => {
 
         <View>
             {
-<<<<<<< HEAD
                 uid && liked == false && (
-=======
-                uid && liked === false && (
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
                     <>
                         <TouchableOpacity style={{
                             width: 50,
@@ -83,19 +76,8 @@ const LikeButton = ({ post }) => {
                             resizeMode: "contain"
                         }} />
                     </TouchableOpacity>
-<<<<<<< HEAD
                 )
             }
-=======
-
-                )
-            }
-            <View style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 4 }}>
-                <Text style={{ color: 'white', fontWeight: '600' }}>
-                    {post.likers.length}
-                </Text>
-            </View>
->>>>>>> db6f96dd7e718529791f1c1a58ba5663596a5a4e
         </View>
     )
 }

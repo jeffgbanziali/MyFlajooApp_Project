@@ -21,64 +21,65 @@ const AddCommentButton = ({ post }) => {
 
     return (
         <View>
-            {post.comments.map(comment => {
-                if (!isEmpty(usersData[0])) {
-                    commenterPicture = usersData
-                        .map(user => {
-                            if (user._id === comment.commenterId) return user.picture
-                            else return null
-                        })
-                        .join('')
-                }
+            {
+                post.comments.map(comment => {
+                    if (!isEmpty(usersData[0])) {
+                        commenterPicture = usersData
+                            .map(user => {
+                                if (user._id === comment.commenterId) return user.picture
+                                else return null
+                            })
+                            .join('')
+                    }
 
-                return (
-                    <ScrollView>
-                        <View key={comment._id}>
-                            <View style={{
-                                marginRight: 10
-                            }}>
-                                <Image
-                                    source={{ uri: commenterPicture }}
-                                    style={{
-                                        width: 50,
-                                        height: 50
-                                    }}
-                                    alt='commenter-pic'
-                                />
-                            </View>
-                            <View style={{
-                                flex: 1
-                            }}>
+                    return (
+                        <ScrollView>
+                            <View key={comment._id}>
                                 <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginBottom: 5
+                                    marginRight: 10
+                                }}>
+                                    <Image
+                                        source={{ uri: commenterPicture }}
+                                        style={{
+                                            width: 50,
+                                            height: 50
+                                        }}
+                                        alt='commenter-pic'
+                                    />
+                                </View>
+                                <View style={{
+                                    flex: 1
                                 }}>
                                     <View style={{
                                         flexDirection: 'row',
-                                        alignItems: 'center'
+                                        justifyContent: 'space-between',
+                                        marginBottom: 5
                                     }}>
-                                        <Text style={{
-                                            fontWeight: 'bold',
-                                            marginRight: 5,
-                                            color: 'blue'
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center'
                                         }}>
-                                            {comment.commenterPseudo}
-                                        </Text>
-                                        {comment.commenterId !== userData._id && (
-                                            <TouchableOpacity >
-                                                <Text >Reply</Text>
-                                            </TouchableOpacity>
-                                        )}
+                                            <Text style={{
+                                                fontWeight: 'bold',
+                                                marginRight: 5,
+                                                color: 'blue'
+                                            }}>
+                                                {comment.commenterPseudo}
+                                            </Text>
+                                            {comment.commenterId !== userData._id && (
+                                                <TouchableOpacity >
+                                                    <Text >Reply</Text>
+                                                </TouchableOpacity>
+                                            )}
+                                        </View>
+                                        <Text >{comment.timestamp}</Text>
                                     </View>
-                                    <Text >{comment.timestamp}</Text>
+                                    <Text>{comment.text}</Text>
                                 </View>
-                                <Text>{comment.text}</Text>
                             </View>
-                        </View>
-                    </ScrollView>
-                )
-            })}
+                        </ScrollView>
+                    )
+                })}
             {userData._id && (
                 <View style={{
                     flexDirection: 'row',
