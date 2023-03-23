@@ -1,7 +1,7 @@
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
-import React, { useState, useEffect, useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { dateParser, isEmpty } from '../../Context/Utils'
 import { FontAwesome } from '@expo/vector-icons';
 import LikeButton from './LikeButton';
@@ -51,7 +51,6 @@ const Posts = ({ post }) => {
                             }}
                         >
                             <FontAwesome name="spinner" size={24} color="red" />
-                            Bonjour
                         </Text>
                     ) : (
                         <>
@@ -70,15 +69,16 @@ const Posts = ({ post }) => {
                                     <TouchableOpacity
                                         onPress={goProfil}
                                     >
-                                        <Image source={
-                                            !isEmpty(usersData[0]) &&
-                                            usersData?.map((user) => {
-                                                if (user._id === post.posterId)
-                                                    return user.picture;
-                                                else return null
+                                        <Image
+                                            source={
+                                                !isEmpty(usersData[0]) &&
+                                                usersData.map((user) => {
+                                                    if (user._id === post.posterId)
+                                                        return user.picture;
+                                                    else return null
+                                                }
+                                                ).join("")
                                             }
-                                            ).join("")
-                                        }
 
                                             style={{
                                                 width: 50,
@@ -101,20 +101,22 @@ const Posts = ({ post }) => {
                                         <View
                                             style={{
                                                 flexDirection: 'row',
-
                                             }}>
                                             <Text style={{
                                                 color: "white",
                                                 marginLeft: 5,
                                                 fontWeight: '600',
                                                 marginTop: 10,
-                                            }}>{!isEmpty(usersData[0]) &&
-                                                usersData?.map((user) => {
-                                                    if (user._id === post.posterId)
-                                                        return user.pseudo;
-                                                    else return null
+                                            }}>
+                                                {
+                                                    !isEmpty(usersData[0]) &&
+                                                    usersData
+                                                        .map((user) => {
+                                                            if (user._id === post.posterId) return user.pseudo;
+                                                            else return null;
+                                                        })
                                                 }
-                                                ).join("")}</Text>
+                                            </Text>
                                             <View
                                                 style={{
                                                     width: 100,
@@ -199,11 +201,14 @@ const Posts = ({ post }) => {
                             }
 
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 20, marginVertical: 10 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
                                     <View>
                                         <LikeButton post={post} />
                                     </View>
-                                    <View>
+                                    <View >
                                         <TouchableOpacity
                                             onPress={() => setShowComments(!showComments)}
                                         >
@@ -240,7 +245,9 @@ const Posts = ({ post }) => {
 
                                         }} />
                                     </TouchableOpacity>
+
                                 </View>
+
                                 <TouchableOpacity style={{
                                     backgroundColor: "#161414",
                                     width: 50,
@@ -258,20 +265,39 @@ const Posts = ({ post }) => {
                                     }} />
                                 </TouchableOpacity>
                             </View>
+                            <View
+                                style={{
+                                    flexDirection: 'column',
+                                    width: "35%",
+                                    marginLeft: 30,
+                                    marginTop: -10,
+                                    justifyContent: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: "gray"
+                                    }}
+                                >
+                                    {post.likers.length} likes
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: "gray",
+
+                                    }}
+                                >
+                                    {post.comments.length} comments
+                                </Text>
+                            </View>
                             <View>
                                 {
                                     showComments && (
                                         <View
                                             style={{
-                                                alignContent: 'center',
-                                                alignItems: 'center',
-                                                alignSelf: 'center',
-                                                justifyContent: 'center',
                                                 marginTop: 10,
-                                                backgroundColor: "#161414",
+                                                backgroundColor: "black",
                                                 width: "100%",
-                                                height: 300,
-                                                borderRadius: 30,
                                                 marginTop: 10,
                                             }}
 

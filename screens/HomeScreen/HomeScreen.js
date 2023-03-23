@@ -26,16 +26,8 @@ const HomeScreen = () => {
                 <SafeAreaView style={styles.container}>
                     <>
                         <Header />
-                        <Stories />
                         <ScrollView>
-                            <View
-                                style={{
-                                    alignItems: 'center',
-                                    marginTop: -20
-                                }}
-                            >
-                                <NavButtonHome />
-                            </View>
+                            <Stories />
                             <Thread />
                         </ScrollView>
                         {/* <View>
