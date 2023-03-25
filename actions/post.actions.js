@@ -12,7 +12,7 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const getPosts = (num) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.40:5000/api/post`)
+            .get(`http://192.168.1.33:5000/api/post`)
             .then((res) => {
                 const array = res.data.slice(0, num);
                 dispatch({ type: GET_POSTS, payload: array });
@@ -25,7 +25,7 @@ export const getPosts = (num) => {
 export const addPosts = (num) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.40:5000/api/post`, data)
+            .get(`http://192.168.1.33:5000/api/post`, data)
             .then((res) => {
                 if (res.data.errors) {
                     dispatch({ type: GET_POST_ERRORS, payload: res.data.errors });
@@ -40,7 +40,7 @@ export const likePost = (postId, userId) => {
     return (dispatch) => {
         return axios({
             method: "patch",
-            url: `http://192.168.0.40:5000/api/post/like-post/` + postId,
+            url: `http://192.168.1.33:5000/api/post/like-post/` + postId,
             data: { id: userId },
         })
             .then((res) => {
@@ -56,7 +56,7 @@ export const unlikePost = (postId, userId) => {
     return (dispatch) => {
         return axios({
             method: "patch",
-            url: `http://192.168.0.40:5000/api/post/unlike-post/` + postId,
+            url: `http://192.168.1.33:5000/api/post/unlike-post/` + postId,
             data: { id: userId },
         })
             .then((res) => {
@@ -65,10 +65,12 @@ export const unlikePost = (postId, userId) => {
             .catch((err) => console.log(err));
     };
 };
+
+
 export const addComment = (userId, postId, text) => {
     return (dispatch) => {
         return axios
-            .patch(`http://192.168.0.40:5000/api/post/comment-post/` + postId, { commenterId, text, commenterPseudo })
+            .patch(`http://192.168.1.33:5000/api/post/comment-post/` + postId, { commenterId, text, commenterPseudo })
             .then((res) => {
                 dispatch({ type: ADD_COMMENT, payload: { postId } });
             })

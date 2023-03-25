@@ -61,15 +61,26 @@ const FollowHandler = ({ idToFollow, type }) => {
                         </View>
                     )}
                     {type === "card" && (
-                        <TouchableOpacity >
+                        <View >
                             <Feather name="user-check" size={24} color="black" />
                             <Text >Friends</Text>
-                        </TouchableOpacity>
+                        </View>
                     )}
                     {type === "friends" && (
-                        <TouchableOpacity >
-                            <AntDesign name="checkcircle" size={16} color="#f7fafc" />
-                        </TouchableOpacity>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: 'gray',
+                                borderRadius: 8,
+                                width: 50,
+                                padding: 4,
+                                borderRadius: 10,
+                            }}
+                        >
+                            <FontAwesome5 name="user-check" size={16} color="black" />
+                        </View>
                     )}
                 </TouchableOpacity>
             )}
@@ -99,7 +110,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                         </View>
                     )}
                     {type === "card" && (
-                        <TouchableOpacity >
+                        <View >
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -123,12 +134,23 @@ const FollowHandler = ({ idToFollow, type }) => {
                                     }}
                                 >Follow</Text>
                             </View>
-                        </TouchableOpacity>
+                        </View>
                     )}
                     {type === "friends" && (
-                        <TouchableOpacity >
-                            <AntDesign name="pluscircle" size={18} color="#6b7280" />
-                        </TouchableOpacity>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#EBF8FF',
+                                borderRadius: 8,
+                                width: 50,
+                                padding: 4,
+                                borderRadius: 10,
+                            }}
+                        >
+                            <FontAwesome5 name="user-plus" size={16} color="black" />
+                        </View>
                     )}
                 </TouchableOpacity>
             )}

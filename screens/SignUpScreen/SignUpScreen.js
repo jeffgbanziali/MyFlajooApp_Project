@@ -33,7 +33,7 @@ const SignUpScreen = () => {
             phoneNumber: phoneNumber,
         };
         try {
-            const url = 'http://192.168.0.40:5000/api/user/register';
+            const url = 'http://192.168.1.33:5000/api/user/register';
 
 
             // Validate the form data

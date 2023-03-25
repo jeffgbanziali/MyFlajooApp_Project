@@ -3,7 +3,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { dateParser, isEmpty } from '../../Context/Utils'
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import LikeButton from './LikeButton';
 import FollowHandler from '../../ProfileUtils.js/FollowHandler';
 import { useNavigation } from '@react-navigation/native';
@@ -106,7 +106,7 @@ const Posts = ({ post }) => {
                                                 color: "white",
                                                 marginLeft: 5,
                                                 fontWeight: '600',
-                                                marginTop: 10,
+                                                fontSize: 20,
                                             }}>
                                                 {
                                                     !isEmpty(usersData[0]) &&
@@ -119,13 +119,13 @@ const Posts = ({ post }) => {
                                             </Text>
                                             <View
                                                 style={{
-                                                    width: 100,
                                                     marginLeft: 5,
-                                                    marginTop: 10,
                                                     justifyContent: 'center',
                                                 }}>
                                                 {
-                                                    post.posterId !== userData._id && <FollowHandler idToFollow={post.posterId} type={"friends"} />
+                                                    post.posterId !== userData._id && (
+                                                        <FollowHandler idToFollow={post.posterId} type={"friends"} />
+                                                    )
 
                                                 }
                                             </View>
@@ -180,10 +180,6 @@ const Posts = ({ post }) => {
                                 post.picture && (
 
                                     <View
-                                        style={{
-                                            backgroundColor: "red",
-
-                                        }}
                                     >
                                         <Image source={post.picture}
                                             style={{
@@ -205,7 +201,7 @@ const Posts = ({ post }) => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                 }}>
-                                    <View>
+                                    <View >
                                         <LikeButton post={post} />
                                     </View>
                                     <View >
@@ -216,11 +212,10 @@ const Posts = ({ post }) => {
                                                 width: 50,
                                                 height: 50,
                                                 borderRadius: 30,
-                                                marginRight: 10,
                                                 justifyContent: 'center',
                                                 alignSelf: 'center'
                                             }}>
-                                                <Feather name="message-circle" size={25} color="white" style={{
+                                                <FontAwesome5 name="comment" size={30} color="white" style={{
                                                     textAlign: "center",
                                                     alignItems: "center",
                                                     alignSelf: "center",
@@ -233,11 +228,10 @@ const Posts = ({ post }) => {
                                         width: 50,
                                         height: 50,
                                         borderRadius: 30,
-                                        marginRight: 10,
                                         justifyContent: 'center',
                                         alignSelf: 'center'
                                     }}>
-                                        <Feather name="send" size={25} color="white" style={{
+                                        <Feather name="send" size={30} color="white" style={{
                                             textAlign: "center",
                                             alignItems: "center",
                                             alignSelf: "center",

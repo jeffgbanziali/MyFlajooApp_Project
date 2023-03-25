@@ -27,7 +27,7 @@ const SignInScreen = () => {
     const data = { email, password }
     try {
       const response = await axios.post(
-        'http://192.168.0.40:5000/api/user/login',
+        'http://192.168.1.33:5000/api/user/login',
         data,
 
         {
