@@ -12,6 +12,7 @@ import AddCommentButton from './AddCommentButton';
 
 
 
+
 const Posts = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true)
     const usersData = useSelector((state) => state.usersReducer)
@@ -27,6 +28,7 @@ const Posts = ({ post }) => {
     useEffect(() => {
         !isEmpty(usersData)[0] && setIsLoading(false);
     }, [usersData]);
+
 
     return (
         <View style={{
@@ -106,7 +108,7 @@ const Posts = ({ post }) => {
                                                 color: "white",
                                                 marginLeft: 5,
                                                 fontWeight: '600',
-                                                fontSize: 20,
+                                                fontSize: 18,
                                             }}>
                                                 {
                                                     !isEmpty(usersData[0]) &&
@@ -181,7 +183,8 @@ const Posts = ({ post }) => {
 
                                     <View
                                     >
-                                        <Image source={post.picture}
+                                        <Image
+                                            source={post.picture}
                                             style={{
                                                 borderColor: "red",
                                                 width: '100%',
