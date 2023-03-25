@@ -243,8 +243,6 @@ const SignUpScreen = () => {
 
                     </View>
                 </ScrollView>
-
-
             </ImageBackground>
         </KeyboardAvoidingView>
 

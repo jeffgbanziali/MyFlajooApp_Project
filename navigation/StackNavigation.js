@@ -17,6 +17,7 @@ import { UidContext } from "../components/Context/AppContext";
 import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
 import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
+import StoriesStream from "../components/homepage/Stories/StoriesStream";
 
 
 
@@ -33,6 +34,7 @@ const StackNavigation = () => {
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Story" component={StoriesStream} />
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
                 <Stack.Screen name="Messages" component={Message} />

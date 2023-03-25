@@ -1,9 +1,17 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { USER } from '../../Data/Users'
+import { USER } from '../../../Data/Users'
 import MyStory from './MyStory'
+import { useNavigation } from '@react-navigation/native'
 
 const Stories = () => {
+
+  const navigation = useNavigation(false)
+  const handleViewStory = () => {
+    console.log('clicked')
+    navigation.navigate('Story')
+  }
+
   return (
     <View
       style={{
@@ -28,7 +36,11 @@ const Stories = () => {
         <MyStory />
         {USER.map((story, index) => (
           <View>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleViewStory()
+              }}
+            >
               <View>
                 <Image
                   source={{ uri: story.image }}

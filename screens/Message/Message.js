@@ -287,9 +287,7 @@ const Message = () => {
 
               <View>
                 <ScrollView>
-                  {conversations.map(conversation => (
-                    <Conversation key={conversation._id} conversation={conversation} />
-                  ))}
+                  <Conversation />
                 </ScrollView>
 
               </View>

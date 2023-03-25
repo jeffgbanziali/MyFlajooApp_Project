@@ -8,14 +8,12 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/homepage/Header'
-import Stories from '../../components/homepage/Stories'
+import Stories from '../../components/homepage/Stories/Stories'
 import NavButtonHome from '../../components/homepage/NavButtonHome'
-import { UidContext } from '../../components/Context/AppContext'
 import Footer from '../../components/homepage/Footer'
 import Thread from '../../components/Thread/Thread'
 
 const HomeScreen = () => {
-    const uid = useContext(UidContext)
 
     return (
         <>

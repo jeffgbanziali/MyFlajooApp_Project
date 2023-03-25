@@ -35,7 +35,9 @@ const Conversation = () => {
                 onPressOut={() => setIsPressed(false)}
                 onPress={handleClickMessage}
             >
-                <Image source={{ uri: user?.picture }}
+                <Image source={{
+                    uri: 'https://www.10wallpaper.com/wallpaper/2880x1800/2102/Assassins_Creed_Eivor_AC_2021_Game_HD_Poster_2880x1800.jpg'
+                }}
                     style={{
                         width: 60,
                         height: 60,
@@ -53,7 +55,7 @@ const Conversation = () => {
                         alignSelf: 'center',
                         fontWeight: 'bold',
                     }}>
-                    {user?.pseudo}
+                    ,kdnfdfkdnfkd
                 </Text>
             </TouchableOpacity>
 

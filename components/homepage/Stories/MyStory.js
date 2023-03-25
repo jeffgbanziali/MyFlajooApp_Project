@@ -9,7 +9,7 @@ const MyStory = () => {
             <TouchableOpacity>
                 <View>
                     <Image
-                        source={require("../../assets/Images/Background.jpg")}
+                        source={require("../../../assets/Images/Background.jpg")}
                         style={{
                             width: 100,
                             height: 140,
@@ -31,7 +31,7 @@ const MyStory = () => {
             }} >
 
                 <Image
-                    source={require("../../assets/Images/woman-gdc9219422_1920.jpg")}
+                    source={require("../../../assets/Images/woman-gdc9219422_1920.jpg")}
                     style={{
                         width: 52,
                         height: 52,
