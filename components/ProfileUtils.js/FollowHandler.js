@@ -61,9 +61,27 @@ const FollowHandler = ({ idToFollow, type }) => {
                         </View>
                     )}
                     {type === "card" && (
-                        <View >
-                            <Feather name="user-check" size={24} color="black" />
-                            <Text >Friends</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#EBF8FF',
+                            borderRadius: 10,
+                            height: 50,
+                            padding: 2,
+                            width: 150,
+                        }} >
+                            <FontAwesome5 name="user-check" size={25} color="#3B82F6" />
+                            <Text
+                                style={{
+                                    color: '#3B82F6',
+                                    textAlign: 'center',
+                                    fontFamily: 'Roboto',
+                                    fontWeight: 'semibold',
+                                    justifyContent: 'center',
+                                    fontSize: 20,
+                                    marginLeft: 6,
+                                }} >Friends</Text>
                         </View>
                     )}
                     {type === "friends" && (
@@ -116,20 +134,21 @@ const FollowHandler = ({ idToFollow, type }) => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    backgroundColor: '#EBF8FF',
+                                    backgroundColor: 'red',
                                     borderRadius: 10,
-                                    padding: 10,
-                                    width: 120,
+                                    height: 50,
+                                    padding: 2,
+                                    width: 150,
                                 }}>
-                                <FontAwesome5 name="user-plus" size={20} color="#3B82F6" />
+                                <FontAwesome5 name="user-plus" size={25} color="white" />
                                 <Text
                                     style={{
-                                        color: '#3B82F6',
+                                        color: 'white',
                                         textAlign: 'center',
                                         fontFamily: 'Roboto',
                                         fontWeight: 'semibold',
                                         justifyContent: 'center',
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         marginLeft: 6,
                                     }}
                                 >Follow</Text>
@@ -152,7 +171,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                             <FontAwesome5 name="user-plus" size={16} color="black" />
                         </View>
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity >
             )}
         </>
     )
