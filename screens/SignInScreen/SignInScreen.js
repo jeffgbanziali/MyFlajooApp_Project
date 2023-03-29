@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UidContext } from '../../components/Context/AppContext'
 
 const SignInScreen = () => {
-  const { setUid } = useContext(UidContext)
 
   const navigation = useNavigation()
 
@@ -27,7 +26,7 @@ const SignInScreen = () => {
     const data = { email, password }
     try {
       const response = await axios.post(
-        'http://192.168.1.33:5000/api/user/login',
+        'http://192.168.0.40:5000/api/user/login',
         data,
 
         {
@@ -45,10 +44,9 @@ const SignInScreen = () => {
           console.log('Token saved')
         }
         console.log(user)
-        setUid(user)
         alert('User logged in successfully')
         console.log(response)
-        //navigation.navigate("HomeScreen");
+        navigation.navigate("HomeScreen");
       } else {
         if (
           response.data.errors.email !== '' ||

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Animated, StatusBar, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +15,32 @@ const StoriesStream = () => {
     const goProfil = () => {
         navigation.navigate("ProfilFriends")
     }
+
+    useEffect(() => {
+        console.log('useEffect')
+        const timer = setTimeout(() => {
+            navigation.goBack();
+        }, 5000);
+
+        Animated.timing(progress, {
+            toValue: 5,
+            duration: 5000,
+            useNativeDriver: false,
+        }).start();
+        return () => {
+            clearTimeout(timer);
+        };
+
+    }, [])
+
+    const [progress, setProgress] = useState(new Animated.Value(0))
+
+    const progressAnimation = progress.interpolate({
+        inputRange: [0, 5],
+        outputRange: ['0%', '100%'],
+    })
+
+
     return (
         <KeyboardAvoidingView style={{
             flex: 1,
@@ -69,14 +95,14 @@ const StoriesStream = () => {
                                 marginLeft: 10
                             }}
                         >
-                            <View
+                            <Animated.View
                                 style={{
                                     height: '100%',
-                                    width: "50%",
+                                    width: progressAnimation,
                                     backgroundColor: 'white',
                                 }}
                             >
-                            </View>
+                            </Animated.View>
                         </View>
                         <View
                             style={{

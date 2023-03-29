@@ -12,6 +12,8 @@ import Stories from '../../components/homepage/Stories/Stories'
 import NavButtonHome from '../../components/homepage/NavButtonHome'
 import Footer from '../../components/homepage/Footer'
 import Thread from '../../components/Thread/Thread'
+import TabNavigation from '../../navigation/TabNavigation'
+import { StatusBar } from 'react-native'
 
 const HomeScreen = () => {
 
@@ -31,6 +33,7 @@ const HomeScreen = () => {
                         {/* <View>
                             <Footer />
                             </View>*/}
+
                     </>
                 </SafeAreaView>
             </KeyboardAvoidingView>

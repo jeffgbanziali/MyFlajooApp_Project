@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import StackNavigation from './Navigation/StackNavigation';
+import StackNavigation from './navigation/StackNavigation';
 import axios from 'axios';
 import { UidContext } from './components/Context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -13,6 +13,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { getUsers } from './actions/users.action';
+import TabNavigation from './navigation/TabNavigation';
 
 
 
@@ -52,7 +53,7 @@ const App = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
-        url: "http://192.168.1.33:5000/jwtid",
+        url: "http://192.168.0.40:5000/jwtid",
         withCredentials: true,
       })
         .then((res) => {
@@ -71,7 +72,7 @@ const App = () => {
 
     <UidContext.Provider value={uid}>
       <StackNavigation />
-    </UidContext.Provider>
+    </UidContext.Provider >
 
 
   );

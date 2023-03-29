@@ -184,7 +184,11 @@ const Posts = ({ post }) => {
                                     <View
                                     >
                                         <Image
-                                            source={post.picture}
+                                            source={
+                                                {
+                                                    uri: post.picture
+                                                }
+                                            }
                                             style={{
                                                 borderColor: "red",
                                                 width: '100%',

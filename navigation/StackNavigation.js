@@ -12,12 +12,14 @@ import Settings from "../screens/Settings/Settings";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Notifications from "../screens/Notifications/Notifications";
 import ChatList from "../screens/Message/ChatList";
-
 import { UidContext } from "../components/Context/AppContext";
 import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
 import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
 import StoriesStream from "../components/homepage/Stories/StoriesStream";
+import TabNavigation from "./TabNavigation";
+import Réels from "../screens/Réels/Réels";
+
 
 
 
@@ -34,7 +36,8 @@ const StackNavigation = () => {
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                <Stack.Screen name="HomeScreen" component={TabNavigation} />
+                <Stack.Screen name="Réels" component={Réels} />
                 <Stack.Screen name="Story" component={StoriesStream} />
                 <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
                 <Stack.Screen name="Messages" component={Message} />
