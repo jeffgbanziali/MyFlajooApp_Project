@@ -170,6 +170,7 @@ const Posts = ({ post }) => {
                                         color: "white",
                                         fontSize: 15,
                                         fontWeight: '400',
+                                        textAlign: "justify",
                                         marginHorizontal: 30,
                                         lineHeight: 20,
                                         marginBottom: 10
