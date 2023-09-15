@@ -3,11 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UidContext } from '../../components/Context/AppContext';
-
-
-
-
 import { useNavigation } from '@react-navigation/native';
+
+
 
 const Logout = () => {
 

@@ -223,7 +223,7 @@ const Posts = ({ post }) => {
                                                 justifyContent: 'center',
                                                 alignSelf: 'center'
                                             }}>
-                                                <FontAwesome5 name="comment" size={30} color="white" style={{
+                                                <FontAwesome5 name="comment" size={25} color="white" style={{
                                                     textAlign: "center",
                                                     alignItems: "center",
                                                     alignSelf: "center",
@@ -239,7 +239,7 @@ const Posts = ({ post }) => {
                                         justifyContent: 'center',
                                         alignSelf: 'center'
                                     }}>
-                                        <Feather name="send" size={30} color="white" style={{
+                                        <Feather name="send" size={25} color="white" style={{
                                             textAlign: "center",
                                             alignItems: "center",
                                             alignSelf: "center",

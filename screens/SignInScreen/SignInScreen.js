@@ -26,7 +26,7 @@ const SignInScreen = () => {
     const data = { email, password }
     try {
       const response = await axios.post(
-        'http://192.168.0.40:5000/api/user/login',
+        'http://10.3.220.235:3000/api/user/login',
         data,
 
         {
@@ -96,7 +96,6 @@ const SignInScreen = () => {
                 placeholderTextColor='#FFFFFF'
                 onChangeText={text => setEmail(text)}
                 value={email}
-                underlineColorAndroid='transparent'
                 autoCapitalize='none'
               />
               {errors.password && (
@@ -109,7 +108,6 @@ const SignInScreen = () => {
                 placeholder='Password'
                 onChangeText={text => setPassword(text)}
                 value={password}
-                underlineColorAndroid='transparent'
                 autoCapitalize='none'
               />
               <TouchableOpacity style={styles.button} onPress={handleSignIn}>

@@ -43,7 +43,7 @@ const LikeButton = ({ post }) => {
                         }}
                             onPress={like}
                         >
-                            <Feather name="heart" size={30} color="white" style={{
+                            <Feather name="heart" size={25} color="white" style={{
                                 textAlign: "center",
                                 alignItems: "center",
                                 alignSelf: "center",
@@ -65,7 +65,7 @@ const LikeButton = ({ post }) => {
                     }}
                         onPress={unlike}
                     >
-                        <AntDesign name="heart" size={30} color="red" style={{
+                        <AntDesign name="heart" size={25} color="red" style={{
                             textAlign: "center",
                             alignItems: "center",
                             alignSelf: "center",

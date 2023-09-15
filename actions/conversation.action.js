@@ -8,7 +8,7 @@ export const FETCH_CONVERSATIONS = "FETCH_CONVERSATIONS";
 export const getMessage = (num) => {
     return (dispatch) => {
         return axios
-            .get(`http://http://192.168.0.34:5000/api/message`)
+            .get(`http://http://10.3.220.235:3000/api/message`)
             .then((res) => {
                 const array = res.data.slice(0, num);
                 dispatch({ type: GET_MESSAGE, payload: array});
@@ -19,7 +19,7 @@ export const getMessage = (num) => {
 };
 
 export const fetchConversations = () => (dispatch) => {
-    axios.get('http://http://192.168.0.34:5000/api/conversation'
+    axios.get('http://http://10.3.220.235:3000/api/conversation'
      )
         .then(res => {
             dispatch({
