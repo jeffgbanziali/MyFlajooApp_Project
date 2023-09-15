@@ -23,7 +23,7 @@ const Header = () => {
       style={{
         display: 'flex',
         width: '100%',
-        height: '6%',
+        height: '8%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
@@ -61,7 +61,6 @@ const Header = () => {
             alignSelf: 'center',
             backgroundColor: '#161414',
             borderRadius: 30,
-            marginLeft: '3.5%',
             marginTop: '1.5%',
             width: 50,
             height: 50,
@@ -71,7 +70,7 @@ const Header = () => {
           <TouchableOpacity onPress={handleClickNotifications}>
             <Feather
               name='bell'
-              size={25}
+              size={22}
               color='white'
               style={{
                 alignSelf: 'center',
@@ -88,7 +87,6 @@ const Header = () => {
             alignSelf: 'center',
             backgroundColor: '#161414',
             borderRadius: 30,
-            marginLeft: '3.5%',
             marginTop: '1.5%',
             width: 50,
             height: 50,
@@ -116,7 +114,7 @@ const Header = () => {
                 style={{
                   color: 'white',
                   fontWeight: 'bold',
-                  fontZize: 2
+                  fontZize: "8px"
                 }}
               >
                 2
@@ -124,7 +122,7 @@ const Header = () => {
             </View>
             <AntDesign
               name='message1'
-              size={25}
+              size={22}
               color='white'
               style={{
                 alignSelf: 'center',
@@ -141,7 +139,6 @@ const Header = () => {
             alignSelf: 'center',
             backgroundColor: '#161414',
             borderRadius: 30,
-            marginLeft: '3.5%',
             marginTop: '1.5%',
             width: 50,
             height: 50,
@@ -151,7 +148,7 @@ const Header = () => {
           <TouchableOpacity onPress={handleClickProfile}>
             <Feather
               name='user'
-              size={25}
+              size={22}
               color='white'
               style={{
                 alignSelf: 'center',

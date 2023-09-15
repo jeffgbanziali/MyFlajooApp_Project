@@ -148,14 +148,14 @@ const Posts = ({ post }) => {
                                 </View>
                                 <TouchableOpacity style={{
                                     backgroundColor: "#302929",
-                                    width: 40,
-                                    height: 40,
+                                    width: 35,
+                                    height: 35,
                                     borderRadius: 30,
                                     marginRight: 10,
                                     justifyContent: 'center',
                                     alignSelf: 'center'
                                 }}>
-                                    <Feather name="more-horizontal" size={25} color="white"
+                                    <Feather name="more-horizontal" size={18} color="white"
                                         style={{
                                             textAlign: "center",
                                             alignItems: "center",

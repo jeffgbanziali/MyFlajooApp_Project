@@ -92,12 +92,12 @@ const FollowHandler = ({ idToFollow, type }) => {
                                 justifyContent: 'center',
                                 backgroundColor: 'gray',
                                 borderRadius: 8,
-                                width: 50,
-                                padding: 4,
-                                borderRadius: 10,
+                                width: 25,
+                                height: 25,
+                                borderRadius: 30,
                             }}
                         >
-                            <FontAwesome5 name="user-check" size={16} color="black" />
+                            <FontAwesome5 name="user-check" size={10} color="black" />
                         </View>
                     )}
                 </TouchableOpacity>
@@ -163,12 +163,12 @@ const FollowHandler = ({ idToFollow, type }) => {
                                 justifyContent: 'center',
                                 backgroundColor: '#EBF8FF',
                                 borderRadius: 8,
-                                width: 50,
-                                padding: 4,
-                                borderRadius: 10,
+                                width: 25,
+                                height: 25,
+                                borderRadius: 30,
                             }}
                         >
-                            <FontAwesome5 name="user-plus" size={16} color="black" />
+                            <FontAwesome5 name="user-plus" size={10} color="black" />
                         </View>
                     )}
                 </TouchableOpacity >
