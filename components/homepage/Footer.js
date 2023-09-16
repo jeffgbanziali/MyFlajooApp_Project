@@ -7,7 +7,8 @@ const Footer = () => {
         <View
             style={{
                 backgroundColor: '#161414',
-                height: 100,
+                marginTop: 200,
+                height: 400,
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',

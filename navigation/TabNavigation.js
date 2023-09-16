@@ -20,7 +20,6 @@ const TabNavigation = () => {
                 tabBarActiveTintColor: "red",
                 tabBarStyle: {
                     backgroundColor: "black",
-                    height: 60,
                     shadowColor: "gray",
                 }
             }}
@@ -37,7 +36,6 @@ const TabNavigation = () => {
                         backgroundColor: "blue",
                         borderRadius: 10,
                         marginRight: 100,
-                        marginTop: 30,
                     },
                     tabBarLabel: () => null,
                 }}

@@ -168,7 +168,7 @@ const Posts = ({ post }) => {
                                 <Text
                                     style={{
                                         color: "white",
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontWeight: '400',
                                         textAlign: "justify",
                                         marginHorizontal: 30,
@@ -183,6 +183,11 @@ const Posts = ({ post }) => {
                                 post.picture && (
 
                                     <View
+                                        style={{
+                                            borderColor: "red",
+                                            width: '100%',
+                                            height: 500,
+                                        }}
                                     >
                                         <Image
                                             source={
@@ -193,7 +198,7 @@ const Posts = ({ post }) => {
                                             style={{
                                                 borderColor: "red",
                                                 width: '100%',
-                                                height: 400,
+                                                height: '100%',
                                                 resizeMode: "cover",
                                                 borderTopLeftRadius: 20,
                                                 borderTopRightRadius: 20,
@@ -251,7 +256,6 @@ const Posts = ({ post }) => {
                                 </View>
 
                                 <TouchableOpacity style={{
-                                    backgroundColor: "#161414",
                                     width: 50,
                                     height: 50,
                                     borderRadius: 30,

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useRef, useState } from 'react'; // Importez useRef depuis react
 import {
     ScrollView,
     StyleSheet,
@@ -6,59 +6,43 @@ import {
     View,
     KeyboardAvoidingView
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/homepage/Header'
 import Stories from '../../components/homepage/Stories/Stories'
-import NavButtonHome from '../../components/homepage/NavButtonHome'
-import Footer from '../../components/homepage/Footer'
 import Thread from '../../components/Thread/Thread'
-import TabNavigation from '../../navigation/TabNavigation'
-import { StatusBar } from 'react-native'
 
 const HomeScreen = () => {
+    const [borderColor, setBorderColor] = useState('gray');
+    const scrollViewRef = useRef(null);
+    const threshold = 1;
 
     return (
         <>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={{ flex: 1 }}
+                style={styles.container}
             >
-                <SafeAreaView style={styles.container}>
-                    <>
-                        <Header />
-                        <ScrollView>
-                            <Stories />
-                            <Thread />
-                        </ScrollView>
-                        {/* <View>
-                            <Footer />
-                            </View>*/}
-
-                    </>
-                </SafeAreaView>
+                <Header borderBottomColor={borderColor} />
+                <ScrollView
+                    ref={scrollViewRef}
+                    onScroll={(event) => {
+                        setBorderColor(
+                            event.nativeEvent.contentOffset.y > threshold ? 'gray' : '#2C2828'
+                        );
+                    }}
+                >
+                    <Stories />
+                    <Thread />
+                </ScrollView>
             </KeyboardAvoidingView>
         </>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#2C2828',
         flex: 1
     },
-    indicatorContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: 'green',
-        padding: 8,
-        alignItems: 'center'
-    },
-    indicatorText: {
-        color: 'white',
-        fontWeight: 'bold'
-    }
 })
 
 export default HomeScreen

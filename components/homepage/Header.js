@@ -4,7 +4,9 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import { AntDesign } from '@expo/vector-icons'
 
-const Header = () => {
+const Header = ({ borderBottomColor }) => {
+
+
   const navigation = useNavigation(false)
   const handleClickProfile = () => {
     console.log('clicked')
@@ -22,11 +24,13 @@ const Header = () => {
     <View
       style={{
         display: 'flex',
+        marginTop: '10%',
         width: '100%',
-        height: '8%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: borderBottomColor, 
       }}
     >
       <TouchableOpacity
@@ -37,8 +41,8 @@ const Header = () => {
       >
         <Image
           style={{
-            width: 120,
-            height: 120,
+            width: 110,
+            height: 110,
             resizeMode: 'contain'
           }}
           source={require('../../assets/Logos/my_flajoo.png')}
@@ -59,7 +63,6 @@ const Header = () => {
           style={{
             justifyContent: 'center',
             alignSelf: 'center',
-            backgroundColor: '#161414',
             borderRadius: 30,
             marginTop: '1.5%',
             width: 50,
@@ -70,7 +73,7 @@ const Header = () => {
           <TouchableOpacity onPress={handleClickNotifications}>
             <Feather
               name='bell'
-              size={22}
+              size={25}
               color='white'
               style={{
                 alignSelf: 'center',
@@ -85,7 +88,6 @@ const Header = () => {
           style={{
             justifyContent: 'center',
             alignSelf: 'center',
-            backgroundColor: '#161414',
             borderRadius: 30,
             marginTop: '1.5%',
             width: 50,
@@ -122,7 +124,7 @@ const Header = () => {
             </View>
             <AntDesign
               name='message1'
-              size={22}
+              size={25}
               color='white'
               style={{
                 alignSelf: 'center',
@@ -137,7 +139,6 @@ const Header = () => {
           style={{
             justifyContent: 'center',
             alignSelf: 'center',
-            backgroundColor: '#161414',
             borderRadius: 30,
             marginTop: '1.5%',
             width: 50,
@@ -148,7 +149,7 @@ const Header = () => {
           <TouchableOpacity onPress={handleClickProfile}>
             <Feather
               name='user'
-              size={22}
+              size={25}
               color='white'
               style={{
                 alignSelf: 'center',

@@ -14,6 +14,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { getUsers } from './actions/users.action';
 import TabNavigation from './navigation/TabNavigation';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -27,6 +28,7 @@ const AppW = () => {
   return (
     <Provider store={store}>
       <App />
+      
     </Provider>
   );
 };
@@ -53,7 +55,7 @@ const App = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
-        url: "http://10.3.220.235:3000/jwtid",
+        url: "http://192.168.0.14:3000/jwtid",
         withCredentials: true,
       })
         .then((res) => {
@@ -72,6 +74,10 @@ const App = () => {
 
     <UidContext.Provider value={uid}>
       <StackNavigation />
+      <StatusBar
+        style="light" // Pour le texte en blanc
+        backgroundColor="#FF0000"
+      />
     </UidContext.Provider >
 
 
