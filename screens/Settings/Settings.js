@@ -25,7 +25,6 @@ const Settings = () => {
                 style={{
                     width: '100%',
                     height: '90%',
-                    backgroundColor: 'blue',
                 }}
             >
                 <View style={{
@@ -41,7 +40,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -71,7 +70,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -101,7 +100,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -131,7 +130,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -161,7 +160,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -191,7 +190,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -221,7 +220,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -251,7 +250,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -281,7 +280,7 @@ const Settings = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >
@@ -308,11 +307,10 @@ const Settings = () => {
                         style={{
                             marginTop: 12,
                             width: '98%',
-                            height: '8%',
                             flexDirection: 'row',
                             alignItems: 'center',
                             padding: 6,
-                            backgroundColor: 'red',
+                            backgroundColor: 'gray',
                             borderRadius: 10,
                         }}
                     >

@@ -4,6 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UidContext } from '../../components/Context/AppContext';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
 
 
@@ -29,15 +30,27 @@ const Logout = () => {
   };
   return (
     <>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={{ backgroundColor: 'green', padding: 10, borderRadius: 5 }}
-          onPress={handleLogout}>
-          <Text
-            style={{ color: 'white', fontWeight: 'bold', textTransform: 'uppercase' }}>
-            Logout</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          borderRadius: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 6,
+        }}
+        onPress={handleLogout}>
+        <AntDesign name="logout" size={24} color="white" />
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            marginLeft: 10,
+            fontSize: 18,
+          }}>
+          Logout
+        </Text>
+      </TouchableOpacity>
     </>
   );
 }
