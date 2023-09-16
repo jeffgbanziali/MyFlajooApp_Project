@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, StyleSheet } from 'react-native';
+import { View, Text, Switch, StyleSheet, ScrollView } from 'react-native';
 import Logout from '../Profile/Logout'
 import { Ionicons } from '@expo/vector-icons';
 
@@ -16,76 +16,314 @@ const Settings = () => {
                 style={styles.container}
 
             >
+
                 <Text
                     style={styles.text}>Settings</Text>
             </View>
 
-            <View
+            <ScrollView
                 style={{
-                    marginTop: 10,
                     width: '100%',
                     height: '90%',
-                    flexDirection: 'column',
-                    alignItems: 'center',
                     backgroundColor: 'blue',
                 }}
             >
-                <View
-                    style={{
-                        marginTop: 12,
-                        width: '98%',
-                        height: '6%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        padding: 10,
-                        backgroundColor: 'red',
-                        borderRadius: 10,
-                    }}
+                <View style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
                 >
-                    <Ionicons
-                        name="ios-notifications-outline"
-                        size={30}
-                        color="white"
-
-                    />
-                    <Text
+                    <View
                         style={{
-                            marginLeft: 10,
-                            color: 'white',
-                            fontWeight: 'bold',
-                            fontSize: 20,
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
                         }}
                     >
-                        Notifications
-                    </Text>
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Ionicons
+                            name="ios-notifications-outline"
+                            size={30}
+                            color="white"
+
+                        />
+                        <Text
+                            style={{
+                                marginLeft: 10,
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20,
+                            }}
+                        >
+                            Notifications
+                        </Text>
+
+                    </View>
+
+                    <View
+                        style={{
+                            marginTop: 12,
+                            width: '98%',
+                            height: '8%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            padding: 6,
+                            backgroundColor: 'red',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Logout />
+
+                    </View>
+
 
                 </View>
-                <View
-                    style={{
-                        marginTop: 12,
-                        width: '98%',
-                        height: '6%',
-                        backgroundColor: 'red',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                    }}
-                >
 
-                </View>
-                <View
-                    style={{
-                        marginTop: 12,
-                        width: '98%',
-                        height: '6%',
-                        backgroundColor: 'red',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                    }}
-                >
-
-                </View>
-
-            </View>
+            </ScrollView>
 
 
             {/*<View style={styles.container}>

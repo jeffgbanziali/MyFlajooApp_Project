@@ -31,7 +31,7 @@ const Logout = () => {
     <>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <TouchableOpacity
-          style={{ backgroundColor: 'red', padding: 10, borderRadius: 5 }}
+          style={{ backgroundColor: 'green', padding: 10, borderRadius: 5 }}
           onPress={handleLogout}>
           <Text
             style={{ color: 'white', fontWeight: 'bold', textTransform: 'uppercase' }}>

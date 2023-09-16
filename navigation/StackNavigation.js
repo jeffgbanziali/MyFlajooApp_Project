@@ -37,7 +37,6 @@ const StackNavigation = () => {
     return (
         <NavigationContainer screenOptions={{ headerShown: false }}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="HomeScreen" component={TabNavigation} />
                 <Stack.Screen name="Réels" component={Réels} />
                 <Stack.Screen name="Story" component={StoriesStream} />
@@ -45,6 +44,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Messages" component={Message} />
                 <Stack.Screen name="Chatlist" component={ChatList} />
                 <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
                 <Stack.Screen name="Notifications" component={Notifications} />
                 <Stack.Screen name="Myfollowing" component={MyFollowings} />
