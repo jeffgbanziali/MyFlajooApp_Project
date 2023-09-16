@@ -1,11 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { useSelector } from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather'
 import { AntDesign } from '@expo/vector-icons'
 
 const Header = ({ borderBottomColor }) => {
 
+  const userData = useSelector((state) => state.userReducer);
+  console.log(userData)
 
   const navigation = useNavigation(false)
   const handleClickProfile = () => {
@@ -103,13 +106,13 @@ const Header = ({ borderBottomColor }) => {
                 position: 'absolute',
                 left: 10,
                 width: 20,
-                height: 18,
+                height: 20,
                 borderRadius: 25,
                 justifyContent: 'center',
                 alignSelf: 'center',
                 alignItems: 'center',
                 marginLeft: 16,
-                marginTop: -6,
+                marginTop: -10,
                 zIndex: 100
               }}
             >
@@ -142,7 +145,6 @@ const Header = ({ borderBottomColor }) => {
             alignSelf: 'center',
             borderRadius: 30,
             marginTop: '1.5%',
-            backgroundColor: 'red',
             marginLeft: 10,
             width: 35,
             height: 35,
@@ -151,7 +153,7 @@ const Header = ({ borderBottomColor }) => {
         >
           <TouchableOpacity onPress={handleClickProfile}>
             <Image source={{
-              uri: 'https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png'
+              uri: userData.picture
             }}
               style={{
                 width: "100%",
@@ -160,7 +162,6 @@ const Header = ({ borderBottomColor }) => {
                 borderWidth: 2,
                 borderColor: "#3B4FB8",
               }}
-
             />
           </TouchableOpacity>
         </View>

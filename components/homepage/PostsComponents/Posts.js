@@ -18,7 +18,6 @@ const Posts = ({ post }) => {
     const usersData = useSelector((state) => state.usersReducer)
     const userData = useSelector((state) => state.userReducer);
     const [showComments, setShowComments] = useState(false)
-
     const navigation = useNavigation();
     const goProfil = () => {
         navigation.navigate("ProfilFriends")

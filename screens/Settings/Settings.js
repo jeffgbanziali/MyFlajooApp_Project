@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet, ScrollView } from 'react-native';
 import Logout from '../Profile/Logout'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
 
 
 const Settings = () => {
+
+    const navigation = useNavigation();
+    const handleClickReturnProfile = () => {
+        console.log("clicked")
+        navigation.navigate('Profile');
+    }
+
     const [isEnabled, setIsEnabled] = useState(false);
     return (
         <View style={{
@@ -16,6 +25,27 @@ const Settings = () => {
                 style={styles.container}
 
             >
+                <View style={{
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    backgroundColor: "#161414",
+                    width: 40,
+                    height: 40,
+                    borderRadius: 30,
+                }}
+                >
+                    <TouchableOpacity
+                        onPress={handleClickReturnProfile}
+                    >
+                        <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                            alignSelf: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            resizeMode: "contain"
+                        }} />
+                    </TouchableOpacity>
+                </View>
+
 
                 <Text
                     style={styles.text}>Settings</Text>
@@ -323,28 +353,18 @@ const Settings = () => {
 
             </ScrollView>
 
-
-            {/*<View style={styles.container}>
-                <Text style={styles.text}>Activer les notifications</Text>
-                <Switch
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setIsEnabled(!isEnabled)}
-                    value={isEnabled}
-                /> 
-                
-</View>*/}
-
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 60,
+        marginTop: 50,
+        paddingBottom: 2,
         marginLeft: 10,
         marginRight: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     text: {
         fontSize: 40,

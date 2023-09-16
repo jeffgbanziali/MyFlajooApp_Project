@@ -1,9 +1,11 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 
 const MyStory = () => {
+    const userData = useSelector((state) => state.userReducer);
     return (
         <View >
             <TouchableOpacity>
@@ -31,7 +33,9 @@ const MyStory = () => {
             }} >
 
                 <Image
-                    source={require("../../../assets/Images/woman-gdc9219422_1920.jpg")}
+                    source={{
+                        uri: userData.picture
+                    }}
                     style={{
                         width: 52,
                         height: 52,

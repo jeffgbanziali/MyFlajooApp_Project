@@ -101,7 +101,7 @@ const Profile = () => {
                         }}>
                         <TouchableOpacity>
                             <Image source={{
-                                uri: 'https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png'
+                                uri: userData.picture
                             }}
                                 style={{
                                     width: 160,

@@ -3,9 +3,11 @@ import { View, Text, Animated, StatusBar, Image, TextInput, TouchableOpacity, Ke
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 
 const StoriesStream = () => {
+    const userData = useSelector((state) => state.userReducer);
     const navigation = useNavigation(false)
     const goToHome = () => {
         console.log('clicked')
@@ -46,6 +48,7 @@ const StoriesStream = () => {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
+            backgroundColor: 'black',
         }}>
             <ScrollView contentContainerStyle={{
                 flexGrow: 1,
@@ -56,7 +59,6 @@ const StoriesStream = () => {
                     flex: 1,
                     height: "100%",
                     position: "relative",
-                    backgroundColor: 'black',
                     alignItems: "center",
                     overflow: "hidden",
                 }}>
@@ -67,6 +69,7 @@ const StoriesStream = () => {
                             width: "100%",
                             alignItems: "center",
                             justifyContent: "center",
+                            marginTop: 30,
                         }}
                     >
                         <TouchableOpacity
@@ -90,9 +93,9 @@ const StoriesStream = () => {
                         <View
                             style={{
                                 height: 3,
-                                width: "50%",
+                                width: "80%",
                                 backgroundColor: 'gray',
-                                marginLeft: 10
+                                marginLeft: 10,
                             }}
                         >
                             <Animated.View
@@ -104,57 +107,7 @@ const StoriesStream = () => {
                             >
                             </Animated.View>
                         </View>
-                        <View
-                            style={{
-                                backgroundColor: '#343232',
-                                height: 40,
-                                width: 80,
-                                marginLeft: 10,
-                                borderRadius: 10,
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}
-                        >
-                            <FontAwesome5 name="clock" size={18} color="white" />
-                            <Text
-                                style={{
-                                    marginLeft: 4,
-                                    color: 'white',
-                                    fontSize: 12
-                                }}>
 
-                                21min
-                            </Text>
-
-                        </View>
-                        <TouchableOpacity
-                            onPress={goProfil}
-                        ><View
-                            style={{
-                                height: 60,
-                                width: 60,
-                                marginLeft: 10,
-                                borderRadius: 30,
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}
-                        >
-                                <Image
-                                    source={{
-                                        uri: 'https://www.10wallpaper.com/wallpaper/2880x1800/2102/Assassins_Creed_Eivor_AC_2021_Game_HD_Poster_2880x1800.jpg'
-                                    }}
-                                    style={{
-                                        height: 60,
-                                        width: 60,
-                                        borderRadius: 30,
-                                        borderWidth: 2,
-                                        borderColor: "red",
-                                    }}
-
-                                />
-                            </View>
-                        </TouchableOpacity>
 
                     </View>
                     <View
@@ -163,8 +116,9 @@ const StoriesStream = () => {
                             flexDirection: "row",
                             position: "absolute",
                             width: "100%",
-                            justifyContent: "center",
-                            top: 45
+                            justifyContent: "space-between",
+                            marginLeft: '30%',
+                            marginTop: "18%",
 
                         }}
                     >
@@ -177,6 +131,64 @@ const StoriesStream = () => {
                         >
                             Your Story
                         </Text>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <View
+                                style={{
+                                    backgroundColor: '#343232',
+                                    height: 40,
+                                    width: 80,
+                                    borderRadius: 10,
+                                    flexDirection: "row",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+
+                                }}
+                            >
+                                <FontAwesome5 name="clock" size={18} color="white" />
+                                <Text
+                                    style={{
+                                        marginLeft: 4,
+                                        color: 'white',
+                                        fontSize: 12
+                                    }}>
+
+                                    21min
+                                </Text>
+                            </View>
+                            <TouchableOpacity
+                                onPress={goProfil}
+                            >
+                                <View
+                                    style={{
+                                        marginLeft: 10,
+                                        height: 40,
+                                        width: 40,
+                                        borderRadius: 30,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Image
+                                        source={{
+                                            uri: userData.picture
+                                        }}
+                                        style={{
+                                            height: "100%",
+                                            width: "100%",
+                                            borderRadius: 30,
+                                        }}
+
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                     <View
                         style={{
@@ -187,7 +199,7 @@ const StoriesStream = () => {
                             borderRadius: 30,
                             width: "90%",
                             height: "80%",
-                            top: '8%',
+                            top: '12%',
                             class: "momo"
                         }}
                     >
