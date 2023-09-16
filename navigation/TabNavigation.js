@@ -49,7 +49,7 @@ const TabNavigation = () => {
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Feather name="search" color={color} size={35} onPress={() => {
-                            navigation.navigate('Profile');
+                            navigation.navigate('Search');
                         }} />
                     ),
                     tabBarLabel: () => null,

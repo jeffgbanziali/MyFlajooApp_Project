@@ -9,13 +9,9 @@ const PostsUser = () => {
         <View style={{
             flexDirection: "row",
             flexWrap: "wrap",
-            alignContent: "flex-start",
-            justifyContent: "flex-start",
+            display: "flex",
             alignItems: "center",
-            alignSelf: "center",
-            marginTop: 10,
-            marginBottom: 10,
-            marginLeft: 40,
+            justifyContent: "space-evenly",
 
         }}
         >
@@ -43,7 +39,6 @@ const PostImage = ({ post }) => {
 
                 borderRadius: 10,
                 overflow: "hidden",
-                marginRight: 10,
                 marginBottom: 10,
                 borderWidth: 1,
                 borderColor: "white",
@@ -52,7 +47,7 @@ const PostImage = ({ post }) => {
         >
             <Image source={{ uri: post.imageUrl }}
                 style={{
-                    width: 130,
+                    width: 135,
                     height: 200,
 
 

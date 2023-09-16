@@ -1,6 +1,7 @@
 import { Divider } from '@rneui/base';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Followers from './Followers';
 
 const ProfileUtils = () => {
     return (
@@ -9,11 +10,12 @@ const ProfileUtils = () => {
         <View style={{
             position: 'relative',
             width: 371,
+            height: 80,
             flex: 1,
             backgroundColor: '#494747',
             borderRadius: 30,
-            paddingBottom: 80,
             marginTop: -40,
+            display: 'flex',
             borderWidth: 1,
             borderColor: '#EFEAEA',
             borderStyle: 'solid',
@@ -22,6 +24,7 @@ const ProfileUtils = () => {
             alignSelf: 'center',
 
         }}>
+            <Followers />
         </View>
 
 

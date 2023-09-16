@@ -30,7 +30,7 @@ const Header = ({ borderBottomColor }) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: borderBottomColor, 
+        borderBottomColor: borderBottomColor,
       }}
     >
       <TouchableOpacity
@@ -56,7 +56,8 @@ const Header = ({ borderBottomColor }) => {
           alignItems: 'center',
           alignContent: 'center',
           flexDirection: 'row',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          marginRight: 10,
         }}
       >
         <View
@@ -141,22 +142,25 @@ const Header = ({ borderBottomColor }) => {
             alignSelf: 'center',
             borderRadius: 30,
             marginTop: '1.5%',
-            width: 50,
-            height: 50,
+            backgroundColor: 'red',
+            marginLeft: 10,
+            width: 35,
+            height: 35,
             zIndex: 100
           }}
         >
           <TouchableOpacity onPress={handleClickProfile}>
-            <Feather
-              name='user'
-              size={25}
-              color='white'
+            <Image source={{
+              uri: 'https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png'
+            }}
               style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: 'contain'
+                width: "100%",
+                height: "100%",
+                borderRadius: 100,
+                borderWidth: 2,
+                borderColor: "#3B4FB8",
               }}
+
             />
           </TouchableOpacity>
         </View>

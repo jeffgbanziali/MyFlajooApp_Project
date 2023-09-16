@@ -8,76 +8,83 @@ const Settings = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     return (
         <View style={{
-            flex: 1, alignItems: 'center', justifyContent: 'center',
-            backgroundColor: '#000000',
-            padding: 20,
-            paddingTop: 50,
-            borderRadius: 10,
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-
-
+            flex: 1,
+            backgroundColor: "#454140",
         }}
         >
             <View
+                style={styles.container}
+
+            >
+                <Text
+                    style={styles.text}>Settings</Text>
+            </View>
+
+            <View
                 style={{
+                    marginTop: 10,
+                    width: '100%',
+                    height: '90%',
                     flexDirection: 'column',
+                    alignItems: 'center',
+                    backgroundColor: 'blue',
                 }}
             >
                 <View
                     style={{
-
-                        backgroundColor: '#454140',
-                        shadowColor: '#000',
-                        display: 'flex',
+                        marginTop: 12,
+                        width: '98%',
+                        height: '6%',
                         flexDirection: 'row',
-                        justifyContent: 'flex-start',
                         alignItems: 'center',
-                        alignContent: 'center',
-                        alignSelf: 'center',
-                        marginBottom: 20,
-
+                        padding: 10,
+                        backgroundColor: 'red',
+                        borderRadius: 10,
                     }}
                 >
                     <Ionicons
-                    style={{ marginLeft: 10 }}
-                     name="notifications" size={24} color="black" />
-                    <Text style={styles.text}>Activer les notifications</Text>
+                        name="ios-notifications-outline"
+                        size={30}
+                        color="white"
+
+                    />
+                    <Text
+                        style={{
+                            marginLeft: 10,
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: 20,
+                        }}
+                    >
+                        Notifications
+                    </Text>
 
                 </View>
                 <View
                     style={{
-                        width: '100%',
-                        height: 50,
-                        backgroundColor: '#454140',
-                        padding: 20,
-                        paddingTop: 50,
-                        borderRadius: 20,
-                        borderWidth: 2,
-                        borderColor: '#FFFFFF',
-                        shadowColor: '#000',
+                        marginTop: 12,
+                        width: '98%',
+                        height: '6%',
+                        backgroundColor: 'red',
+                        alignItems: 'center',
+                        borderRadius: 10,
                     }}
                 >
 
                 </View>
                 <View
                     style={{
-                        width: '100%',
-                        height: 50,
-                        backgroundColor: '#454140',
-                        padding: 20,
-                        paddingTop: 50,
-                        borderRadius: 20,
-                        borderWidth: 2,
-                        borderColor: '#FFFFFF',
-                        shadowColor: '#000',
+                        marginTop: 12,
+                        width: '98%',
+                        height: '6%',
+                        backgroundColor: 'red',
+                        alignItems: 'center',
+                        borderRadius: 10,
                     }}
                 >
 
                 </View>
+
             </View>
 
 
@@ -89,21 +96,22 @@ const Settings = () => {
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => setIsEnabled(!isEnabled)}
                     value={isEnabled}
-                />
+                /> 
+                
 </View>*/}
-            <Logout />
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 60,
+        marginLeft: 10,
+        marginRight: 10,
     },
     text: {
-        fontSize: 20,
+        fontSize: 40,
         color: '#fff',
         fontWeight: 'bold',
         marginLeft: 10,

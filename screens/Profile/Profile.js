@@ -133,10 +133,21 @@ const Profile = () => {
                             </View>
                         </TouchableOpacity>
 
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', marginTop: 10 }}>
+                        <Text style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            marginTop: 10,
+                            color: 'white',
+                        }}>
                             {userData.pseudo}
                         </Text>
-                        <Text style={{ fontSize: 20, color: '#5F5858' }}>
+                        <Text style={{
+                            fontSize: 14,
+                            color: '#5F5858',
+                            fontWeight: 'bold',
+                            marginTop: 10,
+
+                        }}>
                             {userData.bio}
                         </Text>
                     </View>
@@ -146,22 +157,16 @@ const Profile = () => {
                 <ProfileUtils />
             </View>
             <View >
-                <Followers />
-            </View>
-            <View >
                 <NavButtonProfile />
             </View>
 
             <View style={{
-
                 flex: 1,
                 alignContent: 'center',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 10,
                 marginBottom: 10,
                 backgroundColor: '#3D3939',
-                borderRadius: 30,
 
             }}>
                 <PostsUser />
