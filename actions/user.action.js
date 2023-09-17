@@ -5,6 +5,7 @@ export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
+export const SEARCH_USERS = "SEARCH_USERS";
 
 export const getUser = (uid) => {
     return (dispatch) => {
@@ -73,3 +74,16 @@ export const unfollowUser = (followerId, idToUnfollow) => {
             .catch((err) => console.log(err));
     };
 };
+
+
+export const searchUsers = () => {
+    return (dispatch) => {
+        return axios
+            .get(`http://192.168.0.14:3000/api/user/search`)
+            .then((res) => {
+                dispatch({ type: SEARCH_USERS, payload: res.data });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+

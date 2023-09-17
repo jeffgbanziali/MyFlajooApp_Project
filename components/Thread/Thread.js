@@ -21,7 +21,7 @@ const Thread = () => {
     return (
         <View>
             <View>
-                {!isEmpty(posting[0]) &&
+                {!isEmpty(posting) && Array.isArray(posting) &&
                     posting.map(post => {
                         return (
                             <View key={post._id}>

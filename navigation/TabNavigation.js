@@ -38,14 +38,14 @@ const TabNavigation = () => {
             />
 
             <Tab.Screen
-                name="Search"
+                name="Research"
                 component={
                     () => null
                 }
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Feather name="search" color={color} size={30} onPress={() => {
-                            navigation.navigate('Search');
+                            navigation.navigate('Searching');
                         }} />
                     ),
                     tabBarLabel: () => null,

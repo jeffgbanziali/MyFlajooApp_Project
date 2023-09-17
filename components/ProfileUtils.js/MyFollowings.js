@@ -1,11 +1,20 @@
 import { View, Text, Image, KeyboardAvoidingView } from 'react-native';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
 import FollowHandler from './FollowHandler';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 const MyFollowers = () => {
     const userData = useSelector((state) => state.userReducer);
     const usersData = useSelector((state) => state.usersReducer);
+    const navigation = useNavigation();
+    const handleClickReturnProfile = () => {
+        console.log("clicked")
+        navigation.navigate('Profile');
+    }
 
     return (
         <KeyboardAvoidingView
@@ -16,15 +25,46 @@ const MyFollowers = () => {
             }}
 
         >
-            <View>
-                <Text
+            <View style={{ flex: 1, marginTop: 50 }}>
+                <View
                     style={{
-                        fontSize: 30,
-                        fontWeight: 'bold',
-                        color: '#F6F6F6',
-                        textAlign: 'center',
+                        flexDirection: 'row',
+                        justifyContent: "space-between",
                     }}
-                >My Following</Text>
+                >
+
+                    <TouchableOpacity
+                        onPress={handleClickReturnProfile}
+                        style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: "#161414",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 30,
+                            marginLeft: "3.5%",
+                            marginTop: "1.5%"
+                        }}
+                    >
+                        <View>
+                            <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                                alignSelf: 'center',
+                                alignContent: 'center',
+                                alignItems: 'center',
+                                resizeMode: "contain"
+                            }} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text
+                        style={{
+                            fontSize: 28,
+                            fontWeight: 'semibold',
+                            color: '#F6F6F6',
+                            textAlign: 'center',
+                            marginRight: "4.5%",
+                        }}
+                    >My Followings</Text>
+                </View>
 
                 <View
                     style={{

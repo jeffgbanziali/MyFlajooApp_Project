@@ -73,14 +73,16 @@ const Posts = ({ post }) => {
                                         onPress={goProfil}
                                     >
                                         <Image
-                                            source={
-                                                !isEmpty(usersData[0]) &&
-                                                usersData.map((user) => {
-                                                    if (user._id === post.posterId)
-                                                        return user.picture;
-                                                    else return null
-                                                }
-                                                ).join("")
+                                            source={{
+                                                uri:
+                                                    !isEmpty(usersData[0]) &&
+                                                    usersData.map((user) => {
+                                                        if (user._id === post.posterId)
+                                                            return user.picture;
+                                                        else return null
+                                                    }
+                                                    ).join("")
+                                            }
                                             }
 
                                             style={{
@@ -88,7 +90,7 @@ const Posts = ({ post }) => {
                                                 height: 50,
                                                 borderRadius: 30,
                                                 marginTop: 10,
-                                                borderWidth: 3,
+                                                borderWidth: 2,
                                                 borderColor: "red",
                                                 marginLeft: 30,
                                                 resizeMode: "cover",

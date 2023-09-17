@@ -1,4 +1,4 @@
-import { GET_POSTS, LIKE_POST, UNLIKE_POST, ADD_COMMENT } from "../actions/post.actions";
+import { GET_POSTS, LIKE_POST, UNLIKE_POST, ADD_COMMENT, CREATE_POST_ERROR } from "../actions/post.actions";
 
 const initialState = {};
 
@@ -16,7 +16,6 @@ export default function postReducer(state = initialState, action) {
                 }
                 return post;
             });
-
         case UNLIKE_POST:
             return state.map((post) => {
                 if (post._id === action.payload.postId) {
@@ -27,7 +26,6 @@ export default function postReducer(state = initialState, action) {
                 }
                 return post;
             });
-
         case ADD_COMMENT:
             return state.map((post) => {
                 if (post._id === action.payload.postId) {
@@ -38,10 +36,13 @@ export default function postReducer(state = initialState, action) {
                 }
                 return post;
             });
-
+        case CREATE_POST_ERROR:
+            // Gérez l'erreur ici, par exemple, stockez-la dans un champ d'état approprié
+            return {
+                ...state,
+                error: action.payload // Stockez l'erreur dans un champ d'état "error"
+            };
         default:
             return state;
     }
 }
-
-

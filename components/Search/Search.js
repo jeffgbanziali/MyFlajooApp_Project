@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchUsers } from '../../actions/user.action';
 
 const Search = () => {
     const [searchText, setSearchText] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    const dispatch = useDispatch();
+    const searchResults = useSelector((state) => state.userReducer.searchResults);
+
+    const performSearch = () => {
         if (searchText.length > 2) {
             setLoading(true);
-
-            // Remplacez l'URL par votre propre endpoint API
-            const apiUrl = `http://192.168.0.14:3000/`;
-
-            axios.get(apiUrl)
-                .then((response) => {
-                    setSearchResults(response.data);
-                })
-                .catch((error) => {
-                    console.error('Erreur de recherche :', error);
-                })
+            dispatch(searchUsers(searchText))
                 .finally(() => {
                     setLoading(false);
                 });
-        } else {
-            setSearchResults([]);
         }
+    };
+
+    useEffect(() => {
+        performSearch();
     }, [searchText]);
 
     return (
@@ -37,19 +32,20 @@ const Search = () => {
                 placeholder="Rechercher..."
                 onChangeText={setSearchText}
                 value={searchText}
+                onSubmitEditing={performSearch}
             />
+
             {loading ? (
                 <Text style={styles.loadingText}>Chargement en cours...</Text>
             ) : (
                 <FlatList
                     data={searchResults}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item._id}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={styles.item}
-
                         >
-                            <Text>{item.name}</Text>
+                            <Text>{item.pseudo}</Text>
                         </TouchableOpacity>
                     )}
                 />
@@ -62,12 +58,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#fff',
+        backgroundColor: "#2C2828",
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 16,
+        marginTop: 30,
     },
     input: {
         height: 40,
@@ -75,6 +72,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 16,
         paddingHorizontal: 8,
+        fontSize: 16,
+        color: 'white',
+        borderRadius: 8,
     },
     loadingText: {
         fontSize: 18,
@@ -84,6 +84,8 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
+        color: 'white',
+        backgroundColor: 'red',
     },
 });
 

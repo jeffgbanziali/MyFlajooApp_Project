@@ -6,6 +6,7 @@ export const GET_ADD_POSTS = "GET_ADD_POSTS";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 
 export const getPosts = (num) => {
     return async (dispatch) => {
@@ -19,19 +20,25 @@ export const getPosts = (num) => {
     };
 };
 
-export const addPosts = (num) => {
+export const addPosts = (postId) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.14:3000/api/post`, data)
+            .post(`http://192.168.0.14:3000/api/post`, postId)
             .then((res) => {
                 if (res.data.errors) {
-                    dispatch({ type: GET_POST_ERRORS, payload: res.data.errors });
+                    dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
                 } else {
-                    dispatch({ type: GET_POST_ERRORS, payload: "" });
+                    // Dispatch une action réussie si nécessaire
+                    dispatch({ type: ADD_POSTS_SUCCESS }); // Définissez ADD_POSTS_SUCCESS selon vos besoins
                 }
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la création du post :', error);
+                dispatch({ type: CREATE_POST_ERROR, payload: 'Une erreur s\'est produite lors de la création du post.' });
             });
     };
 };
+
 
 export const likePost = (postId, userId) => {
     return async (dispatch) => {

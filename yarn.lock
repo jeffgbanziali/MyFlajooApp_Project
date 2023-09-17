@@ -6428,6 +6428,23 @@ expo-font@~11.0.1:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-loader@~4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.4.0.tgz"
+  integrity sha512-dq88tiRB8aB1U+O/oJI7IY4VU9Nu2iDjEwR8QDfLtD4xWd5lNGoyic5Vh7911E1qNJFqNMSVIVzOD5l1SQ3A6g==
+
+expo-image-picker@^14.5.0:
+  version "14.5.0"
+  resolved "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.5.0.tgz"
+  integrity sha512-9icvfQuWMdNKufFqu+FxenKcfybz9ior+XYQCIl/q5+mpHPo2tKq8I30vu2BjsOJ0Cfo7V4vMeN7a9F/3ooUfQ==
+  dependencies:
+    expo-image-loader "~4.4.0"
+
+expo-image@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/expo-image/-/expo-image-1.5.1.tgz"
+  integrity sha512-133chFSiaiZDeHRmABo/D+j/ByhPjhRwa4X2vgok1E6I2BapJ8n6ZiXODbABNH02EDYssV4Ih71tAWpheMzl/g==
+
 expo-keep-awake@~11.0.1:
   version "11.0.1"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz"
@@ -11757,10 +11774,10 @@ react-native-gradle-plugin@^0.70.3:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   integrity sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==
 
-react-native-image-picker@^5.0.1:
-  version "5.3.1"
-  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-5.3.1.tgz"
-  integrity sha512-zRCjtlE3KOeaWDM8gXzTwXfvo3ZeF2XMkHceU7CVCtKRleKxna/E4XWIPu/lXO2qlMdnSx1WvfPSbqzAX0qxpA==
+react-native-image-picker@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-5.7.0.tgz"
+  integrity sha512-LGBrFQzKEAt/u4z+IcY7COZA7N6lCeLQ2dMu1PubK10+d9YBRS8n/ABNj48CJhEpUhcRPt7H3iWbwIuOlcZrDA==
 
 react-native-linear-gradient@^2.6.2:
   version "2.6.2"
