@@ -5,7 +5,7 @@ import MyStory from './MyStory'
 import { useNavigation } from '@react-navigation/native'
 
 const Stories = () => {
-  
+
 
   const navigation = useNavigation(false)
   const handleViewStory = () => {
@@ -36,7 +36,7 @@ const Stories = () => {
       >
         <MyStory />
         {USER.map((story, index) => (
-          <View>
+          <View key={index}>
             <TouchableOpacity
               onPress={() => {
                 handleViewStory()

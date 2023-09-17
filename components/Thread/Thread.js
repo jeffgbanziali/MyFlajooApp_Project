@@ -9,7 +9,7 @@ const Thread = () => {
     const [loadPost, setLoadPost] = useState(true)
     const [count, setCount] = useState(0)
     const dispatch = useDispatch()
-    const posts = useSelector(state => state.postReducer)
+    const posting = useSelector(state => state.postReducer)
 
     useEffect(() => {
         if (loadPost) {
@@ -21,11 +21,11 @@ const Thread = () => {
     return (
         <View>
             <View>
-                {!isEmpty(posts[0]) &&
-                    posts.map(post => {
+                {!isEmpty(posting[0]) &&
+                    posting.map(post => {
                         return (
-                            <View>
-                                <Posts post={post} key={post._id} />
+                            <View key={post._id}>
+                                <Posts post={post} />
                             </View>
                         )
                     })}

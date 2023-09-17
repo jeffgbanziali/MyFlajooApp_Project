@@ -6,7 +6,6 @@ export const UPDATE_BIO = "UPDATE_BIO";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
-
 export const getUser = (uid) => {
     return (dispatch) => {
         return axios
@@ -19,22 +18,21 @@ export const getUser = (uid) => {
 };
 
 export const uploadPicture = (data, id) => {
-    return (dispatch) => {
-        return axios
-            .post("http://192.168.0.14:3000/api/user/upload", data)
-            .then((res) => {
-                return axios // return axios to chain the two requests
-                    .get(`http://192.168.0.145:3000/api/user/${id}`)
-                    .then((res) => {
-                        dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
-                    })
-                    .catch((err) => console.log(err));
+    return async (dispatch) => {
+        try {
+            // Uploader l'image
+            const uploadResponse = await axios.post("http://192.168.0.14:3000/api/user/upload", data);
 
-            })
-            .catch((err) => console.log(err));
+            // Mettre à jour l'utilisateur après le téléchargement de l'image
+            const userResponse = await axios.get(`http://192.168.0.14:3000/api/user/${id}`);
+
+            // Dispatch des actions avec les données mises à jour
+            dispatch({ type: UPLOAD_PICTURE, payload: userResponse.data.picture });
+        } catch (error) {
+            console.error('Erreur lors du téléchargement de l\'image:', error);
+        }
     }
 };
-
 
 export const updateBio = (bio, userId) => {
     return (dispatch) => {
@@ -43,8 +41,7 @@ export const updateBio = (bio, userId) => {
             .put(`http://192.168.0.14:3000/api/user/` + userId, { bio })
             .then((res) => {
                 dispatch({ type: UPDATE_BIO, payload: bio });
-            }
-            )
+            })
             .catch((err) => console.log(err));
     }
 };
@@ -76,6 +73,3 @@ export const unfollowUser = (followerId, idToUnfollow) => {
             .catch((err) => console.log(err));
     };
 };
-
-
-

@@ -28,6 +28,8 @@ const Posts = ({ post }) => {
         !isEmpty(usersData)[0] && setIsLoading(false);
     }, [usersData]);
 
+    console.log(usersData)
+
 
     return (
         <View style={{
@@ -89,7 +91,8 @@ const Posts = ({ post }) => {
                                                 borderWidth: 3,
                                                 borderColor: "red",
                                                 marginLeft: 30,
-                                                resizeMode: "cover"
+                                                resizeMode: "cover",
+                                                zIndex: 1,
                                             }} />
                                     </TouchableOpacity>
                                     <View
@@ -109,14 +112,11 @@ const Posts = ({ post }) => {
                                                 fontWeight: '600',
                                                 fontSize: 18,
                                             }}>
-                                                {
-                                                    !isEmpty(usersData[0]) &&
-                                                    usersData
-                                                        .map((user) => {
-                                                            if (user._id === post.posterId) return user.pseudo;
-                                                            else return null;
-                                                        })
-                                                }
+                                                {!isEmpty(usersData[0]) &&
+                                                    usersData.map(user => {
+                                                        if (user._id === post.posterId) return user.pseudo
+                                                        else return null
+                                                    })}
                                             </Text>
                                             <View
                                                 style={{
