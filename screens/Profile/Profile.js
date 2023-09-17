@@ -45,49 +45,53 @@ const Profile = () => {
 
                     }}
                     >
-                        <View style={{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            backgroundColor: "#161414",
-                            width: 50,
-                            height: 50,
-                            borderRadius: 30,
-                            marginLeft: "3.5%",
-                            marginTop: "1.5%"
-                        }}
+
+                        <TouchableOpacity
+                            onPress={handleClickReturnHome}
+                            style={{
+                                justifyContent: 'center',
+                                alignSelf: 'center',
+                                backgroundColor: "#161414",
+                                width: 50,
+                                height: 50,
+                                borderRadius: 30,
+                                marginLeft: "3.5%",
+                                marginTop: "1.5%"
+                            }}
                         >
-                            <TouchableOpacity
-                                onPress={handleClickReturnHome}
-                            >
+                            <View>
                                 <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
                                     alignSelf: 'center',
                                     alignContent: 'center',
                                     alignItems: 'center',
                                     resizeMode: "contain"
                                 }} />
-                            </TouchableOpacity>
-                        </View>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                alignSelf: 'center',
+                                backgroundColor: "#161414",
+                                width: 50,
+                                height: 50,
+                                borderRadius: 30,
+                                marginRight: "3.5%",
+                                marginTop: "1.5%"
+                            }}
+                            onPress={handleClickSettings}>
 
-                        <View style={{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            backgroundColor: "#161414",
-                            width: 50,
-                            height: 50,
-                            borderRadius: 30,
-                            marginRight: "3.5%",
-                            marginTop: "1.5%"
-                        }}
-                        >
-                            <TouchableOpacity onPress={handleClickSettings}>
+                            <View>
+
                                 <Entypo name="dots-three-horizontal" size={28} color="#5F5858" style={{
                                     alignSelf: 'center',
                                     alignContent: 'center',
                                     alignItems: 'center',
                                     resizeMode: "contain"
                                 }} />
-                            </TouchableOpacity>
-                        </View>
+
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
 

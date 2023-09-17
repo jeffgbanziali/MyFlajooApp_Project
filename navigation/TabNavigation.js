@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import ProfileFriends from '../screens/ProfileFriends/ProfileFriends';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, Entypo, MaterialIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import Réels from '../screens/Réels/Réels';
 
@@ -12,15 +12,17 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
     const navigation = useNavigation();
 
+    
+
     return (
         <Tab.Navigator
             initialRouteName="HomeScreen"
             screenOptions={{
                 headerShown: false,
-                tabBarActiveTintColor: "red",
+                tabBarActiveTintColor: "lightblue",
                 tabBarStyle: {
                     backgroundColor: "black",
-                    shadowColor: "gray",
+                    shadowColor: "#3D3939",
                 }
             }}
         >
@@ -29,14 +31,8 @@ const TabNavigation = () => {
                 component={HomeScreen}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Feather name="home" size={35} color={color} />
+                        <MaterialIcons name="home-filled" size={30} color={color} />
                     ),
-                    tabBarBadge: true,
-                    tabBarBadgeStyle: {
-                        backgroundColor: "blue",
-                        borderRadius: 10,
-                        marginRight: 100,
-                    },
                     tabBarLabel: () => null,
                 }}
             />
@@ -48,7 +44,7 @@ const TabNavigation = () => {
                 }
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Feather name="search" color={color} size={35} onPress={() => {
+                        <Feather name="search" color={color} size={30} onPress={() => {
                             navigation.navigate('Search');
                         }} />
                     ),
@@ -63,7 +59,7 @@ const TabNavigation = () => {
                 }
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Entypo name="squared-plus" size={35} color={color}
+                        <Entypo name="squared-plus" size={30} color={color}
                             onPress={() => {
                                 navigation.navigate('NewPostScreen');
                             }}
@@ -78,7 +74,7 @@ const TabNavigation = () => {
                 component={Réels}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="movie-play-outline" size={35} color={color}
+                        <MaterialCommunityIcons name="movie-play-outline" size={30} color={color}
                         />
                     ),
                     tabBarLabel: () => null,
@@ -90,7 +86,7 @@ const TabNavigation = () => {
                 component={ProfileFriends}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Feather name="heart" color={color} size={35} />
+                        <Feather name="heart" color={color} size={30} />
                     ),
                     tabBarLabel: () => null,
                 }}
