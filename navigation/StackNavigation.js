@@ -32,9 +32,8 @@ const Stack = createNativeStackNavigator();
 
 
 const StackNavigation = () => {
-
     return (
-        <NavigationContainer screenOptions={{ headerShown: false }}>
+        <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="HomeScreen" component={TabNavigation} />
                 <Stack.Screen name="Réels" component={Réels} />
@@ -48,7 +47,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Notifications" component={Notifications} />
                 <Stack.Screen name="Myfollowing" component={MyFollowings} />
                 <Stack.Screen name="Myfollowers" component={MyFollowers} />
-                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen name="Searching" component={Search} />
                 <Stack.Screen name="Start" component={StartPage} />
                 <Stack.Screen name="Signup" component={SignUpScreen} />
                 <Stack.Screen name="Signin" component={SignInScreen} />
@@ -57,5 +56,6 @@ const StackNavigation = () => {
         </NavigationContainer>
     );
 };
+
 
 export default StackNavigation;

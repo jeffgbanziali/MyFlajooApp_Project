@@ -16,7 +16,7 @@ const TabNavigation = () => {
 
     return (
         <Tab.Navigator
-            initialRouteName="HomeScreen"
+            initialRouteName="Home"
             screenOptions={{
                 headerShown: false,
                 tabBarActiveTintColor: "lightblue",
@@ -27,7 +27,7 @@ const TabNavigation = () => {
             }}
         >
             <Tab.Screen
-                name="HomeScreen"
+                name="Home"
                 component={HomeScreen}
                 options={{
                     tabBarIcon: ({ color }) => (
