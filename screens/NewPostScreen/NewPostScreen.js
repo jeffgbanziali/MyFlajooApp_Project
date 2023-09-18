@@ -175,7 +175,7 @@ const NewPostScreen = () => {
                         <Image
                             source={
                                 {
-                                    uri: "https://s.yimg.com/os/creatr-uploaded-images/2021-02/a94af500-7018-11eb-96ef-b1f45e508b72"
+                                    uri: userData.picture
                                 }
                             }
                             style={{
