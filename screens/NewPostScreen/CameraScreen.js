@@ -2,12 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { AntDesign, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
+import { useNavigation } from '@react-navigation/native';
 
 const CameraScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const cameraRef = useRef(null);
+
+
+    const navigation = useNavigation();
+    const handleClickReturnNewPost = () => {
+        console.log("clicked")
+        navigation.navigate('NewPostScreen');
+    }
 
     useEffect(() => {
         (async () => {
@@ -34,11 +43,16 @@ const CameraScreen = () => {
 
     const takePicture = async () => {
         if (cameraRef.current) {
-            const photo = await cameraRef.current.takePictureAsync();
-            console.log('Photo taken:', photo);
+            try {
+                const { uri } = await cameraRef.current.takePictureAsync();
+                console.log('Photo taken:', uri);
 
-            // Vous pouvez faire ce que vous voulez avec la photo ici, par exemple, l'enregistrer ou l'envoyer à un serveur.
-            
+                const asset = await MediaLibrary.createAssetAsync(uri);
+                console.log('Photo enregistrée localement:', asset);
+
+            } catch (error) {
+                console.error('Erreur lors de la prise de la photo :', error);
+            }
         }
     };
 
@@ -60,29 +74,60 @@ const CameraScreen = () => {
                 <View
                     style={{
                         flexDirection: 'column',
-                        justifyContent: "space-between",
                         height: "100%",
+                        justifyContent: "space-between"
+
                     }}
                 >
-                    <View style={styles.cameraActions}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: "space-between",
+                        }}
+                    >
                         <TouchableOpacity
-                            style={styles.cameraAction}
-                            onPress={toggleCameraType}
+                            onPress={handleClickReturnNewPost}
+                            style={{
+                                justifyContent: 'center',
+                                width: 40,
+                                height: 40,
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                borderRadius: 30,
+                                marginLeft: "3.5%",
+                                marginTop: 50,
+                            }}
                         >
-                            <View style={styles.cameraActionText}>
-                                {type === Camera.Constants.Type.back ? <MaterialIcons name="flip-camera-android" size={24} color="white" /> : <MaterialIcons name="flip-camera-android" size={24} color="white" />}
+                            <View>
+                                <AntDesign name="arrowleft" size={25} color="white" style={{
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    resizeMode: "contain"
+                                }} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.cameraAction}
-                            onPress={toggleFlashMode}
-                        >
-                            <Text style={styles.cameraActionText}>
-                                {flash === Camera.Constants.FlashMode.off ? <MaterialCommunityIcons name="flash" size={24} color="white" /> : <MaterialCommunityIcons name="flash-off" size={24} color="white" />}
-                            </Text>
-                        </TouchableOpacity>
+                        <View style={styles.cameraActions}>
+                            <TouchableOpacity
+                                style={styles.cameraAction}
+                                onPress={toggleCameraType}
+                            >
+                                <View style={styles.cameraActionText}>
+                                    {type === Camera.Constants.Type.back ? <MaterialIcons name="flip-camera-android" size={24} color="white" /> : <MaterialIcons name="flip-camera-android" size={24} color="white" />}
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.cameraAction}
+                                onPress={toggleFlashMode}
+                            >
+                                <Text style={styles.cameraActionText}>
+                                    {flash === Camera.Constants.FlashMode.off ? <MaterialCommunityIcons name="flash" size={24} color="white" /> : <MaterialCommunityIcons name="flash-off" size={24} color="white" />}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View>
+                    <View
+                        
+                    >
                         <TouchableOpacity
                             style={styles.captureButton}
                             onPress={takePicture}
@@ -113,14 +158,14 @@ const styles = StyleSheet.create({
     },
     cameraActions: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         marginTop: 50,
-        margin: 20,
+        
     },
     cameraAction: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 10,
         borderRadius: 100,
+        marginLeft: "1.5%",
     },
     cameraActionText: {
         color: 'white',
@@ -136,7 +181,7 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 100,
-        marginBottom: 30,
+        marginBottom: 40,
 
     },
     captureButtonText: {

@@ -150,7 +150,7 @@ const NewPostScreen = () => {
                     >
                         <Text
                             style={{
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontWeight: 'bold',
                                 color: "white",
                             }}
