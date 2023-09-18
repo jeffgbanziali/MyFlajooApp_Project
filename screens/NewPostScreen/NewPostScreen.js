@@ -21,6 +21,10 @@ const NewPostScreen = () => {
         console.log("clicked")
         navigation.navigate('Photo');
     }
+    const handleStartLive = () => {
+        console.log("clicked")
+        navigation.navigate('Live');
+    }
 
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
@@ -305,7 +309,9 @@ const NewPostScreen = () => {
                             </View>
 
                         </TouchableOpacity>
-                        <TouchableOpacity >
+                        <TouchableOpacity
+                            onPress={handleStartLive}
+                        >
                             <View
                                 style={{
                                     flexDirection: 'row',

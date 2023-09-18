@@ -21,6 +21,7 @@ import Search from "../components/Search/Search";
 import TabNavigation from "./TabNavigation";
 import Réels from "../screens/Réels/Réels";
 import CameraScreen from "../screens/NewPostScreen/CameraScreen";
+import LiveScreen from "../screens/LiveScreen/LiveScreen";
 
 
 
@@ -45,6 +46,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Stack.Screen name="Live" component={LiveScreen} />
                 <Stack.Screen name="Photo" component={CameraScreen} />
                 <Stack.Screen name="Notifications" component={Notifications} />
                 <Stack.Screen name="Myfollowing" component={MyFollowings} />
