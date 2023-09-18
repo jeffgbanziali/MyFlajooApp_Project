@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, Button, Alert, TouchableOpacity, Image } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPosts } from '../../actions/post.actions';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { AntDesign, Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
 
 const NewPostScreen = () => {
     const [postText, setPostText] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const dispatch = useDispatch();
+    const userData = useSelector((state) => state.userReducer);
+
+    const navigation = useNavigation();
+    const handleClickReturnHome = () => {
+        console.log("clicked")
+        navigation.navigate('HomeScreen');
+    }
 
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
@@ -65,29 +74,266 @@ const NewPostScreen = () => {
         <View
             style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#fff',
-                padding: 10,
+                backgroundColor: '#2C2828',
             }}
         >
-            <Text>Saisissez votre nouveau post :</Text>
-            <TextInput
-                multiline
-                placeholder="Écrivez votre post ici..."
-                value={postText}
-                onChangeText={text => setPostText(text)}
-            />
-            <TouchableOpacity onPress={selectImage}>
-                <Text>Ajouter une image</Text>
-            </TouchableOpacity>
-            {selectedImage && (
-                <Image
-                    source={{ uri: selectedImage.uri }}
-                    style={{ width: 200, height: 200 }}
-                />
-            )}
-            <Button title="Publier" onPress={handlePostSubmit} />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginTop: 40,
+                    borderBottomWidth: 2,
+                    borderBottomColor: '#5F5858',
+                    padding: 6,
+                }}
+            >
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={handleClickReturnHome}
+                        style={{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            width: 40,
+                            height: 40,
+                            borderRadius: 30,
+                            marginLeft: "3.5%",
+                        }}
+                    >
+                        <View>
+                            <AntDesign name="arrowleft" size={25} color="#5F5858" style={{
+                                alignSelf: 'center',
+                                alignContent: 'center',
+                                alignItems: 'center',
+                                resizeMode: "contain"
+                            }} />
+                        </View>
+                    </TouchableOpacity>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            color: "black",
+                            marginLeft: "3.5%",
+                            alignSelf: 'center',
+                        }}
+
+                    >
+                        Create a new post
+
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        marginRight: "3.5%",
+                        width: 100,
+                        height: 40,
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        backgroundColor: 'lightblue',
+                        alignItems: 'center',
+                        borderRadius: 10,
+                    }}
+                >
+                    <Button
+                        title="Publier"
+                        fontSize={20}
+                        onPress={handlePostSubmit} />
+                </View>
+            </View>
+            <View
+                style={{
+                    flex: 1,
+                    width: "100%",
+
+                }}
+            >
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        marginTop: 20,
+                        marginLeft: "3.5%",
+                    }}
+
+                >
+
+                    <View
+                        style={{
+                            width: 70,
+                            height: 70,
+                            borderRadius: 100,
+                        }}
+
+                    >
+                        <Image
+                            source={
+                                {
+                                    uri: "https://s.yimg.com/os/creatr-uploaded-images/2021-02/a94af500-7018-11eb-96ef-b1f45e508b72"
+                                }
+                            }
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: 100,
+                            }}
+                        />
+
+                    </View>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            color: "black",
+                            marginLeft: "3.5%",
+                        }}
+                    >
+                        {userData.pseudo}
+                    </Text>
+                </View>
+
+                <View
+                    style={{
+                        marginTop: 20,
+                        backgroundColor: '#2C2828'
+                    }}
+                >
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "40%",
+                            borderBottomWidth: 1,
+                            borderColor: '#5F5858',
+                        }}
+                    >
+                        <TextInput
+                            multiline
+                            placeholder="Write your post here..."
+                            value={postText}
+                            onChangeText={text => setPostText(text)}
+                            style={{
+                                height: 100,
+                                width: "100%",
+                                borderRadius: 10,
+                                marginLeft: "3.5%",
+                                fontSize: 25,
+                            }}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            marginTop: 2,
+                        }}
+                    >
+                        <TouchableOpacity >
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    height: 60,
+                                    width: "100%",
+                                    alignItems: 'center',
+                                    borderBottomWidth: 1,
+                                    borderColor: '#5F5858',
+                                }}
+                            >
+                                <AntDesign
+                                    style={{
+                                        marginLeft: "1.5%",
+                                    }}
+                                    name="camera" size={30} color="blue" />
+                                <Text
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: 'semibold',
+                                        color: "black",
+                                        marginLeft: "1.5%",
+                                        alignSelf: 'center',
+                                    }}
+                                >Take a Picture / Video</Text>
+                            </View>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={selectImage}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    height: 60,
+                                    width: "100%",
+                                    alignItems: 'center',
+                                    borderBottomWidth: 1,
+                                    borderColor: '#5F5858',
+                                }}
+                            >
+                                <Ionicons
+                                    style={{
+                                        marginLeft: "1.5%",
+                                    }}
+                                    name="image" size={30} color="green" />
+                                <Text
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: 'semibold',
+                                        color: "black",
+                                        marginLeft: "1.5%",
+                                        alignSelf: 'center',
+                                    }}
+                                >Add a Picture / Video</Text>
+                            </View>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity >
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    height: 60,
+                                    width: "100%",
+                                    alignItems: 'center',
+                                    borderBottomWidth: 1,
+                                    borderColor: '#5F5858',
+                                }}
+                            >
+                                <FontAwesome
+                                    style={{
+                                        marginLeft: "1.5%",
+                                    }}
+                                    name="video-camera" size={30} color="red" />
+                                <Text
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: 'semibold',
+                                        color: "black",
+                                        marginLeft: "1.5%",
+                                        alignSelf: 'center',
+                                    }}
+                                >
+                                    Start a live
+                                </Text>
+                            </View>
+
+                        </TouchableOpacity>
+                    </View>
+
+                    {selectedImage && (
+                        <Image
+                            source={{ uri: selectedImage.uri }}
+                            style={{ width: 200, height: 200 }}
+                        />
+                    )}
+
+                </View>
+
+
+            </View>
+
         </View>
     );
 };
