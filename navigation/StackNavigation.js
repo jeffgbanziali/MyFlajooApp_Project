@@ -20,6 +20,7 @@ import StoriesStream from "../components/homepage/Stories/StoriesStream";
 import Search from "../components/Search/Search";
 import TabNavigation from "./TabNavigation";
 import Réels from "../screens/Réels/Réels";
+import CameraScreen from "../screens/NewPostScreen/CameraScreen";
 
 
 
@@ -44,6 +45,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Stack.Screen name="Photo" component={CameraScreen} />
                 <Stack.Screen name="Notifications" component={Notifications} />
                 <Stack.Screen name="Myfollowing" component={MyFollowings} />
                 <Stack.Screen name="Myfollowers" component={MyFollowers} />

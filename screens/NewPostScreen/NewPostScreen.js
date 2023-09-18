@@ -17,6 +17,10 @@ const NewPostScreen = () => {
         console.log("clicked")
         navigation.navigate('HomeScreen');
     }
+    const handleTakePicture = () => {
+        console.log("clicked")
+        navigation.navigate('Photo');
+    }
 
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
@@ -82,7 +86,7 @@ const NewPostScreen = () => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    marginTop: 40,
+                    marginTop: 50,
                     borderBottomWidth: 2,
                     borderBottomColor: '#5F5858',
                     padding: 6,
@@ -129,23 +133,33 @@ const NewPostScreen = () => {
 
                     </Text>
                 </View>
-                <View
-                    style={{
-                        marginRight: "3.5%",
-                        width: 100,
-                        height: 40,
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        backgroundColor: 'lightblue',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                    }}
+                <TouchableOpacity
+                    onPress={handlePostSubmit}
                 >
-                    <Button
-                        title="Publier"
-                        fontSize={20}
-                        onPress={handlePostSubmit} />
-                </View>
+                    <View
+                        style={{
+                            marginRight: "3.5%",
+                            width: 100,
+                            height: 40,
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            backgroundColor: 'lightblue',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                color: "white",
+                            }}
+                        >
+                            Add a post
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+
             </View>
             <View
                 style={{
@@ -231,7 +245,9 @@ const NewPostScreen = () => {
                             marginTop: 2,
                         }}
                     >
-                        <TouchableOpacity >
+                        <TouchableOpacity
+                            onPress={handleTakePicture}
+                        >
                             <View
                                 style={{
                                     flexDirection: 'row',
