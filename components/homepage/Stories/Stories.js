@@ -103,17 +103,13 @@ const Stories = () => {
                     marginTop: 7,
                     zIndex: 100
                   }}
-                ></View>
+                >
+                </View>
               </View>
               <View
                 style={{
-                  backgroundColor: '#787373',
-                  borderBottomLeftRadius: 10,
-                  borderBottomRightRadius: 10,
-                  width: 95,
-                  height: 36,
                   marginLeft: 10,
-                  marginTop: 9,
+                  marginTop: 10,
                   alignItems: 'center',
                   justifyContent: 'center',
                   resizeMode: 'cover'

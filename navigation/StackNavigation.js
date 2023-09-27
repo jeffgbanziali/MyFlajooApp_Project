@@ -22,6 +22,7 @@ import TabNavigation from "./TabNavigation";
 import Réels from "../screens/Réels/Réels";
 import CameraScreen from "../screens/NewPostScreen/CameraScreen";
 import LiveScreen from "../screens/LiveScreen/LiveScreen";
+import CreateMyStory from "../components/homepage/Stories/CreateMyStory";
 
 
 
@@ -34,7 +35,10 @@ const Stack = createNativeStackNavigator();
 
 
 const StackNavigation = () => {
+
+
     return (
+
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="HomeScreen" component={TabNavigation} />
@@ -46,6 +50,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Stack.Screen name="StoryCreate" component={CreateMyStory} />
                 <Stack.Screen name="Live" component={LiveScreen} />
                 <Stack.Screen name="Photo" component={CameraScreen} />
                 <Stack.Screen name="Notifications" component={Notifications} />
@@ -58,6 +63,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
             </Stack.Navigator>
         </NavigationContainer>
+
+
     );
 };
 

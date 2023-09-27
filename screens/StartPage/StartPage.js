@@ -12,7 +12,7 @@ function StartPage(props) {
     return (
 
         <>
-            <ImageBackground source={require("../../assets/Images/Background.jpg")} style={{ height: '100%' }}>
+            <ImageBackground source={require("../../assets/Images/Background3.jpg")} style={{ height: '100%' }}>
                 <ScrollView>
                     <View style={{ alignItems: 'center', marginHorizontal: 40, marginVertical: 100 }}>
                         <Text style={{ color: "black", fontSize: 64 }}>Let's Start </Text>

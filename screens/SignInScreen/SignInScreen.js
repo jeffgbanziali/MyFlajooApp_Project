@@ -69,7 +69,7 @@ const SignInScreen = () => {
         style={styles.container}
       >
         <ImageBackground
-          source={require('../../assets/Images/Background.jpg')}
+          source={require('../../assets/Images/Background3.jpg')}
           style={{ height: '100%' }}
         >
           <View

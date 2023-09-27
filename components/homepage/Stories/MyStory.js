@@ -2,16 +2,26 @@ import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 
 const MyStory = () => {
+
+    const navigation = useNavigation();
+
+    const handleCreateStory = () => {
+        console.log("Create Story")
+        navigation.navigate('StoryCreate')
+    }
+
+
     const userData = useSelector((state) => state.userReducer);
     return (
         <View >
             <TouchableOpacity>
                 <View>
                     <Image
-                        source={require("../../../assets/Images/Background.jpg")}
+                        source={require("../../../assets/Images/Background3.jpg")}
                         style={{
                             width: 100,
                             height: 140,
@@ -23,7 +33,8 @@ const MyStory = () => {
                         }} />
                 </View>
             </TouchableOpacity>
-            < View style={{
+
+            <View style={{
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginTop: -90,
@@ -32,65 +43,62 @@ const MyStory = () => {
 
             }} >
 
-                <Image
-                    source={{
-                        uri: userData.picture
-                    }}
-                    style={{
-                        width: 52,
-                        height: 52,
-                        borderRadius: 30,
-                        borderWidth: 3,
-                        borderColor: "#3B4FB8",
-                        marginLeft: 10,
-                        resizeMode: "cover"
-                    }} />
-                <View
-                    style={{
-                        borderRadius: 30,
-                        marginLeft: 60,
-                        marginTop: -30,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        resizeMode: "cover"
-                    }}
+                <TouchableOpacity
+                onPress={handleCreateStory}
                 >
-                    <TouchableOpacity
+
+                    <Image
+                        source={{
+                            uri: userData.picture
+                        }}
                         style={{
-                            backgroundColor: "#000",
-                            width: 20,
-                            height: 20,
+                            width: 52,
+                            height: 52,
                             borderRadius: 30,
+                            borderWidth: 3,
+                            borderColor: "#3B4FB8",
+                            marginLeft: 10,
+                            resizeMode: "cover"
+                        }} />
+                    <View
+                        onPress={handleCreateStory}
+                        style={{
+                            borderRadius: 30,
+                            marginTop: -20,
+                            marginLeft: 40,
+                            alignItems: 'center',
                             justifyContent: 'center',
-                            alignSelf: 'center',
+                            resizeMode: "cover"
                         }}
                     >
-
-                        <Entypo
-                            name="circle-with-plus"
-                            size={16}
-                            color="#D6DA0E"
+                        <View
                             style={{
+                                backgroundColor: "#000",
+                                width: 20,
+                                height: 20,
+                                borderRadius: 30,
+                                justifyContent: 'center',
                                 alignSelf: 'center',
-                                alignContent: 'center',
-                                alignItems: 'center',
-                                resizeMode: "contain"
                             }}
-                        />
+                        >
 
-
-                    </TouchableOpacity>
-
-                </View>
+                            <Entypo
+                                name="circle-with-plus"
+                                size={16}
+                                color="#D6DA0E"
+                                style={{
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    resizeMode: "contain"
+                                }}
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
                 <View
                     style={{
-                        backgroundColor: "#787373",
-                        borderBottomLeftRadius: 10,
-                        borderBottomRightRadius: 10,
-                        width: 95,
-                        height: 36,
-                        marginLeft: 10,
-                        marginTop: 9,
+                        marginTop: 2,
                         alignItems: 'center',
                         justifyContent: 'center',
                         resizeMode: "cover"
@@ -101,7 +109,7 @@ const MyStory = () => {
                         fontSize: 12,
                         fontWeight: '600',
                         marginTop: 10,
-
+                        textAlign: 'center',
                     }}>
                         Your Story
                     </Text>
