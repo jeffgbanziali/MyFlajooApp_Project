@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { dateParser, isEmpty, timestampParser } from '../../Context/Utils'
+import { dateParser, formatPostDate, isEmpty, timestampParser } from '../../Context/Utils'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons';
 
@@ -59,7 +59,7 @@ const AllCommentView = ({ post }) => {
                                     style={{
                                         flexDirection: 'row',
                                         justifyContent: 'space-between',
-                                       
+
                                     }}
                                 >
                                     <View
@@ -86,7 +86,7 @@ const AllCommentView = ({ post }) => {
                                             }}
                                         >
                                             {
-                                                timestampParser(comment.timestamp)
+                                                formatPostDate(post.createdAt)
                                             }
                                         </Text>
 
@@ -98,13 +98,13 @@ const AllCommentView = ({ post }) => {
 
                                     }}
                                 >
-                                    {/*dfkdfjndfjdjfndfdfd/*/}
+                                    
                                     <Text
 
                                         style={{
                                             color: "white",
                                             marginTop: 5,
-                                            fontSize:16,
+                                            fontSize: 16,
                                         }}
                                     >
                                         {comment.text}

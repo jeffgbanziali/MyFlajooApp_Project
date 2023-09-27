@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, Animated, Easing, ScrollView } fro
 import Feather from 'react-native-vector-icons/Feather';
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { dateParser, isEmpty } from '../../Context/Utils'
+import { dateParser, isEmpty, formatPostDate } from '../../Context/Utils'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import LikeButton from './LikeButton';
@@ -146,7 +146,7 @@ const Posts = ({ post }) => {
                                                 </Text>
                                                 <View
                                                     style={{
-                                                        marginLeft: 5,
+                                                        marginLeft: 8,
                                                         justifyContent: 'center',
                                                     }}>
                                                     {
@@ -165,9 +165,7 @@ const Posts = ({ post }) => {
                                                 fontWeight: '400',
                                                 fontSize: 12,
                                                 lineHeight: 12,
-                                            }}>{
-                                                    dateParser(post.createdAt)
-                                                }
+                                            }}>{formatPostDate(post.createdAt)}
                                             </Text>
                                         </View>
                                     </View>
