@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet, ScrollView } from 'react-native';
 import Logout from '../Profile/Logout'
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 
@@ -12,6 +12,10 @@ const Settings = () => {
     const handleClickReturnProfile = () => {
         console.log("clicked")
         navigation.navigate('Profile');
+    }
+    const handleClickAppli = () => {
+        console.log("clicked")
+        navigation.navigate('buttonning');
     }
 
     const [isEnabled, setIsEnabled] = useState(false);
@@ -28,7 +32,6 @@ const Settings = () => {
                 <View style={{
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    backgroundColor: "#161414",
                     width: 40,
                     height: 40,
                     borderRadius: 30,
@@ -37,7 +40,7 @@ const Settings = () => {
                     <TouchableOpacity
                         onPress={handleClickReturnProfile}
                     >
-                        <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                        <MaterialIcons name="arrow-back-ios" size={28} color="white" style={{
                             alignSelf: 'center',
                             alignContent: 'center',
                             alignItems: 'center',
@@ -62,6 +65,7 @@ const Settings = () => {
                     alignItems: 'center',
                 }}
                 >
+
                     <View
                         style={{
                             marginTop: 12,
@@ -74,24 +78,32 @@ const Settings = () => {
                             borderRadius: 10,
                         }}
                     >
-                        <Ionicons
-                            name="ios-notifications-outline"
-                            size={30}
-                            color="white"
-
-                        />
-                        <Text
-                            style={{
-                                marginLeft: 10,
-                                color: 'white',
-                                fontWeight: 'bold',
-                                fontSize: 20,
-                            }}
+                        <TouchableOpacity
+                         style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}
+                            onPress={handleClickAppli}
                         >
-                            Notifications
-                        </Text>
-
+                            <Ionicons
+                                name="ios-notifications-outline"
+                                size={30}
+                                color="white"
+                            />
+                            <Text
+                                style={{
+                                    marginLeft: 10,
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    fontSize: 20,
+                                }}
+                            >
+                                Paramètres de l'application
+                            </Text>
+                        </TouchableOpacity>
                     </View>
+
+
                     <View
                         style={{
                             marginTop: 12,
@@ -351,9 +363,9 @@ const Settings = () => {
 
                 </View>
 
-            </ScrollView>
+            </ScrollView >
 
-        </View>
+        </View >
     )
 }
 

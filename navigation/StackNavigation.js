@@ -23,6 +23,7 @@ import Réels from "../screens/Réels/Réels";
 import CameraScreen from "../screens/NewPostScreen/CameraScreen";
 import LiveScreen from "../screens/LiveScreen/LiveScreen";
 import CreateMyStory from "../components/homepage/Stories/CreateMyStory";
+import ButtonColor from "../components/Settings/ButtonColor";
 
 
 
@@ -49,6 +50,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Chatlist" component={ChatList} />
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="buttonning" component={ButtonColor} />
                 <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
                 <Stack.Screen name="StoryCreate" component={CreateMyStory} />
                 <Stack.Screen name="Live" component={LiveScreen} />

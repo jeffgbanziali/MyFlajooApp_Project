@@ -61,7 +61,6 @@ const AddCommentButton = ({ post }) => {
                         style={{
                             width: '78%',
                             height: 50,
-                            backgroundColor: '#494747',
                             paddingLeft: 12,
                             marginLeft: 2,
                         }}

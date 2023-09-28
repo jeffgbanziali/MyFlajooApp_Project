@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProfileUtils from '../../components/ProfileUtils.js/ProfileUtils';
 import Followers from '../../components/ProfileUtils.js/Followers';
 import NavButtonProfile from '../../components/ProfileUtils.js/NavButtonProfile';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import PostsUser from '../../components/ProfileUtils.js/PostsUser';
 import { UidContext } from '../../components/Context/AppContext';
@@ -60,11 +60,12 @@ const Profile = () => {
                             }}
                         >
                             <View>
-                                <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
+                                <MaterialIcons name="arrow-back-ios" size={28} color="#5F5858" style={{
                                     alignSelf: 'center',
                                     alignContent: 'center',
                                     alignItems: 'center',
-                                    resizeMode: "contain"
+                                    resizeMode: "contain",
+                                    marginLeft: "20%",
                                 }} />
                             </View>
                         </TouchableOpacity>
