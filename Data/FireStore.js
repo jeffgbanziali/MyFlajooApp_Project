@@ -5,6 +5,7 @@ import { getStorage,ref, uploadBytes,getDownloadURL } from 'firebase/storage';
 
 
 
+
 const uploadImageToFirebase = async (localUri, imageName) => {
     const storage = getStorage();
 

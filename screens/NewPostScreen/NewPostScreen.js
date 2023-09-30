@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { uploadImageToFirebase } from '../../Data/FireStore';
 
+
+
 const NewPostScreen = () => {
     const [postText, setPostText] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
@@ -34,8 +36,7 @@ const NewPostScreen = () => {
         try {
             if (selectedImage) {
                 // Génère un nom unique pour l'image
-                const imageName = `image-${Date.now()}.jpg`;
-
+                const imageName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
                 // Télécharge l'image vers Firebase Storage
                 const imageUrl = await uploadImageToFirebase(selectedImage.uri, imageName);
 
