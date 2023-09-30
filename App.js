@@ -13,7 +13,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { getUsers } from './actions/users.action';
-import TabNavigation from './navigation/TabNavigation';
 import { StatusBar } from 'expo-status-bar';
 
 

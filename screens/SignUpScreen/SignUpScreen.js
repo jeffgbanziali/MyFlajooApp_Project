@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
-
-
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
@@ -112,138 +110,157 @@ const SignUpScreen = () => {
             style={styles.container}
 
         >
-            <ImageBackground
-                source={require("../../assets/Images/Background3.jpg")}
-                style={{ height: '100%', width: "100%" }}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{
-                        backgroundColor: "#5C6E7A",
-                        overflow: "hidden",
-                        opacity: 0.5,
-                        width: 400,
-                        height: 1000,
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{
+                    width: 200,
+                    height: 120,
+                    marginTop: 50,
+                    padding: 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <Image
+                        style={{
+                            width: "100%",
+                            height: "100%",
+
+                        }}
+                        source={require("../../assets/Logos/my_flajooo.png")} />
+                </View>
+
+                <View
+                    style={{
+                        overflow: 'hidden',
                         borderRadius: 20,
+                        marginTop: 20,
                         alignItems: 'center',
                         justifyContent: 'center',
                         alignContent: 'center',
                         alignSelf: 'center',
-                        marginTop: 60,
-                        marginLeft: 20,
-                        marginRight: 20,
+                    }}
+                >
 
+                    <Text style={{
+                        color: 'blue',
+                        fontSize: 64,
+                        fontWeight: 'bold',
+                        marginVertical: 20
                     }}>
+                        Register
+                    </Text>
+                    <Text style={{
+                        fontSize: 20,
+                        color: 'lightred',
+                        fontWeight: 'bold',
+                        marginVertical: 2,
+                        marginBottom: 10
+                    }}>
+                        Create a new account for the specified
+                    </Text>
 
+
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Pseudo"
+                        placeholderTextColor='gray'
+                        value={pseudo}
+                        onChangeText={(text) => setPseudo(text)}
+                        keyboardType='none'
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="First Name"
+                        placeholderTextColor='gray'
+                        value={firstName}
+                        onChangeText={(text) => setFirstName(text)}
+                        keyboardType='none'
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Last Name"
+                        placeholderTextColor='gray'
+                        value={lastName}
+                        onChangeText={(text) => setLastName(text)}
+                        keyboardType='none'
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Email"
+                        placeholderTextColor='gray'
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Password"
+                        placeholderTextColor='gray'
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Confirm Password"
+                        placeholderTextColor='gray'
+                        value={confirmPassword}
+                        onChangeText={(text) => setConfirmPassword(text)}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                    />
+                    <InputPage
+                        style={styles.input}
+                        placeholder="Phone Number"
+                        placeholderTextColor='gray'
+                        value={phoneNumber}
+                        onChangeText={(text) => setPhoneNumber(text)}
+                        keyboardType="phone-pad"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: darkRose,
+                            marginLeft: 30,
+                            marginRight: 30,
+                            marginTop: 10,
+                            width: 100,
+                            height: 48,
+                            borderRadius: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignSelf: 'center'
+                        }}
+                        onPress={handleSignUp}
+                    >
                         <Text style={{
-                            color: 'blue',
-                            fontSize: 64,
-                            fontWeight: 'bold',
-                            marginVertical: 20
+                            color: 'white',
+                            fontSize: 16,
+                            fontWeight: 'bold'
                         }}>
                             Register
                         </Text>
-                        <Text style={{
-                            fontSize: 20,
-                            color: 'lightred',
-                            fontWeight: 'bold',
-                            marginVertical: 2,
-                            marginBottom: 10
-                        }}>
-                            Create a new account for the specified
-                        </Text>
-
-
-                        <InputPage
-                            placeholder="Pseudo"
-                            placeholderTextColor="red"
-                            value={pseudo}
-                            onChangeText={(text) => setPseudo(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            placeholder="First Name"
-                            placeholderTextColor="red"
-                            value={firstName}
-                            onChangeText={(text) => setFirstName(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            placeholder="Last Name"
-                            placeholderTextColor="red"
-                            value={lastName}
-                            onChangeText={(text) => setLastName(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            placeholder="Email"
-                            placeholderTextColor="red"
-                            onChangeText={(text) => setEmail(text)}
-                            value={email}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-
-                        />
-                        <InputPage
-                            placeholder="Password"
-                            placeholderTextColor="red"
-                            onChangeText={(text) => setPassword(text)}
-                            value={password}
-                            secureTextEntry={true}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            placeholder="Confirm Password"
-                            placeholderTextColor="red"
-                            value={confirmPassword}
-                            onChangeText={(text) => setConfirmPassword(text)}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                        />
-                        <InputPage
-                            placeholder="Phone Number"
-                            placeholderTextColor="red"
-                            value={phoneNumber}
-                            onChangeText={(text) => setPhoneNumber(text)}
-                            keyboardType="phone-pad"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: 'blue',
-                                width: 350,
-                                height: 50,
-                                borderRadius: 10,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginTop: 20,
-                                marginBottom: 20
-                            }}
-                            onPress={handleSignUp}
-                        >
-                            <Text style={{
-                                color: 'white',
-                                fontSize: 20,
-                                fontWeight: 'bold'
-                            }}>
-                                Register
-                            </Text>
-                        </TouchableOpacity>
-                        <View style={styles.footerView}>
-                            <Text style={styles.footerText}>Have an account? <Text onPress={() => navigation.navigate("Signin")} style={styles.footerLink}>Sign in</Text></Text>
-                        </View>
-
+                    </TouchableOpacity>
+                    <View style={styles.footerView}>
+                        <Text style={styles.footerText}>Have an account? <Text onPress={() => navigation.navigate("Signin")} style={styles.footerLink}>Sign in</Text></Text>
                     </View>
-                </ScrollView>
-            </ImageBackground>
+
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
 
     );
@@ -256,6 +273,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#2C2828',
+        height:"100%"
     },
     title: {
         fontSize: 30,
@@ -276,13 +294,11 @@ const styles = StyleSheet.create({
         borderColor: '#2e2e2d',
         borderWidth: 1,
         overflow: 'hidden',
-        backgroundColor: 'red',
-        marginTop: 10,
-        marginBottom: 10,
+        backgroundColor: 'white',
         marginLeft: 30,
         marginRight: 30,
         paddingLeft: 16,
-        width: 300,
+        width: 300
     },
     button: {
         backgroundColor: darkRose,

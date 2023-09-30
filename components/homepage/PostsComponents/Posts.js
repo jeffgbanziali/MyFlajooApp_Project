@@ -12,10 +12,6 @@ import AddCommentButton from './AddCommentButton';
 import AllCommentView from './AllCommentView';
 
 
-
-
-
-
 const Posts = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true)
     const usersData = useSelector((state) => state.usersReducer)

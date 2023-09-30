@@ -5,7 +5,7 @@ import { Video, ResizeMode } from 'expo-av';
 
 
 
-
+{/*
 const fakeVideos = [
     {
         id: 1,
@@ -31,7 +31,7 @@ const fakeVideos = [
         description: 'Description de la vidéo 3',
         videoSource: require('../../assets/Videos/AZE4.mp4'),
     },
-];
+];*/}
 
 const Réels = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);

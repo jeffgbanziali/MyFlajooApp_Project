@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SignInScreen from "../screens/SignInScreen/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
@@ -25,23 +26,36 @@ import LiveScreen from "../screens/LiveScreen/LiveScreen";
 import CreateMyStory from "../components/homepage/Stories/CreateMyStory";
 import ButtonColor from "../components/Settings/ButtonColor";
 
-
-
-
-
-
-
 const Stack = createNativeStackNavigator();
 
-
-
 const StackNavigation = () => {
+    const uid = useContext(UidContext);
 
+    const [initialScreen, setInitialScreen] = useState("Loading"); // Écran de chargement par défaut
+
+    useEffect(() => {
+        const checkUserLoggedIn = async () => {
+            const token = await AsyncStorage.getItem("token");
+            if (token && uid) {
+                // L'utilisateur est connecté, redirigez-le vers l'écran d'accueil
+                setInitialScreen("HomeScreen");
+            } else {
+                // L'utilisateur n'est pas connecté, redirigez-le vers l'écran de connexion
+                setInitialScreen("Start");
+            }
+        };
+
+        checkUserLoggedIn();
+    }, [uid]);
 
     return (
-
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+                initialRouteName={initialScreen} // Utilisez initialScreen ici
+            >
                 <Stack.Screen name="HomeScreen" component={TabNavigation} />
                 <Stack.Screen name="Réels" component={Réels} />
                 <Stack.Screen name="Story" component={StoriesStream} />
@@ -65,10 +79,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
             </Stack.Navigator>
         </NavigationContainer>
-
-
     );
 };
-
 
 export default StackNavigation;
