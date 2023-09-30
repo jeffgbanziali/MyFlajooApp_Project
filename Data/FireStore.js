@@ -1,16 +1,21 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage,ref, uploadBytes,getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import * as FileSystem from 'expo-file-system';
 
-
-
+// ...
 
 const uploadImageToFirebase = async (localUri, imageName) => {
     const storage = getStorage();
-
     const storageRef = ref(storage, 'PostImages/' + imageName);
-    await uploadBytes(storageRef, localUri);
+
+    // Convertit l'image en blob
+    const response = await fetch(localUri);
+    const blob = await response.blob();
+
+    // Télécharge le blob vers Firebase Storage
+    await uploadBytes(storageRef, blob);
 
     // Récupère l'URL de téléchargement de l'image
     const imageUrl = await getDownloadURL(storageRef);
@@ -19,6 +24,30 @@ const uploadImageToFirebase = async (localUri, imageName) => {
 };
 
 export { uploadImageToFirebase };
+
+
+const convertImageToArrayBuffer = async (localUri) => {
+    try {
+        const { uri } = await FileSystem.downloadAsync(localUri, FileSystem.documentDirectory + 'image.jpg');
+
+        // Lit le fichier image en tant qu'ArrayBuffer
+        const arrayBuffer = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+        
+        // Convertit la chaîne Base64 en Uint8Array
+        const buffer = new Uint8Array(arrayBuffer.length);
+        for (let i = 0; i < arrayBuffer.length; i++) {
+            buffer[i] = arrayBuffer.charCodeAt(i);
+        }
+
+        return buffer;
+    } catch (error) {
+        throw new Error(`Erreur lors de la conversion de l'image en ArrayBuffer : ${error.message}`);
+    }
+};
+
+export { convertImageToArrayBuffer };
+
+
 
 
 const firebaseConfig = {

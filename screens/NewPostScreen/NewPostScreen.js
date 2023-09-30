@@ -6,8 +6,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { uploadImageToFirebase } from '../../Data/FireStore';
-
-
+import { collection, addDoc, getDoc } from 'firebase/firestore';
+import { firestore } from '../../Data/FireStore';  
 
 const NewPostScreen = () => {
     const [postText, setPostText] = useState('');
@@ -19,7 +19,6 @@ const NewPostScreen = () => {
     const handleClickReturnHome = () => {
         navigation.navigate('HomeScreen');
     };
-
 
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
@@ -35,19 +34,20 @@ const NewPostScreen = () => {
 
         try {
             if (selectedImage) {
-                // Génère un nom unique pour l'image
                 const imageName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                // Télécharge l'image vers Firebase Storage
                 const imageUrl = await uploadImageToFirebase(selectedImage.uri, imageName);
-
-                // Ajoute l'URL de l'image au postData
                 postData.imageFileName = imageUrl;
             }
 
-            // Crée le post avec les données
-            await dispatch(addPosts(postData));
+            // Utilise le dispatch pour ajouter le post au store Redux
+            dispatch(addPosts(postData));
 
-            console.log('Post créé avec succès!');
+            // Ajoute le document à la collection "posts" dans Firestore
+            const docRef = await addDoc(collection(firestore, 'posts'), postData);
+            const docSnapshot = await getDoc(docRef);
+
+            console.log('Post créé avec succès! Document ID:', docRef.id);
+            console.log('Document data:', docSnapshot.data());
             Alert.alert('Succès', 'Votre post a été publié avec succès !');
             setPostText('');
             setSelectedImage(null);
@@ -63,7 +63,6 @@ const NewPostScreen = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
-
 
     const selectImage = async () => {
         try {
