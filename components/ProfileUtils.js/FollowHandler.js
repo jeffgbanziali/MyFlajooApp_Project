@@ -76,8 +76,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                                 style={{
                                     color: '#3B82F6',
                                     textAlign: 'center',
-                                    fontFamily: 'Roboto',
-                                    fontWeight: 'semibold',
+                                    fontWeight: '600',
                                     justifyContent: 'center',
                                     fontSize: 20,
                                     marginLeft: 6,
@@ -145,7 +144,6 @@ const FollowHandler = ({ idToFollow, type }) => {
                                     style={{
                                         color: 'white',
                                         textAlign: 'center',
-                                        fontFamily: 'Roboto',
                                         fontWeight: 'semibold',
                                         justifyContent: 'center',
                                         fontSize: 20,

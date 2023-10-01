@@ -27,7 +27,7 @@ const AppW = () => {
   return (
     <Provider store={store}>
       <App />
-      
+
     </Provider>
   );
 };
@@ -52,21 +52,28 @@ const App = () => {
 
   useEffect(() => {
     const fetchToken = async () => {
-      await axios({
-        method: "get",
-        url: "http://192.168.0.14:4000/jwtid",
-        withCredentials: true,
-      })
-        .then((res) => {
-          setUid(res.data);
-        })
-        .catch((err) => console.log("No token"));
+      try {
+        const res = await axios({
+          method: "get",
+          url: "http://192.168.0.14:4000/jwtid",
+          withCredentials: true,
+        });
+        const newUid = res.data;
+        setUid(newUid);
+        console.log(newUid);
+        AsyncStorage.setItem('uid', newUid);
+      } catch (error) {
+        console.log("Error fetching token:", error);
+      }
     };
-    fetchToken();
-    if (uid) dispatch(getUser(uid));
+
+    if (!uid) {
+      fetchToken();
+    }
+    if (uid) {
+      dispatch(getUser(uid));
+    }
     console.log("uid", uid);
-
-
   }, [uid, dispatch]);
 
   return (

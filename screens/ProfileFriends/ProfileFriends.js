@@ -218,7 +218,6 @@ const ProfileFriends = () => {
                 alignItems: 'center',
                 height: 50,
                 width: '100%',
-
               }}
             >
               <View
@@ -259,8 +258,7 @@ const ProfileFriends = () => {
                     <Text
                       style={{
                         textAlign: 'center',
-                        fontFamily: 'Roboto',
-                        fontWeight: 'semibold',
+                        fontWeight: '600',
                         justifyContent: 'center',
                         fontSize: 25,
                         color: 'white'
