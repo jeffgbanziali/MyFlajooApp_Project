@@ -16,7 +16,7 @@ export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
 export const getPosts = (num) => {
     return async (dispatch) => {
         try {
-            const response = await axios.get(`http://192.168.0.14:3000/api/post`);
+            const response = await axios.get(`http://192.168.0.14:4000/api/post`);
             const array = response.data.slice(0, num);
             dispatch({ type: GET_POSTS, payload: array });
         } catch (error) {
@@ -32,7 +32,7 @@ export const getPosts = (num) => {
 export const addPosts = (data) => {
     return async (dispatch) => {
         try {
-            const res = await axios.post(`http://192.168.0.14:3000/api/post`, data);
+            const res = await axios.post(`http://192.168.0.14:4000/api/post`, data);
 
             if (res.data.errors) {
                 dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
@@ -50,7 +50,7 @@ export const addPosts = (data) => {
 export const likePost = (postId, userId) => {
     return async (dispatch) => {
         try {
-            await axios.patch(`http://192.168.0.14:3000/api/post/like-post/` + postId, { id: userId });
+            await axios.patch(`http://192.168.0.14:4000/api/post/like-post/` + postId, { id: userId });
             dispatch({ type: LIKE_POST, payload: { postId, userId } });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du like:', error);
@@ -61,7 +61,7 @@ export const likePost = (postId, userId) => {
 export const unlikePost = (postId, userId) => {
     return async (dispatch) => {
         try {
-            await axios.patch(`http://192.168.0.14:3000/api/post/unlike-post/` + postId, { id: userId });
+            await axios.patch(`http://192.168.0.14:4000/api/post/unlike-post/` + postId, { id: userId });
             dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du unlike:', error);
@@ -72,7 +72,7 @@ export const unlikePost = (postId, userId) => {
 export const addComment = (userId, postId, text) => {
     return async (dispatch) => {
         try {
-            await axios.patch(`http://192.168.0.14:3000/api/post/comment-post/` + postId, { commenterId: userId, text });
+            await axios.patch(`http://192.168.0.14:4000/api/post/comment-post/` + postId, { commenterId: userId, text });
             dispatch({ type: ADD_COMMENT, payload: { postId } });
         } catch (error) {
             console.error('Erreur lors de l\'ajout du commentaire:', error);

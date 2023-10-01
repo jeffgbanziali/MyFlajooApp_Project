@@ -54,7 +54,7 @@ const App = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
-        url: "http://192.168.0.14:3000/jwtid",
+        url: "http://192.168.0.14:4000/jwtid",
         withCredentials: true,
       })
         .then((res) => {
