@@ -153,7 +153,7 @@ const Header = ({ borderBottomColor }) => {
         >
           <TouchableOpacity onPress={handleClickProfile}>
             <Image source={{
-              uri: userData.picture
+              uri: userData.picture ? userData.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
             }}
               style={{
                 width: "100%",

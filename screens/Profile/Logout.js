@@ -19,7 +19,7 @@ const Logout = () => {
     try {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userId');
-      await axios.get('http://192.168.0.14:3000/api/user/logout');
+      await axios.get('http://192.168.0.14:4000/api/user/logout');
       setUid(undefined);
       //navigation.navigate('Signin');
       console.log('Logged out');

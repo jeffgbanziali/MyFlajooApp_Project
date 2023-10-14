@@ -2,11 +2,11 @@ import React from "react";
 import { Text } from "react-native";
 import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { dateParser } from "../Context/Utils";
+import { dateParser, formatPostDate } from "../Context/Utils";
 
 const MessagesUser = ({ message, own }) => {
   const userData = useSelector((state) => state.userReducer);
-  console.log(userData);
+
   return (
     <View style={own ? styles.messageOwn : styles.messageOther}>
       <View
@@ -17,9 +17,7 @@ const MessagesUser = ({ message, own }) => {
       >
         <Image
           source={{
-            uri: own
-              ? userData.picture
-              : message.sender.picture,
+            uri: own ? userData.picture : message.sender.picture,
           }}
           style={{
             width: 26,
@@ -45,7 +43,7 @@ const MessagesUser = ({ message, own }) => {
             marginTop: 5,
           }}
         >
-          {dateParser(message.createdAt)}
+          {formatPostDate(message.createdAt)}
         </Text>
       </View>
     </View>
