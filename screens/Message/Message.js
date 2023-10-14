@@ -1,185 +1,195 @@
-import { View, Text, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
-import Conversation from './Conversation';
-import Search from '../../components/MessagesUser/Search';
-import ChatOnline from '../../components/MessagesUser/ChatOnline';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { UidContext } from '../../components/Context/AppContext';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-
-
-
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Image,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import Conversation from "./Conversation";
+import Search from "../../components/MessagesUser/Search";
+import ChatOnline from "../../components/MessagesUser/ChatOnline";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { UidContext } from "../../components/Context/AppContext";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Message = () => {
-
-  const [conversations, setConversations] = useState([]);
-
-
-  const userData = useSelector((state) => state.userReducer);
+  const [conver, setConver] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
 
   const uid = useContext(UidContext);
 
   useEffect(() => {
-    userData.user && axios.get(`http://localhost:3000/api/conversation/${conversationId}}`)
-      .then((res) => {
-        setConversations(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [userData.conversation]);
+    const getConversation = async () => {
+      try {
+        const response = await axios.get(
+          `http://192.168.0.14:4000/api/conversation/${uid}`
+        );
+        setConver(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-
-
-
-
+    getConversation();
+  }, [uid]);
 
   const navigation = useNavigation();
 
-
   const handleClickReturnHome = () => {
-    console.log("clicked")
-    navigation.navigate('HomeScreen');
-  }
+    console.log("clicked");
+    navigation.navigate("HomeScreen");
+  };
   const handleClickCallList = () => {
-    console.log("clicked")
-    navigation.navigate('CallList');
-  }
+    console.log("clicked");
+    navigation.navigate("CallList");
+  };
 
   const handleClickToCamera = () => {
-    console.log("clicked")
-    navigation.navigate('Camera');
-  }
-
+    console.log("clicked");
+    navigation.navigate("Camera");
+  };
 
   return (
     <>
-
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "null"}
         style={{
           flex: 1,
           paddingBottom: 10,
-          backgroundColor: '#2C2828',
-
+          backgroundColor: "#2C2828",
         }}
       >
         <View
           style={{
-
-            flexDirection: 'row',
+            flexDirection: "row",
             justifyContent: "space-between",
             paddingTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
             marginTop: 10,
-
           }}
         >
           <View
             style={{
-              flexDirection: 'row',
+              flexDirection: "row",
               justifyContent: "flex-start",
-              alignItems: 'center',
+              alignItems: "center",
               paddingTop: 10,
               paddingLeft: 10,
               paddingRight: 10,
               marginTop: 10,
-
-            }}>
-            <View style={{
-
-              justifyContent: 'center',
-              alignSelf: 'center',
-              backgroundColor: "#161414",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "3.5%",
-              marginTop: "1.5%"
-            }} >
-              <TouchableOpacity
-                onPress={handleClickReturnHome}
-              >
-                <AntDesign name="arrowleft" size={28} color="#5F5858" style={{
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                  alignItems: 'center',
-                  resizeMode: "contain"
-                }} />
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                alignSelf: "center",
+                backgroundColor: "#161414",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginLeft: "3.5%",
+                marginTop: "1.5%",
+              }}
+            >
+              <TouchableOpacity onPress={handleClickReturnHome}>
+                <AntDesign
+                  name="arrowleft"
+                  size={28}
+                  color="#5F5858"
+                  style={{
+                    alignSelf: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    resizeMode: "contain",
+                  }}
+                />
               </TouchableOpacity>
             </View>
-            <View style={{
-
-              justifyContent: 'center',
-              alignSelf: 'center',
-              backgroundColor: "#161414",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "3.5%",
-              marginTop: "1.5%"
-            }} >
-              <TouchableOpacity
-                onPress={handleClickToCamera}
-              >
-                <Ionicons name="camera" size={28} color="#5F5858" style={{
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                  alignItems: 'center',
-                  resizeMode: "contain"
-                }} />
+            <View
+              style={{
+                justifyContent: "center",
+                alignSelf: "center",
+                backgroundColor: "#161414",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginLeft: "3.5%",
+                marginTop: "1.5%",
+              }}
+            >
+              <TouchableOpacity onPress={handleClickToCamera}>
+                <Ionicons
+                  name="camera"
+                  size={28}
+                  color="#5F5858"
+                  style={{
+                    alignSelf: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    resizeMode: "contain",
+                  }}
+                />
               </TouchableOpacity>
             </View>
-            <View style={{
-
-              justifyContent: 'center',
-              alignSelf: 'center',
-              backgroundColor: "#161414",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "3.5%",
-              marginTop: "1.5%"
-            }}>
-              <TouchableOpacity
-                onPress={handleClickCallList}
-              >
-                <Ionicons name="ios-call" size={28} color="#000000" style={{
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                  alignItems: 'center',
-                  resizeMode: "contain"
-                }} />
+            <View
+              style={{
+                justifyContent: "center",
+                alignSelf: "center",
+                backgroundColor: "#161414",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginLeft: "3.5%",
+                marginTop: "1.5%",
+              }}
+            >
+              <TouchableOpacity onPress={handleClickCallList}>
+                <Ionicons
+                  name="ios-call"
+                  size={28}
+                  color="#000000"
+                  style={{
+                    alignSelf: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                    resizeMode: "contain",
+                  }}
+                />
               </TouchableOpacity>
             </View>
           </View>
 
           <View
             style={{
-              backgroundColor: '#2C2828',
-              flexDirection: 'row',
+              backgroundColor: "#2C2828",
+              flexDirection: "row",
               justifyContent: "flex-end",
               alignContent: "flex-end",
               alignSelf: "flex-end",
-              alignItems: 'center',
+              alignItems: "center",
               paddingTop: 10,
               paddingLeft: 10,
               paddingRight: 10,
               marginTop: 10,
-
             }}
           >
-            <Image source={require('../../assets/Images/woman-gdc9219422_1920.jpg')}
+            <Image
+              source={require("../../assets/Images/woman-gdc9219422_1920.jpg")}
               style={{
                 width: 60,
                 height: 60,
                 borderRadius: 100,
-                objectfit: 'cover',
+                objectfit: "cover",
                 borderWidth: 5,
                 borderColor: "#3B4FB8",
               }}
-
             />
             <View
               style={{
@@ -194,27 +204,31 @@ const Message = () => {
                 alignItems: "center",
                 marginLeft: 16,
                 marginTop: -10,
-                zIndex: 100
-
-              }}>
-              <Text style={{
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: 10
-              }}>
+                zIndex: 100,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 10,
+                }}
+              >
                 124
               </Text>
             </View>
-            <Text style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              textAlign: 'center',
-              alignContent: 'center',
-              alignItems: 'center',
-              marginBottom: 10,
-              marginLeft: 15,
-              color: '#FFFFFF',
-            }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+                alignContent: "center",
+                alignItems: "center",
+                marginBottom: 10,
+                marginLeft: 15,
+                color: "#FFFFFF",
+              }}
+            >
               Conversations
             </Text>
           </View>
@@ -231,8 +245,8 @@ const Message = () => {
             paddingBottom: -50,
           }}
         >
-
-          <ScrollView horizontal
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             style={{
               zIndex: 100,
@@ -240,7 +254,6 @@ const Message = () => {
             }}
           >
             <View>
-
               <ChatOnline />
             </View>
           </ScrollView>
@@ -253,16 +266,12 @@ const Message = () => {
               marginTop: 150,
               paddingTop: -50,
               height: "100%",
-
             }}
           >
             <View
               style={{
                 zIndex: 100,
                 marginTop: 10,
-
-
-
               }}
             >
               <Search />
@@ -271,42 +280,34 @@ const Message = () => {
               style={{
                 display: "flex",
                 flexFlow: "row wrap",
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
+                flexDirection: "column",
+                justifyContent: "flex-start",
                 //// width: "100%",
-
 
                 marginBottom: 100,
                 paddingBottom: -10,
-                position: "relative"
-
-
-
+                position: "relative",
               }}
             >
-
               <View>
                 <ScrollView>
-                  <Conversation />
+                  {conver.map((c, index) => (
+                    <View key={index} onPress={() => setCurrentChat(c)}>
+                      <Conversation
+                        key={index}
+                        conversation={c}
+                        currentUser={uid}
+                      />
+                    </View>
+                  ))}
                 </ScrollView>
-
               </View>
             </View>
           </View>
-
-
         </ScrollView>
-
       </KeyboardAvoidingView>
-
     </>
+  );
+};
 
-  )
-}
-
-export default Message
-
-
-
-
-
+export default Message;

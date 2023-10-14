@@ -1,8 +1,11 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { View, StyleSheet, Image } from 'react-native';
+import { useSelector } from 'react-redux';
+import { dateParser } from '../Context/Utils';
 
-const MessagesUser = ({ own }) => {
+const MessagesUser = ({message, own }) => {
+    const userData = useSelector((state) => state.userReducer);
     return (
         <View style={own ? styles.messageOwn : styles.messageOther}
         >
@@ -12,7 +15,7 @@ const MessagesUser = ({ own }) => {
                     flexDirection: 'row',
                 }}
             >
-                <Image source={require('../../assets/Images/woman-gdc9219422_1920.jpg')}
+                <Image source={own ? userData.picture : message.sender.picture}
                     style={{
                         width: 25,
                         height: 25,
@@ -24,7 +27,7 @@ const MessagesUser = ({ own }) => {
                 />
 
                 <Text style={own ? styles.textMessageOwn : styles.textMessageOther}
-                >Hello my guys </Text>
+                > {message.text}</Text>
             </View>
             <View>
                 <Text style={{
@@ -37,7 +40,7 @@ const MessagesUser = ({ own }) => {
 
                 }}
                 >
-                    1 min ago
+                     {dateParser(message.createdAt)}
 
                 </Text>
             </View>
@@ -80,6 +83,7 @@ const styles = StyleSheet.create({
     },
 
 })
+
 
 
 export default MessagesUser;

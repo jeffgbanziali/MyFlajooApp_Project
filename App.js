@@ -27,7 +27,6 @@ const AppW = () => {
   return (
     <Provider store={store}>
       <App />
-
     </Provider>
   );
 };
