@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,11 +15,13 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
+import { UidContext } from "../../Context/AppContext";
 
 const StoriesStream = () => {
   const navigation = useNavigation(false);
   const route = useRoute();
   const { id } = route.params;
+  const {uid} = useContext(UidContext)
   const storiesData = useSelector((state) => state.storyReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const selectedStory = storiesData.find((story) => story._id === id);
@@ -30,8 +32,8 @@ const StoriesStream = () => {
     navigation.navigate("HomeScreen");
   };
 
-  const goProfil = () => {
-    navigation.navigate("ProfilFriends");
+  const goProfil = (id) => {
+    navigation.navigate("ProfilFriends", { id });
   };
 
   useEffect(() => {
@@ -87,13 +89,12 @@ const StoriesStream = () => {
               width: "100%",
               alignItems: "center",
               justifyContent: "center",
-              marginTop: 30,
+              marginTop: 38,
             }}
           >
             <TouchableOpacity onPress={goToHome}>
               <View
                 style={{
-                  backgroundColor: "#343232",
                   height: 40,
                   width: 40,
                   marginLeft: 10,
@@ -102,7 +103,7 @@ const StoriesStream = () => {
                   alignItems: "center",
                 }}
               >
-                <Entypo name="cross" size={24} color="black" />
+                <Entypo name="cross" size={30} color="white" />
               </View>
             </TouchableOpacity>
 
@@ -158,14 +159,14 @@ const StoriesStream = () => {
                 style={{
                   backgroundColor: "#343232",
                   height: 40,
-                  width: 80,
                   borderRadius: 10,
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  padding: 4,
                 }}
               >
-                <FontAwesome5 name="clock" size={18} color="white" />
+                <FontAwesome5 name="clock" size={10} color="white" />
                 <Text
                   style={{
                     marginLeft: 4,
@@ -176,7 +177,7 @@ const StoriesStream = () => {
                   {formatPostDate(selectedStory.createdAt)}
                 </Text>
               </View>
-              <TouchableOpacity onPress={goProfil}>
+              <TouchableOpacity onPress={() => goProfil(user._id)}>
                 <View
                   style={{
                     marginLeft: 10,
@@ -231,7 +232,7 @@ const StoriesStream = () => {
                   height: "100%",
                   width: "100%",
                   borderRadius: 30,
-              
+
                   opacity: 0.9,
                 }}
               />

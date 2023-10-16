@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import { dateParser, isEmpty, formatPostDate } from "../../Context/Utils";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
@@ -18,6 +18,7 @@ import FollowHandler from "../../ProfileUtils.js/FollowHandler";
 import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./AddCommentButton";
 import AllCommentView from "./AllCommentView";
+import { UidContext } from "../../Context/AppContext";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,9 +27,16 @@ const Posts = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
+  const uid  = useContext(UidContext);
 
   const goProfil = (id) => {
-    navigation.navigate("ProfilFriends", { id });
+    if (uid === id) {
+      console.log("go to my profil", id);
+      navigation.navigate("Profile", { id });
+    } else {
+      navigation.navigate("ProfilFriends", { id });
+      console.log("go to profile friends", id);
+    }
   };
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
