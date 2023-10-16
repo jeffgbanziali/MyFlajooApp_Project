@@ -3,9 +3,6 @@ import { View, Image, KeyboardAvoidingView, Text, TouchableOpacity, ScrollView, 
 import { Ionicons, Entypo, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
 import { Video, ResizeMode } from 'expo-av';
 
-
-
-{/*
 const fakeVideos = [
     {
         id: 1,
@@ -23,7 +20,7 @@ const fakeVideos = [
         id: 3,
         title: 'Vidéo 3',
         description: 'Description de la vidéo 3',
-        videoSource: require('../../assets/Videos/AZE3.mp4'),
+        videoSource: require('../../assets/Videos/AZE2.mp4'),
     },
     {
         id: 4,
@@ -31,7 +28,7 @@ const fakeVideos = [
         description: 'Description de la vidéo 3',
         videoSource: require('../../assets/Videos/AZE4.mp4'),
     },
-];*/}
+];
 
 const Réels = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);

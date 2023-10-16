@@ -19,7 +19,9 @@ const NewPostScreen = () => {
     const handleClickReturnHome = () => {
         navigation.navigate('HomeScreen');
     };
-
+    const handleTakePicture = () => {
+        navigation.navigate('Photo');
+    };
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
             Alert.alert('Erreur', 'Veuillez entrer du texte pour votre post.');
@@ -120,7 +122,7 @@ const NewPostScreen = () => {
                         <TextInput multiline placeholder="Write your post here..." value={postText} onChangeText={text => setPostText(text)} style={{ height: 100, width: "100%", borderRadius: 10, marginLeft: "3.5%", fontSize: 25 }} />
                     </View>
                     <View style={{ marginTop: 2 }}>
-                        <TouchableOpacity onPress={selectImage}>
+                        <TouchableOpacity onPress={handleTakePicture}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', height: 60, width: "100%", alignItems: 'center', borderBottomWidth: 1, borderColor: '#5F5858' }}>
                                 <AntDesign style={{ marginLeft: "1.5%" }} name="camera" size={30} color="blue" />
                                 <Text style={{ fontSize: 20, fontWeight: 'semibold', color: "black", marginLeft: "1.5%", alignSelf: 'center' }}>Take a Picture / Video</Text>
