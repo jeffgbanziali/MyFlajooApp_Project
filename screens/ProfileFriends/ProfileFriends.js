@@ -1,20 +1,34 @@
-import React, { useContext, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native'
-import { AntDesign, Entypo } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
-import ProfileFriendsUtils from '../../components/ProfileFriendsUtils/ProfileFriendsUtils'
-import FollowHandler from '../../components/ProfileUtils.js/FollowHandler'
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import ProfileFriendsUtils from "../../components/ProfileFriendsUtils/ProfileFriendsUtils";
+import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
+import { useSelector } from "react-redux";
 
 const ProfileFriends = () => {
-  const navigation = useNavigation()
+  const route = useRoute();
+  const { id } = route.params;
+  const navigation = useNavigation();
+  const usersData = useSelector((state) => state.usersReducer);
   const handleClickReturnHome = () => {
-    console.log('clicked')
-    navigation.navigate('HomeScreen')
-  }
+    console.log("clicked");
+    navigation.navigate("HomeScreen");
+  };
   const handleClickSettings = () => {
-    console.log('clicked')
-    navigation.navigate('Settings')
-  }
+    console.log("clicked");
+    navigation.navigate("Settings");
+  };
+
+  const users = usersData.find((user) => user._id === id);
+  const user = usersData.find((user) => user._id === usersData.posterId);
   return (
     <ScrollView style={styles.container}>
       <>
@@ -22,41 +36,41 @@ const ProfileFriends = () => {
           <View
             style={{
               flex: 1,
-              backgroundColor: '#3D3939',
+              backgroundColor: "#3D3939",
               borderRadius: 30,
               paddingBottom: 50,
-              marginTop: 50
+              marginTop: 50,
             }}
           >
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
               <View
                 style={{
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  backgroundColor: '#161414',
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  backgroundColor: "#161414",
                   width: 50,
                   height: 50,
                   borderRadius: 30,
-                  marginLeft: '3.5%',
-                  marginTop: '1.5%'
+                  marginLeft: "3.5%",
+                  marginTop: "1.5%",
                 }}
               >
                 <TouchableOpacity onPress={handleClickReturnHome}>
                   <AntDesign
-                    name='arrowleft'
+                    name="arrowleft"
                     size={28}
-                    color='#5F5858'
+                    color="#5F5858"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
-                      alignItems: 'center',
-                      resizeMode: 'contain'
+                      alignSelf: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                      resizeMode: "contain",
                     }}
                   />
                 </TouchableOpacity>
@@ -64,26 +78,26 @@ const ProfileFriends = () => {
 
               <View
                 style={{
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  backgroundColor: '#161414',
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  backgroundColor: "#161414",
                   width: 50,
                   height: 50,
                   borderRadius: 30,
-                  marginRight: '3.5%',
-                  marginTop: '1.5%'
+                  marginRight: "3.5%",
+                  marginTop: "1.5%",
                 }}
               >
                 <TouchableOpacity onPress={handleClickSettings}>
                   <Entypo
-                    name='dots-three-horizontal'
+                    name="dots-three-horizontal"
                     size={28}
-                    color='#5F5858'
+                    color="#5F5858"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
-                      alignItems: 'center',
-                      resizeMode: 'contain'
+                      alignSelf: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                      resizeMode: "contain",
                     }}
                   />
                 </TouchableOpacity>
@@ -93,107 +107,115 @@ const ProfileFriends = () => {
             <View
               style={{
                 flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems: "center",
+                justifyContent: "center",
                 width: "100%",
-                marginTop: -16
+                marginTop: -16,
+                padding: 5,
               }}
             >
               <TouchableOpacity>
                 <Image
                   source={{
-                    uri: 'https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png'
+                    uri: users.picture,
                   }}
                   style={{
                     width: 160,
                     height: 160,
                     borderRadius: 100,
-                    objectFit: 'cover',
+                    objectFit: "cover",
                     borderWidth: 5,
-                    borderColor: 'red'
+                    borderColor: "red",
                   }}
                 />
 
                 <View
                   style={{
-                    backgroundColor: '#09C03C',
-                    position: 'absolute',
+                    backgroundColor: "#09C03C",
+                    position: "absolute",
                     left: 65,
                     width: 20,
                     height: 20,
                     borderRadius: 25,
                     borderWidth: 2,
-                    borderColor: '#000000',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
-                    alignItems: 'center',
+                    borderColor: "#000000",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    alignItems: "center",
                     marginLeft: 80,
                     marginTop: 100,
-                    zIndex: 100
+                    zIndex: 100,
                   }}
                 ></View>
               </TouchableOpacity>
 
-              <Text style={{ fontSize: 26, fontWeight: 'bold', marginTop: 10 }}>
-                Jeff FLaj
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: "white",
+                  fontWeight: "500",
+                  marginTop: 10,
+                }}
+              >
+                {users.pseudo}
               </Text>
-              <Text style={{ fontSize: 20, color: '#5F5858' }}>@Koukouda</Text>
+              <Text style={{ fontSize: 20, color: "#5F5858" }}>@Koukouda</Text>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
                   flex: 1,
                   width: "50%",
                 }}
               >
-                <Text style={{ fontSize: 18, color: 'gray' }}>
-                  Bonjoirojsidjnskdnshgussrf
-                  fgsydsgdiksbuxgfsdvsdkusgb
-                  ezetzgehzjsbjksdksn snd
+                <Text style={{ fontSize: 18, color: "gray" }}>
+                  {users.bio}
                 </Text>
               </View>
             </View>
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
                 flex: 1,
-                width: '100%',
+                width: "100%",
               }}
             >
               <View
                 style={{
-                  width: '50%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+                  width: "50%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <Text
                   style={{
                     fontSize: 15,
-                    fontWeight: 'normal',
-                    color: 'white',
+                    fontWeight: "normal",
+                    color: "white",
                   }}
                 >
                   Follow by
                 </Text>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                     flex: 1,
                   }}
                 >
-                  <Image source={{
-                    uri: 'https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png'
-                  }}
+                  <Image
+                    source={{
+                      uri: "https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png",
+                    }}
                     style={{
                       width: 35,
                       height: 35,
                       borderRadius: 100,
-                      objectFit: 'cover',
+                      objectFit: "cover",
                       borderWidth: 5,
                     }}
                   />
@@ -201,8 +223,8 @@ const ProfileFriends = () => {
                     style={{
                       fontSize: 15,
                       marginLeft: 10,
-                      fontWeight: 'normal',
-                      color: 'gray',
+                      fontWeight: "normal",
+                      color: "gray",
                     }}
                   >
                     @Ferran_Torres
@@ -214,54 +236,54 @@ const ProfileFriends = () => {
               style={{
                 flex: 1,
                 marginTop: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignItems: "center",
                 height: 50,
-                width: '100%',
+                width: "100%",
               }}
             >
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                   height: 50,
-                  width: '65%',
+                  width: "65%",
                 }}
               >
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flex: 1
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flex: 1,
                   }}
                 >
                   <View>
                     <FollowHandler
-                      idToFollow={'60f0b5b0b9c5b40015b5b0c7'}
-                      type={'card'}
+                      idToFollow={"60f0b5b0b9c5b40015b5b0c7"}
+                      type={"card"}
                     />
                   </View>
                   <View
                     style={{
-                      flexDirection: 'row',
-                      backgroundColor: 'blue',
+                      flexDirection: "row",
+                      backgroundColor: "blue",
                       borderRadius: 10,
                       height: 50,
                       padding: 2,
                       width: 150,
-                      alignItems: 'center',
-                      justifyContent: 'center'
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     <Text
                       style={{
-                        textAlign: 'center',
-                        fontWeight: '600',
-                        justifyContent: 'center',
+                        textAlign: "center",
+                        fontWeight: "600",
+                        justifyContent: "center",
                         fontSize: 25,
-                        color: 'white'
+                        color: "white",
                       }}
                     >
                       Chating
@@ -270,7 +292,6 @@ const ProfileFriends = () => {
                 </View>
               </View>
             </View>
-
           </View>
         </View>
         <View>
@@ -279,15 +300,15 @@ const ProfileFriends = () => {
         <View></View>
         <View></View>
       </>
-    </ScrollView >
-  )
-}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2C2828'
-  }
-})
+    backgroundColor: "#2C2828",
+  },
+});
 
-export default ProfileFriends
+export default ProfileFriends;

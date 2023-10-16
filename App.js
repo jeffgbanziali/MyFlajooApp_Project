@@ -14,6 +14,8 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { getUsers } from './actions/users.action';
 import { StatusBar } from 'expo-status-bar';
+import { getPosts } from './actions/post.actions';
+import { getStories } from './actions/story.action';
 
 
 
@@ -24,6 +26,8 @@ const AppW = () => {
   );
 
   store.dispatch(getUsers())
+  store.dispatch(getPosts());
+store.dispatch(getStories());
   return (
     <Provider store={store}>
       <App />

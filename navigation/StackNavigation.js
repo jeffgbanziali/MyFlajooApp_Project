@@ -58,7 +58,7 @@ const StackNavigation = () => {
             >
                 <Stack.Screen name="HomeScreen" component={TabNavigation} />
                 <Stack.Screen name="Réels" component={Réels} />
-                <Stack.Screen name="Story" component={StoriesStream} />
+                <Stack.Screen name="StoryStream" component={StoriesStream} />
                 <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
                 <Stack.Screen name="Messages" component={Message} />
                 <Stack.Screen name="Chatlist" component={ChatList} />
