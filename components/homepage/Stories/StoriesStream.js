@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
 
 const StoriesStream = () => {
-
   const navigation = useNavigation(false);
   const route = useRoute();
   const { id } = route.params;
@@ -215,6 +214,57 @@ const StoriesStream = () => {
               style={{
                 flex: 1,
                 flexDirection: "row",
+                backgroundColor: "black",
+                position: "absolute",
+                borderRadius: 30,
+                width: "90%",
+                height: "80%",
+                top: "12%",
+                class: "momo",
+              }}
+            >
+              <Image
+                source={{
+                  uri: selectedStory.media,
+                }}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  borderRadius: 30,
+              
+                  opacity: 0.9,
+                }}
+              />
+              <View
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "row",
+                  position: "absolute",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                  bottom: 20,
+                  borderRadius: 30,
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 20,
+                  }}
+                >
+                  {selectedStory.text}
+                </Text>
+              </View>
+            </View>
+          )}
+          {!selectedStory.media && (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
                 backgroundColor: "red",
                 position: "absolute",
                 borderRadius: 30,
@@ -241,20 +291,20 @@ const StoriesStream = () => {
               style={{
                 flex: 1,
                 flexDirection: "row",
-                backgroundColor: "red",
+                backgroundColor: "pink",
                 position: "absolute",
+                justifyContent: "center",
+                alignItems: "center",
                 borderRadius: 30,
                 width: "90%",
                 height: "80%",
                 top: "12%",
-                class: "momo",
               }}
             >
               <Text
                 style={{
-                  marginLeft: 4,
                   color: "white",
-                  fontSize: 12,
+                  fontSize: 30,
                 }}
               >
                 {selectedStory.text}
