@@ -38,6 +38,8 @@ const VideoRéels = () => {
   const video = useRef(null);
 
   const discAnimationValue = useRef(new Animated.Value(0)).current;
+  const musicValue1 = useRef(new Animated.Value(0)).current;
+  const musicValue2 = useRef(new Animated.Value(0)).current;
 
   const discAnimation = {
     transform: [
@@ -49,6 +51,58 @@ const VideoRéels = () => {
       },
     ],
   };
+  const musicAnimation1 = {
+    transform: [
+      {
+        translateX: musicValue1.interpolate({
+          inputRange: [0, 1],
+          outputRange: [8, -16],
+        }),
+      },
+      {
+        translateY: musicValue1.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -32],
+        }),
+      },
+      {
+        rotate: musicValue1.interpolate({
+          inputRange: [0, 1],
+          outputRange: ["0deg", "45deg"],
+        }),
+      },
+    ],
+    opacity: musicValue1.interpolate({
+      inputRange: [0, 0.8, 1],
+      outputRange: [0, 1, 0],
+    }),
+  };
+  const musicAnimation2 = {
+    transform: [
+      {
+        translateX: musicValue2.interpolate({
+          inputRange: [0, 1],
+          outputRange: [8, -16],
+        }),
+      },
+      {
+        translateY: musicValue2.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -40],
+        }),
+      },
+      {
+        rotate: musicValue2.interpolate({
+          inputRange: [0, 1],
+          outputRange: ["0deg", "-45deg"],
+        }),
+      },
+    ],
+    opacity: musicValue2.interpolate({
+      inputRange: [0, 0.8, 1],
+      outputRange: [0, 1, 0],
+    }),
+  };
 
   useEffect(() => {
     Animated.loop(
@@ -59,7 +113,24 @@ const VideoRéels = () => {
         useNativeDriver: false,
       })
     ).start();
-  }, [discAnimationValue]);
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(musicValue1, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        }),
+        Animated.timing(musicValue2, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        }),
+      ])
+    ).start();
+  }, [discAnimationValue, musicValue1, musicValue2]);
 
   return (
     <View
@@ -227,6 +298,38 @@ const VideoRéels = () => {
                     borderRadius: "100%",
                   }}
                 >
+                  <Animated.Image
+                    source={{
+                      uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
+                    }}
+                    style={[
+                      {
+                        position: "absolute",
+                        right: 40,
+                        bottom: 16,
+                        width: 16,
+                        height: 16,
+                        tintColor: "white",
+                      },
+                      musicAnimation1,
+                    ]}
+                  />
+                  <Animated.Image
+                    source={{
+                      uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
+                    }}
+                    style={[
+                      {
+                        position: "absolute",
+                        right: 40,
+                        bottom: 16,
+                        width: 16,
+                        height: 16,
+                        tintColor: "white",
+                      },
+                      musicAnimation2,
+                    ]}
+                  />
                   <Animated.Image
                     source={{
                       uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Disque_Vinyl.svg/1200px-Disque_Vinyl.svg.png",
