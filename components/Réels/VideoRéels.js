@@ -1,5 +1,5 @@
-import { View, Text, Image, Dimensions } from "react-native";
-import React, { useRef, useState } from "react";
+import { View, Text, Image, Dimensions, Animated, Easing } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { Video, ResizeMode } from "expo-av";
 import {
   MaterialCommunityIcons,
@@ -36,7 +36,30 @@ const fakeVideos = [
 
 const VideoRéels = () => {
   const video = useRef(null);
-  const [status, setStatus] = useState({});
+
+  const discAnimationValue = useRef(new Animated.Value(0)).current;
+
+  const discAnimation = {
+    transform: [
+      {
+        rotate: discAnimationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: ["0deg", "360deg"],
+        }),
+      },
+    ],
+  };
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(discAnimationValue, {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      })
+    ).start();
+  }, [discAnimationValue]);
 
   return (
     <View
@@ -204,10 +227,22 @@ const VideoRéels = () => {
                     borderRadius: "100%",
                   }}
                 >
-                  <MaterialCommunityIcons
-                    name="music-circle"
-                    size={40}
-                    color="black"
+                  <Animated.Image
+                    source={{
+                      uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Disque_Vinyl.svg/1200px-Disque_Vinyl.svg.png",
+                    }}
+                    style={[
+                      {
+                        display: "flex",
+                        width: 40,
+                        height: 40,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "pink",
+                        borderRadius: "100%",
+                      },
+                      discAnimation,
+                    ]}
                   />
                 </View>
               </View>
