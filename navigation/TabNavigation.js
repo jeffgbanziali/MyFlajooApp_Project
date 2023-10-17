@@ -27,14 +27,14 @@ const TabNavigation = () => {
         tabBarStyle: {
           display: "flex",
           backgroundColor: "black",
-          height:"10%",
+          height: "10%",
         },
         headerShown: false,
         tabBarActiveTintColor: "white",
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -70,7 +70,9 @@ const TabNavigation = () => {
           tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <Image
-              source={{uri:"https://icon-library.com/images/create-icon-png/create-icon-png-8.jpg"}}
+              source={{
+                uri: "https://icon-library.com/images/create-icon-png/create-icon-png-8.jpg",
+              }}
               style={[
                 styles.newVideoButton,
                 focused && styles.bottomTabIconFocused,

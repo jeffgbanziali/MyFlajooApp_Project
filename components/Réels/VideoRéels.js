@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Animated,
   Easing,
   Dimensions,
+  ScrollView,
 } from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import {
@@ -16,35 +17,15 @@ import {
   FontAwesome5,
   EvilIcons,
 } from "@expo/vector-icons";
+import Modal from "react-native-modal";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity } from "react-native";
-
-const fakeVideos = [
-  {
-    id: 1,
-    title: "Vidéo 1",
-    description: "Description de la vidéo 1",
-    videoSource: require("../../assets/Videos/AZE.mov"),
-  },
-  {
-    id: 2,
-    title: "Vidéo 2",
-    description: "Description de la vidéo 2",
-    videoSource: require("../../assets/Videos/AZE2.mp4"),
-  },
-  {
-    id: 3,
-    title: "Vidéo 3",
-    description: "Description de la vidéo 3",
-    videoSource: require("../../assets/Videos/AZE3.mp4"),
-  },
-  {
-    id: 4,
-    title: "Vidéo 4",
-    description: "Description de la vidéo 3",
-    videoSource: require("../../assets/Videos/AZE4.mp4"),
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getVideoReels } from "../../actions/réels.action";
+import { isEmpty } from "../Context/Utils";
+import AddCommentButton from "../homepage/PostsComponents/AddCommentButton";
+import { useNavigation } from "@react-navigation/native";
+import { UidContext } from "../Context/AppContext";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -54,9 +35,58 @@ const VideoRéels = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [lastViewedVideo, setLastViewedVideo] = useState(0);
   const [status, setStatus] = useState({});
+  const [showComments, setShowComments] = useState(false);
+  const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const discAnimationValue = useRef(new Animated.Value(0)).current;
   const musicValue1 = useRef(new Animated.Value(0)).current;
   const musicValue2 = useRef(new Animated.Value(0)).current;
+  const [loadPosts, setLoadPosts] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const reelsData = useSelector((state) => state.videoReelsReducer);
+  const usersData = useSelector((state) => state.usersReducer);
+  const navigation = useNavigation();
+  const uid = useContext(UidContext);
+
+  useEffect(() => {
+    if (loadPosts) {
+      dispatch(getVideoReels());
+      setLoadPosts(false);
+    }
+  }, [loadPosts, dispatch]);
+
+  useEffect(() => {
+    !isEmpty(usersData) && setLoading(false);
+  }, [usersData]);
+
+  const goProfil = (id) => {
+    if (uid === id) {
+      console.log("go to my profil", id);
+      navigation.navigate("Profile", { id });
+    } else {
+      navigation.navigate("ProfilFriends", { id });
+      console.log("go to profile friends", id);
+    }
+  };
+
+  const toggleComments = () => {
+    if (showComments) {
+      Animated.timing(commentsHeight, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => setShowComments(false));
+    } else {
+      setShowComments(true);
+      Animated.timing(commentsHeight, {
+        toValue: 200, // Hauteur souhaitée du composant de commentaires
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
 
   const handleVideoLoad = async () => {
     await video.current.playAsync();
@@ -193,7 +223,7 @@ const VideoRéels = () => {
       >
         <Video
           ref={video}
-          source={item.videoSource}
+          source={{ uri: item.videoPath }}
           style={{
             width: "100%",
             height: "100%",
@@ -207,15 +237,16 @@ const VideoRéels = () => {
           onError={(error) => console.error("Erreur de lecture vidéo :", error)}
         />
         <TouchableOpacity
+          onPress={toggleVideoPlayback}
           style={{
             position: "absolute",
             width: "100%",
-            height: "100%",
+            height: "74%",
             alignItems: "center",
             zIndex: 1,
             justifyContent: "center",
+            marginTop: 110,
           }}
-          onPress={toggleVideoPlayback}
         >
           <FontAwesome5
             name={isVideoPlaying ? "pause" : "play"}
@@ -241,28 +272,37 @@ const VideoRéels = () => {
               flexDirection: "row",
             }}
           >
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "100%",
-                flexDirection: "row",
-                marginLeft: 20,
-              }}
-            >
-              <Image
-                source={{
-                  uri: "https://ds.static.rtbf.be/article/image/1239x1920/1/a/d/3cf2559725a9fdfa602ec8c887440f32-1676281590.jpg",
-                }}
+            <TouchableOpacity onPress={() => goProfil(item.posterId)}>
+              <View
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: 50,
+                  height: 50,
+                  alignItems: "center",
+                  justifyContent: "center",
                   borderRadius: "100%",
+                  flexDirection: "row",
+                  marginLeft: 20,
                 }}
-              />
-            </View>
+              >
+                <Image
+                  source={{
+                    uri:
+                      !isEmpty(usersData) &&
+                      usersData
+                        .map((user) => {
+                          if (user._id === item.posterId) return user.picture;
+                          else return null;
+                        })
+                        .join(""),
+                  }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "100%",
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
             <View
               style={{
                 alignItems: "flex-start",
@@ -271,7 +311,13 @@ const VideoRéels = () => {
                 marginLeft: 10,
               }}
             >
-              <Text style={{ color: "white" }}>Bonjouraerriehierher</Text>
+              <Text style={{ color: "white", fontSize: 18 }}>
+                {!isEmpty(usersData[0]) &&
+                  usersData.map((user) => {
+                    if (user._id === item.posterId) return user.pseudo;
+                    else return null;
+                  })}
+              </Text>
               <Text style={{ color: "white" }}>Bonjour</Text>
             </View>
           </View>
@@ -291,10 +337,12 @@ const VideoRéels = () => {
             <Text
               style={{
                 color: "white",
-                fontWeight: "bold",
+                fontWeight: "500",
+                fontSize: 16,
+                marginLeft: 6,
               }}
             >
-              345K
+              {item.viewers.length}
             </Text>
           </View>
         </View>
@@ -315,7 +363,7 @@ const VideoRéels = () => {
                 fontWeight: "bold",
               }}
             >
-              {item.title}
+              {item.description}
             </Text>
             <Text
               style={{
@@ -323,7 +371,7 @@ const VideoRéels = () => {
                 marginVertical: 8,
               }}
             >
-              {item.title}
+              {item.description}
             </Text>
             <View
               style={{
@@ -459,7 +507,7 @@ const VideoRéels = () => {
               textAlign: "center",
             }}
           >
-            like
+            {item.likers.length}
           </Text>
         </View>
 
@@ -469,18 +517,21 @@ const VideoRéels = () => {
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              display: "flex",
-              width: 50,
-              height: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "100%",
-            }}
-          >
-            <AntDesign name="message1" size={40} color="white" />
-          </View>
+          <TouchableOpacity onPress={toggleComments}>
+            <View
+              style={{
+                display: "flex",
+                width: 50,
+                height: 50,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "100%",
+              }}
+            >
+              <AntDesign name="message1" size={40} color="white" />
+            </View>
+          </TouchableOpacity>
+
           <Text
             style={{
               color: "white",
@@ -488,7 +539,7 @@ const VideoRéels = () => {
               textAlign: "center",
             }}
           >
-            like
+            {item.comments.length}
           </Text>
         </View>
         <View
@@ -524,12 +575,64 @@ const VideoRéels = () => {
           </Text>
         </View>
       </View>
+      <Modal
+        isVisible={showComments}
+        onBackdropPress={toggleComments} // Pour fermer le modal en appuyant sur l'arrière-plan
+        style={{ margin: 0, justifyContent: "flex-end" }} // Placez le modal en bas de l'écran
+        backdropOpacity={0.5} // Opacité de l'arrière-plan
+        animationIn="slideInUp" // Animation pour afficher le modal
+        animationOut="slideOutDown" // Animation pour fermer le modal
+        useNativeDriverForBackdrop
+      >
+        {/* Contenu du modal (composant de commentaires) */}
+        <View
+          style={{
+            backgroundColor: "#494747",
+            height: "85%",
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+          }}
+        >
+          <View
+            style={{
+              borderBottomWidth: 2,
+              borderColor: "gray",
+              height: 50,
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: 16,
+                fontWeight: "bold",
+                marginTop: 10,
+              }}
+            >
+              Post Comment
+            </Text>
+          </View>
+          <ScrollView>
+            <Text>Bonjour</Text>
+          </ScrollView>
+          <View
+            style={{
+              width: "100%",
+              height: "15%",
+              borderTopWidth: 2,
+              borderColor: "gray",
+            }}
+          >
+            <AddCommentButton item={item} />
+          </View>
+        </View>
+      </Modal>
     </>
   );
 
   return (
     <FlatList
-      data={fakeVideos}
+      data={reelsData}
       renderItem={renderItem}
       onScroll={(e) => {
         const i = Math.round(

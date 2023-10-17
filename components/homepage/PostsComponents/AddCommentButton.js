@@ -35,7 +35,7 @@ const AddCommentButton = ({ post }) => {
                 <View
                     style={{
                         flexDirection: 'row',
-                        marginTop: 10,
+                        marginTop: 20,
                         marginBottom: 10
                     }}
                 >

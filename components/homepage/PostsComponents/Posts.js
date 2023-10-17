@@ -27,7 +27,7 @@ const Posts = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
-  const uid  = useContext(UidContext);
+  const uid = useContext(UidContext);
 
   const goProfil = (id) => {
     if (uid === id) {
@@ -382,7 +382,7 @@ const Posts = ({ post }) => {
         <View
           style={{
             backgroundColor: "#494747",
-            height: "50%",
+            height: "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
           }}
@@ -412,7 +412,7 @@ const Posts = ({ post }) => {
           <View
             style={{
               width: "100%",
-              height: "20%",
+              height: "15%",
               borderTopWidth: 2,
               borderColor: "gray",
             }}
