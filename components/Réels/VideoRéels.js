@@ -1,18 +1,29 @@
-import { View, Text, Image, Dimensions, Animated, Easing } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Animated,
+  Easing,
+  Dimensions,
+} from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import {
   MaterialCommunityIcons,
   FontAwesome,
   AntDesign,
+  FontAwesome5,
 } from "@expo/vector-icons";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { TouchableOpacity } from "react-native";
 
 const fakeVideos = [
   {
     id: 1,
     title: "Vidéo 1",
     description: "Description de la vidéo 1",
-    videoSource: require("../../assets/Videos/AZE2.mp4"),
+    videoSource: require("../../assets/Videos/AZE.mov"),
   },
   {
     id: 2,
@@ -24,7 +35,7 @@ const fakeVideos = [
     id: 3,
     title: "Vidéo 3",
     description: "Description de la vidéo 3",
-    videoSource: require("../../assets/Videos/AZE2.mp4"),
+    videoSource: require("../../assets/Videos/AZE3.mp4"),
   },
   {
     id: 4,
@@ -34,12 +45,42 @@ const fakeVideos = [
   },
 ];
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+
 const VideoRéels = () => {
   const video = useRef(null);
-
+  const [activeVideo, setActiveVideo] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [lastViewedVideo, setLastViewedVideo] = useState(0);
+  const [status, setStatus] = useState({});
   const discAnimationValue = useRef(new Animated.Value(0)).current;
   const musicValue1 = useRef(new Animated.Value(0)).current;
   const musicValue2 = useRef(new Animated.Value(0)).current;
+
+  const handleVideoLoad = async () => {
+    await video.current.playAsync();
+    setIsVideoPlaying(true);
+  };
+
+  const toggleVideoPlayback = () => {
+    if (activeVideo) {
+      video.current.pauseAsync();
+    } else {
+      video.current.playAsync();
+    }
+    setIsVideoPlaying(!isVideoPlaying);
+  };
+
+  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      const newActiveIndex = viewableItems[0].index;
+      if (newActiveIndex !== activeVideo) {
+        setActiveVideo(newActiveIndex);
+        setLastViewedVideo(newActiveIndex);
+        video.current.setPositionAsync(0);
+      }
+    }
+  }).current;
 
   const discAnimation = {
     transform: [
@@ -105,6 +146,13 @@ const VideoRéels = () => {
   };
 
   useEffect(() => {
+    if (video.current && lastViewedVideo !== activeVideo) {
+      video.current.setPositionAsync(0);
+      setLastViewedVideo(activeVideo);
+    }
+  }, [activeVideo, lastViewedVideo]);
+
+  useEffect(() => {
     Animated.loop(
       Animated.timing(discAnimationValue, {
         toValue: 1,
@@ -132,163 +180,227 @@ const VideoRéels = () => {
     ).start();
   }, [discAnimationValue, musicValue1, musicValue2]);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        height: "40%",
-      }}
-    >
-      {fakeVideos.map((videoData, index) => (
-        <>
+  const bottomTabHeight = useBottomTabBarHeight();
+
+  const renderItem = ({ item, index }) => (
+    <>
+      <View
+        style={{
+          width: windowWidth,
+          height: windowHeight - bottomTabHeight,
+        }}
+      >
+        <Video
+          ref={video}
+          source={item.videoSource}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+          }}
+          resizeMode="cover"
+          isLooping
+          shouldPlay={isVideoPlaying}
+          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          onLoad={handleVideoLoad}
+          onError={(error) => console.error("Erreur de lecture vidéo :", error)}
+        />
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            zIndex: 1,
+            justifyContent: "center",
+          }}
+          onPress={toggleVideoPlayback}
+        >
+          <FontAwesome5
+            name={isVideoPlaying ? "pause" : "play"}
+            size={60}
+            color="white"
+          />
+        </TouchableOpacity>
+
+        <View
+          style={{
+            width: "100%",
+            height: 60,
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderRadius: "100%",
+            flexDirection: "row",
+            top: 50,
+            position: "absolute",
+          }}
+        >
           <View
-            key={videoData.id}
             style={{
-              height: "100%",
+              flexDirection: "row",
             }}
           >
-            <Video
-              ref={video}
-              source={videoData.videoSource}
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-              }}
-              resizeMode="cover"
-            />
-
             <View
               style={{
-                width: "100%",
+                width: 60,
                 height: 60,
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: "center",
                 borderRadius: "100%",
                 flexDirection: "row",
-                top: 50,
-                position: "absolute",
+                marginLeft: 20,
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
+              <Image
+                source={{
+                  uri: "https://ds.static.rtbf.be/article/image/1239x1920/1/a/d/3cf2559725a9fdfa602ec8c887440f32-1676281590.jpg",
                 }}
-              >
-                <View
-                  style={{
-                    width: 60,
-                    height: 60,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "100%",
-                    flexDirection: "row",
-                    marginLeft: 20,
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: "https://ds.static.rtbf.be/article/image/1239x1920/1/a/d/3cf2559725a9fdfa602ec8c887440f32-1676281590.jpg",
-                    }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "100%",
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    borderRadius: "100%",
-                    marginLeft: 10,
-                  }}
-                >
-                  <Text style={{ color: "white" }}>Bonjouraerriehierher</Text>
-                  <Text style={{ color: "white" }}>Bonjour</Text>
-                </View>
-              </View>
-              <View
                 style={{
-                  width: 60,
-                  height: 60,
-                  backgroundColor: "red",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  width: "100%",
+                  height: "100%",
                   borderRadius: "100%",
-                  marginRight: 20,
                 }}
-              >
-                <Text>Bonjour</Text>
-              </View>
+              />
             </View>
             <View
               style={{
-                position: "absolute",
-                bottom: 0,
-                flexDirection: "row",
-                width: "100%",
-                paddingHorizontal: 8,
-                paddingBottom: 16,
+                alignItems: "flex-start",
+                justifyContent: "center",
+                borderRadius: "100%",
+                marginLeft: 10,
               }}
             >
-              <View style={{ flex: 4 }}>
-                <Text
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {videoData.title}
-                </Text>
-                <Text
-                  style={{
-                    color: "white",
-                    marginVertical: 8,
-                  }}
-                >
-                  {videoData.title}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 40,
-                      height: 40,
-                      marginRight: 8,
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      name="music-circle"
-                      size={40}
-                      color="black"
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 20,
-                      textAlign: "center",
-                    }}
-                  >
-                    {videoData.title}
-                  </Text>
-                </View>
-              </View>
+              <Text style={{ color: "white" }}>Bonjouraerriehierher</Text>
+              <Text style={{ color: "white" }}>Bonjour</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: 60,
+              height: 60,
+              backgroundColor: "red",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "100%",
+              marginRight: 20,
+            }}
+          >
+            <Text>Bonjour</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            flexDirection: "row",
+            width: "100%",
+            paddingHorizontal: 8,
+            paddingBottom: 16,
+          }}
+        >
+          <View style={{ flex: 4 }}>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              {item.title}
+            </Text>
+            <Text
+              style={{
+                color: "white",
+                marginVertical: 8,
+              }}
+            >
+              {item.title}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
               <View
                 style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
+                  width: 40,
+                  height: 40,
+                  marginRight: 8,
                 }}
               >
-                <View
-                  style={{
+                <MaterialCommunityIcons
+                  name="music-circle"
+                  size={40}
+                  color="black"
+                />
+              </View>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 20,
+                  textAlign: "center",
+                }}
+              >
+                {item.title}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                display: "flex",
+                width: 40,
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "pink",
+                borderRadius: "100%",
+              }}
+            >
+              <Animated.Image
+                source={{
+                  uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
+                }}
+                style={[
+                  {
+                    position: "absolute",
+                    right: 40,
+                    bottom: 16,
+                    width: 16,
+                    height: 16,
+                    tintColor: "white",
+                  },
+                  musicAnimation1,
+                ]}
+              />
+              <Animated.Image
+                source={{
+                  uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
+                }}
+                style={[
+                  {
+                    position: "absolute",
+                    right: 40,
+                    bottom: 16,
+                    width: 16,
+                    height: 16,
+                    tintColor: "white",
+                  },
+                  musicAnimation2,
+                ]}
+              />
+              <Animated.Image
+                source={{
+                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Disque_Vinyl.svg/1200px-Disque_Vinyl.svg.png",
+                }}
+                style={[
+                  {
                     display: "flex",
                     width: 40,
                     height: 40,
@@ -296,63 +408,14 @@ const VideoRéels = () => {
                     justifyContent: "center",
                     backgroundColor: "pink",
                     borderRadius: "100%",
-                  }}
-                >
-                  <Animated.Image
-                    source={{
-                      uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
-                    }}
-                    style={[
-                      {
-                        position: "absolute",
-                        right: 40,
-                        bottom: 16,
-                        width: 16,
-                        height: 16,
-                        tintColor: "white",
-                      },
-                      musicAnimation1,
-                    ]}
-                  />
-                  <Animated.Image
-                    source={{
-                      uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
-                    }}
-                    style={[
-                      {
-                        position: "absolute",
-                        right: 40,
-                        bottom: 16,
-                        width: 16,
-                        height: 16,
-                        tintColor: "white",
-                      },
-                      musicAnimation2,
-                    ]}
-                  />
-                  <Animated.Image
-                    source={{
-                      uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Disque_Vinyl.svg/1200px-Disque_Vinyl.svg.png",
-                    }}
-                    style={[
-                      {
-                        display: "flex",
-                        width: 40,
-                        height: 40,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "pink",
-                        borderRadius: "100%",
-                      },
-                      discAnimation,
-                    ]}
-                  />
-                </View>
-              </View>
+                  },
+                  discAnimation,
+                ]}
+              />
             </View>
           </View>
-        </>
-      ))}
+        </View>
+      </View>
 
       <View
         style={{
@@ -451,7 +514,26 @@ const VideoRéels = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </>
+  );
+
+  return (
+    <FlatList
+      data={fakeVideos}
+      renderItem={renderItem}
+      onScroll={(e) => {
+        const i = Math.round(
+          e.nativeEvent.contentOffset.y / (windowHeight - bottomTabHeight)
+        );
+        setActiveVideo(i);
+      }}
+      onViewableItemsChanged={onViewableItemsChanged}
+      viewabilityConfig={{
+        viewAreaCoveragePercentThreshold: 50,
+      }}
+      pagingEnabled
+      vertical
+    />
   );
 };
 

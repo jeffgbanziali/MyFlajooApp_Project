@@ -31,7 +31,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
     const uid = useContext(UidContext);
 
-    const [initialScreen, setInitialScreen] = useState("Réels"); // Écran de chargement par défaut
+    const [initialScreen, setInitialScreen] = useState("Loading"); // Écran de chargement par défaut
 
     useEffect(() => {
         const checkUserLoggedIn = async () => {
