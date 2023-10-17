@@ -14,6 +14,7 @@ import {
   FontAwesome,
   AntDesign,
   FontAwesome5,
+  EvilIcons,
 } from "@expo/vector-icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity } from "react-native";
@@ -276,16 +277,25 @@ const VideoRéels = () => {
           </View>
           <View
             style={{
-              width: 60,
-              height: 60,
               backgroundColor: "red",
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: "100%",
+              display: "flex",
+              flexDirection: "row",
+              borderRadius: "20%",
               marginRight: 20,
+              padding: 6,
             }}
           >
-            <Text>Bonjour</Text>
+            <EvilIcons name="eye" size={24} color="white" />
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              345K
+            </Text>
           </View>
         </View>
         <View
