@@ -16,12 +16,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
 import { UidContext } from "../../Context/AppContext";
+import LikeStoriesButton from "./LikeStoriesButton";
 
 const StoriesStream = () => {
   const navigation = useNavigation(false);
   const route = useRoute();
   const { id } = route.params;
-  const {uid} = useContext(UidContext)
+  const { uid } = useContext(UidContext);
   const storiesData = useSelector((state) => state.storyReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const selectedStory = storiesData.find((story) => story._id === id);
@@ -158,7 +159,7 @@ const StoriesStream = () => {
               <View
                 style={{
                   backgroundColor: "#343232",
-                  height: 40,
+                  height: 30,
                   borderRadius: 10,
                   flexDirection: "row",
                   justifyContent: "center",
@@ -358,9 +359,7 @@ const StoriesStream = () => {
                 alignItems: "center",
               }}
             >
-              <TouchableOpacity>
-                <Ionicons name="md-heart-sharp" size={40} color="red" />
-              </TouchableOpacity>
+              <LikeStoriesButton story={selectedStory} />
             </View>
             <View
               style={{
