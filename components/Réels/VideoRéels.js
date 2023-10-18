@@ -26,6 +26,9 @@ import { isEmpty } from "../Context/Utils";
 import AddCommentButton from "../homepage/PostsComponents/AddCommentButton";
 import { useNavigation } from "@react-navigation/native";
 import { UidContext } from "../Context/AppContext";
+import RéelsComment from "./RéelsComment";
+import AddRéelsComment from "./AddRéelsComment";
+import LikeRéelsButton from "./LikeRéelsButton";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -479,7 +482,7 @@ const VideoRéels = () => {
         style={{
           position: "absolute",
           right: 8,
-          bottom: 180,
+          bottom: 160,
         }}
       >
         <View
@@ -488,18 +491,7 @@ const VideoRéels = () => {
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              display: "flex",
-              width: 50,
-              height: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "100%",
-            }}
-          >
-            <FontAwesome name="heart" size={40} color="red" />
-          </View>
+          <LikeRéelsButton réels={item}/>
           <Text
             style={{
               color: "white",
@@ -528,7 +520,7 @@ const VideoRéels = () => {
                 borderRadius: "100%",
               }}
             >
-              <AntDesign name="message1" size={40} color="white" />
+              <AntDesign name="message1" size={35} color="white" />
             </View>
           </TouchableOpacity>
 
@@ -560,7 +552,7 @@ const VideoRéels = () => {
           >
             <MaterialCommunityIcons
               name="music-circle"
-              size={50}
+              size={40}
               color="black"
             />
           </View>
@@ -584,7 +576,6 @@ const VideoRéels = () => {
         animationOut="slideOutDown" // Animation pour fermer le modal
         useNativeDriverForBackdrop
       >
-        {/* Contenu du modal (composant de commentaires) */}
         <View
           style={{
             backgroundColor: "#494747",
@@ -613,7 +604,7 @@ const VideoRéels = () => {
             </Text>
           </View>
           <ScrollView>
-            <Text>Bonjour</Text>
+            <RéelsComment réels={item} />
           </ScrollView>
           <View
             style={{
@@ -623,7 +614,7 @@ const VideoRéels = () => {
               borderColor: "gray",
             }}
           >
-            <AddCommentButton item={item} />
+            <AddRéelsComment réels={item} />
           </View>
         </View>
       </Modal>
