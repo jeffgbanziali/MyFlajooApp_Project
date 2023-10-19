@@ -17,11 +17,11 @@ import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile"
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import PostsUser from "../../components/ProfileUtils.js/PostsUser";
-import { UidContext } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
-
+  const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
   const handleClickReturnHome = () => {
     console.log("clicked");
@@ -33,11 +33,11 @@ const Profile = () => {
   };
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.container}>
+      <View >
         <View
           style={{
             flex: 1,
-            backgroundColor: "#3D3939",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 30,
             paddingBottom: 90,
             marginTop: 50,
@@ -194,9 +194,6 @@ const Profile = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#2C2828",
-  },
 });
 
 export default Profile;

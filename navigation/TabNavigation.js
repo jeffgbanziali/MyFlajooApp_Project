@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Feather,
   MaterialCommunityIcons,
-  Entypo,
+  FontAwesome,
   MaterialIcons,
 } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
@@ -15,22 +15,27 @@ import { StyleSheet } from "react-native";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Profile from "../screens/Profile/Profile";
 import Search from "../components/Search/Search";
+import { useDarkMode } from "../components/Context/AppContext";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const navigation = useNavigation();
+  const { isDarkMode } = useDarkMode();
 
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
           display: "flex",
-          backgroundColor: "black",
+          backgroundColor: isDarkMode ? "#171717" : "white",
           height: "10%",
         },
         headerShown: false,
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: isDarkMode ? "white" : "black",
+        tabBarLabelStyle: {
+          color: isDarkMode ? "white" : "black",
+        },
       }}
     >
       <Tab.Screen
@@ -38,12 +43,11 @@ const TabNavigation = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/Logos/home.png")}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
+            <MaterialIcons
+              name="home-filled"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+              style={[focused && styles.bottomTabIconFocused]}
             />
           ),
         }}
@@ -53,12 +57,11 @@ const TabNavigation = () => {
         component={Search}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/Logos/search.png")}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
+            <Feather
+              name="search"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+              style={[focused && styles.bottomTabIconFocused]}
             />
           ),
         }}
@@ -86,12 +89,11 @@ const TabNavigation = () => {
         component={Réels}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/Logos/message.png")}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
+            <MaterialCommunityIcons
+              name="youtube-tv"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+              style={[focused && styles.bottomTabIconFocused]}
             />
           ),
         }}
@@ -101,12 +103,11 @@ const TabNavigation = () => {
         component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/Logos/user.png")}
-              style={[
-                styles.bottomTabIcon,
-                focused && styles.bottomTabIconFocused,
-              ]}
+            <FontAwesome
+              name="user"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+              style={[focused && styles.bottomTabIconFocused]}
             />
           ),
         }}
@@ -116,17 +117,13 @@ const TabNavigation = () => {
 };
 
 const styles = StyleSheet.create({
-  bottomTabIcon: {
-    width: 20,
-    height: 20,
-    tintColor: "grey",
-  },
   bottomTabIconFocused: {
-    tintColor: "white",
+    color: "red", // Utilisez la propriété color à la place de tintColor
   },
   newVideoButton: {
     width: 60,
     height: 60,
   },
 });
+
 export default TabNavigation;

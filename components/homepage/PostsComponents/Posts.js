@@ -18,7 +18,7 @@ import FollowHandler from "../../ProfileUtils.js/FollowHandler";
 import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./AddCommentButton";
 import AllCommentView from "./AllCommentView";
-import { UidContext } from "../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../Context/AppContext";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +28,7 @@ const Posts = ({ post }) => {
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
+  const { isDarkMode } = useDarkMode();
 
   const goProfil = (id) => {
     if (uid === id) {
@@ -69,7 +70,7 @@ const Posts = ({ post }) => {
         style={{
           marginTop: 8,
           marginBottom: 5,
-          backgroundColor: "black",
+          backgroundColor: isDarkMode ? "#171717" : "white",
           position: "relative",
           borderRadius: 20,
           paddingBottom: 20,
@@ -146,7 +147,7 @@ const Posts = ({ post }) => {
                     >
                       <Text
                         style={{
-                          color: "white",
+                          color: isDarkMode ? "white" : "black",
                           marginLeft: 5,
                           fontWeight: "600",
                           fontSize: 18,
@@ -214,7 +215,7 @@ const Posts = ({ post }) => {
               <View>
                 <Text
                   style={{
-                    color: "white",
+                    color: isDarkMode ? "white" : "black",
                     fontSize: 14,
                     fontWeight: "400",
                     textAlign: "justify",

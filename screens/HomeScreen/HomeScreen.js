@@ -10,19 +10,20 @@ import {
 import Header from '../../components/homepage/Header';
 import Stories from '../../components/homepage/Stories/Stories';
 import Thread from '../../components/Thread/Thread';
+import { useDarkMode } from '../../components/Context/AppContext';
 
 const HomeScreen = () => {
     const [borderColor, setBorderColor] = useState('gray');
     const headerTranslateY = new Animated.Value(-200); // Définissez la valeur initiale à -threshold
     const threshold = 200; // Réglez la valeur du seuil en pixels pour déclencher l'animation
-
+    const { isDarkMode } = useDarkMode();
     useEffect(() => {
         // Démarrez le délai pour l'animation
         setTimeout(() => {
             // Définissez l'animation de l'en-tête en fonction du défilement
             Animated.timing(headerTranslateY, {
                 toValue: 1,
-                duration: 200,
+                duration: 100,
                 useNativeDriver: false,
             }).start();
         }, 3000); // 3000 millisecondes (3 secondes)
@@ -32,7 +33,10 @@ const HomeScreen = () => {
         <>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.container}
+                style={{
+                    backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2' ,
+                    flex: 1,
+                }}
             >
                 <ScrollView
                     onScroll={(event) => {
@@ -71,13 +75,11 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#2C2828',
-        flex: 1,
-    },
     header: {
         position: 'relative',
         zIndex: 1,
+
+        marginTop: 10,
     },
 });
 

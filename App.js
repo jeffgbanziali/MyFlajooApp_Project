@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
-import { UidContext } from "./components/Context/AppContext";
+import { DarkModeProvider, UidContext, useDarkMode } from "./components/Context/AppContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.action";
@@ -32,7 +32,9 @@ const App = () => {
   store.dispatch(getVideoReels());
   return (
     <Provider store={store}>
-      <AppW />
+        <DarkModeProvider>
+        <AppW />
+      </DarkModeProvider>
     </Provider>
   );
 };
@@ -53,7 +55,7 @@ axios.interceptors.request.use(
 const AppW = () => {
   const [uid, setUid] = useState(null);
   const dispatch = useDispatch();
-
+  const { isDarkMode } = useDarkMode();
   useEffect(() => {
     const fetchToken = async () => {
       try {
@@ -109,7 +111,7 @@ const AppW = () => {
       </NavigationContainer>
 
       <StatusBar
-        style="light" // Pour le texte en blanc
+        style={isDarkMode ? "light" : "dark"}
         backgroundColor="#FF0000"
       />
     </UidContext.Provider>

@@ -8,25 +8,28 @@ import {
   FontAwesome5,
   Ionicons,
 } from "@expo/vector-icons";
+import { useDarkMode } from "../Context/AppContext";
 
 const ButtonColor = () => {
   // Utilisez useState pour gérer l'état du mode (sombre ou normal)
-  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const navigation = useNavigation();
   const handleClickReturnProfile = () => {
     console.log("clicked");
     navigation.navigate("Settings");
   };
-  // Fonction pour basculer entre le mode sombre et normal
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+
+  const backgroundColorLight = "#F3F2F2";
+  const backgroundColorDark = "#2C2828";
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: "#454140",
+        backgroundColor: isDarkMode
+          ? backgroundColorDark
+          : backgroundColorLight,
       }}
     >
       <View
@@ -50,7 +53,7 @@ const ButtonColor = () => {
             <MaterialIcons
               name="arrow-back-ios"
               size={28}
-              color="white"
+              color={isDarkMode ? "white" : "black"}
               style={{
                 alignSelf: "center",
                 alignContent: "center",
@@ -63,7 +66,7 @@ const ButtonColor = () => {
         <Text
           style={{
             fontSize: 20,
-            color: "#fff",
+            color: isDarkMode ? "white" : "black",
             fontWeight: "bold",
             marginRight: 10,
           }}
@@ -78,7 +81,7 @@ const ButtonColor = () => {
           flexDirection: "column",
           padding: 6,
           margin: 8,
-          backgroundColor: "white",
+          backgroundColor: isDarkMode ? "#171717" : "white",
           borderRadius: 10,
         }}
       >
@@ -99,7 +102,7 @@ const ButtonColor = () => {
             }}
           >
             {isDarkMode ? (
-              <FontAwesome5 name="moon" size={24} color="black" />
+              <FontAwesome5 name="moon" size={24} color="white" />
             ) : (
               <MaterialCommunityIcons
                 name="white-balance-sunny"
@@ -110,7 +113,7 @@ const ButtonColor = () => {
             <Text
               style={{
                 fontSize: 20,
-                color: "black",
+                color: isDarkMode ? "white" : "black",
                 fontWeight: "bold",
                 marginLeft: 10,
               }}
@@ -123,7 +126,7 @@ const ButtonColor = () => {
             value={isDarkMode}
             onValueChange={toggleDarkMode}
             trackColor={{ false: "gray", true: "darkgray" }}
-            thumbColor={isDarkMode ? "black" : "white"}
+            thumbColor={isDarkMode ? "white" : "black"}
           />
         </View>
 
@@ -142,11 +145,15 @@ const ButtonColor = () => {
               flexDirection: "row",
             }}
           >
-            <Ionicons name="notifications" size={24} color="black" />
+            <Ionicons
+              name="notifications"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
             <Text
               style={{
                 fontSize: 20,
-                color: "black",
+                color: isDarkMode ? "white" : "black",
                 fontWeight: "bold",
                 marginLeft: 10,
               }}
@@ -155,11 +162,10 @@ const ButtonColor = () => {
             </Text>
           </View>
 
-          <Switch
-            value={isDarkMode}
-            onValueChange={toggleDarkMode}
-            trackColor={{ false: "gray", true: "darkgray" }}
-            thumbColor={isDarkMode ? "black" : "white"}
+          <MaterialIcons
+            name="arrow-forward-ios"
+            size={24}
+            color={isDarkMode ? "white" : "black"}
           />
         </View>
 
@@ -179,11 +185,15 @@ const ButtonColor = () => {
                 flexDirection: "row",
               }}
             >
-              <MaterialIcons name="language" size={24} color="black" />
+              <MaterialIcons
+                name="language"
+                size={24}
+                color={isDarkMode ? "white" : "black"}
+              />
               <Text
                 style={{
                   fontSize: 20,
-                  color: "black",
+                  color: isDarkMode ? "white" : "black",
                   fontWeight: "bold",
                   marginLeft: 10,
                 }}
@@ -192,110 +202,11 @@ const ButtonColor = () => {
               </Text>
             </View>
 
-            <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          marginTop: 12,
-          flexDirection: "column",
-          padding: 6,
-          margin: 8,
-          backgroundColor: "white",
-          borderRadius: 10,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: 6,
-            borderRadius: 10,
-          }}
-        >
-          {/* Affichez le texte en fonction du mode actuel */}
-          <View
-            style={{
-              marginLeft: 12,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                color: "black",
-                fontWeight: "bold",
-                marginLeft: 10,
-              }}
-            >
-              {isDarkMode ? "Mode Sombre" : "Mode Normal"}
-            </Text>
-          </View>
-
-          <Switch
-            value={isDarkMode}
-            onValueChange={toggleDarkMode}
-            trackColor={{ false: "gray", true: "darkgray" }}
-            thumbColor={isDarkMode ? "black" : "white"}
-          />
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: 6,
-            borderRadius: 10,
-          }}
-        >
-          <View
-            style={{
-              marginLeft: 12,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                color: "black",
-                fontWeight: "bold",
-                marginLeft: 10,
-              }}
-            >
-              Notifications
-            </Text>
-          </View>
-
-          <Switch
-            value={isDarkMode}
-            onValueChange={toggleDarkMode}
-            trackColor={{ false: "gray", true: "darkgray" }}
-            thumbColor={isDarkMode ? "black" : "white"}
-          />
-        </View>
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: 6,
-              borderRadius: 10,
-              marginLeft: 12,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                color: "black",
-                fontWeight: "bold",
-                marginLeft: 10,
-              }}
-            >
-              Language
-            </Text>
-            <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
+            <MaterialIcons
+              name="arrow-forward-ios"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
           </View>
         </TouchableOpacity>
       </View>

@@ -1,160 +1,167 @@
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { useSelector } from 'react-redux';
-import Feather from 'react-native-vector-icons/Feather'
-import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
+import Feather from "react-native-vector-icons/Feather";
+import { AntDesign } from "@expo/vector-icons";
+import { useDarkMode } from "../Context/AppContext";
 
-const Header = ({ borderBottomColor }) => {
-
+const Header = () => {
   const userData = useSelector((state) => state.userReducer);
-  console.log(userData)
+  const { isDarkMode } = useDarkMode();
 
-  const navigation = useNavigation(false)
+  console.log(userData);
+
+  const navigation = useNavigation(false);
   const handleClickProfile = () => {
-    console.log('clicked')
-    navigation.navigate('Profile')
-  }
+    console.log("clicked");
+    navigation.navigate("Profile");
+  };
   const handleClickMessage = () => {
-    console.log('clicked')
-    navigation.navigate('Messages')
-  }
+    console.log("clicked");
+    navigation.navigate("Messages");
+  };
   const handleClickNotifications = () => {
-    console.log('clicked')
-    navigation.navigate('Notifications')
-  }
+    console.log("clicked");
+    navigation.navigate("Notifications");
+  };
   return (
     <View
       style={{
-        display: 'flex',
-        marginTop: '10%',
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        display: "flex",
+        marginTop: "10%",
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         borderBottomWidth: 1,
-        borderBottomColor: borderBottomColor,
+        borderBottomColor: "gray",
+        backgroundColor: isDarkMode ? "#171717" : "white",
       }}
     >
       <TouchableOpacity
         style={{
           width: 100,
-          height: 50
+          height: 50,
         }}
       >
         <Image
           style={{
             width: 110,
             height: 110,
-            resizeMode: 'contain'
+            color: isDarkMode ? "white" : "black",
+            resizeMode: "contain",
           }}
-          source={require('../../assets/Logos/my_flajoo.png')}
+          source={require("../../assets/Logos/my_flajoo.png")}
         />
       </TouchableOpacity>
 
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          alignContent: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          alignContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
           marginRight: 10,
         }}
       >
         <View
           style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
+            justifyContent: "center",
+            alignSelf: "center",
             borderRadius: 30,
-            marginTop: '1.5%',
+            marginTop: "1.5%",
             width: 50,
             height: 50,
-            zIndex: 100
+            zIndex: 100,
           }}
         >
           <TouchableOpacity onPress={handleClickNotifications}>
             <Feather
-              name='bell'
+              name="bell"
               size={25}
-              color='white'
+              color={isDarkMode ? "white" : "black"}
               style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: 'contain'
+                alignSelf: "center",
+                alignContent: "center",
+                alignItems: "center",
+                resizeMode: "contain",
               }}
             />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
+            justifyContent: "center",
+            alignSelf: "center",
             borderRadius: 30,
-            marginTop: '1.5%',
+            marginTop: "1.5%",
             width: 50,
             height: 50,
-            zIndex: 100
+            zIndex: 100,
           }}
         >
           <TouchableOpacity onPress={handleClickMessage}>
             <View
               style={{
-                backgroundColor: 'red',
-                position: 'absolute',
+                backgroundColor: "red",
+                position: "absolute",
                 left: 10,
                 width: 20,
                 height: 20,
                 borderRadius: 25,
-                justifyContent: 'center',
-                alignSelf: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignSelf: "center",
+                alignItems: "center",
                 marginLeft: 16,
                 marginTop: -10,
-                zIndex: 100
+                zIndex: 100,
               }}
             >
               <Text
                 style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontZize: "8px"
+                  color: "white",
+                  fontWeight: "bold",
+                  fontZize: "8px",
                 }}
               >
                 2
               </Text>
             </View>
             <AntDesign
-              name='message1'
+              name="message1"
               size={25}
-              color='white'
+              color={isDarkMode ? "white" : "black"}
               style={{
-                alignSelf: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                resizeMode: 'contain'
+                alignSelf: "center",
+                alignContent: "center",
+                alignItems: "center",
+                resizeMode: "contain",
               }}
             />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
+            justifyContent: "center",
+            alignSelf: "center",
             borderRadius: 30,
-            marginTop: '1.5%',
+            marginTop: "1.5%",
             marginLeft: 10,
             width: 35,
             height: 35,
-            zIndex: 100
+            zIndex: 100,
           }}
         >
           <TouchableOpacity onPress={handleClickProfile}>
-            <Image source={{
-              uri: userData.picture ? userData.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-            }}
+            <Image
+              source={{
+                uri: userData.picture
+                  ? userData.picture
+                  : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
+              }}
               style={{
                 width: "100%",
                 height: "100%",
@@ -167,7 +174,7 @@ const Header = ({ borderBottomColor }) => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

@@ -34,7 +34,6 @@ const Stories = () => {
     <View
       style={{
         marginBottom: 10,
-        backgroundColor: "#000",
         height: 160,
         width: "100%",
         resizeMode: "cover",
