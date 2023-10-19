@@ -12,15 +12,18 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import ProfileFriendsUtils from "../../components/ProfileFriendsUtils/ProfileFriendsUtils";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useSelector } from "react-redux";
-import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import ProfileFriendsTools from "../../components/ProfileFriendsUtils/ProfileFriendsTools";
+import PostsUser from "../../components/ProfileUtils.js/PostsUser";
+import { UidContext } from "../../components/Context/AppContext";
 
 const ProfileFriends = () => {
   const route = useRoute();
   const { id } = route.params;
+
   const navigation = useNavigation();
   const usersData = useSelector((state) => state.usersReducer);
+  const userData = useSelector((state) => state.userReducer);
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("HomeScreen");
@@ -28,6 +31,11 @@ const ProfileFriends = () => {
   const handleClickSettings = () => {
     console.log("clicked");
     navigation.navigate("Settings");
+  };
+
+  const handleSendMEssage = (id) => {
+    console.log("clicked");
+    navigation.navigate("Chatlist", { id });
   };
 
   const users = usersData.find((user) => user._id === id);
@@ -174,69 +182,126 @@ const ProfileFriends = () => {
               >
                 <Text style={{ fontSize: 18, color: "gray" }}>{users.bio}</Text>
               </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginHorizontal: 20,
+                }}
+              >
+                <View
+                  style={{
+                    marginRight: 4,
+                  }}
+                >
+                  <FollowHandler idToFollow={id} type={"profile"} />
+                </View>
+                <View
+                  style={{
+                    marginLeft: 4,
+                  }}
+                >
+                  <TouchableOpacity onPress={() => handleSendMEssage(id)}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "red",
+                        borderRadius: 10,
+                        height: 38,
+                        width: 170,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          textAlign: "center",
+                          fontWeight: "500",
+                          justifyContent: "center",
+                          fontSize: 20,
+                        }}
+                      >
+                       Writing
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
+                position: "relative",
+                marginTop: 12,
                 flex: 1,
                 width: "100%",
               }}
             >
-              <View
+              <Text
                 style={{
-                  width: "50%",
-                  flexDirection: "row",
-                  alignItems: "center",
+                  fontSize: 15,
+
+                  fontWeight: "normal",
+                  color: "white",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "normal",
-                    color: "white",
-                  }}
-                >
-                  Follow by
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flex: 1,
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: "https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png",
-                    }}
-                    style={{
-                      width: 35,
-                      height: 35,
-                      borderRadius: 100,
-                      objectFit: "cover",
-                      borderWidth: 5,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      marginLeft: 10,
-                      fontWeight: "normal",
-                      color: "gray",
-                    }}
-                  >
-                    @Ferran_Torres
-                  </Text>
-                </View>
-              </View>
+                Follow by
+              </Text>
+              <Image
+                source={{
+                  uri: "https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png",
+                }}
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: 100,
+                  objectFit: "cover",
+                  marginLeft: 8,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 8,
+                  fontWeight: "normal",
+                  color: "gray",
+                }}
+              >
+                @Ferran_Torres
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 8,
+                  fontWeight: "normal",
+                  color: "white",
+                }}
+              >
+                andn 54 other persons
+              </Text>
             </View>
           </View>
         </View>
         <ProfileFriendsTools users={users} />
-        <ProfileFriendsUtils />
+        <NavButtonProfile />
+        <View
+          style={{
+            flex: 1,
+            alignContent: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 10,
+            backgroundColor: "#3D3939",
+          }}
+        >
+          <PostsUser />
+        </View>
       </>
     </ScrollView>
   );
