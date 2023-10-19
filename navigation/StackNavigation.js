@@ -30,12 +30,10 @@ const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const { uid } = useContext(UidContext);
   console.log(uid);
-  const navigation = useNavigation(); // Assure-toi d'importer useNavigation
+  const navigation = useNavigation();
 
   useEffect(() => {
-    // Vérifie si l'UID est null, et redirige vers l'écran SignIn si c'est le cas
     if (uid === null) {
-      // Utilise la navigation pour rediriger vers l'écran SignIn
       navigation.navigate("Signin");
     } else {
       navigation.navigate("HomeScreen");

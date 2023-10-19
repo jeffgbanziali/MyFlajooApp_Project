@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { darkRose } from "../../components/Button/Constants";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
 
 const SignInScreen = () => {

@@ -48,7 +48,7 @@ const VideoRéels = () => {
   const reelsData = useSelector((state) => state.videoReelsReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
-  const { uid } = useContext(UidContext);
+ const { uid } = useContext(UidContext);
 
   useEffect(() => {
     if (loadPosts) {
@@ -215,7 +215,7 @@ const VideoRéels = () => {
 
   const bottomTabHeight = useBottomTabBarHeight();
 
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({ item }) => (
     <>
       <View
         style={{
@@ -603,7 +603,7 @@ const VideoRéels = () => {
             </Text>
           </View>
           <ScrollView>
-            <RéelsComment réels={item} />
+            <RéelsComment item={item} />
           </ScrollView>
           <View
             style={{
@@ -613,7 +613,7 @@ const VideoRéels = () => {
               borderColor: "gray",
             }}
           >
-            <AddRéelsComment réels={item} />
+            <AddRéelsComment item={item} />
           </View>
         </View>
       </Modal>

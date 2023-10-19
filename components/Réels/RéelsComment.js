@@ -10,12 +10,12 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 
-const RéelsComment = ({ réels }) => {
+const RéelsComment = ({ item }) => {
   const usersData = useSelector((state) => state.usersReducer);
 
   return (
     <ScrollView>
-      {réels.comments.map((comment) => {
+      {item.comments.map((comment) => {
         if (!isEmpty(usersData[0])) {
           usersData
             .map((user) => {
@@ -94,7 +94,7 @@ const RéelsComment = ({ réels }) => {
                       color: "gray",
                     }}
                   >
-                    {formatPostDate(réels.createdAt)}
+                    {formatPostDate(comment.createdAt)}
                   </Text>
                 </View>
               </View>
