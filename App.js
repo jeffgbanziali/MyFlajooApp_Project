@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
 import { UidContext } from "./components/Context/AppContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.action";
 import rootReducer from "./reducers";

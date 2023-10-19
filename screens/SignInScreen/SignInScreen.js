@@ -11,8 +11,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { darkRose } from "../../components/Button/Constants";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UidContext } from "../../components/Context/AppContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from "react-native";
 
 const SignInScreen = () => {

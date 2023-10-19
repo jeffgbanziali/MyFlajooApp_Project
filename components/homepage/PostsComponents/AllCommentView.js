@@ -17,7 +17,7 @@ const AllCommentView = ({ post }) => {
 
   const dispatch = useDispatch();
   return (
-    <View>
+    <ScrollView>
       {post.comments.map((comment) => {
         if (!isEmpty(usersData[0])) {
           usersData
@@ -29,131 +29,129 @@ const AllCommentView = ({ post }) => {
         }
 
         return (
-          <ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
+              marginLeft: 10,
+              marginTop: 10,
+            }}
+            key={comment._id}
+          >
             <View
               style={{
-                flexDirection: "row",
-                marginLeft: 10,
-                marginTop: 10,
+                width: 45,
+                height: 45,
+                marginRight: 10,
               }}
-              key={comment._id}
+            >
+              <Image
+                source={{
+                  uri:
+                    !isEmpty(usersData[0]) &&
+                    usersData
+                      .map((user) => {
+                        if (user._id === comment.commenterId)
+                          return user.picture;
+                        else return null;
+                      })
+                      .join(""),
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 100,
+                }}
+                alt="commenter-pic"
+              />
+            </View>
+            <View
+              style={{
+                flex: 1,
+              }}
             >
               <View
                 style={{
-                  width: 45,
-                  height: 45,
-                  marginRight: 10,
-                }}
-              >
-                <Image
-                  source={{
-                    uri:
-                      !isEmpty(usersData[0]) &&
-                      usersData
-                        .map((user) => {
-                          if (user._id === comment.commenterId)
-                            return user.picture;
-                          else return null;
-                        })
-                        .join(""),
-                  }}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 100,
-                  }}
-                  alt="commenter-pic"
-                />
-              </View>
-              <View
-                style={{
-                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        marginRight: 5,
-                        color: "white",
-                      }}
-                    >
-                      {comment.commenterPseudo}
-                    </Text>
-                    <Text
-                      style={{
-                        fontWeight: "normal",
-                        marginRight: 5,
-                        color: "gray",
-                      }}
-                    >
-                      {formatPostDate(post.createdAt)}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
                   <Text
                     style={{
+                      fontWeight: "bold",
+                      marginRight: 5,
                       color: "white",
-                      marginTop: 5,
-                      fontSize: 16,
                     }}
                   >
-                    {comment.text}
+                    {comment.commenterPseudo}
                   </Text>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        marginTop: 5,
-                        color: "gray",
-                      }}
-                    >
-                      Reply
-                    </Text>
-                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontWeight: "normal",
+                      marginRight: 5,
+                      color: "gray",
+                    }}
+                  >
+                    {formatPostDate(post.createdAt)}
+                  </Text>
                 </View>
               </View>
               <View
                 style={{
-                  flexDirection: "row",
-                  marginRight: 10,
+                  flexDirection: "column",
                 }}
               >
+                <Text
+                  style={{
+                    color: "white",
+                    marginTop: 5,
+                    fontSize: 16,
+                  }}
+                >
+                  {comment.text}
+                </Text>
                 <TouchableOpacity>
-                  <Feather
-                    name="heart"
-                    size={20}
-                    color="white"
+                  <Text
                     style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      alignSelf: "center",
-                      resizeMode: "contain",
+                      fontWeight: "bold",
+                      marginTop: 5,
+                      color: "gray",
                     }}
-                  />
+                  >
+                    Reply
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                marginRight: 10,
+              }}
+            >
+              <TouchableOpacity>
+                <Feather
+                  name="heart"
+                  size={20}
+                  color="white"
+                  style={{
+                    textAlign: "center",
+                    alignItems: "center",
+                    alignSelf: "center",
+                    resizeMode: "contain",
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 
