@@ -12,6 +12,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import ProfileFriendsUtils from "../../components/ProfileFriendsUtils/ProfileFriendsUtils";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useSelector } from "react-redux";
+import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
+import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
+import ProfileFriendsTools from "../../components/ProfileFriendsUtils/ProfileFriendsTools";
 
 const ProfileFriends = () => {
   const route = useRoute();
@@ -32,7 +35,7 @@ const ProfileFriends = () => {
   return (
     <ScrollView style={styles.container}>
       <>
-        <View>
+        <View style={styles.container}>
           <View
             style={{
               flex: 1,
@@ -169,9 +172,7 @@ const ProfileFriends = () => {
                   width: "50%",
                 }}
               >
-                <Text style={{ fontSize: 18, color: "gray" }}>
-                  {users.bio}
-                </Text>
+                <Text style={{ fontSize: 18, color: "gray" }}>{users.bio}</Text>
               </View>
             </View>
             <View
@@ -232,73 +233,10 @@ const ProfileFriends = () => {
                 </View>
               </View>
             </View>
-            <View
-              style={{
-                flex: 1,
-                marginTop: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                height: 50,
-                width: "100%",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  height: 50,
-                  width: "65%",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flex: 1,
-                  }}
-                >
-                  <View>
-                    <FollowHandler
-                      idToFollow={"60f0b5b0b9c5b40015b5b0c7"}
-                      type={"card"}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      backgroundColor: "blue",
-                      borderRadius: 10,
-                      height: 50,
-                      padding: 2,
-                      width: 150,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontWeight: "600",
-                        justifyContent: "center",
-                        fontSize: 25,
-                        color: "white",
-                      }}
-                    >
-                      Chating
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
           </View>
         </View>
-        <View>
-          <ProfileFriendsUtils />
-        </View>
-        <View></View>
-        <View></View>
+        <ProfileFriendsTools users={users} />
+        <ProfileFriendsUtils />
       </>
     </ScrollView>
   );

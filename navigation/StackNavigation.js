@@ -14,7 +14,9 @@ import Notifications from "../screens/Notifications/Notifications";
 import ChatList from "../screens/Message/ChatList";
 import { UidContext } from "../components/Context/AppContext";
 import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
+import FriendsFollowers from "../components/ProfileFriendsUtils/FriendsFollowers";
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
+import FriendsFollowing from "../components/ProfileFriendsUtils/FriendsFollowing";
 import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
 import StoriesStream from "../components/homepage/Stories/StoriesStream";
 import Search from "../components/Search/Search";
@@ -61,7 +63,9 @@ const StackNavigation = () => {
       <Stack.Screen name="Photo" component={CameraScreen} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Myfollowing" component={MyFollowings} />
+      <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
       <Stack.Screen name="Myfollowers" component={MyFollowers} />
+      <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
       <Stack.Screen name="Searching" component={Search} />
       <Stack.Screen name="Start" component={StartPage} />
       <Stack.Screen name="Signup" component={SignUpScreen} />
