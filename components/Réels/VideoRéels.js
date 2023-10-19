@@ -23,7 +23,6 @@ import { TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getVideoReels } from "../../actions/réels.action";
 import { isEmpty } from "../Context/Utils";
-import AddCommentButton from "../homepage/PostsComponents/AddCommentButton";
 import { useNavigation } from "@react-navigation/native";
 import { UidContext } from "../Context/AppContext";
 import RéelsComment from "./RéelsComment";
@@ -49,7 +48,7 @@ const VideoRéels = () => {
   const reelsData = useSelector((state) => state.videoReelsReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
-  const uid = useContext(UidContext);
+  const { uid } = useContext(UidContext);
 
   useEffect(() => {
     if (loadPosts) {
@@ -491,7 +490,7 @@ const VideoRéels = () => {
             alignItems: "center",
           }}
         >
-          <LikeRéelsButton réels={item}/>
+          <LikeRéelsButton réels={item} />
           <Text
             style={{
               color: "white",

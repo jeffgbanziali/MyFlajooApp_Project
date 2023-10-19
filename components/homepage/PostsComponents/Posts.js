@@ -27,7 +27,7 @@ const Posts = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
-  const uid = useContext(UidContext);
+  const { uid } = useContext(UidContext);
 
   const goProfil = (id) => {
     if (uid === id) {

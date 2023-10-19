@@ -6,7 +6,7 @@ import { UidContext } from "../../Context/AppContext";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
 const LikeStoriesButton = ({ story }) => {
-  const uid = useContext(UidContext);
+  const { uid } = useContext(UidContext);
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
 

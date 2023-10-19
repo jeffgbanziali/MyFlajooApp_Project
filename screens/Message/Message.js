@@ -21,7 +21,7 @@ const Message = () => {
   const [conver, setConver] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
-  const uid = useContext(UidContext);
+  const { uid } = useContext(UidContext);
 
   useEffect(() => {
     const getConversation = async () => {

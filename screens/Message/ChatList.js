@@ -25,7 +25,7 @@ const Message = () => {
   const [arrivalChat, setArrivalChat] = useState(null);
   const [height, setHeight] = useState(40);
   const socket = useRef(io("ws://localhost:8900"));
-  const uid = useContext(UidContext);
+  const { uid } = useContext(UidContext);
   const scrollRef = useRef();
   const route = useRoute();
   const { conversationId } = route.params;

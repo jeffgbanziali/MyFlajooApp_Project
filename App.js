@@ -17,8 +17,10 @@ import { StatusBar } from "expo-status-bar";
 import { getPosts } from "./actions/post.actions";
 import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
+import { registerRootComponent } from "expo";
+import { NavigationContainer } from "@react-navigation/native";
 
-const AppW = () => {
+const App = () => {
   const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk, logger))
@@ -30,7 +32,7 @@ const AppW = () => {
   store.dispatch(getVideoReels());
   return (
     <Provider store={store}>
-      <App />
+      <AppW />
     </Provider>
   );
 };
@@ -48,7 +50,7 @@ axios.interceptors.request.use(
   }
 );
 
-const App = () => {
+const AppW = () => {
   const [uid, setUid] = useState(null);
   const dispatch = useDispatch();
 
@@ -63,11 +65,33 @@ const App = () => {
         const newUid = res.data;
         setUid(newUid);
         console.log(newUid);
-        AsyncStorage.setItem("uid", newUid);
+
+        // Enregistre l'uid dans AsyncStorage
+        AsyncStorage.setItem("uid", JSON.stringify(newUid));
       } catch (error) {
         console.log("Error fetching token:", error);
       }
     };
+
+    // Récupère l'uid depuis AsyncStorage lors du montage du composant
+    const retrieveUid = async () => {
+      try {
+        const storedUid = await AsyncStorage.getItem("uid");
+        const parsedUid = JSON.parse(storedUid);
+
+        if (parsedUid) {
+          setUid(parsedUid);
+        } else {
+          // Si l'uid n'est pas enregistré dans AsyncStorage, récupère-le du serveur
+          fetchToken();
+        }
+      } catch (error) {
+        console.log("Error retrieving uid from AsyncStorage:", error);
+      }
+    };
+
+    // Appelle retrieveUid pour récupérer et définir l'uid
+    retrieveUid();
 
     if (!uid) {
       fetchToken();
@@ -79,8 +103,11 @@ const App = () => {
   }, [uid, dispatch]);
 
   return (
-    <UidContext.Provider value={uid}>
-      <StackNavigation />
+    <UidContext.Provider value={{ uid, setUid }}>
+      <NavigationContainer>
+        <StackNavigation />
+      </NavigationContainer>
+
       <StatusBar
         style="light" // Pour le texte en blanc
         backgroundColor="#FF0000"
@@ -89,4 +116,5 @@ const App = () => {
   );
 };
 
-export default AppW;
+registerRootComponent(AppW);
+export default App;
