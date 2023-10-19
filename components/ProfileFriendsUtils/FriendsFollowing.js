@@ -75,7 +75,7 @@ const FriendsFollowing = () => {
               marginRight: "4.5%",
             }}
           >
-            My Followings
+           {users.following ? users.following.length : 0} Followings 
           </Text>
         </View>
         <ScrollView>

@@ -60,19 +60,19 @@ const ProfileFriends = () => {
                 alignItems: "center",
               }}
             >
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  backgroundColor: "#161414",
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  marginLeft: "3.5%",
-                  marginTop: "1.5%",
-                }}
-              >
-                <TouchableOpacity onPress={handleClickReturnHome}>
+              <TouchableOpacity onPress={handleClickReturnHome}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    backgroundColor: "#161414",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginLeft: "3.5%",
+                    marginTop: "1.5%",
+                  }}
+                >
                   <AntDesign
                     name="arrowleft"
                     size={28}
@@ -84,22 +84,21 @@ const ProfileFriends = () => {
                       resizeMode: "contain",
                     }}
                   />
-                </TouchableOpacity>
-              </View>
-
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  backgroundColor: "#161414",
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  marginRight: "3.5%",
-                  marginTop: "1.5%",
-                }}
-              >
-                <TouchableOpacity onPress={handleClickSettings}>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleClickSettings}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    backgroundColor: "#161414",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginRight: "3.5%",
+                    marginTop: "1.5%",
+                  }}
+                >
                   <Entypo
                     name="dots-three-horizontal"
                     size={28}
@@ -111,8 +110,8 @@ const ProfileFriends = () => {
                       resizeMode: "contain",
                     }}
                   />
-                </TouchableOpacity>
-              </View>
+                </View>
+              </TouchableOpacity>
             </View>
 
             <View
@@ -170,7 +169,6 @@ const ProfileFriends = () => {
               >
                 {users.pseudo}
               </Text>
-              <Text style={{ fontSize: 20, color: "#5F5858" }}>@Koukouda</Text>
               <View
                 style={{
                   flexDirection: "row",
@@ -178,9 +176,10 @@ const ProfileFriends = () => {
                   alignItems: "center",
                   flex: 1,
                   width: "50%",
+                  marginTop: 4,
                 }}
               >
-                <Text style={{ fontSize: 18, color: "gray" }}>{users.bio}</Text>
+                <Text style={{ fontSize: 15, color: "gray" }}>{users.bio}</Text>
               </View>
               <View
                 style={{
@@ -189,7 +188,7 @@ const ProfileFriends = () => {
                   width: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  marginTop: 20,
                 }}
               >
                 <View
@@ -210,7 +209,7 @@ const ProfileFriends = () => {
                         flexDirection: "row",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "red",
+                        backgroundColor: "blue",
                         borderRadius: 10,
                         height: 38,
                         width: 170,
@@ -225,7 +224,7 @@ const ProfileFriends = () => {
                           fontSize: 20,
                         }}
                       >
-                       Writing
+                        Writing
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -283,7 +282,7 @@ const ProfileFriends = () => {
                   color: "white",
                 }}
               >
-                andn 54 other persons
+                and 54 other persons
               </Text>
             </View>
           </View>

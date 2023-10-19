@@ -39,7 +39,7 @@ const FriendsFollowers = () => {
           }}
         >
           <TouchableOpacity
-           onPress={()=>handleClickReturnProfile(id)}
+            onPress={() => handleClickReturnProfile(id)}
             style={{
               justifyContent: "center",
               alignSelf: "center",
@@ -74,11 +74,10 @@ const FriendsFollowers = () => {
               marginRight: "4.5%",
             }}
           >
-            My Followers
+            {users.followers ? users.followers.length : 0} Followers
           </Text>
         </View>
         <ScrollView>
-          
           <View
             style={{
               flexDirection: "column",
