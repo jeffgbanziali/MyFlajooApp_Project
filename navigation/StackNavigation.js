@@ -28,6 +28,9 @@ import CreateMyStory from "../components/homepage/Stories/CreateMyStory";
 import ButtonColor from "../components/Settings/ButtonColor";
 import ProfileEdit from "../components/Settings/ProfileEdit";
 import BioUpdate from "../components/Settings/BioUpdate";
+import AccountInfo from "../components/Settings/AccountInfo";
+import UserInfos from "../components/Settings/UserInfos";
+import UpdateName from "../components/Settings/UpdateName";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,9 +65,12 @@ const StackNavigation = () => {
       <Stack.Screen name="buttonning" component={ButtonColor} />
       <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
       <Stack.Screen name="StoryCreate" component={CreateMyStory} />
+      <Stack.Screen name="Infos" component={UserInfos} />
       <Stack.Screen name="Live" component={LiveScreen} />
       <Stack.Screen name="Photo" component={CameraScreen} />
       <Stack.Screen name="BioUpdate" component={BioUpdate} />
+      <Stack.Screen name="UpdateName" component={UpdateName} />
+      <Stack.Screen name="AccountInfo" component={AccountInfo} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Myfollowing" component={MyFollowings} />
       <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />

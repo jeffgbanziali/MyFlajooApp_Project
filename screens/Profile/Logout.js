@@ -35,22 +35,33 @@ const Logout = () => {
         }}
         onPress={handleLogout}
       >
-        <AntDesign name="logout" size={24} color="white" />
-        <Text
+        <View
           style={{
-            color: "white",
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            marginLeft: 10,
-            fontSize: 18,
+            marginTop: 12,
+            width: "98%",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 6,
+            backgroundColor: "gray",
+            borderRadius: 10,
           }}
         >
-          Logout
-        </Text>
+          <AntDesign name="logout" size={24} color="white" />
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              marginLeft: 10,
+              fontSize: 18,
+            }}
+          >
+            Logout
+          </Text>
+        </View>
       </TouchableOpacity>
     </>
   );
 };
 
 export default Logout;
-

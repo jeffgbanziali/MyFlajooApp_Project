@@ -7,8 +7,10 @@ import {
   Pressable,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
+
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -34,7 +36,6 @@ const ProfileEdit = () => {
       style={{
         flex: 1,
         backgroundColor: "black",
-        height: "100%",
       }}
     >
       <View
@@ -74,7 +75,11 @@ const ProfileEdit = () => {
           ProfileEdit
         </Text>
       </View>
-      <ScrollView>
+      <ScrollView
+        vertical
+        howsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+      >
         <View
           style={{
             marginTop: 10,

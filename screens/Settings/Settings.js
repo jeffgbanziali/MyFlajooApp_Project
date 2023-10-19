@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Switch, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Switch, StyleSheet, TouchableOpacity } from "react-native";
 import Logout from "../Profile/Logout";
-import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
 
 const Settings = () => {
   const navigation = useNavigation();
@@ -17,6 +21,12 @@ const Settings = () => {
     console.log("clicked");
     navigation.navigate("buttonning");
   };
+
+  const handleAccount = () => {
+    console.log("clicked");
+    navigation.navigate("AccountInfo");
+  };
+
   const handleEditProfil = () => {
     console.log("clicked");
     navigation.navigate("EditProfil");
@@ -37,7 +47,6 @@ const Settings = () => {
             style={{
               justifyContent: "center",
               alignSelf: "center",
-              backgroundColor: "red",
               width: 40,
               height: 40,
               borderRadius: 30,
@@ -55,9 +64,44 @@ const Settings = () => {
           height: "100%",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "blue",
         }}
       >
+        <View
+          style={{
+            marginTop: 12,
+            width: "98%",
+            height: "5%",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 6,
+            backgroundColor: "gray",
+            borderRadius: 10,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            onPress={handleAccount}
+          >
+            <MaterialCommunityIcons
+              name="account-circle-outline"
+              size={30}
+              color="white"
+            />
+            <Text
+              style={{
+                marginLeft: 10,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              Account
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             marginTop: 12,
@@ -151,9 +195,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     flexDirection: "row",
-    backgroundColor: "red",
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
     justifyContent: "space-between",
   },
   text: {
