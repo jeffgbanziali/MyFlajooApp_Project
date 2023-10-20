@@ -301,7 +301,7 @@ const Posts = ({ post }) => {
                       width: "26%",
                     }}
                   >
-                    <LikeButton post={post} />
+                    <LikeButton post={post} type={"postPicture"} />
                     <Text
                       style={{
                         color: "white",
@@ -332,7 +332,7 @@ const Posts = ({ post }) => {
                       >
                         <FontAwesome5
                           name="comment"
-                          size={32}
+                          size={30}
                           color="white"
                           style={{
                             textAlign: "center",
@@ -365,7 +365,7 @@ const Posts = ({ post }) => {
                   >
                     <Feather
                       name="send"
-                      size={32}
+                      size={30}
                       color="white"
                       style={{
                         textAlign: "center",
@@ -389,7 +389,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="bookmark"
-                    size={32}
+                    size={30}
                     color="white"
                     style={{
                       textAlign: "center",
@@ -624,7 +624,7 @@ const Posts = ({ post }) => {
                       width: "26%",
                     }}
                   >
-                    <LikeButton post={post} />
+                    <LikeButton post={post} type={"postMessage"} />
                     <Text
                       style={{
                         color: isDarkMode ? "#F5F5F5" : "black",
@@ -655,7 +655,7 @@ const Posts = ({ post }) => {
                       >
                         <FontAwesome5
                           name="comment"
-                          size={32}
+                          size={25}
                           color={isDarkMode ? "#F5F5F5" : "black"}
                           style={{
                             textAlign: "center",
@@ -688,7 +688,7 @@ const Posts = ({ post }) => {
                   >
                     <Feather
                       name="send"
-                      size={32}
+                      size={25}
                       color={isDarkMode ? "#F5F5F5" : "black"}
                       style={{
                         textAlign: "center",
@@ -712,7 +712,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="bookmark"
-                    size={32}
+                    size={25}
                     color={isDarkMode ? "#F5F5F5" : "black"}
                     style={{
                       textAlign: "center",

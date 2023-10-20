@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import {
   dateParser,
   formatPostDate,
@@ -11,23 +11,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { useDarkMode } from "../Context/AppContext";
 
-const RéelsComment = ({ item }) => {
+const RéelsComment = ({ réels }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const { isDarkMode } = useDarkMode();
 
-
   return (
     <ScrollView>
-      {item.comments.map((comment) => {
-        if (!isEmpty(usersData[0])) {
-          usersData
-            .map((user) => {
-              if (user._id === comment.commenterId) return user.picture;
-              else return null;
-            })
-            .join("");
-        }
-
+      {réels.comments.map((comment) => {
         return (
           <View
             style={{

@@ -20,14 +20,8 @@ const AllCommentView = ({ post }) => {
   return (
     <ScrollView>
       {post.comments.map((comment) => {
-        if (!isEmpty(usersData[0])) {
-          usersData
-            .map((user) => {
-              if (user._id === comment.commenterId) return user.picture;
-              else return null;
-            })
-            .join("");
-        }
+
+      
 
         return (
           <View

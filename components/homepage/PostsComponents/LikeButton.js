@@ -5,7 +5,7 @@ import { likePost, unlikePost } from "../../../actions/post.actions";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
-const LikeButton = ({ post }) => {
+const LikeButton = ({ post, type }) => {
   const { uid } = useContext(UidContext);
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
@@ -43,17 +43,32 @@ const LikeButton = ({ post }) => {
             }}
             onPress={like}
           >
-            <Feather
-              name="heart"
-              size={32}
-              color={isDarkMode ? "#F5F5F5" : "black"}
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                resizeMode: "contain",
-              }}
-            />
+            {type === "postPicture" && (
+              <Feather
+                name="heart"
+                size={30}
+                color={isDarkMode ? "#F5F5F5" : "white"}
+                style={{
+                  textAlign: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  resizeMode: "contain",
+                }}
+              />
+            )}
+            {type === "postMessage" && (
+              <Feather
+                name="heart"
+                size={25}
+                color={isDarkMode ? "#F5F5F5" : "black"}
+                style={{
+                  textAlign: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  resizeMode: "contain",
+                }}
+              />
+            )}
           </TouchableOpacity>
         </>
       )}
@@ -68,17 +83,32 @@ const LikeButton = ({ post }) => {
           }}
           onPress={unlike}
         >
-          <AntDesign
-            name="heart"
-            size={32}
-            color="red"
-            style={{
-              textAlign: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              resizeMode: "contain",
-            }}
-          />
+          {type === "postPicture" && (
+            <AntDesign
+              name="heart"
+              size={30}
+              color="red"
+              style={{
+                textAlign: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                resizeMode: "contain",
+              }}
+            />
+          )}
+          {type === "postMessage" && (
+            <AntDesign
+              name="heart"
+              size={25}
+              color="red"
+              style={{
+                textAlign: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                resizeMode: "contain",
+              }}
+            />
+          )}
         </TouchableOpacity>
       )}
     </View>

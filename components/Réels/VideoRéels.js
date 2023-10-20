@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -28,10 +28,11 @@ import { UidContext, useDarkMode } from "../Context/AppContext";
 import RéelsComment from "./RéelsComment";
 import AddRéelsComment from "./AddRéelsComment";
 import LikeRéelsButton from "./LikeRéelsButton";
+import RéelsAnimation from "./RéelsAnimation";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-const VideoRéels = () => {
+const VideoRéels = ({ item, isActive }) => {
   const video = useRef(null);
   const [activeVideo, setActiveVideo] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -39,17 +40,13 @@ const VideoRéels = () => {
   const [status, setStatus] = useState({});
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
-  const discAnimationValue = useRef(new Animated.Value(0)).current;
-  const musicValue1 = useRef(new Animated.Value(0)).current;
-  const musicValue2 = useRef(new Animated.Value(0)).current;
   const [loadPosts, setLoadPosts] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const { isDarkMode } = useDarkMode();
-  const reelsData = useSelector((state) => state.videoReelsReducer);
-  const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
+  const usersData = useSelector((state) => state.usersReducer);
 
   useEffect(() => {
     if (loadPosts) {
@@ -96,127 +93,81 @@ const VideoRéels = () => {
     setIsVideoPlaying(true);
   };
 
-  const toggleVideoPlayback = () => {
-    if (activeVideo) {
-      video.current.pauseAsync();
-    } else {
-      video.current.playAsync();
-    }
-    setIsVideoPlaying(!isVideoPlaying);
-  };
 
-  const onViewableItemsChanged = useRef(({ viewableItems }) => {
-    if (viewableItems.length > 0) {
-      const newActiveIndex = viewableItems[0].index;
-      if (newActiveIndex !== activeVideo) {
-        setActiveVideo(newActiveIndex);
-        setLastViewedVideo(newActiveIndex);
-        video.current.setPositionAsync(0);
-      }
-    }
-  }).current;
+
+
+  const discAnimatedValue = useRef(new Animated.Value(0)).current;
+  const musicNoteAnimatedValue1 = useRef(new Animated.Value(0)).current;
+  const musicNoteAnimatedValue2 = useRef(new Animated.Value(0)).current;
 
   const discAnimation = {
     transform: [
       {
-        rotate: discAnimationValue.interpolate({
+        rotate: discAnimatedValue.interpolate({
           inputRange: [0, 1],
-          outputRange: ["0deg", "360deg"],
+          outputRange: ['0deg', '360deg'],
         }),
       },
     ],
   };
-  const musicAnimation1 = {
-    transform: [
-      {
-        translateX: musicValue1.interpolate({
-          inputRange: [0, 1],
-          outputRange: [8, -16],
-        }),
-      },
-      {
-        translateY: musicValue1.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, -32],
-        }),
-      },
-      {
-        rotate: musicValue1.interpolate({
-          inputRange: [0, 1],
-          outputRange: ["0deg", "45deg"],
-        }),
-      },
-    ],
-    opacity: musicValue1.interpolate({
-      inputRange: [0, 0.8, 1],
-      outputRange: [0, 1, 0],
-    }),
-  };
-  const musicAnimation2 = {
-    transform: [
-      {
-        translateX: musicValue2.interpolate({
-          inputRange: [0, 1],
-          outputRange: [8, -16],
-        }),
-      },
-      {
-        translateY: musicValue2.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, -40],
-        }),
-      },
-      {
-        rotate: musicValue2.interpolate({
-          inputRange: [0, 1],
-          outputRange: ["0deg", "-45deg"],
-        }),
-      },
-    ],
-    opacity: musicValue2.interpolate({
-      inputRange: [0, 0.8, 1],
-      outputRange: [0, 1, 0],
-    }),
-  };
+  const musicNoteAnimation1 = RéelsAnimation(musicNoteAnimatedValue1, false);
+  const musicNoteAnimation2 = RéelsAnimation(musicNoteAnimatedValue2, true);
 
-  useEffect(() => {
-    if (video.current && lastViewedVideo !== activeVideo) {
-      video.current.setPositionAsync(0);
-      setLastViewedVideo(activeVideo);
-    }
-  }, [activeVideo, lastViewedVideo]);
+  const discAnimLoopRef = useRef();
+  const musicAnimLoopRef = useRef();
 
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(discAnimationValue, {
+  const triggerAnimation = useCallback(() => {
+    discAnimLoopRef.current = Animated.loop(
+      Animated.timing(discAnimatedValue, {
         toValue: 1,
         duration: 3000,
         easing: Easing.linear,
         useNativeDriver: false,
-      })
-    ).start();
-
-    Animated.loop(
+      }),
+    );
+    discAnimLoopRef.current.start();
+    musicAnimLoopRef.current = Animated.loop(
       Animated.sequence([
-        Animated.timing(musicValue1, {
+        Animated.timing(musicNoteAnimatedValue1, {
           toValue: 1,
           duration: 2000,
           easing: Easing.linear,
           useNativeDriver: false,
         }),
-        Animated.timing(musicValue2, {
+        Animated.timing(musicNoteAnimatedValue2, {
           toValue: 1,
           duration: 2000,
           easing: Easing.linear,
           useNativeDriver: false,
         }),
-      ])
-    ).start();
-  }, [discAnimationValue, musicValue1, musicValue2]);
+      ]),
+    );
+    musicAnimLoopRef.current.start();
+  }, [discAnimatedValue, musicNoteAnimatedValue1, musicNoteAnimatedValue2]);
+
+  useEffect(() => {
+    if (isActive) {
+      triggerAnimation();
+    } else {
+      discAnimLoopRef.current?.stop();
+      musicAnimLoopRef.current?.stop();
+      discAnimatedValue.setValue(0);
+      musicNoteAnimatedValue1.setValue(0);
+      musicNoteAnimatedValue2.setValue(0);
+    }
+  }, [
+    isActive,
+    triggerAnimation,
+    discAnimatedValue,
+    musicNoteAnimatedValue1,
+    musicNoteAnimatedValue2,
+  ]);
+
+
 
   const bottomTabHeight = useBottomTabBarHeight();
 
-  const renderItem = ({ item }) => (
+  return (
     <>
       <View
         style={{
@@ -235,12 +186,14 @@ const VideoRéels = () => {
           resizeMode="cover"
           isLooping
           shouldPlay={isVideoPlaying}
+          ResizeMode="cover"
+          repeat
+          paused={!isActive}
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           onLoad={handleVideoLoad}
           onError={(error) => console.error("Erreur de lecture vidéo :", error)}
         />
         <TouchableOpacity
-          onPress={toggleVideoPlayback}
           style={{
             position: "absolute",
             width: "100%",
@@ -428,50 +381,42 @@ const VideoRéels = () => {
                 source={{
                   uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
                 }}
-                style={[
-                  {
-                    position: "absolute",
-                    right: 40,
-                    bottom: 16,
-                    width: 16,
-                    height: 16,
-                    tintColor: "white",
-                  },
-                  musicAnimation1,
-                ]}
+                style={[{
+                  position: "absolute",
+                  right: 40,
+                  bottom: 16,
+                  width: 16,
+                  height: 16,
+                  tintColor: "white",
+                }, musicNoteAnimation1]}
               />
               <Animated.Image
+
                 source={{
                   uri: "https://cdn-icons-png.flaticon.com/128/651/651799.png",
                 }}
-                style={[
-                  {
-                    position: "absolute",
-                    right: 40,
-                    bottom: 16,
-                    width: 16,
-                    height: 16,
-                    tintColor: "white",
-                  },
-                  musicAnimation2,
-                ]}
+                style={[{
+                  position: "absolute",
+                  right: 40,
+                  bottom: 16,
+                  width: 16,
+                  height: 16,
+                  tintColor: "white",
+                }, musicNoteAnimation2]}
               />
               <Animated.Image
                 source={{
                   uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Disque_Vinyl.svg/1200px-Disque_Vinyl.svg.png",
                 }}
-                style={[
-                  {
-                    display: "flex",
-                    width: 40,
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "pink",
-                    borderRadius: "100%",
-                  },
-                  discAnimation,
-                ]}
+                style={[{
+                  display: "flex",
+                  width: 40,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "pink",
+                  borderRadius: "100%",
+                }, discAnimation]}
               />
             </View>
           </View>
@@ -509,7 +454,7 @@ const VideoRéels = () => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={toggleComments}>
+          <TouchableOpacity onPress={() => toggleComments(item)}>
             <View
               style={{
                 display: "flex",
@@ -604,7 +549,7 @@ const VideoRéels = () => {
             </Text>
           </View>
           <ScrollView>
-            <RéelsComment item={item} />
+            <RéelsComment réels={item} />
           </ScrollView>
           <View
             style={{
@@ -614,30 +559,11 @@ const VideoRéels = () => {
               borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
             }}
           >
-            <AddRéelsComment item={item} />
+            <AddRéelsComment réels={item} />
           </View>
         </View>
       </Modal>
     </>
-  );
-
-  return (
-    <FlatList
-      data={reelsData}
-      renderItem={renderItem}
-      onScroll={(e) => {
-        const i = Math.round(
-          e.nativeEvent.contentOffset.y / (windowHeight - bottomTabHeight)
-        );
-        setActiveVideo(i);
-      }}
-      onViewableItemsChanged={onViewableItemsChanged}
-      viewabilityConfig={{
-        viewAreaCoveragePercentThreshold: 50,
-      }}
-      pagingEnabled
-      vertical
-    />
   );
 };
 
