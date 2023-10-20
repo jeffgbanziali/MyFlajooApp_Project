@@ -34,9 +34,15 @@ const Header = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottomWidth: 1,
-        borderBottomColor: "gray",
         backgroundColor: isDarkMode ? "#171717" : "white",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}
     >
       <TouchableOpacity
@@ -45,15 +51,25 @@ const Header = () => {
           height: 50,
         }}
       >
-        <Image
-          style={{
-            width: 110,
-            height: 110,
-            color: isDarkMode ? "white" : "black",
-            resizeMode: "contain",
-          }}
-          source={require("../../assets/Logos/my_flajoo.png")}
-        />
+        {isDarkMode ? (
+          <Image
+            style={{
+              width: 110,
+              height: 110,
+              resizeMode: "contain",
+            }}
+            source={require("../../assets/Logos/my_flajoo.png")}
+          />
+        ) : (
+          <Image
+            style={{
+              width: 100,
+              height: 40,
+              resizeMode: "contain",
+            }}
+            source={require("../../assets/Logos/my_flajoo2.jpeg")}
+          />
+        )}
       </TouchableOpacity>
 
       <View

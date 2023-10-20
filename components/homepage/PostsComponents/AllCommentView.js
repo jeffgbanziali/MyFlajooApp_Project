@@ -9,9 +9,10 @@ import {
 } from "../../Context/Utils";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import { useDarkMode } from "../../Context/AppContext";
 
 const AllCommentView = ({ post }) => {
-  const [text, setText] = useState("");
+  const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
 
@@ -85,7 +86,7 @@ const AllCommentView = ({ post }) => {
                     style={{
                       fontWeight: "bold",
                       marginRight: 5,
-                      color: "white",
+                      color: isDarkMode ? "#F5F5F5" : "black",
                     }}
                   >
                     {comment.commenterPseudo}
@@ -94,7 +95,8 @@ const AllCommentView = ({ post }) => {
                     style={{
                       fontWeight: "normal",
                       marginRight: 5,
-                      color: "gray",
+                      color: isDarkMode ? "#F5F5F5" : "black",
+
                     }}
                   >
                     {formatPostDate(post.createdAt)}
@@ -108,7 +110,7 @@ const AllCommentView = ({ post }) => {
               >
                 <Text
                   style={{
-                    color: "white",
+                    color: isDarkMode ? "#F5F5F5" : "black",
                     marginTop: 5,
                     fontSize: 16,
                   }}
@@ -138,7 +140,7 @@ const AllCommentView = ({ post }) => {
                 <Feather
                   name="heart"
                   size={20}
-                  color="white"
+                  color= {isDarkMode ? "#F5F5F5" : "black"}
                   style={{
                     textAlign: "center",
                     alignItems: "center",

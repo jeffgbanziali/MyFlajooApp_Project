@@ -27,7 +27,7 @@ const Stories = () => {
   const navigation = useNavigation(false);
   const handleViewStory = (id) => {
     console.log("clicked story", { id });
-    navigation.navigate("StoryStream" ,{ id });
+    navigation.navigate("StoryStream", { id });
   };
 
   return (
@@ -61,15 +61,24 @@ const Stories = () => {
                       handleViewStory(story._id);
                     }}
                   >
-                    <View>
+                    <View
+                      style={{
+                        shadowColor: "#000",
+                        shadowOffset: {
+                          width: 0,
+                          height: 2,
+                        },
+                        shadowOpacity: 0.4,
+                        shadowRadius: 3.84,
+                        elevation: 5,
+                      }}
+                    >
                       <Image
                         source={{ uri: story.media }}
                         style={{
                           width: 100,
                           height: 140,
                           borderRadius: 10,
-                          borderWidth: 3,
-                          borderColor: "#494747",
                           marginLeft: 10,
                           resizeMode: "cover",
                         }}

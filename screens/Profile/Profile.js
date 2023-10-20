@@ -18,6 +18,7 @@ import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import PostsUser from "../../components/ProfileUtils.js/PostsUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
+import { KeyboardAvoidingView } from "react-native";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
@@ -32,8 +33,14 @@ const Profile = () => {
     navigation.navigate("Settings");
   };
   return (
-    <ScrollView style={styles.container}>
-      <View >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{
+        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+        flex: 1,
+      }}
+    >
+      <ScrollView>
         <View
           style={{
             flex: 1,
@@ -41,6 +48,14 @@ const Profile = () => {
             borderRadius: 30,
             paddingBottom: 90,
             marginTop: 50,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.4,
+            shadowRadius: 3.84,
+            elevation: 5,
           }}
         >
           <View
@@ -55,7 +70,7 @@ const Profile = () => {
               style={{
                 justifyContent: "center",
                 alignSelf: "center",
-                backgroundColor: "#161414",
+                backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                 width: 50,
                 height: 50,
                 borderRadius: 30,
@@ -67,7 +82,7 @@ const Profile = () => {
                 <MaterialIcons
                   name="arrow-back-ios"
                   size={28}
-                  color="#5F5858"
+                  color={isDarkMode ? "#5F5858" : "black"}
                   style={{
                     alignSelf: "center",
                     alignContent: "center",
@@ -78,24 +93,23 @@ const Profile = () => {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                alignSelf: "center",
-                backgroundColor: "#161414",
-                width: 50,
-                height: 50,
-                borderRadius: 30,
-                marginRight: "3.5%",
-                marginTop: "1.5%",
-              }}
-              onPress={handleClickSettings}
-            >
-              <View>
+            <TouchableOpacity onPress={handleClickSettings}>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                  width: 50,
+                  height: 50,
+                  borderRadius: 30,
+                  marginRight: "3.5%",
+                  marginTop: "1.5%",
+                }}
+              >
                 <Entypo
                   name="dots-three-horizontal"
                   size={28}
-                  color="#5F5858"
+                  color={isDarkMode ? "#5F5858" : "black"}
                   style={{
                     alignSelf: "center",
                     alignContent: "center",
@@ -156,7 +170,7 @@ const Profile = () => {
                 fontSize: 20,
                 fontWeight: "bold",
                 marginTop: 10,
-                color: "white",
+                color: isDarkMode ? "white" : "black",
               }}
             >
               {userData.pseudo}
@@ -173,27 +187,24 @@ const Profile = () => {
             </Text>
           </View>
         </View>
-      </View>
-      <ProfileUtils />
-      <NavButtonProfile />
-
-      <View
-        style={{
-          flex: 1,
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 10,
-          backgroundColor: "#3D3939",
-        }}
-      >
-        <PostsUser />
-      </View>
-    </ScrollView>
+        <ProfileUtils />
+        <NavButtonProfile />
+        <View
+          style={{
+            flex: 1,
+            alignContent: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 10,
+          }}
+        >
+          <PostsUser />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});
 
 export default Profile;

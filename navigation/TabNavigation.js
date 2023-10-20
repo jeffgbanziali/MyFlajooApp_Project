@@ -20,7 +20,6 @@ import { useDarkMode } from "../components/Context/AppContext";
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
 
   return (
@@ -42,10 +41,11 @@ const TabNavigation = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="home-filled"
-              size={24}
+              size={30}
               color={isDarkMode ? "white" : "black"}
               style={[focused && styles.bottomTabIconFocused]}
             />
@@ -56,10 +56,11 @@ const TabNavigation = () => {
         name="Searching"
         component={Search}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <Feather
               name="search"
-              size={24}
+              size={30}
               color={isDarkMode ? "white" : "black"}
               style={[focused && styles.bottomTabIconFocused]}
             />
@@ -88,10 +89,11 @@ const TabNavigation = () => {
         name="Réels"
         component={Réels}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="youtube-tv"
-              size={24}
+              size={30}
               color={isDarkMode ? "white" : "black"}
               style={[focused && styles.bottomTabIconFocused]}
             />
@@ -102,10 +104,11 @@ const TabNavigation = () => {
         name="Profile"
         component={Profile}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="user"
-              size={24}
+              size={30}
               color={isDarkMode ? "white" : "black"}
               style={[focused && styles.bottomTabIconFocused]}
             />
@@ -118,7 +121,7 @@ const TabNavigation = () => {
 
 const styles = StyleSheet.create({
   bottomTabIconFocused: {
-    color: "red", // Utilisez la propriété color à la place de tintColor
+    color: "red",
   },
   newVideoButton: {
     width: 60,

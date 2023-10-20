@@ -14,7 +14,7 @@ const Settings = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("Profile");
   };
 
   const handleClickAppli = () => {

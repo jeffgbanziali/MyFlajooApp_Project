@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { likePost, unlikePost } from "../../../actions/post.actions";
-import { UidContext } from "../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
 const LikeButton = ({ post }) => {
   const { uid } = useContext(UidContext);
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
+  const { isDarkMode } = useDarkMode();
 
   const like = () => {
     dispatch(likePost(post._id, uid));
@@ -38,14 +39,14 @@ const LikeButton = ({ post }) => {
               height: 50,
               borderRadius: 30,
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
             }}
             onPress={like}
           >
             <Feather
               name="heart"
-              size={25}
-              color="white"
+              size={32}
+              color={isDarkMode ? "#F5F5F5" : "black"}
               style={{
                 textAlign: "center",
                 alignItems: "center",
@@ -69,7 +70,7 @@ const LikeButton = ({ post }) => {
         >
           <AntDesign
             name="heart"
-            size={25}
+            size={32}
             color="red"
             style={{
               textAlign: "center",

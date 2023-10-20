@@ -2,10 +2,13 @@ import { Link, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/base";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDarkMode } from "../Context/AppContext";
+
 
 const Followers = ({ users }) => {
   const navigation = useNavigation();
+  const { isDarkMode } = useDarkMode();
+
 
   const id = users._id;
 
@@ -38,7 +41,8 @@ const Followers = ({ users }) => {
             style={{
               fontSize: 20,
               fontWeight: "bold",
-              color: "#F6F6F6",
+              color: isDarkMode ? "#F5F5F5" : "black",
+
               textAlign: "center",
             }}
           >
@@ -64,7 +68,7 @@ const Followers = ({ users }) => {
               style={{
                 fontSize: 20,
                 fontWeight: "bold",
-                color: "#F6F6F6",
+                color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}
             >
@@ -90,7 +94,7 @@ const Followers = ({ users }) => {
               style={{
                 fontSize: 20,
                 fontWeight: "bold",
-                color: "#F6F6F6",
+                color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}
             >

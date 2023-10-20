@@ -7,8 +7,9 @@ import {
   Easing,
   ScrollView,
 } from "react-native";
+import { Video, ResizeMode } from "expo-av";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import { useSelector } from "react-redux";
 import { dateParser, isEmpty, formatPostDate } from "../../Context/Utils";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
@@ -19,12 +20,15 @@ import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./AddCommentButton";
 import AllCommentView from "./AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const video = useRef(null);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const [showComments, setShowComments] = useState(false);
+  const [status, setStatus] = useState({});
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
@@ -66,18 +70,28 @@ const Posts = ({ post }) => {
 
   return (
     <>
-      <View
-        style={{
-          marginTop: 8,
-          marginBottom: 5,
-          backgroundColor: isDarkMode ? "#171717" : "white",
-          position: "relative",
-          borderRadius: 20,
-          paddingBottom: 20,
-          zIndex: 1,
-        }}
-      >
-        <View key={post._id}>
+      {post.picture && post.message &&  (
+        <View
+          key={post._id}
+          style={{
+            marginTop: 8,
+            marginBottom: 5,
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            position: "relative",
+            width: "96%",
+            height: 500,
+            borderRadius: 20,
+            zIndex: 1,
+            shadowColor: isDarkMode ? "white " : "#000",
+            shadowOffset: {
+              width: 0,
+              height: isDarkMode ? 1 : 2,
+            },
+            shadowOpacity: isDarkMode ? 0.16 : 0.6,
+            shadowRadius: 3.84,
+            elevation: 2,
+          }}
+        >
           {isLoading ? (
             <Text
               style={{
@@ -96,6 +110,8 @@ const Posts = ({ post }) => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  position: "relative ",
+                  zIndex: 1,
                   marginBottom: 10,
                 }}
               >
@@ -105,7 +121,6 @@ const Posts = ({ post }) => {
                     alignItems: "center",
                     alignContent: "center",
                     alignSelf: "center",
-                    marginBottom: 20,
                   }}
                 >
                   <TouchableOpacity onPress={() => goProfil(post.posterId)}>
@@ -126,8 +141,6 @@ const Posts = ({ post }) => {
                         height: 50,
                         borderRadius: 30,
                         marginTop: 10,
-                        borderWidth: 2,
-                        borderColor: "red",
                         marginLeft: 30,
                         resizeMode: "cover",
                         zIndex: 1,
@@ -147,7 +160,7 @@ const Posts = ({ post }) => {
                     >
                       <Text
                         style={{
-                          color: isDarkMode ? "white" : "black",
+                          color: isDarkMode ? "white" : "white",
                           marginLeft: 5,
                           fontWeight: "600",
                           fontSize: 18,
@@ -175,7 +188,7 @@ const Posts = ({ post }) => {
                     </View>
                     <Text
                       style={{
-                        color: "#797777",
+                        color: "white",
                         fontSize: 10,
                         marginLeft: 5,
                         marginTop: 4,
@@ -212,54 +225,67 @@ const Posts = ({ post }) => {
                   />
                 </TouchableOpacity>
               </View>
-              <View>
-                <Text
+
+              <View
+                style={{
+                  borderColor: "red",
+                  width: "100%",
+                  height: 500,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "absolute",
+                  overflow: "hidden",
+                }}
+              >
+                <LinearGradient
+                  colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
                   style={{
-                    color: isDarkMode ? "white" : "black",
-                    fontSize: 14,
-                    fontWeight: "400",
-                    textAlign: "justify",
-                    marginHorizontal: 30,
-                    lineHeight: 20,
-                    marginBottom: 10,
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 1,
+                    height: 100,
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20,
                   }}
-                >
-                  {post.message}
-                </Text>
-              </View>
-              {post.picture && (
-                <View
+                />
+                <Image
+                  source={{
+                    uri: post.picture,
+                  }}
                   style={{
                     borderColor: "red",
                     width: "100%",
-                    height: 500,
+                    height: "100%",
+                    resizeMode: "cover",
+                    borderRadius: 20,
+                    opacity: isDarkMode ? 0.7 : 1,
                   }}
-                >
-                  <Image
-                    source={{
-                      uri: post.picture,
-                    }}
-                    style={{
-                      borderColor: "red",
-                      width: "100%",
-                      height: "100%",
-                      resizeMode: "cover",
-                      borderTopLeftRadius: 20,
-                      borderTopRightRadius: 20,
-                      borderBottomLeftRadius: 0,
-                      borderBottomRightRadius: 0,
-                    }}
-                  />
-                </View>
-              )}
+                />
+
+                <LinearGradient
+                  colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                  }}
+                />
+              </View>
 
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginHorizontal: 20,
+                  position: "relative",
                   marginVertical: 10,
+                  top: "70%",
                 }}
               >
                 <View
@@ -268,10 +294,32 @@ const Posts = ({ post }) => {
                     alignItems: "center",
                   }}
                 >
-                  <View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "26%",
+                    }}
+                  >
                     <LikeButton post={post} />
+                    <Text
+                      style={{
+                        color: "white",
+                        textAlign: "center",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {post.likers.length}
+                    </Text>
                   </View>
-                  <View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "26%",
+                    }}
+                  >
                     <TouchableOpacity onPress={toggleComments}>
                       <View
                         style={{
@@ -284,7 +332,7 @@ const Posts = ({ post }) => {
                       >
                         <FontAwesome5
                           name="comment"
-                          size={25}
+                          size={32}
                           color="white"
                           style={{
                             textAlign: "center",
@@ -295,6 +343,16 @@ const Posts = ({ post }) => {
                         />
                       </View>
                     </TouchableOpacity>
+                    <Text
+                      style={{
+                        color: "white",
+                        textAlign: "center",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {post.comments.length}
+                    </Text>
                   </View>
                   <TouchableOpacity
                     style={{
@@ -307,7 +365,7 @@ const Posts = ({ post }) => {
                   >
                     <Feather
                       name="send"
-                      size={25}
+                      size={32}
                       color="white"
                       style={{
                         textAlign: "center",
@@ -331,7 +389,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="bookmark"
-                    size={25}
+                    size={32}
                     color="white"
                     style={{
                       textAlign: "center",
@@ -344,45 +402,344 @@ const Posts = ({ post }) => {
               </View>
               <View
                 style={{
-                  flexDirection: "column",
-                  width: "35%",
-                  marginLeft: 30,
-                  marginTop: -10,
-                  justifyContent: "center",
+                  zIndex: 1,
+                  height: "12%",
+                  width: "90%",
+                  marginLeft: 10,
+                  top: "56%",
                 }}
               >
                 <Text
                   style={{
-                    color: "gray",
+                    color: isDarkMode ? "white" : "#F5F5F5",
+                    fontSize: 16,
+                    fontWeight: "400",
+                    textAlign: "justify",
+                    lineHeight: 20,
                   }}
                 >
-                  {post.likers.length} likes
-                </Text>
-                <Text
-                  style={{
-                    color: "gray",
-                  }}
-                >
-                  {post.comments.length} comments
+                  {post.message}
                 </Text>
               </View>
             </>
           )}
         </View>
-      </View>
+      )}
+
+      {!post.picture && post.message && (
+        <View
+          key={post._id}
+          style={{
+            marginTop: 8,
+            marginBottom: 5,
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            position: "relative",
+            width: "96%",
+            height: 200,
+            borderRadius: 20,
+            zIndex: 1,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.4,
+            shadowRadius: 3.84,
+            elevation: 5,
+          }}
+        >
+          {isLoading ? (
+            <Text
+              style={{
+                textAlign: "center",
+                marginTop: 20,
+                marginBottom: 20,
+                color: "red",
+              }}
+            >
+              <FontAwesome name="spinner" size={24} color="red" />
+            </Text>
+          ) : (
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  position: "relative ",
+                  zIndex: 1,
+                  marginBottom: 10,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    alignContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  <TouchableOpacity onPress={() => goProfil(post.posterId)}>
+                    <Image
+                      source={{
+                        uri:
+                          !isEmpty(usersData[0]) &&
+                          usersData
+                            .map((user) => {
+                              if (user._id === post.posterId)
+                                return user.picture;
+                              else return null;
+                            })
+                            .join(""),
+                      }}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 30,
+                        marginTop: 10,
+                        marginLeft: 30,
+                        resizeMode: "cover",
+                        zIndex: 1,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      marginLeft: 6,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: isDarkMode ? "#F5F5F5" : "black",
+                          marginLeft: 5,
+                          fontWeight: "600",
+                          fontSize: 18,
+                        }}
+                      >
+                        {!isEmpty(usersData[0]) &&
+                          usersData.map((user) => {
+                            if (user._id === post.posterId) return user.pseudo;
+                            else return null;
+                          })}
+                      </Text>
+                      <View
+                        style={{
+                          marginLeft: 8,
+                          justifyContent: "center",
+                        }}
+                      >
+                        {post.posterId !== userData._id && (
+                          <FollowHandler
+                            idToFollow={post.posterId}
+                            type={"friends"}
+                          />
+                        )}
+                      </View>
+                    </View>
+                    <Text
+                      style={{
+                        color: isDarkMode ? "#F5F5F5" : "black",
+
+                        fontSize: 10,
+                        marginLeft: 5,
+                        marginTop: 4,
+                        fontWeight: "400",
+                        fontSize: 12,
+                        lineHeight: 12,
+                      }}
+                    >
+                      {formatPostDate(post.createdAt)}
+                    </Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#302929",
+                    width: 35,
+                    height: 35,
+                    borderRadius: 30,
+                    marginRight: 10,
+                    justifyContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  <Feather
+                    name="more-horizontal"
+                    size={18}
+                    color="white"
+                    style={{
+                      textAlign: "center",
+                      alignItems: "center",
+                      alignSelf: "center",
+                      resizeMode: "contain",
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  zIndex: 1,
+                  height: "12%",
+                  width: "90%",
+                  marginLeft: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    color: isDarkMode ? "#F5F5F5" : "black",
+                    fontSize: 16,
+                    fontWeight: "400",
+                    textAlign: "justify",
+                    lineHeight: 20,
+                  }}
+                >
+                  {post.message}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  position: "relative",
+                  marginVertical: 40,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "26%",
+                    }}
+                  >
+                    <LikeButton post={post} />
+                    <Text
+                      style={{
+                        color: isDarkMode ? "#F5F5F5" : "black",
+                        textAlign: "center",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {post.likers.length}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      width: "26%",
+                    }}
+                  >
+                    <TouchableOpacity onPress={toggleComments}>
+                      <View
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 30,
+                          justifyContent: "center",
+                          alignSelf: "center",
+                        }}
+                      >
+                        <FontAwesome5
+                          name="comment"
+                          size={32}
+                          color={isDarkMode ? "#F5F5F5" : "black"}
+                          style={{
+                            textAlign: "center",
+                            alignItems: "center",
+                            alignSelf: "center",
+                            resizeMode: "contain",
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        color: isDarkMode ? "#F5F5F5" : "black",
+                        textAlign: "center",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {post.comments.length}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 30,
+                      justifyContent: "center",
+                      alignSelf: "center",
+                    }}
+                  >
+                    <Feather
+                      name="send"
+                      size={32}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+                      style={{
+                        textAlign: "center",
+                        alignItems: "center",
+                        alignSelf: "center",
+                        resizeMode: "contain",
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginRight: 10,
+                    justifyContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  <Feather
+                    name="bookmark"
+                    size={32}
+                    color={isDarkMode ? "#F5F5F5" : "black"}
+                    style={{
+                      textAlign: "center",
+                      alignItems: "center",
+                      alignSelf: "center",
+                      resizeMode: "contain",
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+      )}
+
       <Modal
         isVisible={showComments}
-        onBackdropPress={toggleComments} // Pour fermer le modal en appuyant sur l'arrière-plan
-        style={{ margin: 0, justifyContent: "flex-end" }} // Placez le modal en bas de l'écran
-        backdropOpacity={0.5} // Opacité de l'arrière-plan
-        animationIn="slideInUp" // Animation pour afficher le modal
-        animationOut="slideOutDown" // Animation pour fermer le modal
+        onBackdropPress={toggleComments}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         useNativeDriverForBackdrop
       >
-        {/* Contenu du modal (composant de commentaires) */}
         <View
           style={{
-            backgroundColor: "#494747",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             height: "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
@@ -391,13 +748,13 @@ const Posts = ({ post }) => {
           <View
             style={{
               borderBottomWidth: 2,
-              borderColor: "gray",
+              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
               height: 50,
             }}
           >
             <Text
               style={{
-                color: "white",
+                color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
                 fontSize: 16,
                 fontWeight: "bold",
@@ -415,7 +772,7 @@ const Posts = ({ post }) => {
               width: "100%",
               height: "15%",
               borderTopWidth: 2,
-              borderColor: "gray",
+              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
             }}
           >
             <AddCommentButton post={post} />

@@ -25,9 +25,15 @@ const MyStory = () => {
         justifyContent: "center",
         position: "relative",
         borderRadius: 10,
-        borderWidth: 3,
-        borderColor: "#0D5C67",
         position: "relative",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.4,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}
     >
       <TouchableOpacity onPress={handleCreateStory}>
@@ -47,8 +53,6 @@ const MyStory = () => {
               width: "100%",
               height: "100%",
               borderRadius: 10,
-              borderWidth: 3,
-              borderColor: "#0D5C67",
               resizeMode: "cover",
             }}
           />
