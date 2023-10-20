@@ -8,8 +8,10 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDarkMode } from "../../components/Context/AppContext";
 
 const Settings = () => {
+  const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
 
   const handleClickReturnProfile = () => {
@@ -38,10 +40,20 @@ const Settings = () => {
       style={{
         flex: 1,
         backgroundColor: "black",
-        height: "100%",
+        backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
+
       }}
     >
-      <View style={styles.container}>
+      <View style={{
+        marginTop: 50,
+        paddingBottom: 2,
+        marginLeft: 10,
+        marginRight: 10,
+        flexDirection: "row",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+        justifyContent: "space-between",
+      }}>
         <TouchableOpacity onPress={() => handleClickReturnProfile()}>
           <View
             style={{
@@ -52,10 +64,15 @@ const Settings = () => {
               borderRadius: 30,
             }}
           >
-            <MaterialIcons name="arrow-back-ios" size={28} color="white" />
+            <MaterialIcons name="arrow-back-ios" size={28} color={isDarkMode ? "white" : "black"} />
           </View>
         </TouchableOpacity>
-        <Text style={styles.text}>Settings</Text>
+        <Text style={{
+          fontSize: 40,
+          color: isDarkMode ? "white" : "black",
+          fontWeight: "bold",
+          marginLeft: 10,
+        }}>Settings</Text>
       </View>
 
       <View
@@ -188,23 +205,6 @@ const Settings = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
-    paddingBottom: 2,
-    marginLeft: 10,
-    marginRight: 10,
-    flexDirection: "row",
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
-    justifyContent: "space-between",
-  },
-  text: {
-    fontSize: 40,
-    color: "#fff",
-    fontWeight: "bold",
-    marginLeft: 10,
-  },
-});
+
 
 export default Settings;
