@@ -9,9 +9,12 @@ import {
 } from "../Context/Utils";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import { useDarkMode } from "../Context/AppContext";
 
 const RéelsComment = ({ item }) => {
   const usersData = useSelector((state) => state.usersReducer);
+  const { isDarkMode } = useDarkMode();
+
 
   return (
     <ScrollView>
@@ -82,7 +85,7 @@ const RéelsComment = ({ item }) => {
                     style={{
                       fontWeight: "bold",
                       marginRight: 5,
-                      color: "white",
+                      color: isDarkMode ? "#F5F5F5" : "black",
                     }}
                   >
                     {comment.commenterPseudo}
@@ -105,7 +108,7 @@ const RéelsComment = ({ item }) => {
               >
                 <Text
                   style={{
-                    color: "white",
+                    color: isDarkMode ? "#F5F5F5" : "black",
                     marginTop: 5,
                     fontSize: 16,
                   }}

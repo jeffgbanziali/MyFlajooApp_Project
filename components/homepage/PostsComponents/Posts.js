@@ -747,7 +747,7 @@ const Posts = ({ post }) => {
         >
           <View
             style={{
-              borderBottomWidth: 2,
+              borderBottomWidth: 1,
               borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
               height: 50,
             }}
@@ -771,7 +771,7 @@ const Posts = ({ post }) => {
             style={{
               width: "100%",
               height: "15%",
-              borderTopWidth: 2,
+              borderTopWidth: 1,
               borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
             }}
           >

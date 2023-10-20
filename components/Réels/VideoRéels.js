@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getVideoReels } from "../../actions/réels.action";
 import { isEmpty } from "../Context/Utils";
 import { useNavigation } from "@react-navigation/native";
-import { UidContext } from "../Context/AppContext";
+import { UidContext, useDarkMode } from "../Context/AppContext";
 import RéelsComment from "./RéelsComment";
 import AddRéelsComment from "./AddRéelsComment";
 import LikeRéelsButton from "./LikeRéelsButton";
@@ -45,10 +45,11 @@ const VideoRéels = () => {
   const [loadPosts, setLoadPosts] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const { isDarkMode } = useDarkMode();
   const reelsData = useSelector((state) => state.videoReelsReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
- const { uid } = useContext(UidContext);
+  const { uid } = useContext(UidContext);
 
   useEffect(() => {
     if (loadPosts) {
@@ -577,7 +578,7 @@ const VideoRéels = () => {
       >
         <View
           style={{
-            backgroundColor: "#494747",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             height: "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
@@ -585,14 +586,14 @@ const VideoRéels = () => {
         >
           <View
             style={{
-              borderBottomWidth: 2,
-              borderColor: "gray",
+              borderBottomWidth: 1,
+              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
               height: 50,
             }}
           >
             <Text
               style={{
-                color: "white",
+                color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
                 fontSize: 16,
                 fontWeight: "bold",
@@ -609,8 +610,8 @@ const VideoRéels = () => {
             style={{
               width: "100%",
               height: "15%",
-              borderTopWidth: 2,
-              borderColor: "gray",
+              borderTopWidth: 1,
+              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
             }}
           >
             <AddRéelsComment item={item} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -21,7 +21,19 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const { isDarkMode } = useDarkMode();
+  const [clickCount, setClickCount] = useState(0);
+  const navigation = useNavigation();
 
+  const handleClickHome = () => {
+    setClickCount((prevCount) => prevCount + 1);
+
+    if (clickCount >= 2) {
+      // Recharge l'application lorsque le seuil est atteint
+      navigation.navigate("HomeScreen", {}, { forceRefresh: true });
+      console.log("reload")
+      setClickCount(0); // Réinitialise le compteur après le rechargement
+    }
+  };
   return (
     <Tab.Navigator
       screenOptions={{
@@ -50,6 +62,11 @@ const TabNavigation = () => {
               style={[focused && styles.bottomTabIconFocused]}
             />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            handleClickHome();
+          },
         }}
       />
       <Tab.Screen
