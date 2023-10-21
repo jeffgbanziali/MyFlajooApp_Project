@@ -4,12 +4,12 @@
     "slug": "MyFlajooApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Images/Background.jpg",
+    "icon": "./assets/Logos/my_flajoo2.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Images/Background.png",
+      "image": "./assets/Images/123.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#25292e"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -19,8 +19,11 @@ import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
 import { registerRootComponent } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
+import Loading from "./components/Loading/Loading";
+import SplashScreen from "./components/SplashScreen/SpashScreen";
 
 const App = () => {
+
   const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk, logger))
@@ -55,7 +58,31 @@ axios.interceptors.request.use(
 const AppW = () => {
   const [uid, setUid] = useState(null);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const { isDarkMode } = useDarkMode();
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    const prepareApp = async () => {
+      try {
+        // Ajoutez ici le chargement des ressources nécessaires avant que l'application ne soit prête
+        // Par exemple, chargez des polices, des images, etc.
+        // await Font.loadAsync(Entypo.font);
+
+        // Simulez un délai de chargement (à remplacer par le chargement réel de vos ressources)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (error) {
+        console.error("Error preparing app:", error);
+      } finally {
+        setAppIsReady(true);
+        SplashScreen.hideAsync(); // Cache l'écran de démarrage une fois que l'application est prête
+      }
+    };
+
+    // Lance la préparation de l'application
+    prepareApp();
+  }, []);
+
   useEffect(() => {
     const fetchToken = async () => {
       try {
@@ -91,6 +118,10 @@ const AppW = () => {
       }
     };
 
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
 
     if (!uid) {
       fetchToken();
@@ -102,18 +133,30 @@ const AppW = () => {
   }, [uid, dispatch]);
 
   return (
-    <UidContext.Provider value={{ uid, setUid }}>
-      <NavigationContainer>
-        <StackNavigation />
-      </NavigationContainer>
+    <View style={{ flex: 1 }}>
+      {appIsReady ? (
+        <UidContext.Provider value={{ uid, setUid }}>
+          <NavigationContainer>
+            <StackNavigation />
+          </NavigationContainer>
 
-      <StatusBar
-        style={isDarkMode ? "light" : "white"}
-        backgroundColor="#FF0000"
-      />
-    </UidContext.Provider>
+          <StatusBar
+            style={isDarkMode ? "light" : "white"}
+            backgroundColor="#FF0000"
+          />
+        </UidContext.Provider>
+      ) : (
+        // Vous pouvez personnaliser ce composant de chargement
+        <Loading />
+      )}
+    </View>
+
   );
 };
 
 registerRootComponent(AppW);
 export default App;
+
+
+
+

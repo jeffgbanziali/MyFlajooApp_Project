@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
 import SignInScreen from "../screens/SignInScreen/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen/ForgotPasswordScreen";
@@ -13,6 +12,7 @@ import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Notifications from "../screens/Notifications/Notifications";
 import ChatList from "../screens/Message/ChatList";
 import { UidContext } from "../components/Context/AppContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MyFollowers from "../components/ProfileUtils.js/MyFollowers";
 import FriendsFollowers from "../components/ProfileFriendsUtils/FriendsFollowers";
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
@@ -42,7 +42,7 @@ const StackNavigation = () => {
 
   useEffect(() => {
     console.log("uid in StackNavigation", uid);
-
+  
     if (uid === null) {
       console.log("Navigating to Signin");
       navigation.navigate("Signin");
@@ -51,6 +51,9 @@ const StackNavigation = () => {
       navigation.navigate("HomeScreen");
     }
   }, [uid, navigation]);
+  
+
+
 
 
 
@@ -60,7 +63,7 @@ const StackNavigation = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="TabNavigation" component={TabNavigation} />
+      <Stack.Screen name="HomeScreen" component={TabNavigation} />
       <Stack.Screen name="Réels" component={Réels} />
       <Stack.Screen name="StoryStream" component={StoriesStream} />
       <Stack.Screen name="ProfilFriends" component={ProfileFriends} />

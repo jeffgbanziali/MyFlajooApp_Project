@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { getStories } from "../../../actions/story.action";
 import MyStory from "./MyStory";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "../../Context/Utils";
-import { useDarkMode } from "../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../Context/AppContext";
+import { Video } from "expo-av";
 
 const Stories = () => {
   const [loadPosts, setLoadPosts] = useState(true);
@@ -14,6 +15,7 @@ const Stories = () => {
   const storiesData = useSelector((state) => state.storyReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const { isDarkMode } = useDarkMode();
+  const { uid } = useContext(UidContext);
 
   useEffect(() => {
     if (loadPosts) {
@@ -28,17 +30,19 @@ const Stories = () => {
 
   const navigation = useNavigation(false);
 
-  const handleViewStory = (id) => {
-    console.log("clicked story", { id });
-    navigation.navigate("StoryStream", { id });
+  const handleViewStory = (id, mediaType) => {
+    console.log("Clicked story ID:", id);
+    navigation.navigate("StoryStream", { id, mediaType });
+
   };
+
 
   const renderItem = ({ item: story }) => (
     <View key={story._id}>
       {story.media && (
         <TouchableOpacity
           onPress={() => {
-            handleViewStory(story._id);
+            handleViewStory(story._id, story.mediaType);
           }}
         >
           <View
@@ -53,16 +57,45 @@ const Stories = () => {
               elevation: 5,
             }}
           >
-            <Image
-              source={{ uri: story.media }}
-              style={{
-                width: 100,
-                height: 140,
-                borderRadius: 10,
-                marginLeft: 10,
-                resizeMode: "cover",
-              }}
-            />
+            {
+              story.mediaType === 'image' && (
+                <Image
+                  source={{ uri: story.media }}
+                  style={{
+                    width: 100,
+                    height: 140,
+                    borderRadius: 10,
+                    marginLeft: 10,
+                    resizeMode: "cover",
+                  }}
+                />
+              )
+            }
+            {
+              story.mediaType === 'video' && (
+
+
+                <Video
+                  source={{ uri: story.media }}
+                  rate={1.0}
+                  volume={1.0}
+                  isMuted={false}
+                  resizeMode="cover"
+                  isLooping
+                  shouldPlay={false}
+                  style={{
+                    width: 100,
+                    height: 140,
+                    borderRadius: 10,
+                    marginLeft: 10,
+                    resizeMode: "cover",
+                  }}
+                />
+              )
+            }
+
+
+
           </View>
         </TouchableOpacity>
       )}
@@ -214,7 +247,7 @@ const Stories = () => {
         data={storiesData}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
-        ListHeaderComponent={<MyStory />} 
+        ListHeaderComponent={<MyStory />}
       />
     </View>
   );

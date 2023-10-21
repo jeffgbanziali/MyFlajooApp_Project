@@ -22,8 +22,24 @@ const uploadImageToFirebase = async (localUri, imageName) => {
 
     return imageUrl;
 };
+const uploadStoryToFirebase = async (localUri, imageName) => {
+    const storage = getStorage();
+    const storageRef = ref(storage, 'StoryContainer/' + imageName);
 
-export { uploadImageToFirebase };
+    // Convertit l'image en blob
+    const response = await fetch(localUri);
+    const blob = await response.blob();
+
+    // Télécharge le blob vers Firebase Storage
+    await uploadBytes(storageRef, blob);
+
+    // Récupère l'URL de téléchargement de l'image
+    const imageUrl = await getDownloadURL(storageRef);
+
+    return imageUrl;
+};
+
+export { uploadImageToFirebase, uploadStoryToFirebase };
 
 
 const convertImageToArrayBuffer = async (localUri) => {
