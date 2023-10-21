@@ -209,6 +209,7 @@ const VideoRéels = ({ item, isActive }) => {
           colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
           style={{
             position: "absolute",
+            zIndex: 1,
             bottom: 0,
             left: 0,
             right: 0,
@@ -241,6 +242,7 @@ const VideoRéels = ({ item, isActive }) => {
             justifyContent: "space-between",
             borderRadius: "100%",
             flexDirection: "row",
+            zIndex: 2,
             top: 50,
             position: "absolute",
           }}

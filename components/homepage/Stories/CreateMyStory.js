@@ -174,7 +174,7 @@ const CreateStory = () => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         marginTop: 50,
-                        borderBottomWidth: 2,
+                        borderBottomWidth: 1,
                         borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
                         padding: 6
                     }}>
@@ -242,7 +242,7 @@ const CreateStory = () => {
                         style={{
                             width: 100,
                             height: 140,
-                            backgroundColor: "blue",
+                            backgroundColor: "#8A8A94",
                             borderRadius: 20,
                             justifyContent: "center",
                             alignItems: "center",
@@ -254,15 +254,15 @@ const CreateStory = () => {
                                 height: 40,
                                 justifyContent: "center",
                                 alignItems: "center",
-                                backgroundColor: "green",
+                                backgroundColor: "blue",
                                 borderRadius: 100,
                             }}
                         >
-                            <MaterialCommunityIcons name="format-letter-case" size={24} color="black" />
+                            <MaterialCommunityIcons name="format-letter-case" size={24} color="white" />
                         </View>
                         <Text
                             style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
+                                color: isDarkMode ? "#F5F5F5" : "white",
                                 fontSize: 14,
                                 marginTop: 10,
                             }}
@@ -275,7 +275,7 @@ const CreateStory = () => {
                         style={{
                             width: 100,
                             height: 140,
-                            backgroundColor: "blue",
+                            backgroundColor: "#7D5C96",
                             borderRadius: 20,
                             justifyContent: "center",
                             alignItems: "center"
@@ -290,11 +290,11 @@ const CreateStory = () => {
                                 backgroundColor: "green",
                                 borderRadius: 100,
                             }}>
-                            <Feather name="music" size={24} color="black" />
+                            <Feather name="music" size={24} color="white" />
                         </View>
                         <Text
                             style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
+                                color: isDarkMode ? "#F5F5F5" : "white",
                                 fontSize: 16,
                                 marginTop: 10,
 
@@ -308,7 +308,7 @@ const CreateStory = () => {
                         style={{
                             width: 100,
                             height: 140,
-                            backgroundColor: "blue",
+                            backgroundColor: "#8C1616",
                             borderRadius: 20,
                             justifyContent: "center",
                             alignItems: "center"
@@ -320,7 +320,7 @@ const CreateStory = () => {
                                 height: 40,
                                 justifyContent: "center",
                                 alignItems: "center",
-                                backgroundColor: "green",
+                                backgroundColor: "yellow",
                                 borderRadius: 100,
                             }}
                         >
@@ -328,7 +328,7 @@ const CreateStory = () => {
                         </View>
                         <Text
                             style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
+                                color: isDarkMode ? "#F5F5F5" : "white",
                                 marginTop: 10,
 
                                 fontSize: 16
@@ -397,18 +397,21 @@ const CreateStory = () => {
                                 marginRight: "4%",
                                 padding: 8,
                                 borderRadius: 20,
-                                borderWidth: 2,
+                                borderWidth: isDarkMode ? 1 : 2,
+                                borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
 
                             }} >
                             <View
                                 style={{
-                                    marginLeft: 4
+                                    marginLeft: 4,
+
                                 }}
                             >
                                 <AntDesign
                                     name="picture"
                                     size={24}
-                                    color="black" />
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
+                                />
                             </View>
                             <Text
                                 style={{
@@ -479,7 +482,7 @@ const CreateStory = () => {
                             marginTop: "12%",
                             justifyContent: "center",
                             position: "absolute",
-                            zIndex: 1,
+                            zIndex: 2,
                         }} >
 
                         <TouchableOpacity
@@ -509,13 +512,13 @@ const CreateStory = () => {
                         style={{
                             width: "100%",
                             height: "20%",
-                            marginTop: "12%",
+                            marginTop: "20%",
                             alignItems: "flex-end",
                             position: "absolute",
                             zIndex: 1,
                         }} >
 
-                        
+
 
                         <TouchableOpacity
                             style={{
