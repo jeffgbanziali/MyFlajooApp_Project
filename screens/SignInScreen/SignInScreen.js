@@ -13,9 +13,11 @@ import { useNavigation } from "@react-navigation/native";
 import { darkRose } from "../../components/Button/Constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
+import { useDarkMode } from "../../components/Context/AppContext";
 
 const SignInScreen = () => {
   const navigation = useNavigation();
+  const { isDarkMode } = useDarkMode();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,34 +68,56 @@ const SignInScreen = () => {
     <>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+        style={{
+          flex: 1,
+          alignItems: "center",
+          backgroundColor: isDarkMode ? "#231C1C" : "#1A1D1E",
+        }}
       >
+        <View style={{
+          marginTop: "20%",
+        }}>
+          <Text style={{
+            fontFamily: "Helvetica",
+            fontSize: "30px",
+            color: isDarkMode ? "black" : "white",
+
+          }}
+          >
+            Sign into your account
+          </Text>
+        </View>
+
+
+
         <View
           style={{
-            width: 200,
-            height: 120,
-            padding: 2,
+            width: "40%",
+            height: "18%",
+            borderRadius: 100,
+            marginTop: "10%",
             justifyContent: "center",
             alignItems: "center",
+
           }}
         >
           <Image
             style={{
               width: "100%",
               height: "100%",
+              borderRadius: 100,
             }}
-            source={require("../../assets/Logos/my_flajooo.png")}
+            source={{ uri: "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
           />
         </View>
-
         <View
           style={{
             overflow: "hidden",
-            width: 400,
-            height: 400,
+            width: '90%',
+            height: '40%',
             borderRadius: 20,
-            backgroundColor: "#3D3939",
-            marginTop: 20,
+            backgroundColor: isDarkMode ? "#D13333" : "#022A36",
+            marginTop: "10%",
             alignItems: "center",
             justifyContent: "center",
             alignContent: "center",
@@ -101,7 +125,13 @@ const SignInScreen = () => {
           }}
         >
           <View>
-            <Text style={styles.title}>Sign In</Text>
+            <Image
+              source={require("../../assets/Logos/my_flajooo.png")}
+              style={{
+                width: 150,
+                height: 90,
+                marginLeft: 10
+              }} />
             {errors.email && <Text style={styles.error}>{errors.email}</Text>}
             <TextInput
               style={styles.input}
@@ -145,19 +175,8 @@ const SignInScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "black",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "500",
-    color: "white",
-    marginBottom: 30,
-    marginTop: 20,
-  },
+
+
   error: {
     color: "red",
     fontSize: 12,
@@ -180,7 +199,7 @@ const styles = StyleSheet.create({
     width: 300,
   },
   button: {
-    backgroundColor: darkRose,
+    backgroundColor: "red",
     marginLeft: 30,
     marginRight: 30,
     marginTop: 10,
@@ -207,7 +226,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   footerLink: {
-    color: "blue",
+    color: "#80F3BC",
     fontWeight: "300",
     fontSize: 16,
   },

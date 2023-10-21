@@ -4,6 +4,7 @@ import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { useDarkMode } from '../../components/Context/AppContext';
 
 
 
@@ -11,6 +12,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 
 const SignUpScreen = () => {
     const navigation = useNavigation();
+    const { isDarkMode } = useDarkMode();
 
     const [pseudo, setPseudo] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -107,7 +109,12 @@ const SignUpScreen = () => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
+            style={{
+                backgroundColor: isDarkMode ? "#231C1C" : "#1A1D1E",
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: "100%"
+            }}
 
         >
 
@@ -115,6 +122,7 @@ const SignUpScreen = () => {
                 <View style={{
                     width: 200,
                     height: 120,
+
                     marginTop: 50,
                     padding: 2,
                     justifyContent: 'center',
@@ -151,7 +159,7 @@ const SignUpScreen = () => {
                     </Text>
                     <Text style={{
                         fontSize: 20,
-                        color: 'lightred',
+                        color: isDarkMode ? "black" : "white",
                         fontWeight: 'bold',
                         marginVertical: 2,
                         marginBottom: 10
@@ -269,12 +277,7 @@ const SignUpScreen = () => {
 
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#2C2828',
-        height:"100%"
-    },
+
     title: {
         fontSize: 30,
         fontWeight: 'bold',
@@ -301,7 +304,7 @@ const styles = StyleSheet.create({
         width: 300
     },
     button: {
-        backgroundColor: darkRose,
+        backgroundColor: "red",
         marginLeft: 30,
         marginRight: 30,
         marginTop: 10,

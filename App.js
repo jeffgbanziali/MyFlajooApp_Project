@@ -32,7 +32,7 @@ const App = () => {
   store.dispatch(getVideoReels());
   return (
     <Provider store={store}>
-        <DarkModeProvider>
+      <DarkModeProvider>
         <AppW />
       </DarkModeProvider>
     </Provider>
@@ -66,16 +66,15 @@ const AppW = () => {
         });
         const newUid = res.data;
         setUid(newUid);
-        console.log(newUid);
+        console.log("New uid:", newUid);
 
         // Enregistre l'uid dans AsyncStorage
         AsyncStorage.setItem("uid", JSON.stringify(newUid));
       } catch (error) {
-        console.log("Error fetching token:", error);
+        console.error("Error fetching token:", error);
       }
     };
 
-    // Récupère l'uid depuis AsyncStorage lors du montage du composant
     const retrieveUid = async () => {
       try {
         const storedUid = await AsyncStorage.getItem("uid");
@@ -85,15 +84,13 @@ const AppW = () => {
           setUid(parsedUid);
         } else {
           // Si l'uid n'est pas enregistré dans AsyncStorage, récupère-le du serveur
-          fetchToken();
+          await fetchToken();
         }
       } catch (error) {
-        console.log("Error retrieving uid from AsyncStorage:", error);
+        console.error("Error retrieving uid from AsyncStorage:", error);
       }
     };
 
-    // Appelle retrieveUid pour récupérer et définir l'uid
-    retrieveUid();
 
     if (!uid) {
       fetchToken();
@@ -111,7 +108,7 @@ const AppW = () => {
       </NavigationContainer>
 
       <StatusBar
-        style={isDarkMode ? "light" : "dark"}
+        style={isDarkMode ? "light" : "white"}
         backgroundColor="#FF0000"
       />
     </UidContext.Provider>

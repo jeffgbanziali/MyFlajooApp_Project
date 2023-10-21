@@ -15,11 +15,14 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
-import { UidContext } from "../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../Context/AppContext";
 import LikeStoriesButton from "./LikeStoriesButton";
+import { LinearGradient } from "expo-linear-gradient";
 
 const StoriesStream = () => {
   const navigation = useNavigation(false);
+  const { isDarkMode } = useDarkMode();
+
   const route = useRoute();
   const { id } = route.params;
   const { uid } = useContext(UidContext);
@@ -237,6 +240,18 @@ const StoriesStream = () => {
                   opacity: 0.9,
                 }}
               />
+              <LinearGradient
+                  colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                  }}
+                />
               <View
                 style={{
                   flex: 1,

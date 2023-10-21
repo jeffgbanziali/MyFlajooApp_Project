@@ -29,6 +29,7 @@ import RéelsComment from "./RéelsComment";
 import AddRéelsComment from "./AddRéelsComment";
 import LikeRéelsButton from "./LikeRéelsButton";
 import RéelsAnimation from "./RéelsAnimation";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -175,6 +176,17 @@ const VideoRéels = ({ item, isActive }) => {
           height: windowHeight - bottomTabHeight,
         }}
       >
+        <LinearGradient
+          colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            height: 100,
+          }}
+        />
         <Video
           ref={video}
           source={{ uri: item.videoPath }}
@@ -192,6 +204,16 @@ const VideoRéels = ({ item, isActive }) => {
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           onLoad={handleVideoLoad}
           onError={(error) => console.error("Erreur de lecture vidéo :", error)}
+        />
+        <LinearGradient
+          colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+          }}
         />
         <TouchableOpacity
           style={{

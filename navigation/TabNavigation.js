@@ -34,16 +34,8 @@ const TabNavigation = () => {
   const navigation = useNavigation();
   const [showOptions, setShowOptions] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const handleClickHome = () => {
-    setClickCount((prevCount) => prevCount + 1);
-
-    if (clickCount >= 2) {
-      // Recharge l'application lorsque le seuil est atteint
-      navigation.navigate("HomeScreen", {}, { forceRefresh: true });
-      console.log("reload")
-      setClickCount(0); // Réinitialise le compteur après le rechargement
-    }
-  };
+  
+  
 
   const handleToggleOptions = () => {
     setShowOptions(!showOptions);
@@ -116,11 +108,6 @@ const TabNavigation = () => {
                 />
               )
             ),
-          }}
-          listeners={{
-            tabPress: (e) => {
-              handleClickHome();
-            },
           }}
         />
 

@@ -31,6 +31,7 @@ import BioUpdate from "../components/Settings/BioUpdate";
 import AccountInfo from "../components/Settings/AccountInfo";
 import UserInfos from "../components/Settings/UserInfos";
 import UpdateName from "../components/Settings/UpdateName";
+import StoryCamera from "../components/homepage/Stories/StoryCamera";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,12 +41,18 @@ const StackNavigation = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log("uid in StackNavigation", uid);
+
     if (uid === null) {
+      console.log("Navigating to Signin");
       navigation.navigate("Signin");
     } else {
+      console.log("Navigating to HomeScreen");
       navigation.navigate("HomeScreen");
     }
   }, [uid, navigation]);
+
+
 
   return (
     <Stack.Navigator
@@ -68,6 +75,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Infos" component={UserInfos} />
       <Stack.Screen name="Live" component={LiveScreen} />
       <Stack.Screen name="Photo" component={CameraScreen} />
+      <Stack.Screen name="StoryCamera" component={StoryCamera} />
       <Stack.Screen name="BioUpdate" component={BioUpdate} />
       <Stack.Screen name="UpdateName" component={UpdateName} />
       <Stack.Screen name="AccountInfo" component={AccountInfo} />

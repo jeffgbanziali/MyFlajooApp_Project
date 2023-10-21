@@ -34,7 +34,7 @@ const HomeScreen = () => {
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{
-                    backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2' ,
+                    backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
                     flex: 1,
                 }}
             >

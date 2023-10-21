@@ -14,6 +14,9 @@ const Settings = () => {
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
 
+  const backgroundColorLight = "#F3F2F2";
+  const backgroundColorDark = "#2C2828";
+
   const handleClickReturnProfile = () => {
     console.log("clicked home");
     navigation.navigate("Profile");
@@ -91,7 +94,7 @@ const Settings = () => {
             flexDirection: "row",
             alignItems: "center",
             padding: 6,
-            backgroundColor: "gray",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
@@ -105,12 +108,12 @@ const Settings = () => {
             <MaterialCommunityIcons
               name="account-circle-outline"
               size={30}
-              color="white"
+              color={isDarkMode ? "white" : "black"}
             />
             <Text
               style={{
                 marginLeft: 10,
-                color: "white",
+                color: isDarkMode ? "white" : "black",
                 fontWeight: "bold",
                 fontSize: 20,
               }}
@@ -127,7 +130,7 @@ const Settings = () => {
             flexDirection: "row",
             alignItems: "center",
             padding: 6,
-            backgroundColor: "gray",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
@@ -141,12 +144,12 @@ const Settings = () => {
             <Ionicons
               name="ios-notifications-outline"
               size={30}
-              color="white"
+              color={isDarkMode ? "white" : "black"}
             />
             <Text
               style={{
                 marginLeft: 10,
-                color: "white",
+                color: isDarkMode ? "white" : "black",
                 fontWeight: "bold",
                 fontSize: 20,
               }}
@@ -163,7 +166,7 @@ const Settings = () => {
             flexDirection: "row",
             alignItems: "center",
             padding: 6,
-            backgroundColor: "gray",
+            backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
@@ -174,11 +177,15 @@ const Settings = () => {
             }}
             onPress={handleEditProfil}
           >
-            <FontAwesome5 name="user-edit" size={24} color="white" />
+            <FontAwesome5
+              name="user-edit"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
             <Text
               style={{
                 marginLeft: 10,
-                color: "white",
+                color: isDarkMode ? "white" : "black",
                 fontWeight: "bold",
                 fontSize: 20,
               }}
@@ -191,10 +198,10 @@ const Settings = () => {
           style={{
             marginTop: 12,
             width: "98%",
+            height: "10%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 6,
-            backgroundColor: "gray",
+            justifyContent: "center",
             borderRadius: 10,
           }}
         >
