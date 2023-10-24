@@ -69,13 +69,22 @@ export const unlikePost = (postId, userId) => {
     };
 };
 
-export const addComment = (userId, postId, text) => {
-    return async (dispatch) => {
-        try {
-            await axios.patch(`http://192.168.0.14:4000/api/post/comment-post/` + postId, { commenterId: userId, text });
-            dispatch({ type: ADD_COMMENT, payload: { postId } });
-        } catch (error) {
-            console.error('Erreur lors de l\'ajout du commentaire:', error);
-        }
+
+export const addComment = (postId, commenterId, text, commenterPseudo) => {
+    console.log("postId:", postId);
+    console.log("userId:", commenterId);
+    console.log("text:", text);
+    console.log("pseudo:", commenterPseudo);
+    return (dispatch) => {
+        return axios({
+            method: "patch",
+            url: `http://192.168.0.14:4000/api/post/comment-post/${postId}`,
+            data: { commenterId, text, commenterPseudo },
+        })
+            .then((res) => {
+                dispatch({ type: ADD_COMMENT, payload: { postId } });
+            })
+            .catch((err) => console.log(err));
     };
 };
+

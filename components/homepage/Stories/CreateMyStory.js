@@ -8,18 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { collection, addDoc, getDoc } from 'firebase/firestore';
 import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
-import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
 import { Modal } from 'react-native';
 import { addStory } from '../../../actions/story.action';
-import { getStorage } from 'firebase/storage';
 import { Video } from 'expo-av';
 
 
 const CreateStory = () => {
-    const [storyText, setStoryText] = useState('');
-    const [cameraPermission, setCameraPermission] = useState(null);
-    const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [postText, setPostText] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -29,23 +24,19 @@ const CreateStory = () => {
     const userData = useSelector((state) => state.userReducer);
     const [galleryMedia, setGalleryMedia] = useState([]);
     const navigation = useNavigation();
-    const [isPressed, setIsPressed] = useState(false);
+    const [text, setText] = useState("");
+    const [police, setPolice] = useState(['normal', 'Arial', 'serif', ' Times New Roman', ' monospace', 'Courier New']);
+    const [indicePolice, setIndicePolice] = useState(0);
+    const policeActuelle = police[indicePolice];
     const { isDarkMode } = useDarkMode();
 
 
 
 
 
-    const handleTakePhoto = async () => {
-        if (cameraPermission) {
-            const { uri } = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images });
-            setSelectedImage(uri);
-        }
-    };
-
 
     const handleClickReturnHome = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('TabNavigation');
     };
     const handleTakePicture = () => {
         navigation.navigate('Photo');
@@ -92,9 +83,6 @@ const CreateStory = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
-
-
-
 
 
     const handleModalImage = async (item) => {
@@ -144,8 +132,9 @@ const CreateStory = () => {
     useEffect(() => {
         const fetchMedia = async () => {
             try {
+                // Accédez à la bibliothèque multimédia sans demander de permission explicite
                 const { assets } = await MediaLibrary.getAssetsAsync({ mediaType: 'all' });
-                setGalleryMedia(assets);
+                console.log('Médias récupérés avec succès:', assets);
             } catch (error) {
                 console.error('Erreur lors de la récupération des médias :', error);
             }
@@ -153,6 +142,25 @@ const CreateStory = () => {
 
         fetchMedia();
     }, []);
+
+
+
+
+
+
+    const changerPoliceText = () => {
+        setIndicePolice((indice) => (indice + 1) % police.length);
+    };
+    const changeFilter = () => {
+        const currentIndex = availableFilters.indexOf(currentFilter);
+        const nextIndex = (currentIndex + 1) % availableFilters.length;
+        const nextFilter = availableFilters[nextIndex];
+        setCurrentFilter(nextFilter);
+        console.log('changing')
+    };
+
+
+
 
 
     return (
@@ -587,6 +595,7 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onPress={changeFilter}
                             style={{
                                 width: "30%",
                                 justifyContent: "space-around",
@@ -657,11 +666,136 @@ const CreateStory = () => {
                 onRequestClose={closeModalText}>
                 <View style={{
                     flex: 1,
-                    justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: isDarkMode ? "red" : "black",
+                    backgroundColor: isDarkMode ? "red" : "gray",
                 }}>
-                    <Button title="Fermer" onPress={closeModalText} />
+                    <View
+                        style={{
+                            width: "100%",
+                            height: 40,
+                            marginTop: "12%",
+                            justifyContent: "center",
+                            position: "absolute",
+                            zIndex: 2,
+                        }}
+                    >
+                        <TouchableOpacity
+                            style={{
+                                width: 40,
+                                height: 40,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginLeft: "2%",
+                            }}
+                            onPress={closeModalText}
+                        >
+                            <Entypo name="cross" size={36} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "50%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            top: "30%"
+
+                        }}>
+                        <TextInput
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                paddingLeft: 12,
+                                fontSize: 40,
+                                fontFamily: policeActuelle,
+                                fontWeight: "normal",
+                                overflow: "hidden",
+                                color: "white",
+                            }}
+                            multiline
+                            numberOfLines={4}
+                            maxLength={40}
+                            onChangeText={(nouveauText) => setText(nouveauText)}
+                            value={text}
+                            editable
+                            placeholder="Leave a short text..."
+                            placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
+                            fontSize="30"
+                            color={isDarkMode ? "#F5F5F5" : "white"} />
+                    </View>
+
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "20%",
+                            marginTop: "20%",
+                            alignItems: "flex-end",
+                            position: "absolute",
+                            zIndex: 1,
+                        }}
+                    >
+                        <TouchableOpacity
+                            onPress={changerPoliceText}
+                            style={{
+                                width: "25%",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                marginRight: "2%",
+                                flexDirection: "row",
+                                padding: 12,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                                    marginRight: 12,
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Police
+                            </Text>
+                            <Ionicons
+                                name="text"
+                                size={30}
+                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                            />
+                        </TouchableOpacity>
+
+                    </View>
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "10%",
+                            bottom: "5%",
+                            position: "absolute",
+                            justifyContent: "center",
+                            alignItems: "flex-end",
+                            paddingRight: 14,
+                            zIndex: 1,
+                        }}
+                    >
+                        <TouchableOpacity
+                            onPress={handleStorySubmit}
+                            style={{
+                                width: "14%",
+                                height: "60%",
+                                backgroundColor: "#80BCF3",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                alignContent: "center",
+                                borderRadius: 100,
+                                flexDirection: "row",
+                                zIndex: 1,
+                            }}
+                        >
+                            <Ionicons
+                                name="ios-send"
+                                size={30}
+                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
             </Modal>

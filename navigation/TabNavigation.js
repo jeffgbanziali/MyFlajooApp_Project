@@ -25,6 +25,7 @@ import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
 import Profile from "../screens/Profile/Profile";
 import Search from "../components/Search/Search";
 import { useDarkMode } from "../components/Context/AppContext";
+import Notifications from "../screens/Notifications/Notifications";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,8 +35,8 @@ const TabNavigation = () => {
   const navigation = useNavigation();
   const [showOptions, setShowOptions] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  
-  
+
+
 
   const handleToggleOptions = () => {
     setShowOptions(!showOptions);
@@ -70,7 +71,6 @@ const TabNavigation = () => {
 
   }
 
-
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -78,7 +78,7 @@ const TabNavigation = () => {
           tabBarStyle: {
             display: "flex",
             backgroundColor: isDarkMode ? "#171717" : "white",
-            height: "10%",
+            height: "8%",
           },
           headerShown: false,
           tabBarActiveTintColor: isDarkMode ? "white" : "black",
@@ -88,21 +88,21 @@ const TabNavigation = () => {
         }}
       >
         <Tab.Screen
-          name="HomeScreen"
+          name="Home"
           component={HomeScreen}
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <Foundation name="home"
-                  size={32}
+                  size={30}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
                 <Feather
                   name="home"
-                  size={30}
+                  size={28}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -154,13 +154,13 @@ const TabNavigation = () => {
               focused ? (
                 <MaterialCommunityIcons
                   name="youtube-tv"
-                  size={30}
+                  size={28}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
                 <Octicons name="video"
-                  size={30}
+                  size={28}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]} />
               )
@@ -169,15 +169,15 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={Profile}
+          name="Notifications"
+          component={Notifications}
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <FontAwesome
                   name="user"
-                  size={32}
+                  size={30}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -344,13 +344,11 @@ const styles = StyleSheet.create({
 
   tabIconContainer: {
     flexDirection: "column",
-    alignItems: "center",
     width: "100%",
     height: "100%",
-    bottom: "10%",
   },
   addButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#0D73D1",
     borderRadius: 100,
     width: "100%",
     height: "100%",

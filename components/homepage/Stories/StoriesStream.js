@@ -25,7 +25,6 @@ import AddStoryComment from "./AddStoryComment";
 const StoriesStream = () => {
   const navigation = useNavigation(false);
   const { isDarkMode } = useDarkMode();
-
   const route = useRoute();
   const { id } = route.params;
   const { uid } = useContext(UidContext);
@@ -41,7 +40,7 @@ const StoriesStream = () => {
 
   const goToHome = () => {
     console.log("clicked");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("TabNavigation");
   };
 
   const goProfil = (id) => {
@@ -90,7 +89,7 @@ const StoriesStream = () => {
 
       navigation.replace("StoryStream", { id: nextStory._id });
     } else {
-      navigation.replace("HomeScreen");
+      navigation.replace("TabNavigation");
       console.log("plus de story")
     }
   };
@@ -99,8 +98,6 @@ const StoriesStream = () => {
 
     goToNextStory();
   };
-
-
 
   const goToPrevStory = () => {
     const currentStoryIndex = storiesData.findIndex((story) => story._id === id);
@@ -119,6 +116,8 @@ const StoriesStream = () => {
   const handlePrevStoryButtonPress = () => {
     goToPrevStory();
   };
+
+
 
 
 
@@ -321,7 +320,6 @@ const StoriesStream = () => {
                 width: "80%",
                 height: "70%",
                 top: "16%",
-                class: "momo",
               }}
             >
               {selectedStory.mediaType === 'image' && (
@@ -405,7 +403,7 @@ const StoriesStream = () => {
                 borderRadius: 30,
                 width: "100%",
                 height: "100%",
-                class: "momo",
+                backgroundColor: "green"
               }}
             >
 

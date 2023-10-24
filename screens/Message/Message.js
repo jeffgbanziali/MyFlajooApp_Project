@@ -43,7 +43,7 @@ const Message = () => {
 
   const handleClickReturnHome = () => {
     console.log("clicked");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("TabNavigation");
   };
   const handleClickCallList = () => {
     console.log("clicked");

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-export const UidContext = createContext({ uid: null, setUid: () => {} });
+export const UidContext = createContext({ uid: null, setUid: () => { } });
 
 const DarkModeContext = createContext();
 
@@ -10,6 +10,7 @@ export const DarkModeProvider = ({ children }) => {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
+
 
   return (
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>

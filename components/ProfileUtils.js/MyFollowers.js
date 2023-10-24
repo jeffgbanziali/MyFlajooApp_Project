@@ -18,7 +18,7 @@ const MyFollowers = () => {
   const navigation = useNavigation();
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("TabNavigation");
   };
   return (
     <KeyboardAvoidingView

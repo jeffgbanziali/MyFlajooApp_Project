@@ -30,7 +30,6 @@ const ReduxApp = () => (
   </Provider>
 );
 
-// Utilisez registerRootComponent à la place de AppRegistry
 registerRootComponent(ReduxApp);
 
 export default ReduxApp;

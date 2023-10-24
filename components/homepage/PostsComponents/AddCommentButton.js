@@ -2,8 +2,8 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-
 import { useDarkMode } from "../../Context/AppContext";
+import { addComment, getPosts } from "../../../actions/post.actions";
 
 const AddCommentButton = ({ post }) => {
   const { isDarkMode } = useDarkMode();

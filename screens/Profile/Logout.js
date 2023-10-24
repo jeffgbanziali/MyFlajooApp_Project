@@ -17,12 +17,13 @@ const Logout = () => {
       await AsyncStorage.removeItem("userId");
       await axios.get("http://192.168.0.14:4000/api/user/logout");
       setUid(undefined);
-      await navigation.navigate("Signin");
       console.log("Logged out");
     } catch (error) {
       console.error(error);
     }
   };
+
+
 
 
 

@@ -219,7 +219,6 @@ const Stories = () => {
   return (
     <View
       style={{
-        marginBottom: 10,
         height: 160,
         width: "100%",
         resizeMode: "cover",

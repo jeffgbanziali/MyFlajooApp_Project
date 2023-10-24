@@ -13,62 +13,33 @@ import Thread from '../../components/Thread/Thread';
 import { useDarkMode } from '../../components/Context/AppContext';
 
 const HomeScreen = () => {
-    const [borderColor, setBorderColor] = useState('gray');
-    const headerTranslateY = new Animated.Value(-200); // Définissez la valeur initiale à -threshold
-    const threshold = 200; // Réglez la valeur du seuil en pixels pour déclencher l'animation
     const { isDarkMode } = useDarkMode();
-    useEffect(() => {
-        // Démarrez le délai pour l'animation
-        setTimeout(() => {
-            // Définissez l'animation de l'en-tête en fonction du défilement
-            Animated.timing(headerTranslateY, {
-                toValue: 1,
-                duration: 100,
-                useNativeDriver: false,
-            }).start();
-        }, 3000); // 3000 millisecondes (3 secondes)
-    }, []);
+
 
     return (
         <>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{
-                    backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
+                    backgroundColor: isDarkMode ? "#171717" : "white",
+
                     flex: 1,
                 }}
             >
-                <ScrollView
-                    onScroll={(event) => {
-                        const offsetY = event.nativeEvent.contentOffset.y;
-                        setBorderColor(
-                            offsetY > threshold ? 'gray' : '#2C2828'
-                        );
-                    }}
-                    scrollEventThrottle={16}
+                <View
+                    style={{
+                        backgroundColor: isDarkMode ? "#171717" : "white",
+                        height: "100%",
+                        marginTop: "14%"
+                    }
+                    }
                 >
-                    <Animated.View
-                        style={[
-                            styles.header,
-                            {
-                                borderBottomColor: borderColor,
-                                transform: [
-                                    {
-                                        translateY: headerTranslateY.interpolate({
-                                            inputRange: [-threshold, 0, threshold],
-                                            outputRange: [-threshold, 0, -threshold],
-                                            extrapolate: 'clamp',
-                                        }),
-                                    },
-                                ],
-                            },
-                        ]}
-                    >
+                    <ScrollView>
                         <Header />
-                    </Animated.View>
-                    <Stories />
-                    <Thread />
-                </ScrollView>
+                        <Stories />
+                        <Thread />
+                    </ScrollView>
+                </View>
             </KeyboardAvoidingView>
         </>
     );

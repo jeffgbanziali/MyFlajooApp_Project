@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { getVideoReels } from "../../actions/réels.action";
+import { commentVideoReels, getVideoReels } from "../../actions/réels.action";
 import { useDarkMode } from "../Context/AppContext";
 
 const AddRéelsComment = ({ réels }) => {
@@ -25,7 +25,7 @@ const AddRéelsComment = ({ réels }) => {
 
   const handleComment = () => {
     if (text) {
-      dispatch(addComment(réels._id, userData._id, text, userData.pseudo))
+      dispatch(commentVideoReels(réels._id, userData._id, text, userData.pseudo))
         .then(() => dispatch(getVideoReels()))
         .then(() => setText(""));
     }

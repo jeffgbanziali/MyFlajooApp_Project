@@ -20,7 +20,7 @@ const NewPostScreen = () => {
     const { isDarkMode } = useDarkMode();
 
     const handleClickReturnHome = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('TabNavigation');
     };
     const handleTakePicture = () => {
         navigation.navigate('Photo');

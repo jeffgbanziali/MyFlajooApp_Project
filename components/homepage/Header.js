@@ -28,11 +28,13 @@ const Header = () => {
   return (
     <View style={{
       backgroundColor: isDarkMode ? "#171717" : "white",
+      borderBottomWidth: 2,
+      borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+
     }}>
       <View
         style={{
           display: "flex",
-          marginTop: "10%",
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-between",

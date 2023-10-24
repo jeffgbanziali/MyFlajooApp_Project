@@ -56,6 +56,7 @@ const StoryCamera = () => {
         }
     };
 
+
     if (hasPermission === null) {
         return <View />;
     }

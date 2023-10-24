@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
-import Followers from "../../components/ProfileUtils.js/Followers";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -26,7 +25,7 @@ const Profile = () => {
   const navigation = useNavigation();
   const handleClickReturnHome = () => {
     console.log("clicked");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("TabNavigation");
   };
   const handleClickSettings = () => {
     console.log("clicked");

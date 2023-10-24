@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { darkRose } from "../../components/Button/Constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
-import { useDarkMode } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import Loading from "../../components/Loading/Loading";
 
 const SignInScreen = () => {
@@ -45,12 +45,12 @@ const SignInScreen = () => {
         if (user) {
           await AsyncStorage.setItem("user", JSON.stringify(user));
           console.log("Token saved");
-          navigation.replace("HomeScreen");
         }
 
         console.log(user);
         alert("User logged in successfully");
         console.log(response);
+        navigation.navigate('TabNavigation');
       } else {
         if (
           response.data.errors.email !== "" ||
@@ -86,10 +86,8 @@ const SignInScreen = () => {
             marginTop: "20%",
           }}>
             <Text style={{
-              fontFamily: "Helvetica",
               fontSize: "30px",
               color: isDarkMode ? "black" : "white",
-
             }}
             >
               Sign into your account

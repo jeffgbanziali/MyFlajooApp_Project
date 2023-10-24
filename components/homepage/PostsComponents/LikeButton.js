@@ -46,7 +46,7 @@ const LikeButton = ({ post, type }) => {
             {type === "postPicture" && (
               <Feather
                 name="heart"
-                size={30}
+                size={25}
                 color={isDarkMode ? "#F5F5F5" : "white"}
                 style={{
                   textAlign: "center",
@@ -86,7 +86,7 @@ const LikeButton = ({ post, type }) => {
           {type === "postPicture" && (
             <AntDesign
               name="heart"
-              size={30}
+              size={25}
               color="red"
               style={{
                 textAlign: "center",

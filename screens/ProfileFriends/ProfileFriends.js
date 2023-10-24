@@ -27,7 +27,7 @@ const ProfileFriends = () => {
   const usersData = useSelector((state) => state.usersReducer);
   const handleClickReturnHome = () => {
     console.log("clicked");
-    navigation.navigate("HomeScreen");
+    navigation.navigate("TabNavigation");
   };
   const handleClickSettings = () => {
     console.log("clicked");
@@ -79,7 +79,7 @@ const ProfileFriends = () => {
                 style={{
                   justifyContent: "center",
                   alignSelf: "center",
-                  backgroundColor:  isDarkMode ? "#161414" : "#E3E4E5",
+                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                   width: 50,
                   height: 50,
                   borderRadius: 30,
@@ -105,7 +105,7 @@ const ProfileFriends = () => {
                 style={{
                   justifyContent: "center",
                   alignSelf: "center",
-                  backgroundColor:  isDarkMode ? "#161414" : "#E3E4E5",
+                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
 
                   width: 50,
                   height: 50,

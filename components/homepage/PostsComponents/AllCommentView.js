@@ -21,7 +21,7 @@ const AllCommentView = ({ post }) => {
     <ScrollView>
       {post.comments.map((comment) => {
 
-      
+
 
         return (
           <View
@@ -49,7 +49,7 @@ const AllCommentView = ({ post }) => {
                           return user.picture;
                         else return null;
                       })
-                      .join(""),
+                      .join("")
                 }}
                 style={{
                   width: "100%",
@@ -93,7 +93,7 @@ const AllCommentView = ({ post }) => {
 
                     }}
                   >
-                    {formatPostDate(post.createdAt)}
+                    {formatPostDate(comment.createdAt)}
                   </Text>
                 </View>
               </View>
@@ -134,7 +134,7 @@ const AllCommentView = ({ post }) => {
                 <Feather
                   name="heart"
                   size={20}
-                  color= {isDarkMode ? "#F5F5F5" : "black"}
+                  color={isDarkMode ? "#F5F5F5" : "black"}
                   style={{
                     textAlign: "center",
                     alignItems: "center",

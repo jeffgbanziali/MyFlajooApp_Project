@@ -42,19 +42,15 @@ const StackNavigation = () => {
 
   useEffect(() => {
     console.log("uid in StackNavigation", uid);
-  
+
     if (uid === null) {
       console.log("Navigating to Signin");
       navigation.navigate("Signin");
     } else {
       console.log("Navigating to HomeScreen");
-      navigation.navigate("HomeScreen");
+      navigation.navigate("TabNavigation");
     }
   }, [uid, navigation]);
-  
-
-
-
 
 
   return (
@@ -63,7 +59,8 @@ const StackNavigation = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="HomeScreen" component={TabNavigation} />
+
+      <Stack.Screen name="TabNavigation" component={TabNavigation} />
       <Stack.Screen name="Réels" component={Réels} />
       <Stack.Screen name="StoryStream" component={StoriesStream} />
       <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
@@ -88,10 +85,11 @@ const StackNavigation = () => {
       <Stack.Screen name="Myfollowers" component={MyFollowers} />
       <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
       <Stack.Screen name="Searching" component={Search} />
-      <Stack.Screen name="Start" component={StartPage} />
+      < Stack.Screen name="Start" component={StartPage} />
       <Stack.Screen name="Signup" component={SignUpScreen} />
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
+
     </Stack.Navigator>
   );
 };

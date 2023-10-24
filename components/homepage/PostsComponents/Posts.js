@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import { dateParser, isEmpty, formatPostDate } from "../../Context/Utils";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
@@ -28,7 +28,6 @@ const Posts = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const [showComments, setShowComments] = useState(false);
-  const [status, setStatus] = useState({});
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
@@ -60,7 +59,7 @@ const Posts = ({ post }) => {
     } else {
       setShowComments(true);
       Animated.timing(commentsHeight, {
-        toValue: 200, // Hauteur souhaitée du composant de commentaires
+        toValue: 200,
         duration: 300,
         easing: Easing.linear,
         useNativeDriver: false,
@@ -70,7 +69,7 @@ const Posts = ({ post }) => {
 
   return (
     <>
-      {post.picture && post.message &&  (
+      {post.picture && post.message && (
         <View
           key={post._id}
           style={{
@@ -271,7 +270,7 @@ const Posts = ({ post }) => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+                    height: 200,
                     borderBottomLeftRadius: 20,
                     borderBottomRightRadius: 20,
                   }}
@@ -332,7 +331,7 @@ const Posts = ({ post }) => {
                       >
                         <FontAwesome5
                           name="comment"
-                          size={30}
+                          size={25}
                           color="white"
                           style={{
                             textAlign: "center",
@@ -365,7 +364,7 @@ const Posts = ({ post }) => {
                   >
                     <Feather
                       name="send"
-                      size={30}
+                      size={25}
                       color="white"
                       style={{
                         textAlign: "center",
@@ -389,7 +388,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="bookmark"
-                    size={30}
+                    size={25}
                     color="white"
                     style={{
                       textAlign: "center",
@@ -412,7 +411,7 @@ const Posts = ({ post }) => {
                 <Text
                   style={{
                     color: isDarkMode ? "white" : "#F5F5F5",
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: "400",
                     textAlign: "justify",
                     lineHeight: 20,
