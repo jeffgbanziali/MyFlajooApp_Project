@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Pressable,
+  Dimensions,
 } from "react-native";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { Entypo, Ionicons } from "@expo/vector-icons";
@@ -22,6 +23,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Video, resizeMode } from "expo-av";
 import AddStoryComment from "./AddStoryComment";
 
+const { width, height } = Dimensions.get("window")
+
 const StoriesStream = () => {
   const navigation = useNavigation(false);
   const { isDarkMode } = useDarkMode();
@@ -29,11 +32,24 @@ const StoriesStream = () => {
   const { id } = route.params;
   const { uid } = useContext(UidContext);
   const storiesData = useSelector((state) => state.storyReducer);
+  console.log(storiesData)
   const usersData = useSelector((state) => state.usersReducer);
-  const selectedStory = storiesData.find((story) => story._id === id);
-  const user = usersData.find((user) => user._id === selectedStory.posterId);
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  const [progress, setProgress] = useState(new Animated.Value(0));
+  console.log(id);
+  const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id))); // Remplace selectedStoryData par la valeur initiale
+  storiesData.find((story) => story.container.stories.some((s) => s._id === id));
+  if (selectedStory) {
+    const selectedContainer = selectedStory.container;
+    console.log("Selected Container:", selectedContainer);
+  } else {
+    console.log("Container not found for story ID:", id);
+  }
+  const user = usersData.find((user) => user._id === selectedStory.container.stories[0].posterId);
+  console.log(user);
+
+
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(
+    selectedStory.container.stories.findIndex((story) => story._id === id)
+  );
 
 
 
@@ -47,71 +63,48 @@ const StoriesStream = () => {
     navigation.navigate("ProfilFriends", { id });
   };
 
-
-
-
-
-
-  useEffect(() => {
-    console.log("useEffect");
-    const timer = setTimeout(() => {
-      goToNextStory();
-    }, 5000);
-
-
-    Animated.timing(progress, {
-      toValue: 5,
-      duration: 5000,
-      useNativeDriver: false,
-    }).start(() => {
-      setIsAnimationComplete(true);
-
-
-      if (isAnimationComplete) {
-        goToNextStory();
-      }
-    });
-
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
-
   const goToNextStory = () => {
-    const currentStoryIndex = storiesData.findIndex((story) => story._id === id);
+    if (selectedStory && selectedStory.container && selectedStory.container.stories) {
+      const totalStories = selectedStory.container.stories.length;
 
-    const nextStoryIndex = currentStoryIndex + 1;
+      if (currentStoryIndex < totalStories - 1) {
+        const nextStoryIndex = currentStoryIndex + 1;
 
-    if (nextStoryIndex < storiesData.length) {
-      const nextStory = storiesData[nextStoryIndex];
+        // On utilise nextStoryIndex pour accéder à la prochaine histoire dans le même container
+        const nextStory = selectedStory.container.stories[nextStoryIndex];
 
-      navigation.replace("StoryStream", { id: nextStory._id });
+        // Fais quelque chose avec nextStory si nécessaire (affichage dans la console, etc.)
+        console.log('Next Story:', nextStory);
+
+        // Mets à jour l'index de l'histoire actuelle en utilisant setCurrentStoryIndex
+        setCurrentStoryIndex(nextStoryIndex);
+        resetAnimation();
+      } else {
+        // Pas d'histoire suivante dans le conteneur actuel, passe au conteneur suivant si disponible
+        const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
+
+        if (nextContainerIndex < storiesData.length) {
+          const nextContainer = storiesData[nextContainerIndex];
+          setCurrentStoryIndex(0);
+          setSelectedStory(nextContainer);
+          resetAnimation();
+
+        } else {
+          console.error('Unable to go to the next story or container.');
+          navigation.navigate("TabNavigation");
+        }
+      }
     } else {
-      navigation.replace("TabNavigation");
-      console.log("plus de story")
+      console.error('Invalid story or container.');
     }
   };
 
-  const handleNextStoryButtonPress = () => {
 
+  const handleNextStoryButtonPress = () => {
     goToNextStory();
   };
 
-  const goToPrevStory = () => {
-    const currentStoryIndex = storiesData.findIndex((story) => story._id === id);
 
-    const prevStoryIndex = currentStoryIndex - 1;
-
-    if (prevStoryIndex >= 0) {
-      const prevStory = storiesData[prevStoryIndex];
-
-      navigation.replace("StoryStream", { id: prevStory._id });
-    } else {
-      console.log("Vous êtes déjà à la première histoire");
-    }
-  };
 
   const handlePrevStoryButtonPress = () => {
     goToPrevStory();
@@ -121,195 +114,229 @@ const StoriesStream = () => {
 
 
 
-  const progressAnimation = progress.interpolate({
-    inputRange: [0, 5],
-    outputRange: ["0%", "100%"],
-  });
+
+  const progressAnimation = useRef(new Animated.Value(0)).current;
+  const start = () => {
+    Animated.timing(progressAnimation, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: false,
+    }).start(({ finished }) => {
+      if (finished) {
+        goToNextStory();
+      }
+    });
+  };
+
+  const resetAnimation = () => {
+    progressAnimation.setValue(0);
+  };
+
 
   return (
     <KeyboardAvoidingView
       style={{
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "black",
       }}
     >
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
+
+
+      <View
+        style={{
+          flex: 1,
+          height: "100%",
+          width: width,
+          position: "relative",
+          alignItems: "center",
+          overflow: "hidden",
         }}
       >
+        <StatusBar backgroundColor="black" barStyle="light-content" />
+        <Pressable
+          onPress={handlePrevStoryButtonPress}
+          style={{
+            flex: 1,
+            height: "70%",
+            marginTop: "30%",
+            width: "30%",
+            position: "absolute",
+            left: 0,
+            overflow: "hidden",
+            zIndex: 2
+          }}
+        >
+        </Pressable>
+        <Pressable
+          style={{
+            flex: 1,
+            height: "70%",
+            marginTop: "30%",
+            width: "30%",
+            position: "absolute",
+            right: 0,
+            overflow: "hidden",
+            zIndex: 2
+          }}
+          onPress={handleNextStoryButtonPress}>
+        </Pressable>
         <View
           style={{
             flex: 1,
-            height: "100%",
+            flexDirection: "row",
             width: "100%",
-            position: "relative",
+            height: "2%",
             alignItems: "center",
-            overflow: "hidden",
+            justifyContent: "space-evenly ",
+            alignItems: "center",
+            top: "5%",
+            position: "absolute",
+            zIndex: 2
           }}
         >
-          <StatusBar backgroundColor="black" barStyle="light-content" />
-          <Pressable
-            onPress={handlePrevStoryButtonPress}
+          <TouchableOpacity onPress={goToHome}>
+            <View
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Entypo name="cross" size={35} color="white" />
+            </View>
+          </TouchableOpacity>
+
+          <View
             style={{
-              flex: 1,
-              height: "70%",
-              marginTop: "30%",
-              width: "30%",
-              position: "absolute",
-              left: 0,
-              overflow: "hidden",
-              zIndex: 2
+              width: '88%',
+              alignItems: "center",
+              justifyContent: "space-evenly ",
+              alignItems: "center",
+              flexDirection: "row"
             }}
           >
-          </Pressable>
-          <Pressable
+            {selectedStory.container.stories.map((item, index) => (
+              <View
+                key={index} // Ajoute cette ligne pour ajouter une clé unique à chaque élément de la liste
+                style={{
+                  flex: 1,
+                  height: 6,
+                  backgroundColor: "rgba(255,255,255,0.5)",
+                  marginLeft: 6,
+                  flexDirection: "row",
+                  borderRadius: 20,
+
+                }}
+              >
+                <Animated.View
+                  style={{
+                    height: 6,
+                    borderRadius: 20,
+                    flex: currentStoryIndex === index ? progressAnimation : selectedStory.container.stories[index].finish,
+                    backgroundColor: "white",
+                  }}
+                ></Animated.View>
+              </View>
+            ))}
+
+          </View>
+
+
+
+
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            position: "absolute",
+            width: "100%",
+            justifyContent: "space-between",
+            marginLeft: "30%",
+            marginTop: "20%",
+            zIndex: 2
+
+          }}
+        >
+          <Text
             style={{
-              flex: 1,
-              height: "70%",
-              marginTop: "30%",
-              width: "30%",
-              position: "absolute",
-              right: 0,
-              overflow: "hidden",
-              zIndex: 2
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "white",
             }}
-            onPress={handleNextStoryButtonPress}>
-          </Pressable>
+          >
+            {!isEmpty(usersData[0]) &&
+              usersData.map((user) => {
+                if (user._id === selectedStory.container.posterId) return user.pseudo;
+                else return null;
+              })}
+          </Text>
           <View
             style={{
               flexDirection: "row",
-              width: "100%",
               alignItems: "center",
-              justifyContent: "center",
-              marginTop: 38,
-              zIndex: 2
+              justifyContent: "space-between",
             }}
           >
-            <TouchableOpacity onPress={goToHome}>
+            <View
+              style={{
+                backgroundColor: "#343232",
+                height: 30,
+                borderRadius: 10,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 4,
+              }}
+            >
+              <FontAwesome5 name="clock" size={10} color="white" />
+              <Text
+                style={{
+                  marginLeft: 4,
+                  color: "white",
+                  fontSize: 12,
+                }}
+              >
+                {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt)}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => goProfil(user._id)}>
               <View
                 style={{
+                  marginLeft: 10,
                   height: 40,
                   width: 40,
-                  marginLeft: 10,
-                  borderRadius: 20,
+                  borderRadius: 30,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Entypo name="cross" size={30} color="white" />
+                <Image
+                  source={{
+                    uri:
+                      !isEmpty(usersData) &&
+                      usersData
+                        .map((user) => {
+                          if (user._id === selectedStory.container.posterId)
+                            return user.picture;
+                          else return null;
+                        })
+                        .join(""),
+                  }}
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    borderRadius: 30,
+                  }}
+                />
               </View>
             </TouchableOpacity>
-
-            <View
-              style={{
-                height: 3,
-                width: "80%",
-                backgroundColor: "gray",
-                marginLeft: 10,
-              }}
-            >
-              <Animated.View
-                style={{
-                  height: "100%",
-                  width: progressAnimation,
-                  backgroundColor: "white",
-                }}
-              ></Animated.View>
-            </View>
           </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              position: "absolute",
-              width: "100%",
-              justifyContent: "space-between",
-              marginLeft: "30%",
-              marginTop: "20%",
-              zIndex: 2
+        </View>
 
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "white",
-              }}
-            >
-              {!isEmpty(usersData[0]) &&
-                usersData.map((user) => {
-                  if (user._id === selectedStory.posterId) return user.pseudo;
-                  else return null;
-                })}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: "#343232",
-                  height: 30,
-                  borderRadius: 10,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 4,
-                }}
-              >
-                <FontAwesome5 name="clock" size={10} color="white" />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "white",
-                    fontSize: 12,
-                  }}
-                >
-                  {formatPostDate(selectedStory.createdAt)}
-                </Text>
-              </View>
-              <TouchableOpacity onPress={() => goProfil(user._id)}>
-                <View
-                  style={{
-                    marginLeft: 10,
-                    height: 40,
-                    width: 40,
-                    borderRadius: 30,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri:
-                        !isEmpty(usersData) &&
-                        usersData
-                          .map((user) => {
-                            if (user._id === selectedStory.posterId)
-                              return user.picture;
-                            else return null;
-                          })
-                          .join(""),
-                    }}
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      borderRadius: 30,
-                    }}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {selectedStory.media && selectedStory.text && (
+        {selectedStory.container.stories[currentStoryIndex].media &&
+          selectedStory.container.stories[currentStoryIndex].text && (
             <View
               style={{
                 flex: 1,
@@ -322,10 +349,10 @@ const StoriesStream = () => {
                 top: "16%",
               }}
             >
-              {selectedStory.mediaType === 'image' && (
+              {selectedStory.container.stories[currentStoryIndex].media_type === "image" && (
                 <Image
                   source={{
-                    uri: selectedStory.media,
+                    uri: selectedStory.container.stories[currentStoryIndex].media,
                   }}
                   style={{
                     height: "100%",
@@ -336,9 +363,9 @@ const StoriesStream = () => {
                   }}
                 />
               )}
-              {selectedStory.mediaType === 'video' && (
+              {selectedStory.container.stories[currentStoryIndex].media_type === 'video' && (
                 <Video
-                  source={{ uri: selectedStory.media }}
+                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media, }}
                   rate={1.0}
                   volume={1.0}
                   isMuted={false}
@@ -385,15 +412,14 @@ const StoriesStream = () => {
                     fontSize: 20,
                   }}
                 >
-                  {selectedStory.text}
+                  {selectedStory.container.stories[currentStoryIndex].text}
                 </Text>
               </View>
             </View>
           )}
 
-
-          {selectedStory.media && !selectedStory.text && (
-
+        {selectedStory.container.stories[currentStoryIndex].media &&
+          !selectedStory.container.stories[currentStoryIndex].text && (
 
             <View
               style={{
@@ -407,29 +433,34 @@ const StoriesStream = () => {
               }}
             >
 
-              {selectedStory.mediaType === 'image' && (
+              {selectedStory.container.stories[currentStoryIndex].media_type === "image" && (
                 <Image
-                  source={{
-                    uri: selectedStory.media,
-                  }}
+                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media }}
                   style={{
                     height: "100%",
                     width: "100%",
                     borderRadius: 30,
-
                     opacity: 0.9,
+                  }}
+                  onLoadEnd={() => {
+                    progressAnimation.setValue(0);
+                    start()
                   }}
                 />
               )}
-              {selectedStory.mediaType === 'video' && (
+              {selectedStory.container.stories[currentStoryIndex].media_type === 'video' && (
                 <Video
-                  source={{ uri: selectedStory.media }}
+                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media }}
                   rate={1.0}
                   volume={1.0}
                   isMuted={false}
                   resizeMode="cover"
                   shouldPlay
                   isLooping
+                  onLoadEnd={() => {
+                    progressAnimation.setValue(0);
+                    start()
+                  }}
                   onError={(error) => console.error("Erreur de chargement de la vidéo:", error)}
                   style={{
                     height: "100%",
@@ -441,57 +472,63 @@ const StoriesStream = () => {
               )}
             </View>
           )}
-          {!selectedStory.media && (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                backgroundColor: "pink",
-                position: "absolute",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 30,
-                width: "90%",
-                height: "78%",
-                top: "14%",
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 30,
-                }}
-              >
-                {selectedStory.text}
-              </Text>
-            </View>
-          )}
+        {!selectedStory.container.stories[currentStoryIndex].media && (
           <View
+            onLoadEnd={() => {
+              progressAnimation.setValue(0);
+              start()
+            }}
             style={{
               flex: 1,
-              width: "100%",
               flexDirection: "row",
+              backgroundColor: "pink",
               position: "absolute",
-              bottom: "4%",
+              justifyContent: "center",
               alignItems: "center",
-              justifyContent: "space-between",
+              borderRadius: 30,
+              width: "90%",
+              height: "78%",
+              top: "14%",
             }}
           >
-            <AddStoryComment story={selectedStory} />
-            <View
+            <Text
               style={{
-                width: 50,
-                height: 50,
-                marginLeft: 10,
-                justifyContent: "center",
-                alignItems: "center",
+                color: "white",
+                fontSize: 30,
               }}
             >
-              <LikeStoriesButton story={selectedStory} />
-            </View>
+              {selectedStory.container.stories[currentStoryIndex].text}
+            </Text>
+          </View>
+        )}
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            flexDirection: "row",
+            position: "absolute",
+            bottom: "4%",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <AddStoryComment story={selectedStory.container.stories[currentStoryIndex].comments} />
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              marginLeft: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 3
+
+            }}
+          >
+            <LikeStoriesButton story={selectedStory.container.stories[currentStoryIndex].likers} />
           </View>
         </View>
-      </ScrollView>
+      </View>
+
     </KeyboardAvoidingView>
   );
 };

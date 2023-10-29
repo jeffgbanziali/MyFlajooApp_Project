@@ -19,8 +19,7 @@ import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
 import { registerRootComponent } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
-import Loading from "./components/Loading/Loading";
-import SplashScreen from "./components/SplashScreen/SpashScreen";
+import { APP_API_URL } from "./config";
 
 const App = () => {
 
@@ -66,11 +65,10 @@ const AppW = () => {
     const fetchToken = async () => {
       await axios({
         method: "get",
-        url: 'http://192.168.0.14:4000/jwtid',
+        url: `${APP_API_URL}/jwtid`,
         withCredentials: true,
       })
         .then((res) => {
-          console.log(res);
           setUid(res.data);
           AsyncStorage.setItem('uid', res.data);
           console.log(AsyncStorage.getItem('uid'));

@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import Loading from "../../components/Loading/Loading";
+import { APP_API_URL } from "../../config";
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +31,7 @@ const SignInScreen = () => {
     const data = { email, password };
     try {
       const response = await axios.post(
-        "http://192.168.0.14:4000/api/user/login",
+        `${APP_API_URL}/api/user/login`,
         data,
         {
           withCredentials: true,

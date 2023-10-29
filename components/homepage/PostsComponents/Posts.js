@@ -46,8 +46,6 @@ const Posts = ({ post }) => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
 
-  console.log(usersData);
-
   const toggleComments = () => {
     if (showComments) {
       Animated.timing(commentsHeight, {

@@ -10,7 +10,6 @@ const Header = () => {
   const userData = useSelector((state) => state.userReducer);
   const { isDarkMode } = useDarkMode();
 
-  console.log(userData);
 
   const navigation = useNavigation(false);
   const handleClickProfile = () => {

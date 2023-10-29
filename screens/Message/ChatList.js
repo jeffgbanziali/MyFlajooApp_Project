@@ -16,6 +16,7 @@ import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessagesUser";
 import { UidContext } from "../../components/Context/AppContext";
 import { io } from "socket.io-client";
+import { APP_API_URL } from "../../config";
 
 const Message = () => {
   const navigation = useNavigation();
@@ -62,7 +63,7 @@ const Message = () => {
     const getMessages = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.0.14:4000/api/message/${conversationId}`
+          `${APP_API_URL}/api/message/${conversationId}`
         );
         console.log("Messages Response:", response.data);
         setChat(response.data);
@@ -104,7 +105,7 @@ const Message = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.14:4000/api/message/",
+        `${APP_API_URL}/api/message/`,
         message
       );
 

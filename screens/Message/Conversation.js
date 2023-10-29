@@ -2,8 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { UidContext } from "../../components/Context/AppContext";
+import { APP_API_URL } from "../../config";
 
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
@@ -18,7 +17,7 @@ const Conversation = ({ conversation, currentUser }) => {
     const getFriendInfo = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.0.14:4000/api/user/friends/${friendId}`
+          `${APP_API_URL}/api/user/friends/${friendId}`
         );
         setUser(response.data);
         console.log("Updated user state:", response.data);

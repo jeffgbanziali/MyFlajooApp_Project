@@ -16,6 +16,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { UidContext } from "../../components/Context/AppContext";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { APP_API_URL } from "../../config";
 
 const Message = () => {
   const [conver, setConver] = useState([]);
@@ -27,7 +28,7 @@ const Message = () => {
     const getConversation = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.0.14:4000/api/conversation/${uid}`
+          `${APP_API_URL}/api/conversation/${uid}`
         );
         setConver(response.data);
         console.log(response);

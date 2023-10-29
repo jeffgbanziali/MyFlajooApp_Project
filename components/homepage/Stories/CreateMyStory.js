@@ -6,9 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from "../../Context/AppContext"
 import { useDispatch, useSelector } from 'react-redux';
 import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { collection, addDoc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, getDoc, } from 'firebase/firestore';
 import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
-import * as MediaLibrary from 'expo-media-library';
+//import * as MediaLibrary from 'expo-media-library';
 import { Modal } from 'react-native';
 import { addStory } from '../../../actions/story.action';
 import { Video } from 'expo-av';
@@ -42,7 +42,6 @@ const CreateStory = () => {
         navigation.navigate('Photo');
     };
 
-
     const handleStorySubmit = async () => {
         try {
             let mediaUrl = null;
@@ -60,16 +59,20 @@ const CreateStory = () => {
 
             const storyData = {
                 posterId: userData._id,
-                content: postText,
-                mediaFileName: mediaUrl,
-                mediaType: mediaType,
+                text: postText,
+                media: {
+                    type: mediaType,
+                    url: mediaUrl,
+                },
             };
 
             dispatch(addStory(storyData));
 
             const docRef = await addDoc(collection(firestore, 'stories'), storyData);
+            const docSnapshot = await getDoc(docRef);
 
             console.log('Story créé avec succès! Document ID:', docRef.id);
+            console.log('Document data:', docSnapshot.data());
             Alert.alert('Succès', 'Votre post a été publié avec succès !');
             setPostText('');
             setSelectedImage(null);
@@ -83,6 +86,11 @@ const CreateStory = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
+
+
+
+
+
 
 
     const handleModalImage = async (item) => {
@@ -129,10 +137,19 @@ const CreateStory = () => {
     }
 
 
-    useEffect(() => {
+    { /* useEffect(() => {
         const fetchMedia = async () => {
             try {
-                // Accédez à la bibliothèque multimédia sans demander de permission explicite
+                // Demander l'autorisation d'accéder à la bibliothèque multimédia
+                const { status } = await MediaLibrary.requestPermissionsAsync();
+
+                if (status !== 'granted') {
+                    // Si l'autorisation n'est pas accordée, afficher une alerte ou prendre d'autres mesures
+                    console.error('Permission refusée pour accéder à la bibliothèque multimédia.');
+                    return;
+                }
+
+                // L'autorisation est accordée, récupérer les médias
                 const { assets } = await MediaLibrary.getAssetsAsync({ mediaType: 'all' });
                 console.log('Médias récupérés avec succès:', assets);
             } catch (error) {
@@ -140,9 +157,43 @@ const CreateStory = () => {
             }
         };
 
+        // Appeler la fonction pour récupérer les médias
         fetchMedia();
-    }, []);
+    }, []);*/}
 
+
+
+    const selectImage = async () => {
+        try {
+            console.log('Demande d\'autorisation...');
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+            if (status !== 'granted') {
+                console.log('Autorisation refusée');
+                Alert.alert('Permission refusée', 'La permission d\'accès à la bibliothèque de médias est requise.');
+            } else {
+                console.log('Autorisation accordée, ouverture de la bibliothèque de médias...');
+                const result = await ImagePicker.launchImageLibraryAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                    allowsEditing: false,
+                    aspect: [4, 3],
+                    quality: 1,
+                });
+
+                if (!result.canceled) {
+                    setSelectedImage(result);
+                    setShowImage(true);
+                    console.log('Image sélectionnée :', result);
+
+                } else {
+                    console.log('Sélection d\'image annulée');
+                }
+            }
+        } catch (error) {
+            console.error('Erreur lors de la sélection de l\'image :', error);
+            Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'image.');
+        }
+    };
 
 
 
@@ -397,6 +448,7 @@ const CreateStory = () => {
 
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onPress={selectImage}
                             style={{
                                 flexDirection: "row",
                                 width: "45%",

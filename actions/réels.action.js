@@ -1,4 +1,5 @@
 import axios from "axios";
+import { APP_API_URL } from "../config";
 
 // VideoRéels actions
 export const GET_VIDEO_REELS = "GET_VIDEO_REELS";
@@ -13,7 +14,7 @@ export const DELETE_VIDEO_REELS = "DELETE_VIDEO_REELS";
 export const getVideoReels = (num) => {
   return (dispatch) => {
     return axios
-      .get("http://192.168.0.14:4000/api/videoReels")
+      .get(`${APP_API_URL}/api/videoReels`)
       .then((res) => {
         const array = res.data.slice(0, num);
         dispatch({ type: GET_VIDEO_REELS, payload: array });
@@ -25,7 +26,7 @@ export const getVideoReels = (num) => {
 export const addVideoReels = (data) => {
   return (dispatch) => {
     return axios
-      .post("http://192.168.0.14:4000/api/videoReels/", data)
+      .post(`${APP_API_URL}/api/videoReels/`, data)
       .then((res) => {
         dispatch({ type: ADD_VIDEO_REELS, payload: res.data });
       })
@@ -37,7 +38,7 @@ export const likeVideoReels = (videoRéelsId, userId) => {
   return (dispatch) => {
     return axios
       .patch(
-        `http://192.168.0.14:4000/api/videoReels/like-videoReels/${videoRéelsId}`,
+        `${APP_API_URL}/api/videoReels/like-videoReels/${videoRéelsId}`,
         { id: userId }
       )
       .then((res) => {
@@ -51,7 +52,7 @@ export const dislikeVideoReels = (videoRéelsId, userId) => {
   return (dispatch) => {
     return axios
       .patch(
-        `http://192.168.0.14:4000/api/videoReels/dislike-videoReels/${videoRéelsId}`,
+        `${APP_API_URL}/api/videoReels/dislike-videoReels/${videoRéelsId}`,
         { id: userId }
       )
       .then((res) => {
@@ -68,7 +69,7 @@ export const viewVideoReels = (videoRéelsId, viewerId) => {
   return (dispatch) => {
     return axios
       .patch(
-        `http://192.168.0.14:4000/api/videoReels/view-videoReels/${videoRéelsId}`,
+        `${APP_API_URL}/api/videoReels/view-videoReels/${videoRéelsId}`,
         { viewerId }
       )
       .then((res) => {
@@ -90,7 +91,7 @@ export const commentVideoReels = (
   return (dispatch) => {
     return axios
       .patch(
-        `http://192.168.0.14:4000/api/videoReels/comment-videoReels/${videoRéelsId}`,
+        `${APP_API_URL}/api/videoReels/comment-videoReels/${videoRéelsId}`,
         {
           commenterId,
           text,
@@ -110,7 +111,7 @@ export const commentVideoReels = (
 export const deleteVideoReels = (videoRéelsId) => {
   return (dispatch) => {
     return axios
-      .delete(`http://192.168.0.14:4000/api/videoReels/${videoRéelsId}`)
+      .delete(`${APP_API_URL}/api/videoReels/${videoRéelsId}`)
       .then((res) => {
         dispatch({ type: DELETE_VIDEO_REELS, payload: { videoRéelsId } });
       })

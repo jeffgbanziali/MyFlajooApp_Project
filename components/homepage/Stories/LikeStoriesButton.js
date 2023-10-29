@@ -11,21 +11,28 @@ const LikeStoriesButton = ({ story }) => {
   const dispatch = useDispatch();
 
   const like = () => {
-    dispatch(likeStory(story._id, uid));
+    console.log('Like button pressed');
+    dispatch(likeStory(story._id, { id: uid }));
     setLiked(true);
     console.log(story._id);
   };
 
   const unlike = () => {
-    dispatch(dislikeStory(story._id, uid));
+    console.log('Unlike button pressed');
+    dispatch(likeStory(story._id, { id: uid }));
     setLiked(false);
     console.log(story._id);
   };
 
+
   useEffect(() => {
-    if (story.likers.includes(uid)) setLiked(true);
-    else setLiked(false);
-  }, [uid, story.likers, liked]);
+    if (story && story.likers && story.likers.includes(uid)) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+  }, [uid, story, liked]);
+
 
   return (
     <View>

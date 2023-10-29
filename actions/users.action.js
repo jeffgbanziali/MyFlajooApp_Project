@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { APP_API_URL } from '../config';
 
 export const GET_USERS = 'GET_USERS';
 
 export const getUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('http://192.168.0.14:4000/api/user');
+      const response = await axios.get(`${APP_API_URL}/api/user`);
       dispatch({
         type: GET_USERS,
         payload: response.data,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { APP_API_URL } from '../config';
 
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
@@ -10,7 +11,7 @@ export const SEARCH_USERS = "SEARCH_USERS";
 export const getUser = (uid) => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.14:4000/api/user/${uid}`)
+            .get(`${APP_API_URL}/api/user/${uid}`)
             .then((res) => {
                 dispatch({ type: GET_USER, payload: res.data });
             })
@@ -22,10 +23,10 @@ export const uploadPicture = (data, id) => {
     return async (dispatch) => {
         try {
             // Uploader l'image
-            const uploadResponse = await axios.post("http://192.168.0.14:4000/api/user/upload", data);
+            const uploadResponse = await axios.post(`${APP_API_URL}/api/user/upload`, data);
 
             // Mettre à jour l'utilisateur après le téléchargement de l'image
-            const userResponse = await axios.get(`http://192.168.0.14:4000/api/user/${id}`);
+            const userResponse = await axios.get(`${APP_API_URL}/api/user/${id}`);
 
             // Dispatch des actions avec les données mises à jour
             dispatch({ type: UPLOAD_PICTURE, payload: userResponse.data.picture });
@@ -39,7 +40,7 @@ export const updateBio = (bio, userId) => {
     return (dispatch) => {
         const data = bio
         return axios
-            .put(`http://192.168.0.14:4000/api/user/` + userId, { bio })
+            .put(`${Config.APP_API_URL}/api/user/` + userId, { bio })
             .then((res) => {
                 dispatch({ type: UPDATE_BIO, payload: bio });
             })
@@ -51,7 +52,7 @@ export const followUser = (followerId, idToFollow) => {
     return (dispatch) => {
         return axios({
             method: "patch",
-            url: `http://192.168.0.14:4000/api/user/follow/` + followerId,
+            url: `${APP_API_URL}/api/user/follow/` + followerId,
             data: { idToFollow },
         })
             .then((res) => {
@@ -65,7 +66,7 @@ export const unfollowUser = (followerId, idToUnfollow) => {
     return (dispatch) => {
         return axios({
             method: "patch",
-            url: `http://192.168.0.14:4000/api/user/unfollow/` + followerId,
+            url: `${APP_API_URL}/api/user/unfollow/` + followerId,
             data: { idToUnfollow },
         })
             .then((res) => {
@@ -79,7 +80,7 @@ export const unfollowUser = (followerId, idToUnfollow) => {
 export const searchUsers = () => {
     return (dispatch) => {
         return axios
-            .get(`http://192.168.0.14:4000/api/user/search`)
+            .get(`${APP_API_URL}/api/user/search`)
             .then((res) => {
                 dispatch({ type: SEARCH_USERS, payload: res.data });
             })

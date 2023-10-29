@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { APP_API_URL } from '../config';
 
 // Story actions
 export const GET_STORIES = 'GET_STORIES';
@@ -13,7 +14,7 @@ export const DELETE_STORY = 'DELETE_STORY';
 export const getStories = (num) => {
   return (dispatch) => {
     return axios
-      .get('http://192.168.0.14:4000/api/stories')
+      .get(`${APP_API_URL}/api/stories`)
       .then((res) => {
         const array = res.data.slice(0, num);
         dispatch({ type: GET_STORIES, payload: array });
@@ -25,7 +26,7 @@ export const getStories = (num) => {
 export const addStory = (data) => {
   return (dispatch) => {
     return axios
-      .post('http://192.168.0.14:4000/api/stories/', data)
+      .post(`${APP_API_URL}/api/stories/`, data)
       .then((res) => {
         dispatch({ type: ADD_STORY, payload: res.data });
       })
@@ -36,7 +37,7 @@ export const addStory = (data) => {
 export const likeStory = (storyId, userId) => {
   return (dispatch) => {
     return axios
-      .patch(`http://192.168.0.14:4000/api/stories/like-story/${storyId}`, { id: userId })
+      .patch(`${APP_API_URL}/api/stories/like-story/${storyId}`, { id: userId })
       .then((res) => {
         dispatch({ type: LIKE_STORY, payload: { storyId, userId } });
       })
@@ -47,7 +48,7 @@ export const likeStory = (storyId, userId) => {
 export const dislikeStory = (storyId, userId) => {
   return (dispatch) => {
     return axios
-      .patch(`http://192.168.0.14:4000/api/stories/dislike-story/${storyId}`, { id: userId })
+      .patch(`${APP_API_URL}/api/stories/dislike-story/${storyId}`, { id: userId })
       .then((res) => {
         dispatch({ type: DISLIKE_STORY, payload: { storyId, userId } });
       })
@@ -58,7 +59,7 @@ export const dislikeStory = (storyId, userId) => {
 export const viewStory = (storyId, viewerId) => {
   return (dispatch) => {
     return axios
-      .patch(`http://192.168.0.14:4000/api/stories/view-story/${storyId}`, { viewerId })
+      .patch(`${APP_API_URL}/api/stories/view-story/${storyId}`, { viewerId })
       .then((res) => {
         dispatch({ type: VIEW_STORY, payload: { storyId, viewerId } });
       })
@@ -69,7 +70,7 @@ export const viewStory = (storyId, viewerId) => {
 export const commentStory = (storyId, commenterId, text, commenterPseudo) => {
   return (dispatch) => {
     return axios
-      .patch(`http://192.168.0.14:4000/api/stories/comment-story/${storyId}`, {
+      .patch(`${APP_API_URL}/api/stories/comment-story/${storyId}`, {
         commenterId,
         text,
         commenterPseudo,
@@ -84,7 +85,7 @@ export const commentStory = (storyId, commenterId, text, commenterPseudo) => {
 export const deleteStory = (storyId) => {
   return (dispatch) => {
     return axios
-      .delete(`http://192.168.0.14:4000/api/stories/${storyId}`)
+      .delete(`${APP_API_URL}/api/stories/${storyId}`)
       .then((res) => {
         dispatch({ type: DELETE_STORY, payload: { storyId } });
       })

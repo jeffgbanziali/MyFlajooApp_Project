@@ -4,6 +4,7 @@ import MessagesUser from '../../components/MessagesUser/MessagesUser';
 import MesssageInput from '../../components/MessagesUser/MesssageInput';
 import { KeyboardAvoidingView } from 'react-native';
 import axios from 'axios';
+import { APP_API_URL } from '../../config';
 
 
 
@@ -18,7 +19,7 @@ export default function Chat() {
         const getMessages = async () => {
           try {
             const response = await axios.get(
-              `http://localhost:4000/api/message/` + currentChat?._id
+              `${APP_API_URL}/api/message/` + currentChat?._id
             );
             console.log("Messages Response:", response.data);
             setChat(response.data);
