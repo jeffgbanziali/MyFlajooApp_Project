@@ -54,7 +54,7 @@ const TabNavigation = () => {
   }
   const AddReels = () => {
     console.log("AddReels")
-    navigation.navigate("NewReelsScreen")
+    navigation.navigate("createRéels")
     closeModal()
 
   }
@@ -85,6 +85,9 @@ const TabNavigation = () => {
           tabBarLabelStyle: {
             color: isDarkMode ? "white" : "black",
           },
+          tabBarLabel: {
+            display: "none"
+          }
         }}
       >
         <Tab.Screen
@@ -237,6 +240,7 @@ const TabNavigation = () => {
                 backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
 
 
+
               }}>
               <AntDesign name="picture" size={34} color={isDarkMode ? "white" : "black"} />
               <Text
@@ -343,9 +347,10 @@ const styles = StyleSheet.create({
   },
 
   tabIconContainer: {
-    flexDirection: "column",
-    width: "100%",
-    height: "100%",
+    flexDirection: "row",
+    width: "80%",
+    height: 70,
+
   },
   addButton: {
     backgroundColor: "#0D73D1",

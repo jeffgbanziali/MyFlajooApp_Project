@@ -67,7 +67,7 @@ const Posts = ({ post }) => {
 
   return (
     <>
-      {post.picture && post.message && (
+      {post.picture && post.message && !post.video && (
         <View
           key={post._id}
           style={{
@@ -128,7 +128,7 @@ const Posts = ({ post }) => {
                           usersData
                             .map((user) => {
                               if (user._id === post.posterId)
-                                return user.picture;
+                                return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                               else return null;
                             })
                             .join(""),

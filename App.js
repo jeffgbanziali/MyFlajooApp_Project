@@ -69,6 +69,7 @@ const AppW = () => {
         withCredentials: true,
       })
         .then((res) => {
+          console.log(res);
           setUid(res.data);
           AsyncStorage.setItem('uid', res.data);
           console.log(AsyncStorage.getItem('uid'));

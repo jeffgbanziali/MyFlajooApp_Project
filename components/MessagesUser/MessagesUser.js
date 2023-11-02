@@ -4,7 +4,7 @@ import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { dateParser, formatPostDate } from "../Context/Utils";
 
-const MessagesUser = ({ message, own }) => {
+const MessagesUser = ({ message, own, }) => {
   const userData = useSelector((state) => state.userReducer);
 
   return (
@@ -13,11 +13,12 @@ const MessagesUser = ({ message, own }) => {
         style={{
           display: "flex",
           flexDirection: "row",
+
         }}
       >
         <Image
           source={{
-            uri: own ? userData.picture : message.sender.picture,
+            uri: own ? userData.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
           }}
           style={{
             width: 26,
@@ -26,11 +27,21 @@ const MessagesUser = ({ message, own }) => {
             marginRight: 10,
           }}
         />
+        <View
+          style={own ? {
+            backgroundColor: "#F51B1B",
+            borderRadius: 100,
+          } : {
+            backgroundColor: "#1158C1",
+            borderRadius: 100,
+          }}
+        >
+          <Text style={own ? styles.textMessageOwn : styles.textMessageOther}>
+            {" "}
+            {message.text}
+          </Text>
+        </View>
 
-        <Text style={own ? styles.textMessageOwn : styles.textMessageOther}>
-          {" "}
-          {message.text}
-        </Text>
       </View>
       <View>
         <Text
@@ -66,20 +77,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginRight: 10,
     marginLeft: 10,
+    borderRadius: 20
   },
   textMessageOwn: {
     fontSize: 16,
-    backgroundColor: "#6373C8",
-    color: "#FFFFFF",
     padding: 10,
-    borderRadius: 40,
+    color: "#FFFFFF",
+
   },
   textMessageOther: {
     fontSize: 16,
-    backgroundColor: "#000000",
     color: "#FFFFFF",
     padding: 10,
-    borderRadius: 40,
   },
 });
 

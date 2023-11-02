@@ -4,10 +4,12 @@ import axios from 'axios';
 import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from "@expo/vector-icons";
 import { useDarkMode, UidContext } from '../Context/AppContext';
+import { Video } from 'expo-av';
 
 
-const PostsUser = () => {
+const VideoRéelsUser = () => {
     const [user, setUser] = useState([]);
     const { isDarkMode } = useDarkMode();
     const { uid } = useContext(UidContext)
@@ -15,7 +17,7 @@ const PostsUser = () => {
     useEffect(() => {
         const getPostUser = async () => {
             try {
-                const response = await axios.get(`${APP_API_URL}/api/post/${uid}`);
+                const response = await axios.get(`${APP_API_URL}/api/videoReels/${uid}`);
                 setUser(response.data);
             } catch (err) {
                 console.error(err);
@@ -23,6 +25,8 @@ const PostsUser = () => {
         }
         getPostUser();
     }, [uid]);
+
+    console.log(user)
 
 
 
@@ -36,8 +40,14 @@ const PostsUser = () => {
                 borderColor: "white",
                 backgroundColor: "white"
             }}>
-                <Image
-                    source={{ uri: item.picture }}
+                <Video
+                    source={{ uri: item.videoPath }}
+                    rate={1.0}
+                    volume={1.0}
+                    isMuted={false}
+                    resizeMode="cover"
+                    isLooping
+                    shouldPlay={false}
                     style={{
                         width: 135,
                         height: 200,
@@ -53,18 +63,22 @@ const PostsUser = () => {
                     }}
                 >
                     <Text style={{
-                        marginLeft: "10%",
-                        fontSize: 16,
-                        fontWeight: "bold",
+                        marginLeft: "4%",
+                        fontSize: 18,
+                        fontWeight: "600",
                         color: "white",
                         zIndex: 4,
-                        bottom: "60%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        bottom: "50%",
 
                     }}>
-                        {item.likers ? item.likers.length : 0}
+                        <Feather name="play" size={18} color="white" />
+                        {" "}
+                        {item.viewers ? item.viewers.length : 0}
                     </Text>
                     <LinearGradient
-                        colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                        colors={["transparent", isDarkMode ? "black" : "black"]}
                         style={{
                             position: "absolute",
                             bottom: 0,
@@ -104,4 +118,4 @@ const PostsUser = () => {
 
 
 
-export default PostsUser;
+export default VideoRéelsUser;;

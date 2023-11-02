@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState } from "react";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   dateParser,
   formatPostDate,
@@ -41,7 +41,7 @@ const RéelsComment = ({ réels }) => {
                     usersData
                       .map((user) => {
                         if (user._id === comment.commenterId)
-                          return user.picture;
+                          return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                         else return null;
                       })
                       .join(""),

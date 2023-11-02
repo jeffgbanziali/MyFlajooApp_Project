@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
+import { formatPostDate } from "../../components/Context/Utils";
 
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
@@ -11,13 +12,13 @@ const Conversation = ({ conversation, currentUser }) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser._id);
+    const friendId = conversation.members.find((m) => m !== currentUser);
     console.log(currentUser._id);
 
     const getFriendInfo = async () => {
       try {
         const response = await axios.get(
-          `${APP_API_URL}/api/user/friends/${friendId}`
+          `${APP_API_URL}/api/user/${friendId}`
         );
         setUser(response.data);
         console.log("Updated user state:", response.data);
@@ -27,32 +28,44 @@ const Conversation = ({ conversation, currentUser }) => {
     };
 
     getFriendInfo();
-  }, [currentUser, conversation]);
+  }, []);
 
   const containerStyle = {
     display: "flex",
-    alignItems: "center",
-    padding: 20,
+    padding: 10,
     flexDirection: "row",
     backgroundColor: isPressed ? "#F5F5F5" : "#FFFFFF",
+    width: "100%"
   };
 
   const handleClickMessage = () => {
     console.log("clicked");
-    navigation.navigate("Chatlist", { conversationId: conversation._id });
-    console.log("Montre moi le chemin", conversation._id );
+    navigation.navigate("Chatlist", {
+      conversationId: conversation._id,
+      user: user
+    });
+    console.log("Montre moi le chemin", conversation._id, user);
   };
   return (
-    <View>
-      <TouchableOpacity
-        style={containerStyle}
-        onPressIn={() => setIsPressed(true)}
-        onPressOut={() => setIsPressed(false)}
-        onPress={handleClickMessage}
+    <TouchableOpacity
+      style={containerStyle}
+      onPressIn={() => setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
+      onPress={handleClickMessage}
+    >
+
+
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
       >
         <Image
           source={{
-            uri: "https://www.10wallpaper.com/wallpaper/2880x1800/2102/Assassins_Creed_Eivor_AC_2021_Game_HD_Poster_2880x1800.jpg",
+            uri: user?.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
           }}
           style={{
             width: 60,
@@ -61,20 +74,61 @@ const Conversation = ({ conversation, currentUser }) => {
             objectfit: "cover",
           }}
         />
-        <Text
+        <View
           style={{
-            fontSize: 16,
-            marginLeft: 20,
-            alignContent: "center",
-            alignItems: "center",
-            alignSelf: "center",
-            fontWeight: "bold",
-          }}
-        >
-          jeff
-        </Text>
-      </TouchableOpacity>
-    </View>
+            display: "flex",
+            width: "87%",
+            height: "100%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+
+          }}>
+          <View
+            style={{
+              justifyContent: "center",
+              marginLeft: "4%",
+            }}>
+            <Text
+              style={{
+                fontSize: 16,
+                alignItems: "center",
+                fontWeight: "bold",
+              }}
+            >
+              {user?.pseudo}
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                marginTop: 6,
+                alignItems: "center",
+                fontWeight: "500",
+              }}
+            >
+              {conversation.message}
+            </Text>
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: 10,
+            }}>
+            <Text
+              style={{
+                fontSize: 8,
+                alignItems: "center",
+                fontWeight: "normal",
+              }}
+            >
+              {formatPostDate(conversation.createdAt)}
+            </Text>
+          </View>
+        </View>
+
+      </View>
+
+    </TouchableOpacity>
   );
 };
 

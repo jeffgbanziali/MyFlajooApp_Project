@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { Camera } from 'expo-camera';
+import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useDarkMode } from "../../Context/AppContext"
+import { useDarkMode } from "../Context/AppContext"
 import { useDispatch, useSelector } from 'react-redux';
-import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { collection, addDoc, getDoc, } from 'firebase/firestore';
-import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
-//import * as MediaLibrary from 'expo-media-library';
+import { firestore, uploadRéelsToFirebase } from '../../Data/FireStore';
+import * as ImagePicker from 'expo-image-picker';
 import { Modal } from 'react-native';
-import { addStory, getStories } from '../../../actions/story.action';
 import { Video } from 'expo-av';
+import { addVideoReels, getVideoReels } from '../../actions/réels.action';
 
 
-const CreateStory = () => {
+const CreateRéels = () => {
     const [postText, setPostText] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -24,78 +22,66 @@ const CreateStory = () => {
     const userData = useSelector((state) => state.userReducer);
     const [galleryMedia, setGalleryMedia] = useState([]);
     const navigation = useNavigation();
-    const [text, setText] = useState("");
-    const [police, setPolice] = useState(['normal', 'Arial', 'serif', ' Times New Roman', ' monospace', 'Courier New']);
-    const [indicePolice, setIndicePolice] = useState(0);
-    const policeActuelle = police[indicePolice];
     const { isDarkMode } = useDarkMode();
-    const [loadStories, setLoadStories] = useState(true);
+    const [loadVideo, setLoadVideo] = useState(true);
 
 
 
 
     useEffect(() => {
-        if (loadStories) {
-            dispatch(getStories());
-            setLoadStories(false);
+        if (loadVideo) {
+            dispatch(getVideoReels());
+            setLoadVideo(false);
         }
-    }, [loadStories, dispatch]);
+    }, [loadVideo, dispatch]);
 
 
     const handleClickReturnHome = () => {
         navigation.navigate('TabNavigation');
-        setLoadStories(true);
+        setLoadVideo(true);
 
     };
-    const handleTakePicture = () => {
-        navigation.navigate('Photo');
-    };
 
-    const handleStorySubmit = async () => {
+
+    const handleSumbitRéels = async () => {
+        let mediaUrl = null;
+
         try {
-            let mediaUrl = null;
-            let mediaType = null;
-
-            if (selectedImage) {
-                const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName);
-                mediaType = 'image';
-            } else if (selectedVideo) {
-                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName);
-                mediaType = 'video';
+            if (selectedVideo && selectedVideo.uri) {
+                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`
+                mediaUrl = await uploadRéelsToFirebase(selectedVideo.uri, mediaName);
             }
 
-            const storyData = {
+            const réelsData = {
                 posterId: userData._id,
-                text: postText,
-                media: {
-                    type: mediaType,
-                    url: mediaUrl,
-                },
+                videoPath: mediaUrl,
             };
 
-            dispatch(addStory(storyData));
+            // Utilise le dispatch pour ajouter la vidéo au store Redux
+            dispatch(addVideoReels(réelsData));
 
-            const docRef = await addDoc(collection(firestore, 'stories'), storyData);
+            // Ajoute le document à la collection "videoRéels" dans ta base de données
+            const docRef = await addDoc(collection(firestore, 'videoRéels'), réelsData);
             const docSnapshot = await getDoc(docRef);
 
-            console.log('Story créé avec succès! Document ID:', docRef.id);
+            console.log('Vidéo créée avec succès! Document ID:', docRef.id);
             console.log('Document data:', docSnapshot.data());
-            Alert.alert('Succès', 'Votre story a été publié avec succès !');
-            setPostText('');
-            setSelectedImage(null);
+            Alert.alert('Succès', 'Votre vidéo a été publiée avec succès !');
             setSelectedVideo(null);
-            setLoadStories(true);
+            setLoadVideo(true);
             navigation.goBack('TabNavigation');
         } catch (error) {
-            console.error('Erreur lors de la création de la story :', error);
-            let errorMessage = 'Une erreur s\'est produite lors de la création de la story.';
+            console.error('Erreur lors de la création de la vidéo :', error);
+
+            let errorMessage = 'Une erreur s\'est produite lors de la création de la vidéo.';
+
+            if (error.response && error.response.data && error.response.data.errors) {
+                errorMessage = Object.values(error.response.data.errors).join('\n');
+            }
+
             Alert.alert('Erreur', errorMessage);
         }
     };
-
-
 
 
 
@@ -107,15 +93,16 @@ const CreateStory = () => {
             if (status !== 'granted') {
                 Alert.alert('Permission refusée', 'La permission d\'accès à la bibliothèque de médias est requise.');
             } else {
+                console.log('Permission accordée. Type de média :', item.mediaType);
+
                 if (item.mediaType === 'video') {
-                    // Si c'est une vidéo, affichez la vidéo
+                    console.log('C\'est une vidéo. Sélection de la vidéo :', item);
                     setSelectedVideo(item);
-                    setSelectedImage(null); // Assurez-vous de réinitialiser l'image sélectionnée
+                    setSelectedImage(null);
                 } else {
-                    // Sinon, c'est une image, affichez l'image
+                    console.log('C\'est une image. Sélection de l\'image :', item);
                     setSelectedImage(item);
                     setSelectedVideo(null);
-                    // Assurez-vous de réinitialiser la vidéo sélectionnée
                 }
 
                 setShowImage(true);
@@ -125,7 +112,6 @@ const CreateStory = () => {
             Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'élément multimédia.');
         }
     };
-
 
 
     const closeImageModal = () => {
@@ -144,34 +130,7 @@ const CreateStory = () => {
         navigation.navigate("StoryCamera")
     }
 
-
-    { /* useEffect(() => {
-        const fetchMedia = async () => {
-            try {
-                // Demander l'autorisation d'accéder à la bibliothèque multimédia
-                const { status } = await MediaLibrary.requestPermissionsAsync();
-
-                if (status !== 'granted') {
-                    // Si l'autorisation n'est pas accordée, afficher une alerte ou prendre d'autres mesures
-                    console.error('Permission refusée pour accéder à la bibliothèque multimédia.');
-                    return;
-                }
-
-                // L'autorisation est accordée, récupérer les médias
-                const { assets } = await MediaLibrary.getAssetsAsync({ mediaType: 'all' });
-                console.log('Médias récupérés avec succès:', assets);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des médias :', error);
-            }
-        };
-
-        // Appeler la fonction pour récupérer les médias
-        fetchMedia();
-    }, []);*/}
-
-
-
-    const selectImage = async () => {
+    const selectVideo = async () => {
         try {
             console.log('Demande d\'autorisation...');
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -183,52 +142,27 @@ const CreateStory = () => {
                 console.log('Autorisation accordée, ouverture de la bibliothèque de médias...');
                 const result = await ImagePicker.launchImageLibraryAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.All,
-                    allowsEditing: false,
+                    allowsEditing: true,
                     aspect: [4, 3],
                     quality: 1,
                 });
 
                 if (!result.canceled) {
-                    if (result.uri.endsWith('.mp4')) {
-                        setSelectedVideo(result);
-                        setSelectedImage(null);
-                        setShowImage(true);
-                        console.log('Vidéo sélectionnée :', result);
-                    } else {
-                        setSelectedImage(result);
-                        setSelectedVideo(null);
-                        setShowImage(true);
-                        console.log('Image sélectionnée :', result);
-                    }
+                    setSelectedVideo(result);
+                    setShowImage(true);
+                    console.log('Image sélectionnée :', result);
+
                 } else {
-                    console.log('Sélection annulée');
+                    console.log('Sélection d\'image annulée');
                 }
             }
         } catch (error) {
-            console.error('Erreur lors de la sélection du média :', error);
-            Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection du média.');
+            console.error('Erreur lors de la sélection de la video :', error);
+            Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'image.');
         }
     };
 
 
-
-
-
-
-
-
-
-
-    const changerPoliceText = () => {
-        setIndicePolice((indice) => (indice + 1) % police.length);
-    };
-    const changeFilter = () => {
-        const currentIndex = availableFilters.indexOf(currentFilter);
-        const nextIndex = (currentIndex + 1) % availableFilters.length;
-        const nextFilter = availableFilters[nextIndex];
-        setCurrentFilter(nextFilter);
-        console.log('changing')
-    };
 
 
 
@@ -292,7 +226,7 @@ const CreateStory = () => {
                                 marginLeft: "3.5%",
                                 alignSelf: 'center'
                             }}>
-                            Create Your Story
+                            Create Your Réels
                         </Text>
 
                     </View>
@@ -319,8 +253,8 @@ const CreateStory = () => {
                         onPress={handleText}
                         style={{
                             width: 100,
-                            height: 140,
-                            backgroundColor: "#8A8A94",
+                            height: 120,
+                            backgroundColor: "#4C1854",
                             borderRadius: 20,
                             justifyContent: "center",
                             alignItems: "center",
@@ -328,15 +262,15 @@ const CreateStory = () => {
                         }}>
                         <View
                             style={{
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: "blue",
                                 borderRadius: 100,
                             }}
                         >
-                            <MaterialCommunityIcons name="format-letter-case" size={24} color="white" />
+                            <FontAwesome5 name="video" size={24} color="white" />
                         </View>
                         <Text
                             style={{
@@ -345,14 +279,14 @@ const CreateStory = () => {
                                 marginTop: 10,
                             }}
                         >
-                            Write a text
+                            Camera
                         </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
                             width: 100,
-                            height: 140,
+                            height: 120,
                             backgroundColor: "#7D5C96",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -361,8 +295,8 @@ const CreateStory = () => {
                         }}>
                         <View
                             style={{
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: "green",
@@ -385,7 +319,7 @@ const CreateStory = () => {
                     <TouchableOpacity onPress={goCamera}
                         style={{
                             width: 100,
-                            height: 140,
+                            height: 120,
                             backgroundColor: "#8C1616",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -394,8 +328,46 @@ const CreateStory = () => {
                         }}>
                         <View
                             style={{
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: "#340B3A",
+                                borderRadius: 100,
+                            }}
+                        >
+                            <Entypo
+                                name="adjust"
+                                size={30}
+                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                            />
+                        </View>
+                        <Text
+                            style={{
+                                color: isDarkMode ? "#F5F5F5" : "white",
+                                marginTop: 10,
+
+                                fontSize: 16
+                            }}
+                        >
+                            Effects
+                        </Text>
+
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={goCamera}
+                        style={{
+                            width: 100,
+                            height: 120,
+                            backgroundColor: "#E5A708",
+                            borderRadius: 20,
+                            justifyContent: "center",
+                            alignItems: "center"
+
+                        }}>
+                        <View
+                            style={{
+                                width: 60,
+                                height: 60,
                                 justifyContent: "center",
                                 alignItems: "center",
                                 backgroundColor: "yellow",
@@ -468,7 +440,7 @@ const CreateStory = () => {
 
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={selectImage}
+                            onPress={selectVideo}
                             style={{
                                 flexDirection: "row",
                                 width: "45%",
@@ -579,17 +551,9 @@ const CreateStory = () => {
                         </TouchableOpacity>
                     </View>
 
-                    {selectedImage && !selectedVideo && (
-                        <Image
-                            source={{ uri: selectedImage.uri }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                            }}
-                        />
-                    )}
-
                     {selectedVideo && (
+                        console.log('Selected Video URI:', selectedVideo.uri),
+
 
                         <Video
                             source={{ uri: selectedVideo.uri }}
@@ -597,12 +561,14 @@ const CreateStory = () => {
                                 width: "100%",
                                 height: "100%",
                             }}
+                            width="100%"
                             rate={1.0}
                             volume={1.0}
                             isMuted={false}
                             resizeMode="cover"
                             shouldPlay
                             isLooping
+                            onError={(error) => console.error('Erreur de lecture de la vidéo :', error)}
                         />
 
                     )}
@@ -671,7 +637,6 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={changeFilter}
                             style={{
                                 width: "30%",
                                 justifyContent: "space-around",
@@ -712,7 +677,7 @@ const CreateStory = () => {
                         }}
                     >
                         <TouchableOpacity
-                            onPress={handleStorySubmit}
+                            onPress={handleSumbitRéels}
                             style={{
                                 width: "14%",
                                 height: "60%",
@@ -735,150 +700,11 @@ const CreateStory = () => {
                 </View>
             </Modal>
 
-            <Modal
-                visible={showText}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={closeModalText}>
-                <View style={{
-                    flex: 1,
-                    alignItems: "center",
-                    backgroundColor: isDarkMode ? "red" : "gray",
-                }}>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 40,
-                            marginTop: "12%",
-                            justifyContent: "center",
-                            position: "absolute",
-                            zIndex: 2,
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginLeft: "2%",
-                            }}
-                            onPress={closeModalText}
-                        >
-                            <Entypo name="cross" size={36} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "50%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            top: "30%"
 
-                        }}>
-                        <TextInput
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                paddingLeft: 12,
-                                fontSize: 40,
-                                fontFamily: policeActuelle,
-                                fontWeight: "normal",
-                                overflow: "hidden",
-                                color: "white",
-                            }}
-                            multiline
-                            numberOfLines={4}
-                            maxLength={40}
-                            onChangeText={(nouveauText) => setText(nouveauText)}
-                            value={text}
-                            editable
-                            placeholder="Leave a short text..."
-                            placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
-                            fontSize="30"
-                            color={isDarkMode ? "#F5F5F5" : "white"} />
-                    </View>
-
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "20%",
-                            marginTop: "20%",
-                            alignItems: "flex-end",
-                            position: "absolute",
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={changerPoliceText}
-                            style={{
-                                width: "25%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "2%",
-                                flexDirection: "row",
-                                padding: 12,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 18,
-                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-                                    marginRight: 12,
-                                    fontWeight: "600",
-                                }}
-                            >
-                                Police
-                            </Text>
-                            <Ionicons
-                                name="text"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "10%",
-                            bottom: "5%",
-                            position: "absolute",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            paddingRight: 14,
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={handleStorySubmit}
-                            style={{
-                                width: "14%",
-                                height: "60%",
-                                backgroundColor: "#80BCF3",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                alignContent: "center",
-                                borderRadius: 100,
-                                flexDirection: "row",
-                                zIndex: 1,
-                            }}
-                        >
-                            <Ionicons
-                                name="ios-send"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-            </Modal>
         </>
 
 
     );
 };
 
-export default CreateStory;
+export default CreateRéels;

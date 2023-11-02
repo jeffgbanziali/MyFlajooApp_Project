@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { darkRose } from "../../components/Button/Constants";
@@ -24,6 +24,10 @@ const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const { uid, setUid } = useContext(UidContext)
+
+
+
 
   const handleSignIn = async () => {
     setIsLoadingSignIn(true);
@@ -65,9 +69,11 @@ const SignInScreen = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoadingSignIn(false); // Arrête le chargement spécifique à la connexion une fois que la requête est terminée
+      setIsLoadingSignIn(false);
     }
   };
+
+
 
 
   return (

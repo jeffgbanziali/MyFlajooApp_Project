@@ -1,16 +1,36 @@
 import { Link, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/base";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
 import { useDarkMode } from "../Context/AppContext";
+import axios from "axios";
+import { APP_API_URL } from "../../config";
 
 
 const Followers = ({ users }) => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
-
+  const [user, setUser] = useState([]);
+  
 
   const id = users._id;
+
+  useEffect(() => {
+    const getPostUser = async () => {
+      try {
+        const response = await axios.get(`${APP_API_URL}/api/post/${users._id}`);
+        setUser(response.data);
+        console.log(users._id)
+        console.log("Updated user state:", response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getPostUser();
+  }, [users._id]);
+
+  console.log(user.posts)
+
 
   const handleFollowing = () => {
     navigation.navigate("FriendsFollowing", { id });
@@ -46,7 +66,7 @@ const Followers = ({ users }) => {
               textAlign: "center",
             }}
           >
-            200 K {""}
+             {user.posts ? user.posts.length : 0}
           </Text>
           <Text
             style={{

@@ -92,11 +92,11 @@ const MyFollowers = () => {
                   return (
                     <>
                       <View
+                        key={user}
                         style={{
                           flexDirection: "row",
                           justifyContent: "space-between",
                         }}
-                        key={user._id}
                       >
                         <View
                           style={{

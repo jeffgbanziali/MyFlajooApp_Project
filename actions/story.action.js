@@ -24,37 +24,52 @@ export const getStories = (num) => {
 };
 
 export const addStory = (data) => {
+  return async (dispatch) => {
+    try {
+      console.log('Adding story:', data);
+
+      const response = await axios.post(`${APP_API_URL}/api/stories/`, data);
+
+      if (response.data.message === 'Story added to container successfully!') {
+        console.log('Story added successfully:', response.data.story);
+
+        // Mettre à jour le state Redux avec l'histoire nouvellement ajoutée
+        dispatch({ type: ADD_STORY, payload: response.data.story });
+      } else {
+        console.log('Error adding story:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error adding story:', error);
+
+      // Gérer les erreurs ici (si nécessaire)
+    }
+  };
+};
+
+export const likeStory = (storyId, posterId) => {
   return (dispatch) => {
     return axios
-      .post(`${APP_API_URL}/api/stories/`, data)
+      .patch(`${APP_API_URL}/api/stories/like-story/${storyId}`, posterId)
       .then((res) => {
-        dispatch({ type: ADD_STORY, payload: res.data });
+        dispatch({ type: LIKE_STORY, payload: { storyId, posterId } });
       })
       .catch((err) => console.log(err));
   };
 };
 
-export const likeStory = (storyId, userId) => {
+export const dislikeStory = (storyId, posterId) => {
   return (dispatch) => {
     return axios
-      .patch(`${APP_API_URL}/api/stories/like-story/${storyId}`, { id: userId })
+      .patch(`${APP_API_URL}/api/stories/dislike-story/${storyId}`, posterId)
       .then((res) => {
-        dispatch({ type: LIKE_STORY, payload: { storyId, userId } });
+        dispatch({ type: DISLIKE_STORY, payload: { storyId, posterId } });
       })
       .catch((err) => console.log(err));
   };
 };
 
-export const dislikeStory = (storyId, userId) => {
-  return (dispatch) => {
-    return axios
-      .patch(`${APP_API_URL}/api/stories/dislike-story/${storyId}`, { id: userId })
-      .then((res) => {
-        dispatch({ type: DISLIKE_STORY, payload: { storyId, userId } });
-      })
-      .catch((err) => console.log(err));
-  };
-};
+
+
 
 export const viewStory = (storyId, viewerId) => {
   return (dispatch) => {

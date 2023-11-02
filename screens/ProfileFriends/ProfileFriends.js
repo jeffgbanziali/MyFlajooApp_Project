@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,18 +10,18 @@ import {
 } from "react-native";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import ProfileFriendsUtils from "../../components/ProfileFriendsUtils/ProfileFriendsUtils";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useSelector } from "react-redux";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import ProfileFriendsTools from "../../components/ProfileFriendsUtils/ProfileFriendsTools";
-import PostsUser from "../../components/ProfileUtils.js/PostsUser";
+import PostsFriendsUser from "../../components/ProfileFriendsUtils/PostsFriendsUser";
 import { useDarkMode } from "../../components/Context/AppContext";
 
 const ProfileFriends = () => {
   const route = useRoute();
   const { id } = route.params;
   const { isDarkMode } = useDarkMode();
+  const [selectedSwitchValue, setSelectedSwitchValue] = useState();
 
   const navigation = useNavigation();
   const usersData = useSelector((state) => state.usersReducer);
@@ -31,7 +31,6 @@ const ProfileFriends = () => {
   };
   const handleClickSettings = () => {
     console.log("clicked");
-    navigation.navigate("Settings");
   };
 
   const handleSendMEssage = (id) => {
@@ -40,7 +39,27 @@ const ProfileFriends = () => {
   };
 
   const users = usersData.find((user) => user._id === id);
-  const user = usersData.find((user) => user._id === usersData.posterId);
+  console.log(users)
+
+  const handleSwitchChange = (value) => {
+    setSelectedSwitchValue(value);
+    // Vous pouvez effectuer des actions spécifiques en fonction de la valeur ici
+    switch (value) {
+      case "P":
+        console.log("Option sélectionnée : Post");
+        break;
+      case "V":
+        console.log("Option sélectionnée : Video");
+        break;
+      case "A":
+        console.log("Option sélectionnée : Audio");
+        break;
+      default:
+        break;
+    }
+  };
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -301,18 +320,23 @@ const ProfileFriends = () => {
           </View>
         </View>
         <ProfileFriendsTools users={users} />
-        <NavButtonProfile />
-        <View
-          style={{
+        <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
+        {selectedSwitchValue === "P" && (
+          <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
+            <PostsFriendsUser users={users} />
+          </View>
+        )}
+        {selectedSwitchValue === "V" && (
+          <View style={{
             flex: 1,
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 10,
-          }}
-        >
-          <PostsUser />
-        </View>
+            width: '100%',
+            height: 100,
+            backgroundColor: "red",
+            marginBottom: 10
+          }}>
+
+          </View>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );

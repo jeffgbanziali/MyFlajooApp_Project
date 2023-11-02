@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Conversation from "./Conversation";
 import Search from "../../components/MessagesUser/Search";
 import ChatOnline from "../../components/MessagesUser/ChatOnline";
@@ -22,6 +22,8 @@ const Message = () => {
   const [conver, setConver] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
+
+
   const { uid } = useContext(UidContext);
 
   useEffect(() => {
@@ -30,7 +32,11 @@ const Message = () => {
         const response = await axios.get(
           `${APP_API_URL}/api/conversation/${uid}`
         );
-        setConver(response.data);
+        
+        const sortedConversations = response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setConver(sortedConversations);
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -41,7 +47,6 @@ const Message = () => {
   }, [uid]);
 
   const navigation = useNavigation();
-
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
@@ -69,11 +74,10 @@ const Message = () => {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "space-between",
             paddingTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
-            marginTop: 10,
+            marginTop: "6%",
           }}
         >
           <View
@@ -82,8 +86,6 @@ const Message = () => {
               justifyContent: "flex-start",
               alignItems: "center",
               paddingTop: 10,
-              paddingLeft: 10,
-              paddingRight: 10,
               marginTop: 10,
             }}
           >
@@ -171,12 +173,8 @@ const Message = () => {
             style={{
               backgroundColor: "#2C2828",
               flexDirection: "row",
-              justifyContent: "flex-end",
-              alignContent: "flex-end",
-              alignSelf: "flex-end",
               alignItems: "center",
               paddingTop: 10,
-              paddingLeft: 10,
               paddingRight: 10,
               marginTop: 10,
             }}
@@ -203,8 +201,8 @@ const Message = () => {
                 justifyContent: "center",
                 alignSelf: "center",
                 alignItems: "center",
-                marginLeft: 16,
-                marginTop: -10,
+                marginLeft: 10,
+                bottom: 40,
                 zIndex: 100,
               }}
             >
@@ -223,10 +221,8 @@ const Message = () => {
                 fontWeight: "bold",
                 fontSize: 20,
                 textAlign: "center",
-                alignContent: "center",
                 alignItems: "center",
-                marginBottom: 10,
-                marginLeft: 15,
+                marginLeft: 20,
                 color: "#FFFFFF",
               }}
             >
@@ -267,6 +263,7 @@ const Message = () => {
               marginTop: 150,
               paddingTop: -50,
               height: "100%",
+              width: "100%",
             }}
           >
             <View
@@ -283,26 +280,22 @@ const Message = () => {
                 flexFlow: "row wrap",
                 flexDirection: "column",
                 justifyContent: "flex-start",
-                //// width: "100%",
-
+                width: "100%",
                 marginBottom: 100,
                 paddingBottom: -10,
                 position: "relative",
               }}
             >
-              <View>
-                <ScrollView>
-                  {conver.map((c, index) => (
-                    <View key={index} onPress={() => setCurrentChat(c)}>
-                      <Conversation
-                        key={index}
-                        conversation={c}
-                        currentUser={uid}
-                      />
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
+              <ScrollView>
+                {conver.map((c, index) => (
+                  <View key={index} onPress={() => setCurrentChat(c,)}>
+                    <Conversation
+                      conversation={c}
+                      currentUser={uid}
+                    />
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           </View>
         </ScrollView>

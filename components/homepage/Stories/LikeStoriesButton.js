@@ -14,24 +14,22 @@ const LikeStoriesButton = ({ story }) => {
     console.log('Like button pressed');
     dispatch(likeStory(story._id, { id: uid }));
     setLiked(true);
-    console.log(story._id);
+    console.log("Est-ce que tu existes, mon", story._id, 'ane', uid);
   };
+
 
   const unlike = () => {
     console.log('Unlike button pressed');
-    dispatch(likeStory(story._id, { id: uid }));
+    dispatch(dislikeStory(story._id, { id: uid }));
     setLiked(false);
-    console.log(story._id);
+    console.log("est-ceque tu existe mon", story._id);
   };
 
 
   useEffect(() => {
-    if (story && story.likers && story.likers.includes(uid)) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
-  }, [uid, story, liked]);
+
+    setLiked(story.likers.includes(uid));
+  }, [uid, story.likers,]);
 
 
   return (

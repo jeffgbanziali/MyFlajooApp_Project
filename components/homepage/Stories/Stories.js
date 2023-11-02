@@ -9,35 +9,35 @@ import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { Video } from "expo-av";
 
 const Stories = () => {
-  const [loadPosts, setLoadPosts] = useState(true);
+  const [loadStories, setLoadStories] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const storiesData = useSelector((state) => state.storyReducer);
-  console.log(storiesData);
   const usersData = useSelector((state) => state.usersReducer);
   const { isDarkMode } = useDarkMode();
   const { uid } = useContext(UidContext);
 
   useEffect(() => {
-    if (loadPosts) {
+    if (loadStories) {
       dispatch(getStories());
-      setLoadPosts(false);
+      setLoadStories(false);
     }
-  }, [loadPosts, dispatch]);
+  }, [loadStories, dispatch]);
 
   useEffect(() => {
     !isEmpty(usersData) && setLoading(false);
   }, [usersData]);
 
-
-
+  const filteredStories = storiesData.filter(item => item.container.posterId !== uid);
   const navigation = useNavigation(false);
 
   const handleViewStory = (id, media_type) => {
     console.log("Clicked story ID:", id);
-
+    setLoadStories(false);
     navigation.navigate("StoryStream", { id, media_type });
   };
+
+
 
 
 
@@ -45,19 +45,17 @@ const Stories = () => {
   const renderItem = ({ item }) => {
 
 
-
-
     return (
 
 
-      <View key={item.container.stories[item.container.stories.length - 1]._id}>
+      <View key={item.container._id}>
 
-        {item.container.stories[item.container.stories.length - 1].media && (
+        {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
 
           <TouchableOpacity
             onPress={() => {
-              const storyId = item.container.stories[0]._id; // Accéder à l'ID de la première histoire
-              const mediaType = item.container.stories[0].media_type; // Accéder au type de média de la première histoire
+              const storyId = item.container.stories[0]._id;
+              const mediaType = item.container.stories[0].media_type;
               handleViewStory(storyId, mediaType);
             }}
           >
@@ -109,7 +107,7 @@ const Stories = () => {
           </TouchableOpacity>
         )}
 
-        {!item.container.stories[item.container.stories.length - 1].media && (
+        {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
           <TouchableOpacity
             onPress={() => {
               handleViewStory(item.container.stories._id,);
@@ -156,7 +154,7 @@ const Stories = () => {
                 !isEmpty(usersData[0]) &&
                 usersData
                   .map((user) => {
-                    if (user._id === item.container.posterId) return user.picture;
+                    if (user._id === item.container.posterId) return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                     else return null;
                   })
                   .join(""),
@@ -252,9 +250,8 @@ const Stories = () => {
           marginBottom: 10,
           marginLeft: 10,
           marginRight: 10,
-          alignSelf: "center",
         }}
-        data={storiesData}
+        data={filteredStories}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
         ListHeaderComponent={<MyStory />}

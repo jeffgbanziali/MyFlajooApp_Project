@@ -15,13 +15,14 @@ import {
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import LikeStoriesButton from "./LikeStoriesButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Video, resizeMode } from "expo-av";
 import AddStoryComment from "./AddStoryComment";
+import { getStories } from "../../../actions/story.action";
 
 const { width, height } = Dimensions.get("window")
 
@@ -30,7 +31,9 @@ const StoriesStream = () => {
   const { isDarkMode } = useDarkMode();
   const route = useRoute();
   const { id } = route.params;
+  const dispatch = useDispatch();
   const { uid } = useContext(UidContext);
+  const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
   console.log(storiesData)
   const usersData = useSelector((state) => state.usersReducer);
@@ -43,7 +46,7 @@ const StoriesStream = () => {
   } else {
     console.log("Container not found for story ID:", id);
   }
-  const user = usersData.find((user) => user._id === selectedStory.container.stories[0].posterId);
+  const user = usersData.find((user) => user._id === selectedStory.container.posterId);
   console.log(user);
 
 
@@ -56,7 +59,8 @@ const StoriesStream = () => {
 
   const goToHome = () => {
     console.log("clicked");
-    navigation.navigate("TabNavigation");
+
+    navigation.navigate("TabNavigation",);
   };
 
   const goProfil = (id) => {
@@ -64,40 +68,39 @@ const StoriesStream = () => {
   };
 
   const goToNextStory = () => {
-    if (selectedStory && selectedStory.container && selectedStory.container.stories) {
-      const totalStories = selectedStory.container.stories.length;
+    try {
+      if (selectedStory && selectedStory.container && selectedStory.container.stories) {
+        const totalStories = selectedStory.container.stories.length;
 
-      if (currentStoryIndex < totalStories - 1) {
-        const nextStoryIndex = currentStoryIndex + 1;
+        if (currentStoryIndex < totalStories - 1) {
+          const nextStoryIndex = currentStoryIndex + 1;
+          const nextStory = selectedStory.container.stories[nextStoryIndex];
 
-        // On utilise nextStoryIndex pour accéder à la prochaine histoire dans le même container
-        const nextStory = selectedStory.container.stories[nextStoryIndex];
+          console.log('Next Story:', nextStory);
 
-        // Fais quelque chose avec nextStory si nécessaire (affichage dans la console, etc.)
-        console.log('Next Story:', nextStory);
-
-        // Mets à jour l'index de l'histoire actuelle en utilisant setCurrentStoryIndex
-        setCurrentStoryIndex(nextStoryIndex);
-        resetAnimation();
-      } else {
-        // Pas d'histoire suivante dans le conteneur actuel, passe au conteneur suivant si disponible
-        const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
-
-        if (nextContainerIndex < storiesData.length) {
-          const nextContainer = storiesData[nextContainerIndex];
-          setCurrentStoryIndex(0);
-          setSelectedStory(nextContainer);
+          setCurrentStoryIndex(nextStoryIndex);
           resetAnimation();
-
         } else {
-          console.error('Unable to go to the next story or container.');
-          navigation.navigate("TabNavigation");
+          const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
+
+          if (nextContainerIndex < storiesData.length) {
+            const nextContainer = storiesData[nextContainerIndex];
+            setSelectedStory(nextContainer);
+            setCurrentStoryIndex(0);
+            resetAnimation();
+          } else {
+            console.error('Unable to go to the next story or container.');
+            navigation.navigate("TabNavigation");
+          }
         }
+      } else {
+        console.error('Invalid story or container.');
       }
-    } else {
-      console.error('Invalid story or container.');
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
+
 
 
   const handleNextStoryButtonPress = () => {
@@ -156,7 +159,7 @@ const StoriesStream = () => {
           onPress={handlePrevStoryButtonPress}
           style={{
             flex: 1,
-            height: "70%",
+            height: "65%",
             marginTop: "30%",
             width: "30%",
             position: "absolute",
@@ -169,7 +172,7 @@ const StoriesStream = () => {
         <Pressable
           style={{
             flex: 1,
-            height: "70%",
+            height: "65%",
             marginTop: "30%",
             width: "30%",
             position: "absolute",
@@ -319,7 +322,7 @@ const StoriesStream = () => {
                       usersData
                         .map((user) => {
                           if (user._id === selectedStory.container.posterId)
-                            return user.picture;
+                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                           else return null;
                         })
                         .join(""),
@@ -358,8 +361,11 @@ const StoriesStream = () => {
                     height: "100%",
                     width: "100%",
                     borderRadius: 30,
-
                     opacity: 0.9,
+                  }}
+                  onLoadEnd={() => {
+                    progressAnimation.setValue(0);
+                    start()
                   }}
                 />
               )}
@@ -372,6 +378,10 @@ const StoriesStream = () => {
                   resizeMode="cover"
                   shouldPlay
                   isLooping
+                  onLoad={() => {
+                    progressAnimation.setValue(0);
+                    start()
+                  }}
                   style={{
                     height: "100%",
                     width: "100%",
@@ -457,7 +467,7 @@ const StoriesStream = () => {
                   resizeMode="cover"
                   shouldPlay
                   isLooping
-                  onLoadEnd={() => {
+                  onLoad={() => {
                     progressAnimation.setValue(0);
                     start()
                   }}
@@ -512,7 +522,7 @@ const StoriesStream = () => {
             justifyContent: "space-between",
           }}
         >
-          <AddStoryComment story={selectedStory.container.stories[currentStoryIndex].comments} />
+          <AddStoryComment story={selectedStory.container.stories[currentStoryIndex]} />
           <View
             style={{
               width: 50,
@@ -524,7 +534,9 @@ const StoriesStream = () => {
 
             }}
           >
-            <LikeStoriesButton story={selectedStory.container.stories[currentStoryIndex].likers} />
+            <LikeStoriesButton
+              story={selectedStory.container.stories[currentStoryIndex]}
+            />
           </View>
         </View>
       </View>

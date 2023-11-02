@@ -49,7 +49,7 @@ const AddRéelsComment = ({ réels }) => {
             }}
           >
             <Image
-              source={{ uri: userData.picture }}
+              source={{ uri: userData.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
               style={{
                 width: "100%",
                 height: "100%",

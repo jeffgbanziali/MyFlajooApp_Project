@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import SwitchSelector from "react-native-switch-selector";
 
-const NavButtonProfile = () => {
-    const options = [
-        { label: "01:00", value: "1", testID: "switch-one", accessibilityLabel: "switch-one" },
-        { label: "01:30", value: "1.5", testID: "switch-one-thirty", accessibilityLabel: "switch-one-thirty" },
-        { label: "02:00", value: "2", testID: "switch-two", accessibilityLabel: "switch-two" }
-    ];
+const NavButtonProfile = ({ onSwitchChange }) => {
+
+
+    useEffect(() => {
+        onSwitchChange("P");
+    }, [onSwitchChange]);
 
     return (
         <View style={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            Top: -50,
         }}
         >
 
@@ -23,7 +22,7 @@ const NavButtonProfile = () => {
                 fontSize={16}
                 fontStyle="normal"
                 fontWeight={600}
-                onPress={value => console.log(`Call onPress with value: ${value}`)}
+                onPress={value => onSwitchChange(value)}
                 backgroundColor="#494747"
                 textColor="#FFFFFF"
                 selectedColor="#FFFFFF"
@@ -33,7 +32,8 @@ const NavButtonProfile = () => {
                 hasPadding
                 options={[
                     { label: "Post ", value: "P" },
-                    { label: "Video", value: "V" }
+                    { label: "Video", value: "V" },
+                    { label: "Audio", value: "A" }
                 ]}
                 testID="gender-switch-selector"
                 accessibilityLabel="gender-switch-selector"
@@ -44,11 +44,8 @@ const NavButtonProfile = () => {
                     marginBottom: 20,
                 }}
             />
-
-
         </View>
     );
 }
-
 
 export default NavButtonProfile;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TextInput, Alert, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPosts } from '../../actions/post.actions';
+import { addPosts, getPosts } from '../../actions/post.actions';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -17,14 +17,24 @@ const NewPostScreen = () => {
     const userData = useSelector((state) => state.userReducer);
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
+    const [loadPost, setLoadPost] = useState(true);
     const { isDarkMode } = useDarkMode();
 
+
+    useEffect(() => {
+        if (loadPost) {
+            dispatch(getPosts());
+            setLoadPost(false);
+        }
+    }, [loadPost, dispatch]);
     const handleClickReturnHome = () => {
         navigation.navigate('TabNavigation');
     };
     const handleTakePicture = () => {
         navigation.navigate('Photo');
     };
+
+
     const handlePostSubmit = async () => {
         if (postText.trim() === '') {
             Alert.alert('Erreur', 'Veuillez entrer du texte pour votre post.');
@@ -56,6 +66,8 @@ const NewPostScreen = () => {
             Alert.alert('Succès', 'Votre post a été publié avec succès !');
             setPostText('');
             setSelectedImage(null);
+            setLoadPost(true);
+            navigation.goBack('TabNavigation');
         } catch (error) {
             console.error('Erreur lors de la création du post :', error);
 

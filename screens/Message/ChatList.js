@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAvoidingView } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
 import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessagesUser";
 import { UidContext } from "../../components/Context/AppContext";
@@ -29,14 +29,14 @@ const Message = () => {
   const { uid } = useContext(UidContext);
   const scrollRef = useRef();
   const route = useRoute();
-  const { conversationId } = route.params;
+  const { conversationId, user } = route.params;
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
       console.log("Received message:", data);
       setArrivalChat({
-        sender: data.senderId,
+        senderId: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
@@ -45,13 +45,13 @@ const Message = () => {
 
   useEffect(() => {
     arrivalChat &&
-      currentChat?.members?.includes(arrivalChat.sender) &&
+      currentChat?.members?.includes(arrivalChat.senderId) &&
       setChat((prev) => [...prev, arrivalChat]);
   }, [arrivalChat, currentChat]);
 
   useEffect(() => {
     socket.current.emit("addUser", uid);
-    socket.current.on("getUSers", (users) => {
+    socket.current.on("getUsers", (users) => {
       console.log(users);
       setOnlineUser(
         uid.followings.filter((f) => users.some((u) => u._id === f))
@@ -74,11 +74,14 @@ const Message = () => {
     };
     getMessages();
   }, [conversationId]);
-  
+
+
+
+
 
   useEffect(() => {
     setCurrentChat(chat);
-  }, [chat.length]); 
+  }, [chat.length]);
 
   console.log(currentChat);
 
@@ -86,14 +89,14 @@ const Message = () => {
     console.log("handleSendMessage called");
     console.log("newChat:", newChat);
     const message = {
-      sender: uid,
+      senderId: uid,
       text: newChat,
       conversationId: conversationId,
     };
     console.log("où est mon : ", conversationId);
 
     const uniqueSenders = [
-      ...new Set(currentChat.map((message) => message.sender)),
+      ...new Set(currentChat.map((message) => message.senderId)),
     ];
     const receiverId = uniqueSenders.find((sender) => sender !== uid);
 
@@ -110,7 +113,7 @@ const Message = () => {
       );
 
       setChat((prevChat) => [...prevChat, response.data]);
-      setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]); 
+      setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
       setNewChat("");
     } catch (err) {
       console.log(err);
@@ -120,6 +123,10 @@ const Message = () => {
   useEffect(() => {
     scrollRef?.current?.scrollToEnd({ animated: true });
   }, [chat]);
+
+
+
+
 
   const handleClickReturnMessageList = () => {
     console.log("clicked");
@@ -139,7 +146,6 @@ const Message = () => {
       <View
         style={{
           flex: 1,
-          marginTop: 20,
           backgroundColor: "#2C2828",
         }}
       >
@@ -149,101 +155,107 @@ const Message = () => {
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: 30,
-            marginTop: 20,
+            marginTop: "12%",
           }}
         >
           <View
             style={{
-              justifyContent: "center",
-              alignSelf: "center",
-              backgroundColor: "#161414",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "3.5%",
-              marginTop: "1.5%",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            <TouchableOpacity onPress={handleClickReturnMessageList}>
+            <TouchableOpacity
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#161414",
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                marginLeft: "3.5%",
+              }}
+              onPress={handleClickReturnMessageList}>
               <AntDesign
                 name="arrowleft"
-                size={28}
+                size={25}
                 color="#5F5858"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
+
               />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+                alignItems: "center",
+                color: "#FFFFFF",
+                marginLeft: 10
+              }}
+            >
+              {user.pseudo}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "35%",
+              justifyContent: "space-around"
+            }}>
+            <TouchableOpacity onPress={handleClickCall}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#D9D9D9",
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                marginTop: "1.5%",
+              }}
+            >
+              <Ionicons
+                name="ios-call"
+                size={25}
+                color="#000000"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleClickCall}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#D9D9D9",
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+              }}
+            >
+              <Ionicons
+                name="videocam"
+                size={24}
+                color="#000000"
+
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleClickCall}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#D9D9D9",
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+              }}
+            >
+              <Entypo
+                name="dots-three-vertical"
+                size={20}
+                color="black" />
+
             </TouchableOpacity>
           </View>
 
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 26,
-              textAlign: "center",
-              alignContent: "center",
-              alignItems: "center",
-              marginBottom: 10,
-              color: "#FFFFFF",
-            }}
-          >
-            Messages
-          </Text>
-          <View
-            style={{
-              justifyContent: "center",
-              alignSelf: "center",
-              backgroundColor: "#D9D9D9",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "11.5%",
-              marginTop: "1.5%",
-            }}
-          >
-            <TouchableOpacity onPress={handleClickCall}>
-              <Ionicons
-                name="ios-call"
-                size={28}
-                color="#000000"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              justifyContent: "center",
-              alignSelf: "center",
-              backgroundColor: "#D9D9D9",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginRight: "3.5%",
-              marginTop: "1.5%",
-            }}
-          >
-            <TouchableOpacity onPress={handleClickVideoCall}>
-              <Ionicons
-                name="videocam"
-                size={28}
-                color="#000000"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
-              />
-            </TouchableOpacity>
-          </View>
+
         </View>
 
         <KeyboardAvoidingView
@@ -276,7 +288,7 @@ const Message = () => {
                       width: "100%",
                     }}
                   >
-                    <MessagesUser message={mes} own={mes.sender === uid} />
+                    <MessagesUser message={mes} user={user} own={mes.senderId === uid} />
                   </View>
                 ))}
               </ScrollView>

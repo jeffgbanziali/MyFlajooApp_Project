@@ -6,22 +6,26 @@ import {
     View,
     KeyboardAvoidingView,
     Animated,
+    Dimensions,
 } from 'react-native';
 import Header from '../../components/homepage/Header';
 import Stories from '../../components/homepage/Stories/Stories';
 import Thread from '../../components/Thread/Thread';
 import { useDarkMode } from '../../components/Context/AppContext';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const HomeScreen = () => {
     const { isDarkMode } = useDarkMode();
-
-
+    const bottomTabHeight = useBottomTabBarHeight();
     return (
         <>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{
                     backgroundColor: isDarkMode ? "#171717" : "white",
+                    height: windowHeight - bottomTabHeight,
 
                     flex: 1,
                 }}

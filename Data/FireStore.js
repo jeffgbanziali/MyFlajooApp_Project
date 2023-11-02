@@ -39,7 +39,34 @@ const uploadStoryToFirebase = async (localUri, imageName) => {
     return imageUrl;
 };
 
-export { uploadImageToFirebase, uploadStoryToFirebase };
+const uploadRéelsToFirebase = async (localUri, fileName) => {
+    try {
+        const storage = getStorage();
+        const storageRef = ref(storage, 'VideoRéelsContainer/' + fileName);
+
+        console.log('Fetching blob from:', localUri);
+        const response = await fetch(localUri);
+        const blob = await response.blob();
+        console.log('Blob fetched successfully:', blob);
+
+        console.log('Uploading blob to Firebase Storage...');
+        await uploadBytes(storageRef, blob);
+        console.log('Blob uploaded successfully.');
+
+        console.log('Getting download URL...');
+        const mediaUrl = await getDownloadURL(storageRef);
+        console.log('Download URL obtained:', mediaUrl);
+
+        return mediaUrl;
+    } catch (error) {
+        console.error('Error during uploadRéelsToFirebase:', error);
+        throw error;
+    }
+};
+
+
+
+export { uploadImageToFirebase, uploadStoryToFirebase, uploadRéelsToFirebase };
 
 
 const convertImageToArrayBuffer = async (localUri) => {
@@ -48,7 +75,7 @@ const convertImageToArrayBuffer = async (localUri) => {
 
         // Lit le fichier image en tant qu'ArrayBuffer
         const arrayBuffer = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
-        
+
         // Convertit la chaîne Base64 en Uint8Array
         const buffer = new Uint8Array(arrayBuffer.length);
         for (let i = 0; i < arrayBuffer.length; i++) {

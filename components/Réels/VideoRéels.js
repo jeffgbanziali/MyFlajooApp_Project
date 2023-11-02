@@ -270,7 +270,7 @@ const VideoRéels = ({ item, isActive }) => {
                       !isEmpty(usersData) &&
                       usersData
                         .map((user) => {
-                          if (user._id === item.posterId) return user.picture;
+                          if (user._id === item.posterId) return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                           else return null;
                         })
                         .join(""),

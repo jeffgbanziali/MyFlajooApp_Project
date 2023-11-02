@@ -1,28 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, FlatList, View, Text } from 'react-native';
 import axios from 'axios';
 import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useDarkMode, UidContext } from '../Context/AppContext';
+import { useDarkMode } from '../Context/AppContext';
 
 
-const PostsUser = () => {
+const PostsFriendsUser = ({ users }) => {
     const [user, setUser] = useState([]);
     const { isDarkMode } = useDarkMode();
-    const { uid } = useContext(UidContext)
-
     useEffect(() => {
         const getPostUser = async () => {
             try {
-                const response = await axios.get(`${APP_API_URL}/api/post/${uid}`);
+                const response = await axios.get(`${APP_API_URL}/api/post/${users._id}`);
                 setUser(response.data);
             } catch (err) {
                 console.error(err);
             }
         }
         getPostUser();
-    }, [uid]);
+    }, [users._id]);
 
 
 
@@ -104,4 +102,4 @@ const PostsUser = () => {
 
 
 
-export default PostsUser;
+export default PostsFriendsUser;

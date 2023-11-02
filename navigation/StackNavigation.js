@@ -32,6 +32,8 @@ import AccountInfo from "../components/Settings/AccountInfo";
 import UserInfos from "../components/Settings/UserInfos";
 import UpdateName from "../components/Settings/UpdateName";
 import StoryCamera from "../components/homepage/Stories/StoryCamera";
+import CreateRéels from "../components/Réels/CreateRéels";
+import StoriesStreamUser from "../components/homepage/Stories/StoriesStreamUser";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,14 +45,22 @@ const StackNavigation = () => {
   useEffect(() => {
     console.log("uid in StackNavigation", uid);
 
-    if (uid === null) {
+    if (uid === null || uid === undefined) {
       console.log("Navigating to Signin");
-      navigation.navigate("Signin");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Signin' }],
+      });
     } else {
       console.log("Navigating to HomeScreen");
-      navigation.navigate("TabNavigation");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'TabNavigation' }],
+      });
     }
   }, [uid, navigation]);
+
+
 
 
   return (
@@ -62,7 +72,9 @@ const StackNavigation = () => {
 
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
       <Stack.Screen name="Réels" component={Réels} />
+      <Stack.Screen name="createRéels" component={CreateRéels} />
       <Stack.Screen name="StoryStream" component={StoriesStream} />
+      <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
       <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
       <Stack.Screen name="Messages" component={Message} />
       <Stack.Screen name="Chatlist" component={ChatList} />

@@ -46,7 +46,7 @@ const AllCommentView = ({ post }) => {
                     usersData
                       .map((user) => {
                         if (user._id === comment.commenterId)
-                          return user.picture;
+                          return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                         else return null;
                       })
                       .join("")

@@ -18,11 +18,14 @@ import { useNavigation } from "@react-navigation/native";
 import PostsUser from "../../components/ProfileUtils.js/PostsUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { KeyboardAvoidingView } from "react-native";
+import VideoRéelsUser from "../../components/ProfileUtils.js/VideoRéelsUser";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
+  const [selectedSwitchValue, setSelectedSwitchValue] = useState();
+
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
@@ -31,6 +34,30 @@ const Profile = () => {
     console.log("clicked");
     navigation.navigate("Settings");
   };
+
+  const handleSwitchChange = (value) => {
+    setSelectedSwitchValue(value);
+    // Vous pouvez effectuer des actions spécifiques en fonction de la valeur ici
+    switch (value) {
+      case "P":
+        console.log("Option sélectionnée : Post");
+        // Faire quelque chose pour l'option "Post"
+        break;
+      case "V":
+        console.log("Option sélectionnée : Video");
+        // Faire quelque chose pour l'option "Video"
+        break;
+      case "A":
+        console.log("Option sélectionnée : Audio");
+        // Faire quelque chose pour l'option "Audio"
+        break;
+      default:
+        break;
+    }
+  };
+
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -187,18 +214,21 @@ const Profile = () => {
           </View>
         </View>
         <ProfileUtils />
-        <NavButtonProfile />
-        <View
-          style={{
+        <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
+        {selectedSwitchValue === "P" && (
+          <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
+            <PostsUser />
+          </View>
+        )}
+        {selectedSwitchValue === "V" && (
+          <View style={{
             flex: 1,
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 10,
-          }}
-        >
-          <PostsUser />
-        </View>
+            width: '100%',
+            marginBottom: 10
+          }}>
+            <VideoRéelsUser />
+          </View>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
