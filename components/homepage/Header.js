@@ -28,7 +28,7 @@ const Header = () => {
     <View style={{
       backgroundColor: isDarkMode ? "#171717" : "white",
       borderBottomWidth: 2,
-      borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+      borderColor: isDarkMode ? "#343232" : "lightgray",
 
     }}>
       <View

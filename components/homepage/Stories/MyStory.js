@@ -48,7 +48,6 @@ const MyStory = () => {
         justifyContent: "center",
         position: "relative",
         borderRadius: 10,
-        borderWidth: 2,
         position: "relative",
         shadowColor: "#000",
         shadowOffset: {
@@ -64,112 +63,106 @@ const MyStory = () => {
 
       {
         userStories.length > 0 ? (
-          <>
+          <View>
 
             {
-              userStories.map((item) => {
-                return (
-                  <>
+              userStories.map((item) => (
 
-                    <View
-                      key={item.container.posterId}
+                <View
+                  key={item}
 
+                >
+                  {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        const storyId = item.container.stories[0]._id;
+                        const mediaType = item.container.stories[0].media_type;
+                        handleViewStory(storyId, mediaType);
+                      }}
                     >
-                      {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
-
-                        <TouchableOpacity
-                          onPress={() => {
-                            const storyId = item.container.stories[0]._id;
-                            const mediaType = item.container.stories[0].media_type;
-                            handleViewStory(storyId, mediaType);
-                          }}
-                        >
-                          <View
-                            style={{
-                              shadowColor: "#000",
-                              shadowOffset: {
-                                width: 0,
-                                height: 2,
-                              },
-                              shadowOpacity: 0.4,
-                              shadowRadius: 3.84,
-                              elevation: 5,
-                            }}
-                          >
-                            {item.container.stories[item.container.stories.length - 1].media_type === "image" && (
-                              <Image
-                                source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
-                                style={{
-                                  width: 100,
-                                  height: 140,
-                                  borderRadius: 10,
-                                  resizeMode: "cover",
-                                }}
-                              />
-                            )}
-                            {item.container.stories[item.container.stories.length - 1].media_type === "video" && (
-                              <Video
-                                source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
-                                rate={1.0}
-                                volume={1.0}
-                                isMuted={false}
-                                resizeMode="cover"
-                                isLooping
-                                shouldPlay={false}
-                                style={{
-                                  width: 100,
-                                  height: 140,
-                                  borderRadius: 10,
-                                  resizeMode: "cover",
-                                }}
-                              />
-                            )}
-
-
-                          </View>
-                        </TouchableOpacity>
-                      )}
-
-                      {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
-                        <TouchableOpacity
-                          onPress={() => {
-                            handleViewStory(item.container.stories._id,);
-                          }}
-                        >
-                          <View
+                      <View
+                        style={{
+                          shadowColor: "#000",
+                          shadowOffset: {
+                            width: 0,
+                            height: 2,
+                          },
+                          shadowOpacity: 0.4,
+                          shadowRadius: 3.84,
+                          elevation: 5,
+                        }}
+                      >
+                        {item.container.stories[item.container.stories.length - 1].media_type === "image" && (
+                          <Image
+                            source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
                             style={{
                               width: 100,
                               height: 140,
                               borderRadius: 10,
-                              borderWidth: 3,
-                              padding: 5,
-                              borderColor: "#494747",
-                              backgroundColor: "green",
-                              alignItems: "center",
-                              justifyContent: "center",
                               resizeMode: "cover",
                             }}
-                          >
-                            <Text
-                              style={{
-                                color: "white",
-                                fontSize: 12,
-                                fontWeight: "600",
-                                marginTop: 10,
-                              }}
-                            >
-                              {item.container.stories[item.container.stories.length - 1].text}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
+                          />
+                        )}
+                        {item.container.stories[item.container.stories.length - 1].media_type === "video" && (
+                          <Video
+                            source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
+                            rate={1.0}
+                            volume={1.0}
+                            isMuted={false}
+                            resizeMode="cover"
+                            isLooping
+                            shouldPlay={false}
+                            style={{
+                              width: 100,
+                              height: 140,
+                              borderRadius: 10,
+                              resizeMode: "cover",
+                            }}
+                          />
+                        )}
 
-                    </View>
-                  </>
-                )
 
-              })
-            }
+                      </View>
+                    </TouchableOpacity>
+                  )}
+
+                  {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleViewStory(item.container.stories._id,);
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: 100,
+                          height: 140,
+                          borderRadius: 10,
+                          borderWidth: 3,
+                          padding: 5,
+                          borderColor: "#494747",
+                          backgroundColor: "green",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          resizeMode: "cover",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 12,
+                            fontWeight: "600",
+                            marginTop: 10,
+                          }}
+                        >
+                          {item.container.stories[item.container.stories.length - 1].text}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+
+                </View>
+              ))}
 
             <View
               style={{
@@ -217,7 +210,7 @@ const MyStory = () => {
 
               </TouchableOpacity>
             </View>
-          </>
+          </View>
         ) : (
           <>
             <TouchableOpacity onPress={handleCreateStory}>

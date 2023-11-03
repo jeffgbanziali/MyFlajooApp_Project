@@ -67,7 +67,7 @@ const StoriesStream = () => {
     navigation.navigate("ProfilFriends", { id });
   };
 
-  const goToNextStory = () => {
+  /*const goToNextStory = () => {
     try {
       if (selectedStory && selectedStory.container && selectedStory.container.stories) {
         const totalStories = selectedStory.container.stories.length;
@@ -99,7 +99,7 @@ const StoriesStream = () => {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  };*/
 
 
 
@@ -118,7 +118,7 @@ const StoriesStream = () => {
 
 
 
-  const progressAnimation = useRef(new Animated.Value(0)).current;
+  /*const progressAnimation = useRef(new Animated.Value(0)).current;
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
@@ -133,7 +133,7 @@ const StoriesStream = () => {
 
   const resetAnimation = () => {
     progressAnimation.setValue(0);
-  };
+  };*/
 
 
   return (
