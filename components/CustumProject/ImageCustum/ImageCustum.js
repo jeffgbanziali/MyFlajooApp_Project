@@ -1,71 +1,56 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+// FilterEffects.js
+import React from 'react';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
+import Valencia from '../FilterName/Valencia';
+import Brannan from '../FilterName/Brannan';
+import GLImage from "./GLImage";
+import Grayscale from '../FilterName/GrayScale';
+import { Surface } from 'gl-react-expo';
 
 
-const ImageCustum = () => {
+
+const ImageCustum = ({ onSelectEffect, source }) => {
     return (
-        <>
-            <View
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+            <TouchableOpacity
                 style={{
-                    flexDirection: 'row'
+                    width: 40,
+                    height: 40,
+                    borderRadius: 100
                 }}
-            >
-                <View
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 100,
-                        backgroundColor: 'blue',
-                    }}
-                >
-                    <Text>Image 1</Text>
-                </View>
-                <View
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 100,
-                        backgroundColor: 'red',
-                    }}
-                >
-                    <Text>Image 2</Text>
-                </View>
-                <View
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 100,
-                        marginLeft: 8,
-                        backgroundColor: 'green',
-                    }}
-                >
-                    <Text>Image 3</Text>
-                </View>
-                <View
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 100,
-                        marginLeft: 8,
-                        backgroundColor: 'yellow',
-                    }}
-                >
-                    <Text>Image 4</Text>
-                </View>
-                <View
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 100,
-                        marginLeft: 8,
-                        backgroundColor: 'purple',
-                    }}
-                >
-                    <Text>Image 5</Text>
-                </View>
-            </View>
-        </>
-    )
+
+                onPress={() => onSelectEffect("grayscale")}>
+                <Surface>
+                    <Grayscale
+                        title='grayscale'
+                        on={true}>
+                        {{ uri: source }}
+                    </Grayscale>
+                </Surface>
+                <Text>Grayscale</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 100
+                }}
+                onPress={() => onSelectEffect("sepia")}>
+                <Text>Sepia</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 100
+                }}
+                onPress={() => onSelectEffect("temperature")}>
+                <Text>Temperature</Text>
+            </TouchableOpacity>
+        </View>
+
+    );
 }
 
-export default ImageCustum
+export default ImageCustum;

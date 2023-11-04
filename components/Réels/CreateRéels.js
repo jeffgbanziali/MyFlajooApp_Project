@@ -673,10 +673,11 @@ const CreateRéels = () => {
                             style={{
                                 width: "100%",
                                 height: "20%",
+                                backgroundColor: "red",
                                 position: "absolute",
                                 justifyContent: "center",
                                 padding: 5,
-                                bottom: "15%",
+                                bottom: "20%",
                             }}
                         >
                             <TextInput

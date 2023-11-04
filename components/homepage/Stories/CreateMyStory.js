@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert, Animated, Easing } from 'react-native';
+import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert, Animated, Easing, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +13,14 @@ import { Modal } from 'react-native';
 import { addStory, getStories } from '../../../actions/story.action';
 import { Video } from 'expo-av';
 import ImageCustum from '../../CustumProject/ImageCustum/ImageCustum';
+import { Surface } from 'gl-react-expo';
+import Grayscale from '../../CustumProject/FilterName/GrayScale';
+import Sepia from '../../CustumProject/FilterName/Sepia';
+import Temperature from '../../CustumProject/FilterName/Temperature';
+import Brightness from '../../CustumProject/FilterName/Brightness';
+
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
 const CreateStory = () => {
@@ -31,8 +39,9 @@ const CreateStory = () => {
     const policeActuelle = police[indicePolice];
     const { isDarkMode } = useDarkMode();
     const [loadStories, setLoadStories] = useState(true);
-    const [showFilter, setShowFilter] = useState(false);
     const [addText, setAddText] = useState(false);
+    const [addEffect, setAddEffect] = useState(false);
+    const [selectedEffect, setSelectedEffect] = useState(null);
     const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
 
 
@@ -79,10 +88,8 @@ const CreateStory = () => {
             };
 
             dispatch(addStory(storyData));
-
             const docRef = await addDoc(collection(firestore, 'stories'), storyData);
             const docSnapshot = await getDoc(docRef);
-
             console.log('Story créé avec succès! Document ID:', docRef.id);
             console.log('Document data:', docSnapshot.data());
             Alert.alert('Succès', 'Votre story a été publié avec succès !');
@@ -97,12 +104,6 @@ const CreateStory = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
-
-
-
-
-
-
 
     const handleModalImage = async (item) => {
         try {
@@ -128,8 +129,6 @@ const CreateStory = () => {
             Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'élément multimédia.');
         }
     };
-
-
 
     const closeImageModal = () => {
         setShowImage(false);
@@ -214,31 +213,6 @@ const CreateStory = () => {
     };
 
 
-
-
-
-    const toggleFilter = () => {
-        if (showFilter) {
-            Animated.timing(commentsHeight, {
-                toValue: 0,
-                duration: 300,
-                easing: Easing.linear,
-                useNativeDriver: false,
-            }).start(() => setShowFilter(false));
-        } else {
-            setShowFilter(true);
-            Animated.timing(commentsHeight, {
-                toValue: 200,
-                duration: 300,
-                easing: Easing.linear,
-                useNativeDriver: false,
-            }).start();
-        }
-    };
-
-
-
-
     const changerPoliceText = () => {
         setIndicePolice((indice) => (indice + 1) % police.length);
     };
@@ -251,7 +225,14 @@ const CreateStory = () => {
     const handlePress = () => {
         setAddText(!addText);
     };
+    const handleAddEffect = () => {
+        setAddEffect(!addEffect);
+    };
 
+
+    const handleSelectEffect = (effect) => {
+        setSelectedEffect(effect);
+    };
 
     return (
 
@@ -568,6 +549,8 @@ const CreateStory = () => {
                     flex: 1,
                     alignItems: "center",
                     backgroundColor: isDarkMode ? "red" : "black",
+                    width: windowWidth,
+                    height: windowHeight
                 }}>
                     <View
                         style={{
@@ -592,15 +575,36 @@ const CreateStory = () => {
                             <Entypo name="cross" size={36} color="white" />
                         </TouchableOpacity>
                     </View>
-
                     {selectedImage && !selectedVideo && (
-                        <Image
-                            source={{ uri: selectedImage.uri }}
+
+                        <Surface
+
                             style={{
                                 width: "100%",
                                 height: "100%",
-                            }}
-                        />
+
+                            }}>
+                            {selectedEffect === "grayscale" && (
+                                <Grayscale on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Grayscale>
+                            )}
+                            {selectedEffect === "sepia" && (
+                                <Sepia on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Sepia>
+                            )}
+                            {selectedEffect === "temperature" && (
+                                <Temperature on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Temperature>
+                            )}
+                            {!selectedEffect && (
+                                <Brightness on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Brightness>
+                            )}
+                        </Surface>
                     )}
 
                     {selectedVideo && (
@@ -620,7 +624,6 @@ const CreateStory = () => {
                         />
 
                     )}
-
                     <View
                         style={{
                             width: "100%",
@@ -688,7 +691,7 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-
+                            onPress={handleAddEffect}
                             style={{
                                 width: "30%",
                                 justifyContent: "space-around",
@@ -747,6 +750,24 @@ const CreateStory = () => {
                                 placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
                                 fontSize="20"
                                 color={isDarkMode ? "#F5F5F5" : "white"} />
+                        </View>
+                    )}
+                    {addEffect && (
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "20%",
+                                position: "absolute",
+                                justifyContent: "center",
+                                padding: 5,
+                                bottom: "20%",
+                                backgroundColor: "red"
+                            }}
+                        >
+
+                            <ImageCustum
+                                source={selectedImage.uri}
+                                onSelectEffect={handleSelectEffect} />
                         </View>
                     )}
                     <View

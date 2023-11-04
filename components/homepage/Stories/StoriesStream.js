@@ -104,16 +104,9 @@ const StoriesStream = () => {
   const handleNextStoryButtonPress = () => {
     goToNextStory();
   };
-
-
-
   const handlePrevStoryButtonPress = () => {
     goToPrevStory();
   };
-
-
-
-
 
 
   const progressAnimation = useRef(new Animated.Value(0)).current;
