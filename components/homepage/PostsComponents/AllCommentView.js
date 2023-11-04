@@ -20,9 +20,6 @@ const AllCommentView = ({ post }) => {
   return (
     <ScrollView>
       {post.comments.map((comment) => {
-
-
-
         return (
           <View
             style={{
@@ -130,17 +127,17 @@ const AllCommentView = ({ post }) => {
                 marginRight: 10,
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Feather
                   name="heart"
                   size={20}
                   color={isDarkMode ? "#F5F5F5" : "black"}
-                  style={{
-                    textAlign: "center",
-                    alignItems: "center",
-                    alignSelf: "center",
-                    resizeMode: "contain",
-                  }}
+
                 />
               </TouchableOpacity>
             </View>

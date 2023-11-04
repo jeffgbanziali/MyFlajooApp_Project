@@ -37,7 +37,7 @@ const LikeRéelsButton = ({ réels }) => {
               height: 50,
               borderRadius: 30,
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
             }}
             onPress={like}
           >
@@ -45,12 +45,7 @@ const LikeRéelsButton = ({ réels }) => {
               name="heart"
               size={35}
               color="white"
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                resizeMode: "contain",
-              }}
+
             />
           </TouchableOpacity>
         </>
@@ -62,7 +57,7 @@ const LikeRéelsButton = ({ réels }) => {
             height: 50,
             borderRadius: 30,
             justifyContent: "center",
-            alignSelf: "center",
+            alignItems: "center",
           }}
           onPress={unlike}
         >
@@ -70,12 +65,6 @@ const LikeRéelsButton = ({ réels }) => {
             name="heart"
             size={35}
             color="red"
-            style={{
-              textAlign: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              resizeMode: "contain",
-            }}
           />
         </TouchableOpacity>
       )}

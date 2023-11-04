@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../actions/post.actions";
 import { isEmpty } from "../Context/Utils";
 import Posts from "../homepage/PostsComponents/Posts";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
@@ -19,22 +20,24 @@ const Thread = () => {
   }, [loadPost, dispatch]);
 
   return (
-    <View>
-      {!isEmpty(posting) &&
-        Array.isArray(posting) &&
-        posting.map((post) => {
-          return (
-            <View
-              style={{
-                alignItems: "center",
-              }}
-              key={post._id}
-            >
-              <Posts post={post} />
-            </View>
-          );
-        })}
-    </View>
+    <GestureHandlerRootView>
+      <View>
+        {!isEmpty(posting) &&
+          Array.isArray(posting) &&
+          posting.map((post) => {
+            return (
+              <View
+                style={{
+                  alignItems: "center",
+                }}
+                key={post._id}
+              >
+                <Posts post={post} />
+              </View>
+            );
+          })}
+      </View>
+    </GestureHandlerRootView>
   );
 };
 

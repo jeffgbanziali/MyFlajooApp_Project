@@ -124,17 +124,17 @@ const RéelsComment = ({ réels }) => {
                 marginRight: 10,
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Feather
                   name="heart"
                   size={20}
-                  color="white"
-                  style={{
-                    textAlign: "center",
-                    alignItems: "center",
-                    alignSelf: "center",
-                    resizeMode: "contain",
-                  }}
+                  color={isDarkMode ? "#F5F5F5" : "black"}
+
                 />
               </TouchableOpacity>
             </View>

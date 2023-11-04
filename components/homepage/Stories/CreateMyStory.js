@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert, Animated, Easing } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
 import { Modal } from 'react-native';
 import { addStory, getStories } from '../../../actions/story.action';
 import { Video } from 'expo-av';
+import ImageCustum from '../../CustumProject/ImageCustum/ImageCustum';
 
 
 const CreateStory = () => {
@@ -30,7 +31,9 @@ const CreateStory = () => {
     const policeActuelle = police[indicePolice];
     const { isDarkMode } = useDarkMode();
     const [loadStories, setLoadStories] = useState(true);
-
+    const [showFilter, setShowFilter] = useState(false);
+    const [addText, setAddText] = useState(false);
+    const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
 
 
 
@@ -214,7 +217,24 @@ const CreateStory = () => {
 
 
 
-
+    const toggleFilter = () => {
+        if (showFilter) {
+            Animated.timing(commentsHeight, {
+                toValue: 0,
+                duration: 300,
+                easing: Easing.linear,
+                useNativeDriver: false,
+            }).start(() => setShowFilter(false));
+        } else {
+            setShowFilter(true);
+            Animated.timing(commentsHeight, {
+                toValue: 200,
+                duration: 300,
+                easing: Easing.linear,
+                useNativeDriver: false,
+            }).start();
+        }
+    };
 
 
 
@@ -223,15 +243,14 @@ const CreateStory = () => {
         setIndicePolice((indice) => (indice + 1) % police.length);
     };
     const changeFilter = () => {
-        const currentIndex = availableFilters.indexOf(currentFilter);
-        const nextIndex = (currentIndex + 1) % availableFilters.length;
-        const nextFilter = availableFilters[nextIndex];
-        setCurrentFilter(nextFilter);
         console.log('changing')
     };
 
 
 
+    const handlePress = () => {
+        setAddText(!addText);
+    };
 
 
     return (
@@ -265,7 +284,7 @@ const CreateStory = () => {
                             onPress={handleClickReturnHome}
                             style={{
                                 justifyContent: 'center',
-                                alignSelf: 'center',
+                                alignItems: 'center',
                                 width: 40,
                                 height: 40,
                                 borderRadius: 30,
@@ -276,12 +295,7 @@ const CreateStory = () => {
                                     name="arrowleft"
                                     size={25}
                                     color={isDarkMode ? "#F5F5F5" : "black"}
-                                    style={{
-                                        alignSelf: 'center',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        resizeMode: "contain"
-                                    }} />
+                                />
                             </View>
                         </TouchableOpacity>
                         <Text
@@ -618,6 +632,7 @@ const CreateStory = () => {
                         }}
                     >
                         <TouchableOpacity
+                            onPress={handlePress}
                             style={{
                                 width: "25%",
                                 justifyContent: "space-around",
@@ -642,7 +657,9 @@ const CreateStory = () => {
                                 size={30}
                                 color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
                             />
+
                         </TouchableOpacity>
+
                         <TouchableOpacity
                             style={{
                                 width: "25%",
@@ -671,7 +688,7 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={changeFilter}
+
                             style={{
                                 width: "30%",
                                 justifyContent: "space-around",
@@ -699,11 +716,44 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                     </View>
+                    {addText && (
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "20%",
+                                position: "absolute",
+                                justifyContent: "center",
+                                padding: 5,
+                                bottom: "20%",
+                            }}
+                        >
+                            <TextInput
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    paddingLeft: 12,
+                                    fontSize: 10,
+                                    fontWeight: "normal",
+                                    overflow: "hidden",
+                                    color: "white",
+                                }}
+                                multiline
+                                numberOfLines={4}
+                                maxLength={40}
+                                value={postText}
+                                onChangeText={(text) => setPostText(text)}
+                                editable
+                                placeholder="Leave a short text..."
+                                placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
+                                fontSize="20"
+                                color={isDarkMode ? "#F5F5F5" : "white"} />
+                        </View>
+                    )}
                     <View
                         style={{
                             width: "100%",
                             height: "10%",
-                            bottom: "5%",
+                            bottom: "3%",
                             position: "absolute",
                             justifyContent: "center",
                             alignItems: "flex-end",
@@ -732,6 +782,7 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                     </View>
+
                 </View>
             </Modal>
 
@@ -874,7 +925,9 @@ const CreateStory = () => {
                     </View>
 
                 </View>
+
             </Modal>
+
         </>
 
 

@@ -95,7 +95,7 @@ const Profile = () => {
               onPress={handleClickReturnHome}
               style={{
                 justifyContent: "center",
-                alignSelf: "center",
+                alignItems: "center",
                 backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                 width: 50,
                 height: 50,
@@ -109,13 +109,6 @@ const Profile = () => {
                   name="arrow-back-ios"
                   size={28}
                   color={isDarkMode ? "#5F5858" : "black"}
-                  style={{
-                    alignSelf: "center",
-                    alignContent: "center",
-                    alignItems: "center",
-                    resizeMode: "contain",
-                    marginLeft: "20%",
-                  }}
                 />
               </View>
             </TouchableOpacity>
@@ -123,7 +116,7 @@ const Profile = () => {
               <View
                 style={{
                   justifyContent: "center",
-                  alignSelf: "center",
+                  alignItems: "center",
                   backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                   width: 50,
                   height: 50,
@@ -136,12 +129,6 @@ const Profile = () => {
                   name="dots-three-horizontal"
                   size={28}
                   color={isDarkMode ? "#5F5858" : "black"}
-                  style={{
-                    alignSelf: "center",
-                    alignContent: "center",
-                    alignItems: "center",
-                    resizeMode: "contain",
-                  }}
                 />
               </View>
             </TouchableOpacity>

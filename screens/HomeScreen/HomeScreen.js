@@ -26,7 +26,6 @@ const HomeScreen = () => {
                 style={{
                     backgroundColor: isDarkMode ? "#171717" : "white",
                     height: windowHeight - bottomTabHeight,
-
                     flex: 1,
                 }}
             >
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
     header: {
         position: 'relative',
         zIndex: 1,
-
         marginTop: 10,
     },
 });

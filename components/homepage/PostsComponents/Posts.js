@@ -7,7 +7,6 @@ import {
   Easing,
   ScrollView,
 } from "react-native";
-import { Video, ResizeMode } from "expo-av";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -206,19 +205,14 @@ const Posts = ({ post }) => {
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Feather
                     name="more-horizontal"
                     size={18}
                     color="white"
-                    style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      alignSelf: "center",
-                      resizeMode: "contain",
-                    }}
+                   
                   />
                 </TouchableOpacity>
               </View>
@@ -324,19 +318,14 @@ const Posts = ({ post }) => {
                           height: 50,
                           borderRadius: 30,
                           justifyContent: "center",
-                          alignSelf: "center",
+                          alignItems: "center",
                         }}
                       >
                         <FontAwesome5
                           name="comment"
                           size={25}
                           color="white"
-                          style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            resizeMode: "contain",
-                          }}
+
                         />
                       </View>
                     </TouchableOpacity>
@@ -357,19 +346,14 @@ const Posts = ({ post }) => {
                       height: 50,
                       borderRadius: 30,
                       justifyContent: "center",
-                      alignSelf: "center",
+                      alignItems: "center",
                     }}
                   >
                     <Feather
                       name="send"
                       size={25}
                       color="white"
-                      style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        resizeMode: "contain",
-                      }}
+
                     />
                   </TouchableOpacity>
                 </View>
@@ -381,19 +365,14 @@ const Posts = ({ post }) => {
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Feather
                     name="bookmark"
                     size={25}
                     color="white"
-                    style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      alignSelf: "center",
-                      resizeMode: "contain",
-                    }}
+
                   />
                 </TouchableOpacity>
               </View>
@@ -563,19 +542,14 @@ const Posts = ({ post }) => {
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Feather
                     name="more-horizontal"
                     size={18}
                     color="white"
-                    style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      alignSelf: "center",
-                      resizeMode: "contain",
-                    }}
+
                   />
                 </TouchableOpacity>
               </View>
@@ -647,19 +621,14 @@ const Posts = ({ post }) => {
                           height: 50,
                           borderRadius: 30,
                           justifyContent: "center",
-                          alignSelf: "center",
+                          alignItems: "center",
                         }}
                       >
                         <FontAwesome5
                           name="comment"
                           size={25}
                           color={isDarkMode ? "#F5F5F5" : "black"}
-                          style={{
-                            textAlign: "center",
-                            alignItems: "center",
-                            alignSelf: "center",
-                            resizeMode: "contain",
-                          }}
+
                         />
                       </View>
                     </TouchableOpacity>
@@ -680,19 +649,14 @@ const Posts = ({ post }) => {
                       height: 50,
                       borderRadius: 30,
                       justifyContent: "center",
-                      alignSelf: "center",
+                      alignItems: "center",
                     }}
                   >
                     <Feather
                       name="send"
                       size={25}
                       color={isDarkMode ? "#F5F5F5" : "black"}
-                      style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        resizeMode: "contain",
-                      }}
+
                     />
                   </TouchableOpacity>
                 </View>
@@ -704,19 +668,14 @@ const Posts = ({ post }) => {
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Feather
                     name="bookmark"
                     size={25}
                     color={isDarkMode ? "#F5F5F5" : "black"}
-                    style={{
-                      textAlign: "center",
-                      alignItems: "center",
-                      alignSelf: "center",
-                      resizeMode: "contain",
-                    }}
+
                   />
                 </TouchableOpacity>
               </View>

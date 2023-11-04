@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { View, TouchableOpacity, } from "react-native";
+import { useDispatch } from "react-redux";
 import { likePost, unlikePost } from "../../../actions/post.actions";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -48,12 +48,7 @@ const LikeButton = ({ post, type }) => {
                 name="heart"
                 size={25}
                 color={isDarkMode ? "#F5F5F5" : "white"}
-                style={{
-                  textAlign: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  resizeMode: "contain",
-                }}
+
               />
             )}
             {type === "postMessage" && (
@@ -61,12 +56,7 @@ const LikeButton = ({ post, type }) => {
                 name="heart"
                 size={25}
                 color={isDarkMode ? "#F5F5F5" : "black"}
-                style={{
-                  textAlign: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  resizeMode: "contain",
-                }}
+
               />
             )}
           </TouchableOpacity>
@@ -79,7 +69,7 @@ const LikeButton = ({ post, type }) => {
             height: 50,
             borderRadius: 30,
             justifyContent: "center",
-            alignSelf: "center",
+            alignItems: "center",
           }}
           onPress={unlike}
         >
@@ -88,12 +78,7 @@ const LikeButton = ({ post, type }) => {
               name="heart"
               size={25}
               color="red"
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                resizeMode: "contain",
-              }}
+
             />
           )}
           {type === "postMessage" && (
@@ -101,12 +86,6 @@ const LikeButton = ({ post, type }) => {
               name="heart"
               size={25}
               color="red"
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                resizeMode: "contain",
-              }}
             />
           )}
         </TouchableOpacity>

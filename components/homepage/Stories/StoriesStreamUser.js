@@ -63,36 +63,36 @@ const StoriesStreamUser = () => {
         navigation.navigate("Profile", { id });
     };
 
-    /* const goToNextStory = () => {
-         try {
-             if (selectedStory && selectedStory.container && selectedStory.container.stories) {
-                 const totalStories = selectedStory.container.stories.length;
- 
-                 if (currentStoryIndex < totalStories - 1) {
-                     const nextStoryIndex = currentStoryIndex + 1;
-                     const nextStory = selectedStory.container.stories[nextStoryIndex];
-                     setCurrentStoryIndex(nextStoryIndex);
-                     resetAnimation();
-                 } else {
-                     const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
- 
-                     if (nextContainerIndex < storiesData.length) {
-                         const nextContainer = storiesData[nextContainerIndex];
-                         setSelectedStory(nextContainer);
-                         setCurrentStoryIndex(0);
-                         resetAnimation();
-                     } else {
-                         console.error('Unable to go to the next story or container.');
-                         navigation.navigate("TabNavigation");
-                     }
-                 }
-             } else {
-                 console.error('Invalid story or container.');
-             }
-         } catch (error) {
-             console.error('Error:', error);
-         }
-     };*/
+    const goToNextStory = () => {
+        try {
+            if (selectedStory && selectedStory.container && selectedStory.container.stories) {
+                const totalStories = selectedStory.container.stories.length;
+
+                if (currentStoryIndex < totalStories - 1) {
+                    const nextStoryIndex = currentStoryIndex + 1;
+                    const nextStory = selectedStory.container.stories[nextStoryIndex];
+                    setCurrentStoryIndex(nextStoryIndex);
+                    resetAnimation();
+                } else {
+                    const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
+
+                    if (nextContainerIndex < storiesData.length) {
+                        const nextContainer = storiesData[nextContainerIndex];
+                        setSelectedStory(nextContainer);
+                        setCurrentStoryIndex(0);
+                        resetAnimation();
+                    } else {
+                        console.error('Unable to go to the next story or container.');
+                        navigation.navigate("TabNavigation");
+                    }
+                }
+            } else {
+                console.error('Invalid story or container.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
 
 
@@ -120,7 +120,7 @@ const StoriesStreamUser = () => {
             useNativeDriver: false,
         }).start(({ finished }) => {
             if (finished) {
-                //goToNextStory();
+                goToNextStory();
             }
         });
     };
@@ -146,6 +146,7 @@ const StoriesStreamUser = () => {
             <KeyboardAvoidingView
                 style={{
                     flex: 1,
+                    backgroundColor: "black"
                 }}
             >
 
@@ -226,7 +227,7 @@ const StoriesStreamUser = () => {
                         >
                             {selectedStory.container.stories.map((item, index) => (
                                 <View
-                                    key={index} // Ajoute cette ligne pour ajouter une clé unique à chaque élément de la liste
+                                    key={index}
                                     style={{
                                         flex: 1,
                                         height: 6,
@@ -375,6 +376,7 @@ const StoriesStreamUser = () => {
                                         source={{
                                             uri: selectedStory.container.stories[currentStoryIndex].media,
                                         }}
+                                        resizeMode="cover"
                                         style={{
                                             height: "100%",
                                             width: "100%",
@@ -395,6 +397,7 @@ const StoriesStreamUser = () => {
                                         isMuted={false}
                                         shouldPlay
                                         isLooping
+                                        resizeMode="cover"
                                         onLoad={() => {
                                             progressAnimation.setValue(0);
                                             start()
@@ -469,6 +472,7 @@ const StoriesStreamUser = () => {
                                             borderRadius: 30,
                                             opacity: 0.9,
                                         }}
+                                        resizeMode="cover"
                                         onLoadEnd={() => {
                                             progressAnimation.setValue(0);
                                             start()
@@ -483,6 +487,7 @@ const StoriesStreamUser = () => {
                                         isMuted={false}
                                         shouldPlay
                                         isLooping
+                                        resizeMode="cover"
                                         onLoad={() => {
                                             progressAnimation.setValue(0);
                                             start()

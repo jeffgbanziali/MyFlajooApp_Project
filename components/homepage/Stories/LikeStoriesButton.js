@@ -42,7 +42,7 @@ const LikeStoriesButton = ({ story }) => {
               height: 50,
               borderRadius: 30,
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
             }}
             onPress={like}
           >
@@ -50,12 +50,7 @@ const LikeStoriesButton = ({ story }) => {
               name="heart"
               size={35}
               color="white"
-              style={{
-                textAlign: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                resizeMode: "contain",
-              }}
+
             />
           </TouchableOpacity>
         </>
@@ -67,7 +62,7 @@ const LikeStoriesButton = ({ story }) => {
             height: 50,
             borderRadius: 30,
             justifyContent: "center",
-            alignSelf: "center",
+            alignItems: "center",
           }}
           onPress={unlike}
         >
@@ -75,12 +70,6 @@ const LikeStoriesButton = ({ story }) => {
             name="heart"
             size={35}
             color="red"
-            style={{
-              textAlign: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              resizeMode: "contain",
-            }}
           />
         </TouchableOpacity>
       )}

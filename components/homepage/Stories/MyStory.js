@@ -110,8 +110,8 @@ const MyStory = () => {
                             rate={1.0}
                             volume={1.0}
                             isMuted={false}
-                            resizeMode="cover"
                             isLooping
+                            resizeMode="cover"
                             shouldPlay={false}
                             style={{
                               width: 100,
@@ -144,7 +144,6 @@ const MyStory = () => {
                           backgroundColor: "green",
                           alignItems: "center",
                           justifyContent: "center",
-                          resizeMode: "cover",
                         }}
                       >
                         <Text
@@ -182,7 +181,6 @@ const MyStory = () => {
                   borderRadius: 30,
                   alignItems: "center",
                   justifyContent: "center",
-                  resizeMode: "cover",
                 }}
               >
                 <View
@@ -199,12 +197,7 @@ const MyStory = () => {
                     name="circle-with-plus"
                     size={35}
                     color="blue"
-                    style={{
-                      alignSelf: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                      resizeMode: "contain",
-                    }}
+
                   />
                 </View>
 
@@ -251,7 +244,6 @@ const MyStory = () => {
                     borderRadius: 30,
                     alignItems: "center",
                     justifyContent: "center",
-                    resizeMode: "cover",
                   }}
                 >
                   <View
@@ -268,12 +260,7 @@ const MyStory = () => {
                       name="circle-with-plus"
                       size={30}
                       color="blue"
-                      style={{
-                        alignSelf: "center",
-                        alignContent: "center",
-                        alignItems: "center",
-                        resizeMode: "contain",
-                      }}
+
                     />
                   </View>
                   <View
@@ -281,7 +268,6 @@ const MyStory = () => {
                       marginTop: 2,
                       alignItems: "center",
                       justifyContent: "center",
-                      resizeMode: "cover",
                     }}
                   >
                     <Text

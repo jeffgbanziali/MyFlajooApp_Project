@@ -82,7 +82,7 @@ const Header = () => {
           <View
             style={{
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
               borderRadius: 30,
               marginTop: "1.5%",
               width: 50,
@@ -95,19 +95,14 @@ const Header = () => {
                 name="bell"
                 size={25}
                 color={isDarkMode ? "white" : "black"}
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
+
               />
             </TouchableOpacity>
           </View>
           <View
             style={{
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
               borderRadius: 30,
               marginTop: "1.5%",
               width: 50,
@@ -127,8 +122,8 @@ const Header = () => {
                   justifyContent: "center",
                   alignSelf: "center",
                   alignItems: "center",
-                  marginLeft: 16,
-                  marginTop: -10,
+                  marginLeft: 6,
+                  marginTop: -8,
                   zIndex: 100,
                 }}
               >
@@ -136,7 +131,7 @@ const Header = () => {
                   style={{
                     color: "white",
                     fontWeight: "bold",
-                    fontZize: "8px",
+                    fontSize: 8,
                   }}
                 >
                   2
@@ -146,12 +141,7 @@ const Header = () => {
                 name="message1"
                 size={25}
                 color={isDarkMode ? "white" : "black"}
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
+
               />
             </TouchableOpacity>
           </View>

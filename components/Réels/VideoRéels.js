@@ -198,7 +198,6 @@ const VideoRéels = ({ item, isActive }) => {
           resizeMode="cover"
           isLooping
           shouldPlay={isVideoPlaying}
-          ResizeMode="cover"
           repeat
           paused={!isActive}
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
@@ -213,7 +212,7 @@ const VideoRéels = ({ item, isActive }) => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+            height: 200,
           }}
         />
         <TouchableOpacity
@@ -240,7 +239,7 @@ const VideoRéels = ({ item, isActive }) => {
             height: 60,
             alignItems: "center",
             justifyContent: "space-between",
-            borderRadius: "100%",
+            borderRadius: 100,
             flexDirection: "row",
             zIndex: 2,
             top: 50,
@@ -278,7 +277,7 @@ const VideoRéels = ({ item, isActive }) => {
                   style={{
                     width: "100%",
                     height: "100%",
-                    borderRadius: "100%",
+                    borderRadius: 100,
                   }}
                 />
               </View>
@@ -287,7 +286,7 @@ const VideoRéels = ({ item, isActive }) => {
               style={{
                 alignItems: "flex-start",
                 justifyContent: "center",
-                borderRadius: "100%",
+                borderRadius: 100,
                 marginLeft: 10,
               }}
             >
@@ -308,7 +307,7 @@ const VideoRéels = ({ item, isActive }) => {
               justifyContent: "center",
               display: "flex",
               flexDirection: "row",
-              borderRadius: "20%",
+              borderRadius: 20,
               marginRight: 20,
               padding: 6,
             }}
@@ -398,7 +397,7 @@ const VideoRéels = ({ item, isActive }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "pink",
-                borderRadius: "100%",
+                borderRadius: 100,
               }}
             >
               <Animated.Image
@@ -439,7 +438,7 @@ const VideoRéels = ({ item, isActive }) => {
                   alignItems: "center",
                   justifyContent: "center",
                   backgroundColor: "pink",
-                  borderRadius: "100%",
+                  borderRadius: 100,
                 }, discAnimation]}
               />
             </View>
@@ -486,7 +485,7 @@ const VideoRéels = ({ item, isActive }) => {
                 height: 50,
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: "100%",
+                borderRadius: 100,
               }}
             >
               <AntDesign name="message1" size={35} color="white" />
@@ -516,7 +515,7 @@ const VideoRéels = ({ item, isActive }) => {
               height: 50,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: "100%",
+              borderRadius: 100,
             }}
           >
             <MaterialCommunityIcons

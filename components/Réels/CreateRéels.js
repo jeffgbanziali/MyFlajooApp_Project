@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, Alert, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from "../Context/AppContext"
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +24,7 @@ const CreateRéels = () => {
     const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
     const [loadVideo, setLoadVideo] = useState(true);
+    const [addText, setAddText] = useState(false);
 
 
 
@@ -44,17 +45,18 @@ const CreateRéels = () => {
 
 
     const handleSumbitRéels = async () => {
-        let mediaUrl = null;
-
         try {
+            let mediaUrl = null;
+
             if (selectedVideo && selectedVideo.uri) {
-                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`
+                const mediaName = `video-${Date.now()}.${selectedVideo.assets[0].uri.split('.').pop()}`;
                 mediaUrl = await uploadRéelsToFirebase(selectedVideo.uri, mediaName);
             }
 
             const réelsData = {
                 posterId: userData._id,
-                videoPath: mediaUrl,
+                description: postText,
+                videoPath: mediaUrl
             };
 
             // Utilise le dispatch pour ajouter la vidéo au store Redux
@@ -75,7 +77,9 @@ const CreateRéels = () => {
 
             let errorMessage = 'Une erreur s\'est produite lors de la création de la vidéo.';
 
-            if (error.response && error.response.data && error.response.data.errors) {
+            if (error.message) {
+                errorMessage = error.message;
+            } else if (error.response && error.response.data && error.response.data.errors) {
                 errorMessage = Object.values(error.response.data.errors).join('\n');
             }
 
@@ -164,6 +168,10 @@ const CreateRéels = () => {
 
 
 
+    const handlePress = () => {
+        setAddText(!addText);
+    };
+
 
 
 
@@ -199,7 +207,7 @@ const CreateRéels = () => {
                             onPress={handleClickReturnHome}
                             style={{
                                 justifyContent: 'center',
-                                alignSelf: 'center',
+                                alignItems: 'center',
                                 width: 40,
                                 height: 40,
                                 borderRadius: 30,
@@ -210,12 +218,7 @@ const CreateRéels = () => {
                                     name="arrowleft"
                                     size={25}
                                     color={isDarkMode ? "#F5F5F5" : "black"}
-                                    style={{
-                                        alignSelf: 'center',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        resizeMode: "contain"
-                                    }} />
+                                />
                             </View>
                         </TouchableOpacity>
                         <Text
@@ -584,6 +587,7 @@ const CreateRéels = () => {
                         }}
                     >
                         <TouchableOpacity
+                            onPress={handlePress}
                             style={{
                                 width: "25%",
                                 justifyContent: "space-around",
@@ -664,6 +668,39 @@ const CreateRéels = () => {
                             />
                         </TouchableOpacity>
                     </View>
+                    {addText && (
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "20%",
+                                position: "absolute",
+                                justifyContent: "center",
+                                padding: 5,
+                                bottom: "15%",
+                            }}
+                        >
+                            <TextInput
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    paddingLeft: 12,
+                                    fontSize: 10,
+                                    fontWeight: "normal",
+                                    overflow: "hidden",
+                                    color: "white",
+                                }}
+                                multiline
+                                numberOfLines={4}
+                                maxLength={40}
+                                value={postText}
+                                onChangeText={(text) => setPostText(text)}
+                                editable
+                                placeholder="Leave a short text..."
+                                placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
+                                fontSize="20"
+                                color={isDarkMode ? "#F5F5F5" : "white"} />
+                        </View>
+                    )}
                     <View
                         style={{
                             width: "100%",

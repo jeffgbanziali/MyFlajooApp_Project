@@ -97,7 +97,7 @@ const ProfileFriends = () => {
               <View
                 style={{
                   justifyContent: "center",
-                  alignSelf: "center",
+                  alignItems: "center",
                   backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                   width: 50,
                   height: 50,
@@ -110,12 +110,7 @@ const ProfileFriends = () => {
                   name="arrowleft"
                   size={28}
                   color={isDarkMode ? "#5F5858" : "black"}
-                  style={{
-                    alignSelf: "center",
-                    alignContent: "center",
-                    alignItems: "center",
-                    resizeMode: "contain",
-                  }}
+
                 />
               </View>
             </TouchableOpacity>
@@ -123,7 +118,7 @@ const ProfileFriends = () => {
               <View
                 style={{
                   justifyContent: "center",
-                  alignSelf: "center",
+                  alignItems: "center",
                   backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
 
                   width: 50,
@@ -137,12 +132,6 @@ const ProfileFriends = () => {
                   name="dots-three-horizontal"
                   size={28}
                   color={isDarkMode ? "#5F5858" : "black"}
-                  style={{
-                    alignSelf: "center",
-                    alignContent: "center",
-                    alignItems: "center",
-                    resizeMode: "contain",
-                  }}
                 />
               </View>
             </TouchableOpacity>

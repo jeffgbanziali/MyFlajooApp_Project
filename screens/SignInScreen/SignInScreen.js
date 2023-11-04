@@ -93,7 +93,7 @@ const SignInScreen = () => {
             marginTop: "20%",
           }}>
             <Text style={{
-              fontSize: "30px",
+              fontSize: 30,
               color: isDarkMode ? "black" : "white",
             }}
             >

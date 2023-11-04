@@ -67,7 +67,7 @@ const StoriesStream = () => {
     navigation.navigate("ProfilFriends", { id });
   };
 
-  /*const goToNextStory = () => {
+  const goToNextStory = () => {
     try {
       if (selectedStory && selectedStory.container && selectedStory.container.stories) {
         const totalStories = selectedStory.container.stories.length;
@@ -99,7 +99,7 @@ const StoriesStream = () => {
     } catch (error) {
       console.error('Error:', error);
     }
-  };*/
+  };
 
 
 
@@ -118,7 +118,7 @@ const StoriesStream = () => {
 
 
 
-  /*const progressAnimation = useRef(new Animated.Value(0)).current;
+  const progressAnimation = useRef(new Animated.Value(0)).current;
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
@@ -133,13 +133,14 @@ const StoriesStream = () => {
 
   const resetAnimation = () => {
     progressAnimation.setValue(0);
-  };*/
+  };
 
 
   return (
     <KeyboardAvoidingView
       style={{
         flex: 1,
+        backgroundColor: "black"
       }}
     >
 
@@ -221,7 +222,7 @@ const StoriesStream = () => {
           >
             {selectedStory.container.stories.map((item, index) => (
               <View
-                key={index} // Ajoute cette ligne pour ajouter une clé unique à chaque élément de la liste
+                key={index}
                 style={{
                   flex: 1,
                   height: 6,
@@ -397,7 +398,7 @@ const StoriesStream = () => {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  height: 200, // Ajuste la hauteur du dégradé selon tes besoins
+                  height: 200,
                   borderBottomLeftRadius: 20,
                   borderBottomRightRadius: 20,
                 }}

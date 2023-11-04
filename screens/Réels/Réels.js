@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Dimensions, FlatList } from "react-native";
 import VideoRéels from "../../components/Réels/VideoRéels";
 import { useSelector } from "react-redux";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -22,13 +23,15 @@ const Réels = () => {
       <FlatList
         data={reelsData}
         renderItem={({ item, index }) => (
-          <VideoRéels item={item} isActive={activeVideoIndex === index} />
+          <GestureHandlerRootView>
+            <VideoRéels item={item} isActive={activeVideoIndex === index} />
+          </GestureHandlerRootView>
         )}
         onScroll={(e) => {
           const i = Math.round(
             e.nativeEvent.contentOffset.y / (windowHeight - bottomTabHeight)
           );
-          setActiveVideoIndex(i); // Use 'i' instead of 'index'
+          setActiveVideoIndex(i); 
         }}
         pagingEnabled
         vertical

@@ -82,6 +82,7 @@ const AppW = () => {
 
   return (
 
+
     <UidContext.Provider value={{ uid, setUid }}>
       <NavigationContainer>
         <StackNavigation />
@@ -91,6 +92,7 @@ const AppW = () => {
         backgroundColor="#FF0000"
       />
     </UidContext.Provider>
+
   );
 };
 
