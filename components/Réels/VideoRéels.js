@@ -333,6 +333,7 @@ const VideoRéels = ({ item, isActive }) => {
             width: "100%",
             paddingHorizontal: 8,
             paddingBottom: 16,
+            zIndex: 4
           }}
         >
           <View style={{ flex: 4 }}>

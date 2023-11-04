@@ -93,47 +93,43 @@ const ProfileFriends = () => {
               alignItems: "center",
             }}
           >
-            <TouchableOpacity onPress={handleClickReturnHome}>
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  marginLeft: "3.5%",
-                  marginTop: "1.5%",
-                }}
-              >
-                <AntDesign
-                  name="arrowleft"
-                  size={28}
-                  color={isDarkMode ? "#5F5858" : "black"}
-
-                />
-              </View>
+            <TouchableOpacity
+              onPress={handleClickReturnHome}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginLeft: "3.5%",
+                marginTop: "1.5%",
+              }}
+            >
+              <AntDesign
+                name="arrowleft"
+                size={28}
+                color={isDarkMode ? "#5F5858" : "black"}
+              />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleClickSettings}>
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  marginRight: "3.5%",
-                  marginTop: "1.5%",
-                }}
-              >
-                <Entypo
-                  name="dots-three-horizontal"
-                  size={28}
-                  color={isDarkMode ? "#5F5858" : "black"}
-                />
-              </View>
+            <TouchableOpacity
+              onPress={handleClickSettings}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginRight: "3.5%",
+                marginTop: "1.5%",
+              }}
+            >
+              <Entypo
+                name="dots-three-horizontal"
+                size={28}
+                color={isDarkMode ? "#5F5858" : "black"}
+              />
             </TouchableOpacity>
           </View>
 

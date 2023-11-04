@@ -39,14 +39,9 @@ const Stories = () => {
 
 
 
-
-
-
   const renderItem = ({ item }) => {
 
-
     return (
-
 
       <View key={item.container._id}>
 

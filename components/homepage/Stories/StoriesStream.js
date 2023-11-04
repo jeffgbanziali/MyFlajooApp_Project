@@ -12,8 +12,8 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../Context/Utils";
@@ -22,9 +22,8 @@ import LikeStoriesButton from "./LikeStoriesButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Video, resizeMode } from "expo-av";
 import AddStoryComment from "./AddStoryComment";
-import { getStories } from "../../../actions/story.action";
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 
 const StoriesStream = () => {
   const navigation = useNavigation(false);
@@ -33,7 +32,6 @@ const StoriesStream = () => {
   const { id } = route.params;
   const dispatch = useDispatch();
   const { uid } = useContext(UidContext);
-  const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
   console.log(storiesData)
   const usersData = useSelector((state) => state.usersReducer);
