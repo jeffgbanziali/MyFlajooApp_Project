@@ -131,7 +131,7 @@ const Header = () => {
                   style={{
                     color: "white",
                     fontWeight: "bold",
-                    fontSize: 8,
+                    fontSize: 12,
                   }}
                 >
                   2

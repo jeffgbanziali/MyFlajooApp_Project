@@ -44,16 +44,14 @@ const Stories = () => {
     return (
 
       <View key={item.container._id}>
-
-        {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
-
-          <TouchableOpacity
-            onPress={() => {
-              const storyId = item.container.stories[0]._id;
-              const mediaType = item.container.stories[0].media_type;
-              handleViewStory(storyId, mediaType);
-            }}
-          >
+        <TouchableOpacity
+          onPress={() => {
+            const storyId = item.container.stories[0]._id;
+            const mediaType = item.container.stories[0].media_type;
+            handleViewStory(storyId, mediaType);
+          }}
+        >
+          {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
             <View
               style={{
                 shadowColor: "#000",
@@ -99,15 +97,8 @@ const Stories = () => {
 
 
             </View>
-          </TouchableOpacity>
-        )}
-
-        {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
-          <TouchableOpacity
-            onPress={() => {
-              handleViewStory(item.container.stories._id,);
-            }}
-          >
+          )}
+          {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
             <View
               style={{
                 width: 100,
@@ -134,8 +125,8 @@ const Stories = () => {
                 {item.container.stories[item.container.stories.length - 1].text}
               </Text>
             </View>
-          </TouchableOpacity>
-        )}
+          )}
+        </TouchableOpacity>
         <View
           style={{
             alignItems: "center",
@@ -233,7 +224,7 @@ const Stories = () => {
           height: 2,
         },
         shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowRadius: 10,
         elevation: 5,
       }}
     >

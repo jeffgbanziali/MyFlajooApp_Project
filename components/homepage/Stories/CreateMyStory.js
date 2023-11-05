@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Button, Image, TouchableOpacity, FlatList, Alert, Animated, Easing, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { collection, addDoc, getDoc, } from 'firebase/firestore';
 import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
-//import * as MediaLibrary from 'expo-media-library';
+import * as MediaLibrary from 'expo-media-library';
 import { Modal } from 'react-native';
 import { addStory, getStories } from '../../../actions/story.action';
 import { Video } from 'expo-av';
@@ -18,6 +18,11 @@ import Grayscale from '../../CustumProject/FilterName/GrayScale';
 import Sepia from '../../CustumProject/FilterName/Sepia';
 import Temperature from '../../CustumProject/FilterName/Temperature';
 import Brightness from '../../CustumProject/FilterName/Brightness';
+import Valencia from '../../CustumProject/FilterName/Valencia';
+import Amaro from '../../CustumProject/FilterName/Amaro';
+import Saturation from '../../CustumProject/FilterName/Saturation';
+import Contrast from '../../CustumProject/FilterName/Contrast';
+import Brannan from '../../CustumProject/FilterName/Brannan';
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -44,7 +49,7 @@ const CreateStory = () => {
     const [selectedEffect, setSelectedEffect] = useState(null);
     const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
 
-
+    const surfaceRef = useRef(null);
 
     useEffect(() => {
         if (loadStories) {
@@ -63,14 +68,25 @@ const CreateStory = () => {
         navigation.navigate('Photo');
     };
 
+    const applyFilter = async (imageUri) => {
+        try {
+            const result = await surfaceRef.current.glView.capture();
+            return result.uri;
+        } catch (error) {
+            console.error('Erreur lors de l\'application du filtre à l\'image :', error);
+            throw new Error('Failed to apply filter to image');
+        }
+    };
+
     const handleStorySubmit = async () => {
         try {
             let mediaUrl = null;
             let mediaType = null;
 
             if (selectedImage) {
-                const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName);
+                const filteredImageUri = await applyFilter(selectedImage.uri);
+                const mediaName = `image-${Date.now()}.${filteredImageUri.split('.').pop()}`;
+                mediaUrl = await uploadStoryToFirebase(filteredImageUri, mediaName);
                 mediaType = 'image';
             } else if (selectedVideo) {
                 const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
@@ -87,23 +103,29 @@ const CreateStory = () => {
                 },
             };
 
-            dispatch(addStory(storyData));
-            const docRef = await addDoc(collection(firestore, 'stories'), storyData);
-            const docSnapshot = await getDoc(docRef);
-            console.log('Story créé avec succès! Document ID:', docRef.id);
-            console.log('Document data:', docSnapshot.data());
-            Alert.alert('Succès', 'Votre story a été publié avec succès !');
-            setPostText('');
-            setSelectedImage(null);
-            setSelectedVideo(null);
-            setLoadStories(true);
-            navigation.goBack('TabNavigation');
+            // Condition pour la soumission
+            if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
+                dispatch(addStory(storyData));
+                const docRef = await addDoc(collection(firestore, 'stories'), storyData);
+                const docSnapshot = await getDoc(docRef);
+                console.log('Story créée avec succès! Document ID:', docRef.id);
+                console.log('Document data:', docSnapshot.data());
+                Alert.alert('Succès', 'Votre story a été publiée avec succès !');
+                setPostText('');
+                setSelectedImage(null);
+                setSelectedVideo(null);
+                setLoadStories(true);
+                navigation.goBack('TabNavigation');
+            } else {
+                Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
+            }
         } catch (error) {
             console.error('Erreur lors de la création de la story :', error);
             let errorMessage = 'Une erreur s\'est produite lors de la création de la story.';
             Alert.alert('Erreur', errorMessage);
         }
     };
+
 
     const handleModalImage = async (item) => {
         try {
@@ -197,10 +219,10 @@ const CreateStory = () => {
                         setShowImage(true);
                         console.log('Vidéo sélectionnée :', result);
                     } else {
-                        setSelectedImage(result);
+                        setSelectedImage(result.assets[0]);
                         setSelectedVideo(null);
                         setShowImage(true);
-                        console.log('Image sélectionnée :', result);
+                        console.log('Image sélectionnée :', result.assets[0]);
                     }
                 } else {
                     console.log('Sélection annulée');
@@ -216,11 +238,6 @@ const CreateStory = () => {
     const changerPoliceText = () => {
         setIndicePolice((indice) => (indice + 1) % police.length);
     };
-    const changeFilter = () => {
-        console.log('changing')
-    };
-
-
 
     const handlePress = () => {
         setAddText(!addText);
@@ -578,12 +595,18 @@ const CreateStory = () => {
                     {selectedImage && !selectedVideo && (
 
                         <Surface
-
+                            ref={surfaceRef}
                             style={{
                                 width: "100%",
                                 height: "100%",
 
                             }}>
+
+                            {selectedEffect === "brightness" && (
+                                <Brightness on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Brightness>
+                            )}
                             {selectedEffect === "grayscale" && (
                                 <Grayscale on={true}>
                                     {{ uri: selectedImage.uri }}
@@ -599,6 +622,32 @@ const CreateStory = () => {
                                     {{ uri: selectedImage.uri }}
                                 </Temperature>
                             )}
+                            {selectedEffect === "valencia" && (
+                                <Valencia on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Valencia>
+                            )}
+                            {selectedEffect === "amaro" && (
+                                <Amaro on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Amaro>
+                            )}
+                            {selectedEffect === "saturation" && (
+                                <Saturation on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Saturation>
+                            )}
+                            {selectedEffect === "contrast" && (
+                                <Contrast on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Contrast>
+                            )}
+                            {selectedEffect === "brannan" && (
+                                <Brannan on={true}>
+                                    {{ uri: selectedImage.uri }}
+                                </Brannan>
+                            )}
+
                             {!selectedEffect && (
                                 <Brightness on={true}>
                                     {{ uri: selectedImage.uri }}
@@ -759,15 +808,17 @@ const CreateStory = () => {
                                 height: "20%",
                                 position: "absolute",
                                 justifyContent: "center",
+                                alignItems: "center",
                                 padding: 5,
                                 bottom: "20%",
-                                backgroundColor: "red"
                             }}
                         >
-
                             <ImageCustum
-                                source={selectedImage.uri}
-                                onSelectEffect={handleSelectEffect} />
+                                onSelectEffect={handleSelectEffect}
+                                selectedImage={selectedImage}
+                                selectedEffect={selectedEffect}
+                            />
+
                         </View>
                     )}
                     <View
@@ -863,8 +914,8 @@ const CreateStory = () => {
                             multiline
                             numberOfLines={4}
                             maxLength={40}
-                            onChangeText={(nouveauText) => setText(nouveauText)}
-                            value={text}
+                            onChangeText={(nouveauText) => setPostText(nouveauText)}
+                            value={postText}
                             editable
                             placeholder="Leave a short text..."
                             placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { View, Button, Image } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Button, Image, Alert } from 'react-native';
 import { Surface } from 'gl-react-expo';
 import Grayscale from '../../components/CustumProject/FilterName/GrayScale';
 import Sepia from '../../components/CustumProject/FilterName/Sepia';
 import Temperature from '../../components/CustumProject/FilterName/Temperature';
+import * as MediaLibrary from 'expo-media-library';
 
 const Notifications = () => {
     const [currentFilter, setCurrentFilter] = useState("grayscale");
+    const surfaceRef = useRef(null);
 
     const renderFilter = () => {
         switch (currentFilter) {
@@ -21,6 +23,18 @@ const Notifications = () => {
         }
     };
 
+    const _downloadImage = async () => {
+        const result = await surfaceRef.current.glView.capture();
+        try {
+            await MediaLibrary.saveToLibraryAsync(result.uri);
+            // Utilisation d'Alert pour afficher un message sur iOS
+            Alert.alert('Image Saved', 'Image saved to the storage');
+        } catch (error) {
+            console.error('Error saving image:', error);
+        }
+    };
+
+
     return (
         <View
             style={{
@@ -31,7 +45,7 @@ const Notifications = () => {
                 alignItems: "center"
             }}
         >
-            <Surface style={{ width: 100, height: 100 }}>
+            <Surface ref={surfaceRef} style={{ width: 100, height: 100 }}>
                 {renderFilter()}
             </Surface>
             <Button
@@ -50,14 +64,15 @@ const Notifications = () => {
                 title="Clear Filter"
                 onPress={() => setCurrentFilter("none")}
             />
+            <Button
+                title="Download"
+                onPress={_downloadImage}
+            />
         </View>
     );
 }
 
 export default Notifications;
-
-
-
 
 
 

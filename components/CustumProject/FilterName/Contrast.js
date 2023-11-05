@@ -1,9 +1,9 @@
 import React from 'react';
-import { Shaders, Node } from 'gl-react';
+import { Shaders, Node, GLSL } from 'gl-react';
 
 const shaders = Shaders.create({
   Contrast: {
-    frag: `
+    frag:GLSL `
       precision highp float;
       varying vec2 uv;
       uniform sampler2D inputImageTexture;

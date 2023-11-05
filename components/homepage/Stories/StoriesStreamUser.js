@@ -503,35 +503,36 @@ const StoriesStreamUser = () => {
                                 )}
                             </View>
                         )}
-                    {!selectedStory.container.stories[currentStoryIndex].media && (
-                        <View
-                            onLoadEnd={() => {
-                                progressAnimation.setValue(0);
-                                start()
-                            }}
-                            style={{
-                                flex: 1,
-                                flexDirection: "row",
-                                backgroundColor: "pink",
-                                position: "absolute",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: 30,
-                                width: "90%",
-                                height: "78%",
-                                top: "14%",
-                            }}
-                        >
-                            <Text
+                    {!selectedStory.container.stories[currentStoryIndex].media &&
+                        selectedStory.container.stories[currentStoryIndex].text && (
+                            <View
+                                onLoadEnd={() => {
+                                    progressAnimation.setValue(0);
+                                    start()
+                                }}
                                 style={{
-                                    color: "white",
-                                    fontSize: 30,
+                                    flex: 1,
+                                    flexDirection: "row",
+                                    backgroundColor: "pink",
+                                    position: "absolute",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: 30,
+                                    width: "90%",
+                                    height: "78%",
+                                    top: "14%",
                                 }}
                             >
-                                {selectedStory.container.stories[currentStoryIndex].text}
-                            </Text>
-                        </View>
-                    )}
+                                <Text
+                                    style={{
+                                        color: "white",
+                                        fontSize: 30,
+                                    }}
+                                >
+                                    {selectedStory.container.stories[currentStoryIndex].text}
+                                </Text>
+                            </View>
+                        )}
 
                     <View
                         style={{
