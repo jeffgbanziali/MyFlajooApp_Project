@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   dateParser,
@@ -10,16 +10,30 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { useDarkMode } from "../../Context/AppContext";
+import { getPosts } from "../../../actions/post.actions";
 
 const AllCommentView = ({ post }) => {
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-
+  const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
+
+  console.log(post.comments)
+
+
+  useEffect(() => {
+    if (loadPost) {
+      dispatch(getPosts());
+      setLoadPost(false);
+    }
+  }, [loadPost, dispatch]);
+
+
   return (
     <ScrollView>
       {post.comments.map((comment) => {
+        console.log('Received post data:', post);
         return (
           <View
             style={{

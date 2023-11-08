@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   dateParser,
   formatPostDate,
@@ -10,10 +10,24 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { useDarkMode } from "../Context/AppContext";
+import { getVideoReels } from "../../actions/réels.action";
 
 const RéelsComment = ({ réels }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const { isDarkMode } = useDarkMode();
+  const [loadRéels, setLoadRéels] = useState(true);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (loadRéels) {
+      dispatch(getVideoReels());
+      setLoadRéels(false);
+    }
+  }, [loadRéels, dispatch]);
+
+  console.log(réels)
+
 
   return (
     <ScrollView>

@@ -54,7 +54,7 @@ const Logout = () => {
         />
         <Text
           style={{
-            color: isDarkMode ? "white" : "0A0D10",
+            color: isDarkMode ? "white" : "#0A0D10",
             fontWeight: "bold",
             textTransform: "uppercase",
             marginLeft: 10,

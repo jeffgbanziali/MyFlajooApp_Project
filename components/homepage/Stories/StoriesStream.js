@@ -22,6 +22,7 @@ import LikeStoriesButton from "./LikeStoriesButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Video, resizeMode } from "expo-av";
 import AddStoryComment from "./AddStoryComment";
+import { getStories } from "../../../actions/story.action";
 
 const { width } = Dimensions.get("window")
 
@@ -32,6 +33,7 @@ const StoriesStream = () => {
   const { id } = route.params;
   const dispatch = useDispatch();
   const { uid } = useContext(UidContext);
+  const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
   console.log(storiesData)
   const usersData = useSelector((state) => state.usersReducer);
@@ -52,12 +54,17 @@ const StoriesStream = () => {
     selectedStory.container.stories.findIndex((story) => story._id === id)
   );
 
-
+  useEffect(() => {
+    if (loadStories) {
+      dispatch(getStories());
+      setLoadStories(false);
+    }
+  }, [loadStories, dispatch]);
 
 
   const goToHome = () => {
     console.log("clicked");
-
+    setLoadStories(true);
     navigation.navigate("TabNavigation",);
   };
 

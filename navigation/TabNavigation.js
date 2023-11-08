@@ -26,6 +26,9 @@ import Profile from "../screens/Profile/Profile";
 import Search from "../components/Search/Search";
 import { useDarkMode } from "../components/Context/AppContext";
 import Notifications from "../screens/Notifications/Notifications";
+import CallScreen from "../screens/CallScreen/CallScreen";
+import IncomingCall from "../screens/CallScreen/IncomingCall";
+import VoiceCall from "../screens/CallScreen/VoiceCall";
 
 const Tab = createBottomTabNavigator();
 

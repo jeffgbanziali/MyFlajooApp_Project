@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { View, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import { likeStory, dislikeStory } from "../../../actions/story.action";
 import { UidContext } from "../../Context/AppContext";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -27,9 +27,12 @@ const LikeStoriesButton = ({ story }) => {
 
 
   useEffect(() => {
-
-    setLiked(story.likers.includes(uid));
-  }, [uid, story.likers,]);
+    setLiked((prevLiked) => {
+      if (story.likers.includes(uid)) return true;
+      else return false;
+    });
+  }, [uid, story.likers]);
+  
 
 
   return (

@@ -101,9 +101,10 @@ export const commentVideoReels = (
         }
       )
       .then((res) => {
+        const comment = res.data.comment
         dispatch({
           type: COMMENT_VIDEO_REELS,
-          payload: { videoRéelsId, comment: res.data },
+          payload: { videoRéelsId, comment },
         });
       })
       .catch((err) => console.log(err));

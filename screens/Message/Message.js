@@ -32,7 +32,7 @@ const Message = () => {
         const response = await axios.get(
           `${APP_API_URL}/api/conversation/${uid}`
         );
-        
+
         const sortedConversations = response.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );

@@ -25,6 +25,9 @@ const MesssageInput = ({ username, socket }) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: 10,
+           
+            width: "100% ",
+            height: "100% ",
         }}
         >
             <TextInput
@@ -40,7 +43,7 @@ const MesssageInput = ({ username, socket }) => {
                     paddingHorizontal: 20,
                     marginRight: 10,
                     height: Math.max(40, height),
-                    
+
                 }}
                 placeholder="Message..."
                 placeholderTextColor="#787373"

@@ -1,110 +1,107 @@
-import React, { useState, useRef } from 'react';
-import { View, Button, Image, Alert } from 'react-native';
-import { Surface } from 'gl-react-expo';
-import Grayscale from '../../components/CustumProject/FilterName/GrayScale';
-import Sepia from '../../components/CustumProject/FilterName/Sepia';
-import Temperature from '../../components/CustumProject/FilterName/Temperature';
-import * as MediaLibrary from 'expo-media-library';
+import React, { useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { createPeerConnection, addStream, start, stop } from "expo-av";
 
 const Notifications = () => {
-    const [currentFilter, setCurrentFilter] = useState("grayscale");
-    const surfaceRef = useRef(null);
+    const [peerConnection, setPeerConnection] = useState(null);
+    const [localStream, setLocalStream] = useState(null);
+    const [remoteStream, setRemoteStream] = useState(null);
 
-    const renderFilter = () => {
-        switch (currentFilter) {
-            case "grayscale":
-                return <Grayscale on={true}>{{ uri: "https://leclaireur.fnac.com/wp-content/uploads/2022/10/naruto-header-jpeg.jpg" }}</Grayscale>;
-            case "sepia":
-                return <Sepia on={true}>{{ uri: "https://leclaireur.fnac.com/wp-content/uploads/2022/10/naruto-header-jpeg.jpg" }}</Sepia>;
-            case "invertColors":
-                return <Temperature on={true}>{{ uri: "https://leclaireur.fnac.com/wp-content/uploads/2022/10/naruto-header-jpeg.jpg" }}</Temperature>;
-            default:
-                return <Image source={{ uri: "https://leclaireur.fnac.com/wp-content/uploads/2022/10/naruto-header-jpeg.jpg" }} style={{ width: 100, height: 100 }} />;
-        }
+    const handleStartCall = async () => {
+        // Créez un flux audio et vidéo local
+        const localStream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true,
+        });
+
+        // Créez une connexion pair-à-pair
+        const peerConnection = await createPeerConnection();
+
+        // Ajoutez le flux audio et vidéo local à la connexion pair-à-pair
+        await addStream(peerConnection, localStream);
+
+        // Démarrez l'appel
+        start(peerConnection);
+
+        // Mettez à jour les états
+        setLocalStream(localStream);
+        setPeerConnection(peerConnection);
     };
 
-    const _downloadImage = async () => {
-        const result = await surfaceRef.current.glView.capture();
-        try {
-            await MediaLibrary.saveToLibraryAsync(result.uri);
-            // Utilisation d'Alert pour afficher un message sur iOS
-            Alert.alert('Image Saved', 'Image saved to the storage');
-        } catch (error) {
-            console.error('Error saving image:', error);
-        }
-    };
+    const handleStopCall = () => {
+        // Arrêtez l'appel
+        stop(peerConnection);
 
-
-    return (
-        <View
-            style={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "red",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
-        >
-            <Surface ref={surfaceRef} style={{ width: 100, height: 100 }}>
-                {renderFilter()}
-            </Surface>
-            <Button
-                title="Grayscale"
-                onPress={() => setCurrentFilter("grayscale")}
-            />
-            <Button
-                title="Sepia"
-                onPress={() => setCurrentFilter("sepia")}
-            />
-            <Button
-                title="Invert Colors"
-                onPress={() => setCurrentFilter("invertColors")}
-            />
-            <Button
-                title="Clear Filter"
-                onPress={() => setCurrentFilter("none")}
-            />
-            <Button
-                title="Download"
-                onPress={_downloadImage}
-            />
-        </View>
-    );
-}
-
-export default Notifications;
-
-
-
-
-/*
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
-
-const Notifications = () => {
-    const [filterName, setFilterName] = useState('none');
-
-    const handleFilterChange = (newFilter) => {
-        setFilterName(newFilter);
+        // Mettez à jour les états
+        setLocalStream(null);
+        setPeerConnection(null);
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Filter
-                uri="https://leclaireur.fnac.com/wp-content/uploads/2022/10/naruto-header-jpeg.jpg"
-                aspectRatio={1}
-                filterName={filterName}
-                onDraw={(surface) => {
-                }}
+        <View style={styles.container}>
+            <Text style={styles.title}>Appel audio/video</Text>
+
+            {peerConnection && (
+                <View style={styles.callContainer}>
+                    <View style={styles.localStreamContainer}>
+                        <Text>Flux local</Text>
+                        <Video
+                            style={styles.localStream}
+                            source={localStream}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <View style={styles.remoteStreamContainer}>
+                        <Text>Flux distant</Text>
+                        <Video
+                            style={styles.remoteStream}
+                            source={remoteStream}
+                            resizeMode="contain"
+                        />
+                    </View>
+                </View>
+            )}
+
+            <Button
+                title="Démarrer l'appel"
+                onPress={handleStartCall}
             />
-            <Text style={{ marginTop: 20 }}>Current Filter: {filterName}</Text>
-            <Button onPress={() => handleFilterChange('none')} title="No Filter" />
-            <Button onPress={() => handleFilterChange('brannan')} title="Brannan Filter" />
-            <Button onPress={() => handleFilterChange('valencia')} title="Valencia Filter" />
-            <Button onPress={() => handleFilterChange('grayscale')} title="GrayScale Filter" />
+            <Button
+                title="Arrêter l'appel"
+                onPress={handleStopCall}
+            />
         </View>
     );
 };
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+    },
+    callContainer: {
+        width: 200,
+        height: 200,
+    },
+    localStreamContainer: {
+        flex: 1,
+    },
+    localStream: {
+        width: "100%",
+        height: "100%",
+    },
+    remoteStreamContainer: {
+        flex: 1,
+    },
+    remoteStream: {
+        width: "100%",
+        height: "100%",
+    },
+});
+
 export default Notifications;
-*/

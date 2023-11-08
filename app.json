@@ -11,6 +11,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#25292e"
     },
+    "plugins": [
+      "@stream-io/video-react-native-sdk",
+      [
+        "@config-plugins/react-native-webrtc",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -18,14 +28,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "org.name.MyFlajooApp"
     },
-      "bundleIdentifier": "com.example.yourapp",
-      "infoPlist": {
-        "NSCameraUsageDescription": "We need your permission to access the camera",
-        "NSPhotoLibraryUsageDescription": "We need your permission to access the photo library",
-        "NSMicrophoneUsageDescription": "We need your permission to access the microphone"
-      },
+    "bundleIdentifier": "com.example.yourapp",
+    "infoPlist": {
+      "NSCameraUsageDescription": "We need your permission to access the camera",
+      "NSPhotoLibraryUsageDescription": "We need your permission to access the photo library",
+      "NSMicrophoneUsageDescription": "We need your permission to access the microphone"
+    },
     "android": {
       "permissions": [
         "CAMERA",
@@ -35,10 +46,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.flaj16.MyFlajooApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5c678841-2d3c-4737-b24e-714c839ec4e4"
+      }
     }
   }
 }

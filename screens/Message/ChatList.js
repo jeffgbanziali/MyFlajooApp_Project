@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  StatusBar,
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,9 +15,10 @@ import { KeyboardAvoidingView } from "react-native";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessagesUser";
-import { UidContext } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { io } from "socket.io-client";
 import { APP_API_URL } from "../../config";
+import { Image } from "react-native";
 
 const Message = () => {
   const navigation = useNavigation();
@@ -30,6 +32,11 @@ const Message = () => {
   const scrollRef = useRef();
   const route = useRoute();
   const { conversationId, user } = route.params;
+  const { isDarkMode } = useDarkMode();
+
+
+
+
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -49,7 +56,7 @@ const Message = () => {
       setChat((prev) => [...prev, arrivalChat]);
   }, [arrivalChat, currentChat]);
 
-  useEffect(() => {
+  { /*useEffect(() => {
     socket.current.emit("addUser", uid);
     socket.current.on("getUsers", (users) => {
       console.log(users);
@@ -57,7 +64,7 @@ const Message = () => {
         uid.followings.filter((f) => users.some((u) => u._id === f))
       );
     });
-  }, [uid]);
+  }, [uid]);*/}
 
   useEffect(() => {
     const getMessages = async () => {
@@ -124,7 +131,7 @@ const Message = () => {
     scrollRef?.current?.scrollToEnd({ animated: true });
   }, [chat]);
 
-
+  console.log("toi là ", user)
 
 
 
@@ -132,17 +139,28 @@ const Message = () => {
     console.log("clicked");
     navigation.navigate("Messages");
   };
-  const handleClickCall = () => {
-    console.log("clicked");
+  const handleClickCall = (user) => {
+    console.log("Calling")
+    navigation.navigate("CallingOn", { user: user })
   };
 
-  const handleClickVideoCall = () => {
-    console.log("clicked");
-    navigation.navigate("Settings");
+  const handleClickVideoCall = (user) => {
+    console.warn("user called");
+    navigation.navigate("VideoCall", { user: user });
   };
+
+
+
+  
+
+
+
+
+
 
   return (
     <>
+
       <View
         style={{
           flex: 1,
@@ -182,18 +200,49 @@ const Message = () => {
 
               />
             </TouchableOpacity>
-            <Text
+            <Image
+              source={{ uri: user.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
               style={{
-                fontWeight: "bold",
-                fontSize: 20,
-                textAlign: "center",
+                width: 50,
+                height: 50,
+                borderRadius: 100,
+                marginLeft: "4%"
+              }}
+            />
+            <View
+              style={{
                 alignItems: "center",
-                color: "#FFFFFF",
-                marginLeft: 10
+                justifyContent: "center",
+                flexDirection: "column",
               }}
             >
-              {user.pseudo}
-            </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  textAlign: "center",
+                  alignItems: "center",
+                  color: "#FFFFFF",
+                  marginLeft: 10
+                }}
+              >
+                {user.pseudo}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "normal",
+                  fontSize: 14,
+                  textAlign: "center",
+                  alignItems: "center",
+                  color: "#FFFFFF",
+                  marginLeft: 10
+                }}
+              >
+                Online
+              </Text>
+            </View>
+
+
           </View>
 
           <View
@@ -201,9 +250,10 @@ const Message = () => {
               flexDirection: "row",
               alignItems: "center",
               width: "35%",
-              justifyContent: "space-around"
+              justifyContent: "space-around",
+              marginRight: "4%",
             }}>
-            <TouchableOpacity onPress={handleClickCall}
+            <TouchableOpacity onPress={() => handleClickCall(user)}
               style={{
                 justifyContent: "center",
                 alignItems: "center",
@@ -220,7 +270,7 @@ const Message = () => {
                 color="#000000"
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleClickCall}
+            <TouchableOpacity onPress={() => handleClickVideoCall(user)}
               style={{
                 justifyContent: "center",
                 alignItems: "center",
@@ -265,6 +315,7 @@ const Message = () => {
             paddingBottom: 10,
             backgroundColor: "white",
             marginTop: 40,
+            width: "100%",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
           }}
@@ -297,17 +348,37 @@ const Message = () => {
                 style={{
                   position: "relative",
                   width: "100%",
-                  height: "12%",
+                  height: "15%",
+                  backgroundColor: "transparent",
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  padding: 4
                 }}
               >
                 <View
                   style={{
+                    width: "85%",
+                    height: Math.max(50, height),
                     flexDirection: "row",
-                    justifyContent: "space-between",
                     alignItems: "center",
-                    padding: 10,
+                    backgroundColor: "#D9D9D9",
+                    borderRadius: 30,
+                    marginBottom: 10,
+                    padding: 10
                   }}
                 >
+                  <TouchableOpacity
+                    style={{
+                      width: 30,
+                      height: 30,
+                      borderRadius: 100,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <AntDesign name="smile-circle" size={28} color="gray" />
+                  </TouchableOpacity>
+
                   <TextInput
                     value={newChat}
                     onChangeText={(text) => setNewChat(text)}
@@ -315,44 +386,71 @@ const Message = () => {
                       setHeight(e.nativeEvent.contentSize.height)
                     }
                     style={{
-                      flex: 1,
+
+                      width: "67%",
                       borderColor: "#D9D9D9",
                       borderWidth: 2,
-                      borderRadius: 30,
-                      paddingVertical: 10,
-                      paddingHorizontal: 20,
-                      marginRight: 10,
-                      height: Math.max(40, height),
+                      marginLeft: "2%",
+                      textAlignVertical: 'center',
+                      height: Math.max(50, height),
                     }}
                     placeholder="Message..."
                     placeholderTextColor="#787373"
                     backgroundColor="#D9D9D9"
+                    fontSize="20px"
                     multiline
                   />
-                  <Pressable
+                  <View
                     style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
-                      justifyContent: "center",
-                      backgroundColor: "gray",
+                      width: "23%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
                     }}
-                    onPress={handleSendMessage}
                   >
-                    <FontAwesome
-                      name="send"
-                      size={24}
-                      color={newChat === "" ? "#FFFFFF" : "#3B4FB8"}
+                    <TouchableOpacity
                       style={{
-                        textAlign: "center",
-                        alignItems: "center",
-                        alignSelf: "center",
-                        alignContent: "center",
-                        marginRight: 4,
+                        width: 30,
+                        height: 30,
+                        borderRadius: 100,
+                        justifyContent: "center",
+                        alignItems: "center"
                       }}
-                    />
-                  </Pressable>
+                    >
+                      <FontAwesome name="paperclip" size={28} color="gray" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        width: 30,
+                        height: 30,
+                        borderRadius: 100,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <FontAwesome name="camera" size={25} color="gray" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                <Pressable
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginLeft: "2%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "gray",
+                    marginBottom: 10
+                  }}
+                  onPress={handleSendMessage}
+                >
+                  <FontAwesome
+                    name="send"
+                    size={24}
+                    color={newChat === "" ? "#FFFFFF" : "#3B4FB8"}
+                  />
+                </Pressable>
               </View>
             </>
           ) : (

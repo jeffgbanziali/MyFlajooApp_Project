@@ -20,6 +20,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Video } from "expo-av";
 import BottomSheetStories, { BottomSheetRefProps } from "./BottomSheetStories";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { getStories } from "../../../actions/story.action";
 
 const { width, height } = Dimensions.get("window")
 
@@ -30,6 +31,7 @@ const StoriesStreamUser = () => {
     const { id } = route.params;
     const dispatch = useDispatch();
     const { uid } = useContext(UidContext);
+    const [loadStories, setLoadStories] = useState(true);
     const storiesData = useSelector((state) => state.storyReducer);
     console.log(storiesData)
     const usersData = useSelector((state) => state.usersReducer);
@@ -45,17 +47,22 @@ const StoriesStreamUser = () => {
     const user = usersData.find((user) => user._id === selectedStory.container.posterId);
     console.log(user);
 
-
     const [currentStoryIndex, setCurrentStoryIndex] = useState(
         selectedStory.container.stories.findIndex((story) => story._id === id)
     );
 
 
+    useEffect(() => {
+        if (loadStories) {
+            dispatch(getStories());
+            setLoadStories(false);
+        }
+    }, [loadStories, dispatch]);
 
 
     const goToHome = () => {
         console.log("clicked");
-
+        setLoadStories(true);
         navigation.navigate("TabNavigation",);
     };
 

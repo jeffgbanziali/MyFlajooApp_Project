@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginRight: "4.5%",
 
+
     },
     cameraAction: {
         borderRadius: 100,

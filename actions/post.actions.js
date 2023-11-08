@@ -70,7 +70,6 @@ export const unlikePost = (postId, userId) => {
     };
 };
 
-
 export const addComment = (postId, commenterId, text, commenterPseudo) => {
     console.log("postId:", postId);
     console.log("userId:", commenterId);
@@ -83,9 +82,9 @@ export const addComment = (postId, commenterId, text, commenterPseudo) => {
             data: { commenterId, text, commenterPseudo },
         })
             .then((res) => {
-                dispatch({ type: ADD_COMMENT, payload: { postId } });
+                const comment = res.data.comment; 
+                dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
             })
             .catch((err) => console.log(err));
     };
 };
-

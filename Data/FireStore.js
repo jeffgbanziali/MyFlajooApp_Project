@@ -23,21 +23,41 @@ const uploadImageToFirebase = async (localUri, imageName) => {
     return imageUrl;
 };
 const uploadStoryToFirebase = async (localUri, imageName) => {
-    const storage = getStorage();
-    const storageRef = ref(storage, 'StoryContainer/' + imageName);
+    try {
+        const storage = getStorage();
+        const storageRef = ref(storage, 'StoryContainer/' + imageName);
 
-    // Convertit l'image en blob
-    const response = await fetch(localUri);
-    const blob = await response.blob();
+        // Convertit l'image en blob
+        const response = await fetch(localUri);
+        const blob = await response.blob();
 
-    // Télécharge le blob vers Firebase Storage
-    await uploadBytes(storageRef, blob);
+        // Télécharge le blob vers Firebase Storage en utilisant put
+        const uploadTask = uploadBytes(storageRef, blob, { contentType: blob.type });
 
-    // Récupère l'URL de téléchargement de l'image
-    const imageUrl = await getDownloadURL(storageRef);
-
-    return imageUrl;
+        // Gestion des événements de la tâche de téléchargement
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Progress: ${progress}%`);
+            },
+            (error) => {
+                console.error('Error during upload:', error);
+                throw new Error('Failed to upload file');
+            },
+            () => {
+                // Téléchargement terminé avec succès, récupère l'URL de téléchargement
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File uploaded successfully:', downloadURL);
+                    return downloadURL;
+                });
+            }
+        );
+    } catch (error) {
+        console.error('Error during uploadStoryToFirebase:', error);
+        throw new Error('Failed to upload file');
+    }
 };
+
 
 const uploadRéelsToFirebase = async (localUri, fileName) => {
     try {

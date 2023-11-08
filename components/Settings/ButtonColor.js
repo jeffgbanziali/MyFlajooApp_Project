@@ -11,7 +11,6 @@ import {
 import { useDarkMode } from "../Context/AppContext";
 
 const ButtonColor = () => {
-  // Utilisez useState pour gérer l'état du mode (sombre ou normal)
 
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const navigation = useNavigation();
@@ -43,7 +42,7 @@ const ButtonColor = () => {
         <View
           style={{
             justifyContent: "center",
-            alignSelf: "center",
+            alignItems: "center",
             width: 40,
             height: 40,
             borderRadius: 30,
@@ -54,12 +53,7 @@ const ButtonColor = () => {
               name="arrow-back-ios"
               size={28}
               color={isDarkMode ? "white" : "black"}
-              style={{
-                alignSelf: "center",
-                alignContent: "center",
-                alignItems: "center",
-                resizeMode: "contain",
-              }}
+              
             />
           </TouchableOpacity>
         </View>
@@ -94,7 +88,6 @@ const ButtonColor = () => {
             borderRadius: 10,
           }}
         >
-          {/* Affichez le texte en fonction du mode actuel */}
           <View
             style={{
               marginLeft: 12,

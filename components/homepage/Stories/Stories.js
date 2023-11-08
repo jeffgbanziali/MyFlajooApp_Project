@@ -33,7 +33,7 @@ const Stories = () => {
 
   const handleViewStory = (id, media_type) => {
     console.log("Clicked story ID:", id);
-    setLoadStories(false);
+    setLoadStories(true);
     navigation.navigate("StoryStream", { id, media_type });
   };
 

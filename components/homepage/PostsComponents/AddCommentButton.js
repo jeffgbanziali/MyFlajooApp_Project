@@ -11,12 +11,12 @@ const AddCommentButton = ({ post }) => {
   const [text, setText] = useState("");
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-  const [isButtonVisible, setIsButtonVisible] = useState(false); // Ajoutez cet état local
+  const [loadPost, setLoadPost] = useState(true);
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Mettez à jour la visibilité du bouton en fonction de la longueur du texte
     if (text.length > 0) {
       setIsButtonVisible(true);
     } else {
@@ -25,12 +25,22 @@ const AddCommentButton = ({ post }) => {
   }, [text]);
 
   const handleComment = () => {
-    if (text) {
+    if (userData._id && text) {
       dispatch(addComment(post._id, userData._id, text, userData.pseudo))
         .then(() => dispatch(getPosts()))
         .then(() => setText(""));
     }
   };
+
+  console.log(userData)
+
+  useEffect(() => {
+    if (loadPost) {
+      dispatch(getPosts());
+      setLoadPost(false);
+    }
+  }, [loadPost, dispatch]);
+
 
   return (
     <View>
@@ -50,7 +60,7 @@ const AddCommentButton = ({ post }) => {
             }}
           >
             <Image
-              source={{ uri: userData.picture }}
+              source={{ uri: userData.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
               style={{
                 width: "100%",
                 height: "100%",
@@ -73,7 +83,7 @@ const AddCommentButton = ({ post }) => {
             fontSize="16"
             color={isDarkMode ? "#F5F5F5" : "black"}
           />
-          {isButtonVisible && ( // Affichez le bouton si isButtonVisible est vrai
+          {isButtonVisible && (
             <View
               style={{
                 width: 40,

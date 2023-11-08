@@ -7,6 +7,7 @@ import {
     KeyboardAvoidingView,
     Animated,
     Dimensions,
+    SafeAreaView,
 } from 'react-native';
 import Header from '../../components/homepage/Header';
 import Stories from '../../components/homepage/Stories/Stories';
@@ -29,11 +30,10 @@ const HomeScreen = () => {
                     flex: 1,
                 }}
             >
-                <View
+                <SafeAreaView
                     style={{
                         backgroundColor: isDarkMode ? "#171717" : "white",
                         height: "100%",
-                        marginTop: "14%"
                     }
                     }
                 >
@@ -42,7 +42,7 @@ const HomeScreen = () => {
                         <Stories />
                         <Thread />
                     </ScrollView>
-                </View>
+                </SafeAreaView>
             </KeyboardAvoidingView>
         </>
     );

@@ -4,13 +4,13 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import FollowHandler from "../ProfileUtils.js/FollowHandler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
 
 const FriendsFollowers = () => {
   const route = useRoute();

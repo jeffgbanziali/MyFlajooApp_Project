@@ -11,11 +11,10 @@ const AddRéelsComment = ({ réels }) => {
 
   const userData = useSelector((state) => state.userReducer);
   const [isButtonVisible, setIsButtonVisible] = useState(false); // Ajoutez cet état local
-
+  const [loadRéels, setLoadRéels] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Mettez à jour la visibilité du bouton en fonction de la longueur du texte
     if (text.length > 0) {
       setIsButtonVisible(true);
     } else {
@@ -24,12 +23,27 @@ const AddRéelsComment = ({ réels }) => {
   }, [text]);
 
   const handleComment = () => {
-    if (text) {
+    console.log('Text:', text);
+    console.log('User Data:', userData);
+  
+    if (userData._id && text) {
       dispatch(commentVideoReels(réels._id, userData._id, text, userData.pseudo))
-        .then(() => dispatch(getVideoReels()))
-        .then(() => setText(""));
+        .then(() => {
+          console.log('Comment added successfully!');
+          dispatch(getVideoReels());
+        })
+        .then(() => setText(""))
+        .catch((error) => console.error('Error adding comment:', error));
     }
   };
+  
+
+  useEffect(() => {
+    if (loadRéels) {
+      dispatch(getVideoReels());
+      setLoadRéels(false);
+    }
+  }, [loadRéels, dispatch]);
 
   return (
     <View>

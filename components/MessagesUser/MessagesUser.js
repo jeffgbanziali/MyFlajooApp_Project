@@ -4,21 +4,17 @@ import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { dateParser, formatPostDate } from "../Context/Utils";
 
-const MessagesUser = ({ message, own, }) => {
+const MessagesUser = ({ message, own }) => {
   const userData = useSelector((state) => state.userReducer);
+
+  const userImageUri = own ? userData.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
 
   return (
     <View style={own ? styles.messageOwn : styles.messageOther}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-
-        }}
-      >
+      <View style={{ display: "flex", flexDirection: "row" }}>
         <Image
           source={{
-            uri: own ? userData.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+            uri: userImageUri || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
           }}
           style={{
             width: 26,
@@ -28,20 +24,23 @@ const MessagesUser = ({ message, own, }) => {
           }}
         />
         <View
-          style={own ? {
-            backgroundColor: "#F51B1B",
-            borderRadius: 100,
-          } : {
-            backgroundColor: "#1158C1",
-            borderRadius: 100,
-          }}
+          style={
+            own
+              ? {
+                backgroundColor: "#F51B1B",
+                borderRadius: 100,
+              }
+              : {
+                backgroundColor: "#1158C1",
+                borderRadius: 100,
+              }
+          }
         >
           <Text style={own ? styles.textMessageOwn : styles.textMessageOther}>
             {" "}
             {message.text}
           </Text>
         </View>
-
       </View>
       <View>
         <Text

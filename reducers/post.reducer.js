@@ -27,15 +27,17 @@ export default function postReducer(state = initialState, action) {
                 return post;
             });
         case ADD_COMMENT:
+            const { postId, commenterId, text, commenterPseudo } = action.payload;
             return state.map((post) => {
-                if (post._id === action.payload.postId) {
+                if (post._id === postId) {
                     return {
                         ...post,
-                        comments: [action.payload.comment, ...post.comments]
+                        comments: [{ commenterId, text, commenterPseudo }, ...post.comments]
                     };
                 }
                 return post;
             });
+
         case CREATE_POST_ERROR:
             // Gérez l'erreur ici, par exemple, stockez-la dans un champ d'état approprié
             return {

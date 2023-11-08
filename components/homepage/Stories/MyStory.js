@@ -23,7 +23,7 @@ const MyStory = () => {
 
   const handleViewStory = (id, media_type) => {
     console.log("Clicked story ID:", id);
-    setLoadStories(false);
+    setLoadStories(true);
     navigation.navigate("StoryStreamUser", { id, media_type });
   };
 

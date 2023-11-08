@@ -34,6 +34,11 @@ import UpdateName from "../components/Settings/UpdateName";
 import StoryCamera from "../components/homepage/Stories/StoryCamera";
 import CreateRéels from "../components/Réels/CreateRéels";
 import StoriesStreamUser from "../components/homepage/Stories/StoriesStreamUser";
+import IncomingCall from "../screens/CallScreen/IncomingCall";
+import VoiceCall from "../screens/CallScreen/VoiceCall";
+import VideoCall from "../screens/CallScreen/VideoCall";
+import CallingOn from "../screens/CallScreen/CallingOn";
+import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +82,11 @@ const StackNavigation = () => {
       <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
       <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
       <Stack.Screen name="Messages" component={Message} />
+      <Stack.Screen name="IncomingCall" component={IncomingCall} />
+      <Stack.Screen name="CallingOn" component={CallingOn} />
+      <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
+      <Stack.Screen name="VoiceCall" component={VoiceCall} />
+      <Stack.Screen name="VideoCall" component={VideoCall} />
       <Stack.Screen name="Chatlist" component={ChatList} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Settings" component={Settings} />

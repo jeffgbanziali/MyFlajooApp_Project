@@ -23,7 +23,6 @@ const FriendsFollowing = () => {
     console.log("clicked");
     navigation.navigate("ProfilFriends", { id });
   };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

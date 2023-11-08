@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StatusBar } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
 import { DarkModeProvider, UidContext, useDarkMode } from "./components/Context/AppContext";
@@ -13,7 +13,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { getUsers } from "./actions/users.action";
-import { StatusBar } from "expo-status-bar";
 import { getPosts } from "./actions/post.actions";
 import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
@@ -88,8 +87,7 @@ const AppW = () => {
         <StackNavigation />
       </NavigationContainer>
       <StatusBar
-        style={isDarkMode ? "light" : "white"}
-        backgroundColor="#FF0000"
+        barStyle={isDarkMode ? "light-content" : "dark-content"}
       />
     </UidContext.Provider>
 
